@@ -17,23 +17,21 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 @Entity
-public class Product {
+public class Review {
 	@Id
 	@SequenceGenerator(
-			name = "productSequence",
-			sequenceName = "seq_product_id",
+			name = "reviewSequence",
+			sequenceName = "seq_review_id",
 			initialValue = 1,
 			allocationSize = 1
 		)
-	@GeneratedValue(generator = "productSequence")
-	private Long prod_id;
-	private String prod_name;
-	private int prod_price;
-	private int prod_stock;
-	private String prod_cate;
-	private Long prodimg_id;
-	private Long member_id; // 판매자ID
-	private String prod_content;
-	private int prod_like;
-	private Date prod_date;
+	@GeneratedValue(generator = "reviewSequence")
+	private Long review_id;
+	private Long member_id;
+	private Date postdate;
+	private String title;
+	private String content;
+	private int star;
+	private String evaluation;
+	private int visitcount;
 }

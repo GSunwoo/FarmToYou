@@ -29,7 +29,7 @@ public class Purchase {
 	@GeneratedValue(generator = "purchaseSequence")
 	private Long purc_id;
 	private Long prod_id;
-	private Long member_id;
+	private Long member_id; // 구매자ID
 	private Long review_id;
 	private Long purc_state;
 	private Long purc_cmpl;
