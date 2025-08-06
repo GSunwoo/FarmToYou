@@ -23,5 +23,6 @@ public class MemberDTO {
 	private String com_addr1;
 	private String com_addr2;
 	private String entryman;
+	private String bank;
 	private String account;
 }
