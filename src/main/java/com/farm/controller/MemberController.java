@@ -13,7 +13,7 @@ import com.farm.service.MemberFormTransactService;
 public class MemberController {
 
 	@Autowired
-	MemberFormTransactService transDao;
+    private IMemberFormService formDao;
 	
 	@GetMapping("/memberForm/seller.do") //회원가입 페이지
 	public String memberFormSeller() {
@@ -27,12 +27,12 @@ public class MemberController {
 	
 	@PostMapping("/memberForm/seller.regist.do") // 서브밋 했을때 가입시켜주는
 	public String memberRegistSeller(MemberDTO memberDTO) {
-		transDao.registerSeller(memberDTO);
+		formDao.registMember(memberDTO);
 		return "redirect:/";
 	}
 	@PostMapping("/memberForm/buyer.regist.do")
 	public String memberRegistBuyer(MemberDTO memberDTO) {
-		transDao.registerBuyer(memberDTO);
+		formDao.registMember(memberDTO);
 		return "redirect:/";
 	}
 	

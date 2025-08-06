@@ -73,10 +73,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    alert("회원가입 완료!");
-  });
+  //form.addEventListener("submit", (e) => {
+  //  e.preventDefault();
+  //  alert("회원가입 완료!");
+  //});
 
   document.getElementById("emailId").addEventListener("input", () => {
     updateHiddenEmail();

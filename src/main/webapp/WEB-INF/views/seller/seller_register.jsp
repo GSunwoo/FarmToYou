@@ -42,8 +42,8 @@
       <div class="form-line">
         <label for="emailId">이메일</label>
         <div class="form-group email-group">
-          <input type="text" id="emailId" name="emailId" placeholder="이메일 주소" required /> @
-          <input type="text" id="emailDomain" name="emailDomain" readonly required />
+          <input type="text" id="emailId" name="emailid" placeholder="이메일 주소" required /> @
+          <input type="text" id="emailDomain" name="emaildomain" readonly required />
           <select id="domainSelect" onchange="handleDomainSelect(this)">
             <option value="">도메인 선택</option>
             <option value="self">직접입력</option>
