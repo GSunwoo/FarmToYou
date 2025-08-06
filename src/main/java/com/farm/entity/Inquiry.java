@@ -1,10 +1,15 @@
 package com.farm.entity;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.SequenceGenerator;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -27,9 +32,20 @@ public class Inquiry {
 		)
 	@GeneratedValue(generator = "inquirySequence")
 	private Long inquiry_id;
+	@JoinColumn
 	private Long member_id;
 	private String title;
 	private String content;
-	private Date postdate;
+	@Column(columnDefinition = "DATE DEFAULT SYSDATE")
+	private LocalDate postdate;
+	@Column(columnDefinition = "NUMBER DEFAULT 0")
 	private int visitcount;
+	
+	@PrePersist
+	protected void onPrePersist() {
+		
+		this.postdate = LocalDate.now();
+		this.visitcount = 0;
+		
+	}
 }
