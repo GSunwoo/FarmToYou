@@ -36,6 +36,8 @@ public class Farm {
 	@Column(nullable = false)
 	private String depositor;
 	@Column(nullable = false)
+	private String bank;
+	@Column(nullable = false)
 	private String account;
 	
 	@ManyToOne

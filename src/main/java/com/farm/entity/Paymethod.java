@@ -36,6 +36,7 @@ public class Paymethod {
 	private String card_num;
 	private String acc_com;
 	private String acc_num;
+	private String bank;
 	
 	@ManyToOne
 	@JoinColumn(name = "member_id", nullable = false)
