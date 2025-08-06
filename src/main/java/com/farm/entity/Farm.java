@@ -2,6 +2,7 @@ package com.farm.entity;
 
 import java.sql.Date;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.Id;
@@ -21,12 +22,22 @@ import lombok.NoArgsConstructor;
 public class Farm {
 	@Id
 	private Long farm_id; //사업자 번호
-	@JoinColumn
+	@Column(nullable = false)
 	private String owner_name;
+	@Column(nullable = false)
 	private String brand_name;
+	@Column(nullable = false)
 	private String com_zip;
+	@Column(nullable = false)
 	private String com_addr1;
+	@Column(nullable = false)
 	private String com_addr2;
+	@Column(nullable = false)
 	private String depositor;
+	@Column(nullable = false)
 	private String account;
+	
+	@JoinColumn(name = "member_id")
+	@Column(nullable = false)
+	private Member member;
 }

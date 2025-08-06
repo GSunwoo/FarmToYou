@@ -1,12 +1,16 @@
 package com.farm.entity;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.SequenceGenerator;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -38,12 +42,28 @@ public class Product {
 	@Column(nullable = false)
 	private String prod_cate;
 	private Long prodimg_id;
+	@Column(nullable = false)
 	private String prod_content;
 	@Column(nullable = false)
 	private int prod_like;
-	@Column(nullable = false)
+	@Column(nullable = false, columnDefinition = "DATE DEFAULT SYSDATE")
 	private Date prod_date;
 	
 	@JoinColumn(name = "member_id")
+	@Column(nullable = false)
     private Member member; // 판매자
+	
+	@OneToMany(mappedBy = "product")
+    private List<Purchase> purchase = new ArrayList<>();
+	@OneToMany(mappedBy = "product")
+	private List<Inquiry> inquiry = new ArrayList<>();
+	@OneToMany(mappedBy = "product")
+	private List<Review> review = new ArrayList<>();
+	@OneToMany(mappedBy = "product")
+	private List<Wishlist> wishlist = new ArrayList<>();
+	
+	@PrePersist
+	protected void onPrePersist() {
+		this.prod_date = new Date(System.currentTimeMillis());
+	}
 }

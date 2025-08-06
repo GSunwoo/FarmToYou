@@ -1,10 +1,16 @@
 package com.farm.entity;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.SequenceGenerator;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -27,11 +33,31 @@ public class Review {
 		)
 	@GeneratedValue(generator = "reviewSequence")
 	private Long review_id;
-	private Long member_id;
+	@Column(nullable = false, columnDefinition = "DATE DEFAULT SYSDATE")
 	private Date postdate;
+	@Column(nullable = false)
 	private String title;
+	@Column(nullable = false)
 	private String content;
+	@Column(nullable = false)
 	private int star;
 	private String evaluation;
+	@Column(nullable = false, columnDefinition = "NUMBER DEFAULT 0")
 	private int visitcount;
+	
+	@JoinColumn(name = "member_id")
+	@Column(nullable = false)
+	private Member member;
+	@JoinColumn(name = "prod_id")
+	@Column(nullable = false)
+	private Product product;
+	
+	@OneToMany(mappedBy = "review")
+    private List<Purchase> purchase = new ArrayList<>();
+	
+	@PrePersist
+	protected void onPrePersist() {
+		this.postdate = new Date(System.currentTimeMillis());
+		this.visitcount = 0;
+	}
 }

@@ -1,10 +1,16 @@
 package com.farm.entity;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.SequenceGenerator;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -27,16 +33,47 @@ public class Member {
 		)
 	@GeneratedValue(generator = "memberSequence")
 	private Long member_id;
+	@Column(nullable = false)
 	private String user_type;
+	@Column(nullable = false)
 	private String user_id;
+	@Column(nullable = false)
 	private String user_pw;
+	@Column(nullable = false)
 	private String name;
+	@Column(nullable = false)
 	private String phone_num;
+	@Column(nullable = false)
 	private String email;
+	@Column(nullable = false, columnDefinition = "NUMBER DEFAULT 50")
 	private int trust_score;
+	@Column(nullable = false, columnDefinition = "DATE DEFAULT SYSDATE")
 	private Date regidate;
-	private Long addr_id;
-	private Long pay_id;
-	private Long farm_id;
+	@Column(nullable = false, columnDefinition = "NUMBER DEFAULT 1")
 	private int enable;
+	
+	@OneToMany(mappedBy = "member")
+    private List<Purchase> purchase = new ArrayList<>();
+	@OneToMany(mappedBy = "member")
+	private List<Farm> farm = new ArrayList<>();
+	@OneToMany(mappedBy = "member")
+	private List<Address> address = new ArrayList<>();
+	@OneToMany(mappedBy = "member")
+	private List<Inquiry> inquiry = new ArrayList<>();
+	@OneToMany(mappedBy = "member")
+	private List<Paymethod> paymethod = new ArrayList<>();
+	@OneToMany(mappedBy = "member")
+	private List<Product> product = new ArrayList<>();
+	@OneToMany(mappedBy = "member")
+	private List<Review> review = new ArrayList<>();
+	@OneToMany(mappedBy = "member")
+	private List<Wishlist> wishlist = new ArrayList<>();
+	
+	@PrePersist
+	protected void onPrePersist() {
+		this.regidate = new Date(System.currentTimeMillis());
+		this.trust_score = 50;
+		this.enable = 1;
+	}
+	
 }

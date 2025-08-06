@@ -32,14 +32,21 @@ public class Inquiry {
 		)
 	@GeneratedValue(generator = "inquirySequence")
 	private Long inquiry_id;
-	@JoinColumn
-	private Long member_id;
+	@Column(nullable = false)
 	private String title;
+	@Column(nullable = false)
 	private String content;
-	@Column(columnDefinition = "DATE DEFAULT SYSDATE")
+	@Column(nullable = false, columnDefinition = "DATE DEFAULT SYSDATE")
 	private LocalDate postdate;
-	@Column(columnDefinition = "NUMBER DEFAULT 0")
+	@Column(nullable = false, columnDefinition = "NUMBER DEFAULT 0")
 	private int visitcount;
+	
+	@JoinColumn(name = "member_id")
+	@Column(nullable = false)
+	private Member member;
+	@JoinColumn(name = "prod_id")
+	@Column(nullable = false)
+	private Product product;
 	
 	@PrePersist
 	protected void onPrePersist() {

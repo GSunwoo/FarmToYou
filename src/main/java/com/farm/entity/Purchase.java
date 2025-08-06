@@ -3,10 +3,12 @@ package com.farm.entity;
 import java.sql.Date;
 import java.time.LocalDate;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.SequenceGenerator;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -29,15 +31,28 @@ public class Purchase {
 		)
 	@GeneratedValue(generator = "purchaseSequence")
 	private Long purc_id;
-	private Long purc_state;
-	private Long purc_cmpl;
-	private Long purc_request;
+	@Column(nullable = false, columnDefinition = "VARCHAR(10) DEFAULT 'chk_order'")
+	private String purc_state; // 주문상태 (주문확인중/상품준비중/배송중/배송완료)
+	@Column(nullable = false, columnDefinition = "NUMBER DEFAULT 0") // 0이면 결제 안된 상태
+	private int purc_cmpl; // 결제상태
+	@Column(nullable = false)
+	private String purc_request; // 구매자 요청사항
+	@Column(nullable = false, columnDefinition = "DATE DEFAULT SYSDATE")
 	private Date purc_date;
 	
 	@JoinColumn(name = "prod_id")
+	@Column(nullable = false)
 	private Product product; // 상품
 	@JoinColumn(name = "member_id")
+	@Column(nullable = false)
 	private Member member; // 판매자
 	@JoinColumn(name = "review_id")
     private Review review; // 리뷰
+	
+	@PrePersist
+	protected void onPrePersist() {
+		this.purc_date = new Date(System.currentTimeMillis());
+		this.purc_cmpl = 0;
+		this.purc_state = "chk_order";
+	}
 }
