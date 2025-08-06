@@ -5,7 +5,7 @@ import java.sql.Date;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumenerator;
+import jakarta.persistence.SequenceGenerator;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,7 +37,6 @@ public class Member {
 	private Date regidate;
 	private Long addr_id;
 	private Long pay_id;
-	@JoinColumn
 	private Long farm_id;
 	private int enable;
 }
