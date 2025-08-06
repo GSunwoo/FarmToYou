@@ -5,7 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.farm.dto.MemberDTO;
 
 @Mapper
-public interface ImemberFormService {
+public interface IMemberFormService {
 	// 회원가입
 	public int registMember(MemberDTO memberDTO);
 	public int registAddr(MemberDTO memberDTO);

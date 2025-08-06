@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   form.addEventListener("submit", (e) => {
-    e.preventDefault();
+    //e.preventDefault();
     alert("회원가입 완료!");
   });
   // 이메일 합치기

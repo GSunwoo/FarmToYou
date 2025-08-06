@@ -47,7 +47,7 @@ public class LoginConfig {
 				// 어떤 요청 URL에 누가 접근 가능한지 설정하는 부분
 				.authorizeHttpRequests((request) -> request
 						.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
-						.requestMatchers("/").permitAll()
+						.requestMatchers("/","/memberForm/**").permitAll()
 						.requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
 						.requestMatchers("/buyer/**").hasAnyRole("buyer", "admin")
 						.requestMatchers("/seller/**").hasAnyRole("seller", "admin")

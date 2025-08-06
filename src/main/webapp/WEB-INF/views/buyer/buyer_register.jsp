@@ -4,9 +4,9 @@
 <head>
   <meta charset="UTF-8">
   <title>회원가입</title>
-  <link rel="stylesheet" href="./src/main/resources/static/css/buyer_register.css">
+  <link rel="stylesheet" href="/css/buyer_register.css">
   <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-  <script src="./src/main/resources/static/js/buyer_register.js" defer></script>
+  <script src="/js/buyer_register.js" defer></script>
 </head>
 
 <body>
@@ -14,8 +14,8 @@
     <h2>일반 회원가입</h2>
     <p>가입을 통해 더 다양한 서비스를 만나보세요!</p>
 
-    <form id="registerForm" method="post" action="registerBuyer.do">
-
+    <form id="registerForm" method="post" action="/memberForm/buyer/regist.do">
+	  <input type="text" name="user_type" value="ROLE_BUYER" hidden="hidden" />
       <div class="form-line">
         <label for="user_id">아이디</label>
         <div class="form-group row-group">
