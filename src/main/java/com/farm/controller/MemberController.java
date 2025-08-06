@@ -1,14 +1,19 @@
 package com.farm.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.farm.dto.MemberDTO;
+import com.farm.service.ImemberFormService;
 
 @Controller
 public class MemberController {
 
+	@Autowired
+	ImemberFormService formDao;
+	
 	@GetMapping("/memberForm/seller.do")
 	public String memberFormSeller() {
 		return "memberFormSeller";
@@ -21,10 +26,17 @@ public class MemberController {
 	
 	@PostMapping("/memberForm/seller/regist.do")
 	public String memberRegistSeller(MemberDTO memberDTO) {
+		/* 트랜젝션으로 묶어줄 예정 */
+		formDao.registMember(memberDTO);
+		formDao.registAddr(memberDTO);
+		formDao.registFarm(memberDTO);
 		return "redirect:/";
 	}
 	@PostMapping("/memberForm/buyer/regist.do")
 	public String memberRegistBuyer(MemberDTO memberDTO) {
+		/* 트랜젝션으로 묶어줄 예정 */
+		formDao.registMember(memberDTO);
+		formDao.registAddr(memberDTO);
 		return "redirect:/";
 	}
 	
