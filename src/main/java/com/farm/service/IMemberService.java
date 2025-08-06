@@ -10,5 +10,6 @@ public interface IMemberService {
 	MemberDTO loginCheck(String userId);
 	// user_id로 회원 정보를 조회하는 쿼리
 	MemberDTO selectBuyerData (MemberDTO memberDTO);
+	MemberDTO selectSellerData (MemberDTO memberDTO);
 
 }

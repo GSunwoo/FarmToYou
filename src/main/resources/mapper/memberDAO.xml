@@ -7,14 +7,25 @@
 	
 	<select id="loginCheck"
 		resultType="com.farm.dto.MemberDTO">
-		SELECT user_id, user_pw, user_type, enable
+		SELECT user_id, user_pw, user_type, enable, member_id
 			FROM member WHERE user_id = ${userId}
 	</select>
 	
 	<select id="selectBuyerData"
 		parameterType="com.farm.dto.MemberDTO"
 		resultType="com.farm.dto.MemberDTO">
-		SELECT * FROM member, purchase, address
+		SELECT user_id, user_pw, user_type, enable, phone_num,
+				name, email, member_id, trust_score, regidate
+		FROM member
+		WHERE user_id = #{user_id} 
+	</select>
+	<select id="selectSellerData"
+		parameterType="com.farm.dto.MemberDTO"
+		resultType="com.farm.dto.MemberDTO">
+		SELECT user_id, user_pw, user_type, enable, phone_num,
+				name, email, member_id, regidate
+		FROM member
+		WHERE user_id = #{user_id} 
 	</select>
 	
 </mapper>
