@@ -44,7 +44,9 @@ public class Member {
 	@Column(nullable = false)
 	private String phone_num;
 	@Column(nullable = false)
-	private String email;
+	private String emailid;
+	@Column(nullable = false)
+	private String emaildomain;
 	@Column(nullable = false, columnDefinition = "NUMBER DEFAULT 50")
 	private int trust_score;
 	@Column(nullable = false, columnDefinition = "DATE DEFAULT SYSDATE")

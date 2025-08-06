@@ -19,7 +19,7 @@ public class LoginController {
 			 */
 			System.out.println("로그인 전입니다");
 		}
-		return "auth/login";
+		return "login";
 	}
 
 	// 로그인 시도 중 에러가 발생하는 경우
