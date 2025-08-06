@@ -7,13 +7,15 @@
 	<insert id="registMember"
 		parameterType="com.farm.dto.MemberDTO">
 		INSERT INTO member (member_id, user_id, user_pw, user_type, phone_num, name, email)
-			VALUES
+			VALUES (seq_member_id.nextval, ${user_id}, ${user_pw}, ${user_type}, ${phone_num}, ${name}, ${email})
 	</insert>
 	<insert id="registAddr">
-	
+		INSERT INTO address (addr_id, member_id, zipcode, addr1, addr2)
+			VALUES(seq_address_id.nextval, seq_member_id.currval, ${zipcode}, ${addr1}, ${addr2})
 	</insert>
 	<insert id="registFarm">
-	
+		INSERT INTO farm (farm_id, member_id, account, brand_name, com_addr1, com_addr2, com_zip, owner_name, depositor)
+			VALUES(${farm_id}, seq_member_id.currval, ${account}, ${brand_name}, ${com_addr1}, ${com_addr2}, ${com_zip}, ${owner_name}, ${depositor})
 	</insert>
 	
 </mapper>
