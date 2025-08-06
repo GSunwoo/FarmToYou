@@ -1,0 +1,177 @@
+@charset "UTF-8";
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 0;
+}
+
+.login-container {
+  width: 360px;
+  margin: 70px auto;
+  background: white;
+  padding: 40px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.logo {
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.tabs {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.tab {
+  display: inline-block;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+}
+
+.tab.active {
+  font-weight: bold;
+  color: #075830;
+  border-bottom: 2px solid #075830;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.login-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #075830;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.login-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0 20px;
+  font-size: 14px;
+}
+
+.login-options a {
+  color: #333;
+}
+
+.login-options a:hover {
+  text-decoration: underline;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid #ccc;
+}
+
+.divider:not(:empty)::before {
+  margin-right: .75em;
+}
+
+.divider:not(:empty)::after {
+  margin-left: .75em;
+}
+
+.signup-btn {
+  width: 100%;
+  padding: 10px;
+  background: none;
+  border: 1px solid #ccc;
+  color: #333;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.2s;
+}
+
+.signup-btn:hover {
+  background: #f5f5f5;
+}
+
+
+.mypw-container {
+  width: 600px;
+  margin: 100px auto;
+  background: #fff;
+  padding: 40px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.mypw-title {
+  text-align: center;
+  margin-bottom: 12px;
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 8px;
+}
+
+.mypw-info-box {
+  background-color: #eaf1ff;
+  color: #4a69ad;
+  border: 1px solid #a9c1ff;
+  padding: 15px 20px;
+  margin-bottom: 25px;
+  font-size: 14px;
+  line-height: 1.4;
+  border-radius: 4px;
+}
+
+.mypw-btn {
+  width: 100%;
+  padding: 12px 0;
+  background-color: #075830;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.mypw-footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  gap: 20px;
+}
+
+.mypw-footer button {
+  width: 100%;
+  padding: 10px 0;
+  background: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  color: #333;
+  transition: background-color 0.25s ease;
+}

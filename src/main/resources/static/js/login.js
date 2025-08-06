@@ -1,0 +1,20 @@
+document.addEventListener("DOMContentLoaded", () => {
+	const tabs = document.querySelectorAll('.tab');
+	tabs.forEach(tab => {
+		tab.addEventListener('click', () => {
+			tabs.forEach(t => t.classList.remove('active'));
+			tab.classList.add('active');
+		});
+	});
+
+	const loginForm = document.querySelector('form');
+	loginForm.addEventListener('submit', (e) => {
+		const id = document.querySelector('input[type="text"]').value.trim();
+		const pw = document.querySelector('input[type="password"]').value.trim();
+
+		if (!id || !pw) {
+			e.preventDefault();
+			alert("아이디와 비밀번호 모두 입력해 주세요.");
+		}
+	});
+});
