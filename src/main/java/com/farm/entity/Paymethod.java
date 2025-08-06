@@ -2,9 +2,12 @@ package com.farm.entity;
 
 import java.sql.Date;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -27,7 +30,10 @@ public class Paymethod {
 		)
 	@GeneratedValue(generator = "paySequence")
 	private Long pay_id;
-	private Long member_id;
+	@ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
+	@Column(nullable = false)
 	private String method;
 	private String card_com;
 	private String card_num;

@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.SequenceGenerator;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -28,11 +29,15 @@ public class Purchase {
 		)
 	@GeneratedValue(generator = "purchaseSequence")
 	private Long purc_id;
-	private Long prod_id;
-	private Long member_id; // 구매자ID
-	private Long review_id;
 	private Long purc_state;
 	private Long purc_cmpl;
 	private Long purc_request;
 	private Date purc_date;
+	
+	@JoinColumn(name = "prod_id")
+	private Product product; // 상품
+	@JoinColumn(name = "member_id")
+	private Member member; // 판매자
+	@JoinColumn(name = "review_id")
+    private Review review; // 리뷰
 }

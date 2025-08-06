@@ -2,9 +2,11 @@ package com.farm.entity;
 
 import java.sql.Date;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.SequenceGenerator;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -27,13 +29,21 @@ public class Product {
 		)
 	@GeneratedValue(generator = "productSequence")
 	private Long prod_id;
+	@Column(nullable = false)
 	private String prod_name;
+	@Column(nullable = false)
 	private int prod_price;
+	@Column(nullable = false)
 	private int prod_stock;
+	@Column(nullable = false)
 	private String prod_cate;
 	private Long prodimg_id;
-	private Long member_id; // 판매자ID
 	private String prod_content;
+	@Column(nullable = false)
 	private int prod_like;
+	@Column(nullable = false)
 	private Date prod_date;
+	
+	@JoinColumn(name = "member_id")
+    private Member member; // 판매자
 }

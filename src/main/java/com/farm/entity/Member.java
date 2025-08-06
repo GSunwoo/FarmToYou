@@ -38,4 +38,5 @@ public class Member {
 	private Long addr_id;
 	private Long pay_id;
 	private Long farm_id;
+	private int enable;
 }
