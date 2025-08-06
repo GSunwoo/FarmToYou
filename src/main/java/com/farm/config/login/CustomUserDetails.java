@@ -14,6 +14,7 @@ import com.farm.dto.MemberDTO;
 유저디테일 인터페이스 구현.
 멤버DTO 전체를 내부에 보관해 로그인 후 필요한 정보 즉시 사용 가능
  */
+
 public class CustomUserDetails implements UserDetails{
 	
 	private final MemberDTO memberDTO;

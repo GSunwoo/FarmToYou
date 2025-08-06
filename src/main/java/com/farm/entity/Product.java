@@ -45,7 +45,7 @@ public class Product {
 	private Long prodimg_id;
 	@Column(nullable = false)
 	private String prod_content;
-	@Column(nullable = false)
+	@Column(nullable = false, columnDefinition = "NUMBER DEFAULT 0")
 	private int prod_like;
 	@Column(nullable = false, columnDefinition = "DATE DEFAULT SYSDATE")
 	private Date prod_date;
