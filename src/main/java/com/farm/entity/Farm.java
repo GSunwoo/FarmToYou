@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -37,7 +38,7 @@ public class Farm {
 	@Column(nullable = false)
 	private String account;
 	
-	@JoinColumn(name = "member_id")
-	@Column(nullable = false)
+	@ManyToOne
+	@JoinColumn(name = "member_id", nullable = false)
 	private Member member;
 }

@@ -9,6 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.SequenceGenerator;
 import lombok.AccessLevel;
@@ -41,11 +42,11 @@ public class Inquiry {
 	@Column(nullable = false, columnDefinition = "NUMBER DEFAULT 0")
 	private int visitcount;
 	
-	@JoinColumn(name = "member_id")
-	@Column(nullable = false)
+	@ManyToOne
+	@JoinColumn(name = "member_id", nullable = false)
 	private Member member;
-	@JoinColumn(name = "prod_id")
-	@Column(nullable = false)
+	@ManyToOne
+	@JoinColumn(name = "prod_id", nullable = false)
 	private Product product;
 	
 	@PrePersist

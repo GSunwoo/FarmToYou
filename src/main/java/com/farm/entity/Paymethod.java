@@ -30,7 +30,6 @@ public class Paymethod {
 		)
 	@GeneratedValue(generator = "paySequence")
 	private Long pay_id;
-	@ManyToOne
 	@Column(nullable = false)
 	private String method;
 	private String card_com;
@@ -38,6 +37,7 @@ public class Paymethod {
 	private String acc_com;
 	private String acc_num;
 	
-	@JoinColumn(name = "member_id")
+	@ManyToOne
+	@JoinColumn(name = "member_id", nullable = false)
 	private Member member;
 }

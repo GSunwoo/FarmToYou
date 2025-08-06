@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.SequenceGenerator;
 import lombok.AccessLevel;
@@ -34,6 +35,7 @@ public class Address {
 	@Column(nullable = false)
 	private String addr1;
 	private String addr2;
+	@ManyToOne
 	@JoinColumn(name = "member_id")
 	private Member member;
 }
