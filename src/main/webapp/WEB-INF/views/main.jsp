@@ -19,7 +19,7 @@
 	<!-- 로그인 및 회원가입 메뉴 -->
 	<div class="top-util">
 		<ul style="font-size: 1em;">
-			<li><a href="auth/login">로그인</a></li>
+			<li><a href="/myLogin.do">로그인</a></li>
 			<li>|</li>
 			<li><a href="#">회원가입</a></li>
 			<li>|</li>

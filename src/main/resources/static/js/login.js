@@ -1,3 +1,6 @@
+/*
+로그인 자바스크립트()
+*/
 document.addEventListener("DOMContentLoaded", () => {
 	const tabs = document.querySelectorAll('.tab');
 	tabs.forEach(tab => {

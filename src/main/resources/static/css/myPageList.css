@@ -1,0 +1,136 @@
+@charset "UTF-8";
+/* 본문 영역 */
+.mypage-cont {
+  flex: 1;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 30px;
+}
+
+/* 주문목록 제목 */
+.mypage-zone-tit {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 10px;
+  margin-bottom: 25px;
+}
+
+.mypage-zone-tit h3 {
+  font-size: 22px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.btn-inquiry {
+  padding: 6px 12px;
+  background-color: #234D3C;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.btn-inquiry:hover {
+  background-color: #1c3d2f;
+}
+
+/* 조회 기간 선택 */
+.data-check-box h3 {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.date-check-list {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.date-check-list button {
+  padding: 6px 14px;
+  border: 1px solid #ccc;
+  background: #fff;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.date-check-list button:hover,
+.date-check-list button.active {
+  background-color: #4CAF50;
+  color: white;
+  border-color: #4CAF50;
+}
+
+/* 달력 입력창 */
+.date-check-calendar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.date-check-calendar input {
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+/* 조회 버튼 */
+.btn-date-check {
+  background-color: #234D3C;
+  color: white;
+  border: none;
+  padding: 7px 18px;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.btn-date-check:hover {
+  background-color: #1c3d2f;
+}
+
+/* 주문 테이블 영역 */
+.mypage-info-content {
+  margin-top: 30px;
+}
+
+.pick-list-num {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #666;
+}
+
+.mypage-table-type table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.mypage-table-type thead th {
+  background-color: #f5f5f5;
+  padding: 12px;
+  font-size: 14px;
+  font-weight: bold;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+.mypage-table-type tbody td {
+  padding: 14px;
+  text-align: center;
+  border: 1px solid #eee;
+  font-size: 14px;
+  color: #444;
+}
+
+.mypage-table-type p {
+  margin: 30px 0;
+  font-size: 15px;
+  color: #888;
+}
