@@ -29,16 +29,21 @@ public class Product {
 		)
 	@GeneratedValue(generator = "productSequence")
 	private Long prod_id;
+	@Column(nullable = false)
 	private String prod_name;
+	@Column(nullable = false)
 	private int prod_price;
+	@Column(nullable = false)
 	private int prod_stock;
 	@Column(nullable = false)
 	private String prod_cate;
 	private Long prodimg_id;
-	private Long member_id; // 판매자ID
 	private String prod_content;
+	@Column(nullable = false)
 	private int prod_like;
-	@Column(columnDefinition = "DATE DEFAULT SYSDATE",
-			nullable = false)
+	@Column(nullable = false)
 	private Date prod_date;
+	
+	@JoinColumn(name = "member_id")
+    private Member member; // 판매자
 }

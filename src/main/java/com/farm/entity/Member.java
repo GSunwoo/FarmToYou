@@ -2,12 +2,10 @@ package com.farm.entity;
 
 import java.sql.Date;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.JoinColumenerator;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,12 +34,8 @@ public class Member {
 	private String name;
 	private String phone_num;
 	private String email;
-	@Column(columnDefinition = "NUMBER DEFAULT 50")
 	private int trust_score;
-	@Column(columnDefinition = "DATE DEFAULT SYSDATE")
-	private Date regidate;
-	@JoinColumn
-	private Long addr_id;
+	@Column(columnDefinition = "DATE DEFAULT SYSDATE"ng addr_id;
 	@JoinColumn
 	private Long pay_id;
 	@JoinColumn
