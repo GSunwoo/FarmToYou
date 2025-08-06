@@ -39,4 +39,5 @@ public class Member {
 	private Long pay_id;
 	@JoinColumn
 	private Long farm_id;
+	private int enable;
 }
