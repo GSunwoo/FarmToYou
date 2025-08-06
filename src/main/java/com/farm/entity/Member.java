@@ -27,7 +27,6 @@ public class Member {
 		)
 	@GeneratedValue(generator = "memberSequence")
 	private Long member_id;
-	@Column(columnDefinition = "VARCHAR2 DEFAULT buyer")
 	private String user_type;
 	private String user_id;
 	private String user_pw;
@@ -35,8 +34,8 @@ public class Member {
 	private String phone_num;
 	private String email;
 	private int trust_score;
-	@Column(columnDefinition = "DATE DEFAULT SYSDATE"ng addr_id;
-	@JoinColumn
+	private Date regidate;
+	private Long addr_id;
 	private Long pay_id;
 	@JoinColumn
 	private Long farm_id;
