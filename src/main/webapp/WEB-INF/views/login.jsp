@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +13,7 @@
 </head>
 <body>
 <!-- 로그인 및 회원가입 메뉴 -->
-    <div class="top-util">
+	<div class="top-util">
         <ul style="font-size: 1em;">
             <li><a href="login.html">로그인</a></li>
             <li>|</li>
