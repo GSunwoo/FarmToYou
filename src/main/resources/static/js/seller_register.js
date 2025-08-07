@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
   pwFormatMsg.id = "pwFormatMsg";
   pwFormatMsg.className = "warning-text";
   pwFormatMsg.style.display = "none";
-  pwFormatMsg.innerText = "첫 글자 대문자, 특수기호 포함, 7자 이상이어야 합니다.";
+  pwFormatMsg.innerText = "특수기호 포함, 7자 이상이어야 합니다.";
   pwInput.parentNode.appendChild(pwFormatMsg);
 
   // 비밀번호 유효성 검사
@@ -89,7 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // 폼 제출: 더 이상 preventDefault 하지 않음
   form.addEventListener("submit", () => {
     // 기본 전송됨
-    alert("회원가입 요청을 전송합니다."); // 선택사항
+    alert("회원가입 완료!"); // 선택사항
   });
 });
 
@@ -116,7 +116,8 @@ function updateHiddenPhone() {
 // 아이디 중복 확인 (가상)
 function checkDuplicateId() {
   const id = document.getElementById("userid").value.trim();
-  const idRule = /^[A-Za-z0-9_!@#$%^&*().\-]{7,}$/;
+  //const rule = /^[A-Z][A-Za-z\d@$!%*?&]{6,}$/; //맨앞 대문자 조건
+  const idRule = /^[A-Za-z0-9_]{7,}$/;
 
   if (!idRule.test(id)) {
     alert("아이디는 7자리 이상이며, 영문자와 밑줄(_)만 사용할 수 있습니다.");
@@ -130,7 +131,7 @@ function checkDuplicateId() {
 
 // 비밀번호 유효성 체크
 function validatePassword(pw) {
-  const rule = /^[A-Z][A-Za-z\d@$!%*?&]{6,}$/;
+  const rule = /^[A-Za-z\d@$!%*?&]{7,}$/; 
   const hasSpecial = /[@$!%*?&]/;
   return rule.test(pw) && hasSpecial.test(pw);
 }
@@ -144,7 +145,7 @@ function checkFormValidity() {
   const phone3 = document.getElementById("phone3").value.trim();
   const name = document.getElementById("name").value.trim();
 
-  const idValid = /^[A-Za-z_]{7,}$/.test(id);
+  const idValid = /^[A-Za-z0-9_]{7,}$/.test(id); 
   const pwValid = validatePassword(pw);
   const pwMatch = pwValid && pw === pw2;
   const phoneValid = phone2.length === 4 && phone3.length === 4;

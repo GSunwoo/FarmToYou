@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	pwFormatMsg.id = "pwFormatMsg";
 	pwFormatMsg.className = "warning-text";
 	pwFormatMsg.style.display = "none";
-	pwFormatMsg.innerText = "첫 글자 대문자, 특수기호 포함, 7자 이상이어야 합니다.";
+	pwFormatMsg.innerText = "특수기호 포함, 7자 이상이어야 합니다.";
 	pwInput.parentNode.appendChild(pwFormatMsg);
 
 	// 비밀번호 유효성 검사 및 경고 표시
@@ -138,8 +138,8 @@ function checkDuplicateId() {
 
 // 비밀번호 조건 체크: 첫 글자 대문자 + 특수문자 포함 + 7자 이상
 function validatePassword(pw) {
-	const rule = /^[A-Z][A-Za-z\d@$!%*?&]{6,}$/;
-	const hasSpecial = /[@$!%*?&]/;
+	const rule = /^[A-Za-z\d@$!%*?&]{7,}$/;  // 전체 7자리 이상
+	const hasSpecial = /[@$!%*?&]/; 
 	return rule.test(pw) && hasSpecial.test(pw);
 }
 
