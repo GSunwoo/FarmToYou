@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const useridInput = document.getElementById("userid");
   useridInput.addEventListener("input", () => {
-    useridInput.value = useridInput.value.replace(/[^A-Za-z_]/g, "");
+    useridInput.value = useridInput.value.replace(/[^A-Za-z0-9_!@#$%^&*().\-]/g, "");  // 아이디 입력시 숫자 허용 추가
     checkFormValidity();
   });
 
@@ -64,6 +64,11 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   document.getElementById("emailDomain").addEventListener("input", () => {
+	const emailDomainInput = document.getElementById("emailDomain");
+	if (!emailDomainInput.readOnly) {
+	  // 영문 소문자 + 점(.)만 허용
+	  emailDomainInput.value = emailDomainInput.value.replace(/[^a-z.]/g, "");
+	  }
     updateHiddenEmail();
     checkFormValidity();
   });
@@ -111,7 +116,7 @@ function updateHiddenPhone() {
 // 아이디 중복 확인 (가상)
 function checkDuplicateId() {
   const id = document.getElementById("userid").value.trim();
-  const idRule = /^[A-Za-z_]{7,}$/;
+  const idRule = /^[A-Za-z0-9_!@#$%^&*().\-]{7,}$/;
 
   if (!idRule.test(id)) {
     alert("아이디는 7자리 이상이며, 영문자와 밑줄(_)만 사용할 수 있습니다.");

@@ -21,7 +21,11 @@
 		<ul style="font-size: 1em;">
 			<li><a href="/myLogin.do">로그인</a></li>
 			<li>|</li>
-			<li><a href="#">회원가입</a></li>
+			<li class="dropdown"><a href="#">회원가입</a>
+				<ul class="dropdown-menu">
+					<li><a href="/memberForm/buyer.do">구매자 회원가입</a></li>
+					<li><a href="/memberForm/seller.do">판매자 회원가입</a></li>
+				</ul></li>
 			<li>|</li>
 			<li><a href="#">마이페이지</a></li>
 			<li>|</li>
