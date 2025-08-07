@@ -45,6 +45,8 @@ public class Review {
 	private String evaluation;
 	@Column(nullable = false, columnDefinition = "NUMBER DEFAULT 0")
 	private int visitcount;
+	@Column(nullable = false, columnDefinition = "NUMBER DEFAULT 0")
+	private int review_like;
 	
 	@ManyToOne
 	@JoinColumn(name = "member_id", nullable = false)
@@ -60,5 +62,6 @@ public class Review {
 	protected void onPrePersist() {
 		this.postdate = new Date(System.currentTimeMillis());
 		this.visitcount = 0;
+		this.review_like = 0;
 	}
 }
