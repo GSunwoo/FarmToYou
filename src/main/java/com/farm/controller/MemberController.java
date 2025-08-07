@@ -30,7 +30,7 @@ public class MemberController {
 	public String memberRegistSeller(MemberDTO memberDTO) {
 		String passwd = PasswordEncoderFactories.createDelegatingPasswordEncoder()
 					.encode(memberDTO.getUser_pw());
-		memberDTO.setUser_pw(passwd);
+		memberDTO.setUser_pw(passwd.replace("{bcrypt}", ""));
 		formDao.registMember(memberDTO);
 		return "redirect:/";
 	}
@@ -38,7 +38,7 @@ public class MemberController {
 	public String memberRegistBuyer(MemberDTO memberDTO) {
 		String passwd = PasswordEncoderFactories.createDelegatingPasswordEncoder()
 				.encode(memberDTO.getUser_pw());
-		memberDTO.setUser_pw(passwd);
+		memberDTO.setUser_pw(passwd.replace("{bcrypt}", ""));
 		formDao.registMember(memberDTO);
 		return "redirect:/";
 	}

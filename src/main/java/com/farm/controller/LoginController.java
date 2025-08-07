@@ -2,26 +2,33 @@ package com.farm.controller;
 
 import java.security.Principal;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.farm.config.login.CustomUserDetails;
+import com.farm.dto.MemberDTO;
 
 @Controller
 public class LoginController {
-	@RequestMapping("/myLogin.do")
-	public String login1(Principal principal, Model model) {
-		try {
-			String user_id = principal.getName();
-			model.addAttribute("user_id", user_id);
-		} catch (Exception e) {
-			/*
-			 * 최초 접근시 로그인 정보가 없으므로 NullPointerException이 발생된다. 따라서 예외처리 해야한다.
-			 */
-			System.out.println("로그인 전입니다");
-		}
+	
+	@GetMapping("/myLogin.do")
+	public String login0() {
 		return "login";
 	}
 
+//	  // 이 부분을 추가
+//    @PostMapping("/myLoginAction.do")
+//    public String loginAction() {
+//        // Spring Security가 처리하므로 실제로는 도달하지 않음
+//        return "redirect:/";
+//    }
+	
+	
 	// 로그인 시도 중 에러가 발생하는 경우
 	@RequestMapping("/myError.do")
 	public String login2() {

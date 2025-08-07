@@ -8,7 +8,7 @@
 	<select id="loginCheck"
 		resultType="com.farm.dto.MemberDTO">
 		SELECT user_id, user_pw, user_type, enable, member_id
-			FROM member WHERE user_id = ${userId}
+			FROM member WHERE user_id = #{userId}
 	</select>
 	
 	<select id="selectBuyerData"
