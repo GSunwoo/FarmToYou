@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.farm.dto.MemberDTO;
 import com.farm.service.IMemberFormService;
-import com.farm.service.MemberFormTransactService;
 
 @Controller
 public class MemberController {

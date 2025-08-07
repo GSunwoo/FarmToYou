@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.farm.service.IMypageService">
+	<!-- 해당 멤버의 결제완료된 구매건수 -->
+	<select id="getOrderCnt"
+		resultType="int">
+		SELECT COUNT(*)
+			FROM purchase 
+			WHERE 
+				member_id = #{member_id} AND
+				purc_cmpl = 1
+	</select>
+	<!-- 해당 멤버가 작성한 리뷰 수 -->
+	<select id="getReviewCnt"
+		resultType="int">
+		SELECT COUNT(*)
+			FROM review 
+			WHERE 
+				member_id = #{member_id} AND
+	</select>
+	<!-- 해당 멤버가 작성한 문의 수 -->
+	<select id="getInquiryCnt"
+		resultType="int">
+		SELECT COUNT(*)
+			FROM inquiry 
+			WHERE 
+				member_id = #{member_id} AND
+	</select>
+	
+</mapper>
