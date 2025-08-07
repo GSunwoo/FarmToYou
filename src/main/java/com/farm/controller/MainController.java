@@ -18,10 +18,9 @@ public class MainController {
 
 	@GetMapping("/")
 	public String main(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
-		MemberDTO member = userDetails.getMemberDTO();
-		
-		model.addAttribute("memberName", member.getName());
 		if(userDetails!=null) {
+			MemberDTO member = userDetails.getMemberDTO();
+			model.addAttribute("memberName", member.getName());
 			System.out.println(userDetails.getMemberDTO().getUser_id());
 		}
 		return "main";
