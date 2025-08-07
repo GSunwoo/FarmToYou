@@ -1,85 +1,129 @@
 let isIdChecked = false;
 
 document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("registerForm");
   const pwInput = document.getElementById("password");
   const pwCheckInput = document.getElementById("password2");
-  const pwMismatchMsg = document.getElementById("pwMismatchMsg");
-
-  const form = document.getElementById("registerForm");
   const phone2 = document.getElementById("phone2");
   const phone3 = document.getElementById("phone3");
-  const submitBtn = document.getElementById("submitBtn");
-  const emailId = document.getElementById("emailId");
-  const emailDomain = document.getElementById("emailDomain");
+  const submitBtn = document.querySelector(".submit-btn");
 
-  // 비밀번호 재확인 체크
-  pwCheckInput.addEventListener("input", () => {
-    if (pwInput.value !== pwCheckInput.value) {
-      pwMismatchMsg.style.display = "block";
+  const useridInput = document.getElementById("userid");
+  useridInput.addEventListener("input", () => {
+    // 한글과 숫자, 기타 특수문자 제거 (영문자와 _ 만 허용)
+    useridInput.value = useridInput.value.replace(/[^A-Za-z_]/g, "");
+    checkFormValidity();
+  });
+
+
+  // 비밀번호 불일치 메시지
+  const pwMismatchMsg = document.createElement("p");
+  pwMismatchMsg.id = "pwMismatchMsg";
+  pwMismatchMsg.className = "warning-text";
+  pwMismatchMsg.style.display = "none";
+  pwMismatchMsg.innerText = "비밀번호가 일치하지 않습니다.";
+  pwCheckInput.parentNode.appendChild(pwMismatchMsg);
+
+  // 비밀번호 형식 오류 메시지
+  const pwFormatMsg = document.createElement("p");
+  pwFormatMsg.id = "pwFormatMsg";
+  pwFormatMsg.className = "warning-text";
+  pwFormatMsg.style.display = "none";
+  pwFormatMsg.innerText = "첫 글자 대문자, 특수기호 포함, 7자 이상이어야 합니다.";
+  pwInput.parentNode.appendChild(pwFormatMsg);
+
+  // 비밀번호 유효성 검사 및 경고 표시
+  pwInput.addEventListener("input", () => {
+    if (!validatePassword(pwInput.value)) {
+      pwFormatMsg.style.display = "block";
     } else {
-      pwMismatchMsg.style.display = "none";
+      pwFormatMsg.style.display = "none";
     }
     checkFormValidity();
   });
 
-  // 전화번호 숫자만 허용 및 자동 포커스
+  // 비밀번호 재확인
+  pwCheckInput.addEventListener("input", () => {
+    const match = pwInput.value === pwCheckInput.value;
+    pwMismatchMsg.style.display = match ? "none" : "block";
+    checkFormValidity();
+  });
+
+  // 이메일 도메인 선택
+  document.getElementById("domainSelect").addEventListener("change", function () {
+    const emailDomainInput = document.getElementById("emailDomain");
+    if (this.value === "self") {
+      emailDomainInput.readOnly = false;
+      emailDomainInput.value = "";
+      emailDomainInput.focus();
+    } else {
+      emailDomainInput.readOnly = true;
+      emailDomainInput.value = this.value;
+    }
+    updateHiddenEmail();
+    checkFormValidity();
+  });
+
+  // 이메일/전화번호 조합 값 갱신
+  document.getElementById("emailId").addEventListener("input", () => {
+    updateHiddenEmail();
+    checkFormValidity();
+  });
+
+  document.getElementById("emailDomain").addEventListener("input", () => {
+    updateHiddenEmail();
+    checkFormValidity();
+  });
+
   phone2.addEventListener("input", () => {
     phone2.value = phone2.value.replace(/[^0-9]/g, "");
     if (phone2.value.length === 4) phone3.focus();
+    updateHiddenPhone();
     checkFormValidity();
   });
 
   phone3.addEventListener("input", () => {
     phone3.value = phone3.value.replace(/[^0-9]/g, "");
+    updateHiddenPhone();
     checkFormValidity();
   });
 
-  const fieldsToWatch = [
-    "password", "password2",
-    "phone2", "phone3",
-    "address", "detailAddress"
-  ];
-
-  fieldsToWatch.forEach(id => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.addEventListener("input", checkFormValidity);
-    }
-  });
-
+  // 폼 제출
   form.addEventListener("submit", (e) => {
     //e.preventDefault();
     alert("회원가입 완료!");
   });
-  // 이메일 합치기
-  emailId.addEventListener("input", () => {
-    updateHiddenEmail();      // ✅ 추가
-    checkFormValidity();
-  });
-  //이메일 도메인 합치기
-  emailDomain.addEventListener("input", () => {
-    updateHiddenEmail();      // ✅ 추가
-    checkFormValidity();
-  });
-  //전화번호 합치기1
-  phone2.addEventListener("input", () => {
-    phone2.value = phone2.value.replace(/[^0-9]/g, "");
-    if (phone2.value.length === 4) phone3.focus();
-    updateHiddenPhone();     // ✅ 추가
-    checkFormValidity();
-  });
-  //전화번호 합치기2
-  phone3.addEventListener("input", () => {
-    phone3.value = phone3.value.replace(/[^0-9]/g, "");
-    updateHiddenPhone();     // ✅ 추가
-    checkFormValidity();
-  });
 });
 
+// 이메일 주소 자동 조합
+function updateHiddenEmail() {
+  const emailId = document.getElementById("emailId").value.trim();
+  const emailDomain = document.getElementById("emailDomain").value.trim();
+  const hiddenEmail = document.getElementById("email");
+
+  if (hiddenEmail) {
+    hiddenEmail.value = emailId && emailDomain ? `${emailId}@${emailDomain}` : "";
+  }
+}
+
+// 전화번호 자동 조합
+function updateHiddenPhone() {
+  const phone2 = document.getElementById("phone2").value.trim();
+  const phone3 = document.getElementById("phone3").value.trim();
+  const hiddenPhone = document.getElementById("phone_num");
+
+  if (hiddenPhone) {
+    hiddenPhone.value = phone2 && phone3 ? `010-${phone2}-${phone3}` : "";
+  }
+}
+
+// 아이디 중복 확인 (가상)
 function checkDuplicateId() {
-  const id = document.getElementById("user_id").value.trim();
-  if (id.length < 7) {
-    alert("아이디는 7자리 이상이어야 합니다.");
+  const id = document.getElementById("userid").value.trim();
+  const idRule = /^[A-Za-z_]{7,}$/;
+
+  if (!idRule.test(id)) {
+    alert("아이디는 7자리 이상이며, 영문자와 밑줄(_)만 사용할 수 있습니다.");
     isIdChecked = false;
   } else {
     alert("사용 가능한 아이디입니다.");
@@ -88,191 +132,30 @@ function checkDuplicateId() {
   checkFormValidity();
 }
 
-function handleDomainSelect(select) {
-  const domainInput = document.getElementById("emailDomain");
-  if (select.value === "self") {
-    domainInput.value = "";
-    domainInput.readOnly = false;
-    domainInput.focus();
-  } else {
-    domainInput.value = select.value;
-    domainInput.readOnly = true;
-  }
-  updateHiddenEmail(); // 도메인 바뀔 때도 히든 값 갱신
-  checkFormValidity();
-}
-//이메일 아이디@도메인 합치기
-function updateHiddenEmail() {
-  const emailId = document.getElementById("emailId").value.trim();
-  const emailDomain = document.getElementById("emailDomain").value.trim();
-  const hiddenEmail = document.getElementById("email");
-
-  if (emailId && emailDomain) {
-    hiddenEmail.value = `${emailId}@${emailDomain}`;
-  } else {
-    hiddenEmail.value = "";
-  }
-}
-//전화번호 010 + 전화번호4 + 전화번호4 +
-function updateHiddenPhone() {
-  const phone2 = document.getElementById("phone2").value.trim();
-  const phone3 = document.getElementById("phone3").value.trim();
-  const hiddenPhone = document.getElementById("phone_num");
-
-  if (phone2 && phone3) {
-    hiddenPhone.value = `010-${phone2}-${phone3}`;
-  } else {
-    hiddenPhone.value = "";
-  }
+// 비밀번호 조건 체크: 첫 글자 대문자 + 특수문자 포함 + 7자 이상
+function validatePassword(pw) {
+  const rule = /^[A-Z][A-Za-z\d@$!%*?&]{6,}$/;
+  const hasSpecial = /[@$!%*?&]/;
+  return rule.test(pw) && hasSpecial.test(pw);
 }
 
-
-function execDaumPostcode() {
-  new daum.Postcode({
-    oncomplete: function (data) {
-      document.getElementById("zipcode").value = data.zonecode; 
-      document.getElementById("address").value = data.address;
-      checkFormValidity();
-    }
-  }).open();
-}
-
+// 전체 유효성 검사
 function checkFormValidity() {
+  const id = document.getElementById("userid").value.trim();
+  const idRule = /^[A-Za-z_]{7,}$/;
+  const idValid = idRule.test(id);
+
   const pw = document.getElementById("password").value.trim();
   const pw2 = document.getElementById("password2").value.trim();
   const phone2 = document.getElementById("phone2").value.trim();
   const phone3 = document.getElementById("phone3").value.trim();
-  const address = document.getElementById("address").value.trim();
-  const detailAddress = document.getElementById("detailAddress").value.trim();
-  const submitBtn = document.getElementById("submitBtn");
+  const name = document.getElementById("name").value.trim();
 
-  const pwMatch = pw !== "" && pw === pw2;
+  const pwValid = validatePassword(pw);
+  const pwMatch = pwValid && pw === pw2;
   const phoneValid = phone2.length === 4 && phone3.length === 4;
-  const addressValid = address !== "" && detailAddress !== "";
+  const nameValid = name.length >= 2;
 
-  const isValid = isIdChecked && pwMatch && phoneValid && addressValid;
-
-  submitBtn.disabled = !isValid;
-
+  const submitBtn = document.querySelector(".submit-btn");
+  submitBtn.disabled = !(isIdChecked && idValid && pwMatch && phoneValid && nameValid);
 }
-
-
-// let isIdChecked = false;
-
-// document.addEventListener("DOMContentLoaded", () => {
-//   //2. 필요한 변수들
-//   const pwInput = document.getElementById("password");
-//   const pwCheckInput = document.getElementById("password2");
-//   const pwMismatchMsg = document.getElementById("pwMismatchMsg");
-//   const form = document.getElementById("registerForm");
-//   const phone2 = document.getElementById("phone2");
-//   const phone3 = document.getElementById("phone3");
-
-//   //3. 비밀번호 확인 메시지
-//   pwCheckInput.addEventListener("input", () => {
-//     if (pwInput.value !== pwCheckInput.value) {
-//       pwMismatchMsg.style.display = "block";
-//     } else {
-//       pwMismatchMsg.style.display = "none";
-//     }
-//     checkFormValidity(); // 실시간 검사
-//   });
-
-//   // 4. 전화번호 자동 포커스 및 숫자만
-//   phone2.addEventListener("input", () => {
-//     phone2.value = phone2.value.replace(/[^0-9]/g, "");
-//     if (phone2.value.length === 4) phone3.focus();
-//   });
-
-//   phone3.addEventListener("input", () => {
-//     phone3.value = phone3.value.replace(/[^0-9]/g, "");
-//   });
-
-
-//   // 5. 실시간 유효성 검사 연결
-
-//   const fieldsToWatch = [
-//     "userid", "password", "password2",
-//     "emailId", "emailDomain",
-//     "phone2", "phone3",
-//     "address", "detailAddress"
-//   ];
-
-//   fieldsToWatch.forEach(id => {
-//     const el = document.getElementById(id);
-//     if (el) {
-//       el.addEventListener("input", checkFormValidity);
-//     }
-//   });
-
-//   form.addEventListener("submit", (e) => {
-//     e.preventDefault();
-
-//     const id = form.userid.value.trim();
-//     const pw = form.password.value.trim();
-//     const pw2 = form.password2.value.trim();
-//     const emailId = document.getElementById("emailId").value.trim();
-//     const emailDomain = document.getElementById("emailDomain").value.trim();
-//     const address = document.getElementById("address").value.trim();
-//     // 추가 내용
-//     const detailAddress = document.getElementById("detailAddress").value.trim();
-//     if (!id || !pw || !pw2 || !emailId || !emailDomain || !phone2.value || !phone3.value || !address || !detailAddress) {
-//       alert("공란입니다");
-//       return;
-//     }
-
-//     if (id.length < 7) {
-//       alert("아이디는 7자리 이상이어야 합니다.");
-//       return;
-//     }
-
-//     const pwRegex = /^[A-Z](?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{6,}$/;
-//     if (!pwRegex.test(pw)) {
-//       alert("비밀번호는 맨 앞 대문자, 특수문자 포함, 7자리 이상이어야 합니다.");
-//       return;
-//     }
-
-//     if (pw !== pw2) {
-//       alert("비밀번호가 일치하지 않습니다.");
-//       return;
-//     }
-
-//     const fullEmail = `${emailId}@${emailDomain}`;
-//     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fullEmail)) {
-//       alert("이메일 형식이 올바르지 않습니다.");
-//       return;
-//     }
-
-//     alert("회원가입 완료!");
-//   });
-// });
-
-// function checkDuplicateId() {
-//   const id = document.getElementById("userid").value.trim();
-//   if (id.length < 7) {
-//     alert("아이디는 7자리 이상이어야 합니다.");
-//   } else {
-//     alert("사용 가능한 아이디입니다."); // 실제 중복 확인은 서버 연동 필요
-//   }
-// }
-
-// function handleDomainSelect(select) {
-//   const domainInput = document.getElementById("emailDomain");
-//   if (select.value === "self") {
-//     domainInput.value = "";
-//     domainInput.readOnly = false;
-//     domainInput.focus();
-//   } else {
-//     domainInput.value = select.value;
-//     domainInput.readOnly = true;
-//   }
-//   checkFormValidity();
-// }
-
-// function execDaumPostcode() {
-//   new daum.Postcode({
-//     oncomplete: function (data) {
-//       document.getElementById("address").value = data.address;
-//     }
-//   }).open();
-// }

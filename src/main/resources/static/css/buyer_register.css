@@ -43,7 +43,7 @@ p {
 .row-group {
   display: flex;
   gap: 10px;
-  justify-content: flex-start; /* 수평 중앙 정렬 */
+  justify-content: center; /* 수평 중앙 정렬 */
 }
 
 .row-group input {
@@ -161,8 +161,26 @@ button {
   color: red;
 }
 
-
-.half-width {
+.half-width{
   width: 50% !important;
-  max-width: 200px;  /* 원하는 크기로 조절 가능 (예: 120~200px) */
+  max-width: 80px;
+}
+
+/* 은행 선택 */
+.account-group {
+  display: flex;
+  gap: 10px;
+}
+
+.account-group input {
+  flex: 2;
+}
+
+.account-group select {
+  flex: 1;
+  min-width: 120px;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
 }
