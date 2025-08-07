@@ -558,3 +558,13 @@ body {
   cursor: pointer;
   margin-top: 10px;
 }
+
+
+/* 다른 css 배제 */
+.simple-page .banner-carousel,
+.simple-page .review-section,
+.simple-page .weekly-best,
+.simple-page .contact-footer {
+  display: none !important;
+  
+}
