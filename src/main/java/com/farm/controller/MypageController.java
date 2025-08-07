@@ -20,10 +20,10 @@ public class MypageController {
 	public String mypageMapper(@AuthenticationPrincipal CustomUserDetails userDetails) {
 		MemberDTO member = userDetails.getMemberDTO();
 		if(member.getUser_type().equals("ROLE_BUYER")) {
-			return "redirect:buyer/mypage.do";
+			return "redirect:/buyer/mypage.do";
 		}
 		else {
-			return "redirect:seller/mypage.do";
+			return "redirect:/seller/mypage.do";
 		}
 	}
 	

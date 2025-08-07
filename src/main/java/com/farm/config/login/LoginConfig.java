@@ -55,8 +55,8 @@ public class LoginConfig {
 						.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
 						.requestMatchers("/","/memberForm/**", "/findPw.do").permitAll()
 						.requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
-						.requestMatchers("/buyer/**").hasAnyRole("buyer", "admin")
-						.requestMatchers("/seller/**").hasAnyRole("seller", "admin")
+						.requestMatchers("/buyer/**").hasAnyRole("BUYER", "ADMIN")
+						.requestMatchers("/seller/**").hasAnyRole("SELLER", "ADMIN")
 						.anyRequest()
 						.authenticated());
 
