@@ -6,8 +6,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>비밀번호찾기 페이지</title>
+<link rel="stylesheet" href="/css/mainpage.css">
+<link rel="stylesheet" href="/css/findPw.css">
+<!-- 돋보기 외부 css -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
+	<%@ include file="./common/header.jsp" %>
+	
 	<div class="mypw-container">
             <h2 class="mypw-title">비밀번호찾기</h2>
 
@@ -25,8 +31,8 @@
                 <div class="divider"><span>or</span></div>
 
                 <div class="mypw-footer">
-                    <button type="button" onclick="location.href='login.html'">로그인</button>
-                    <button type="button" onclick="location.href='signup.html'">회원가입</button>
+                    <button type="button" onclick="location.href='/login.do'">로그인</button>
+                    <button type="button" onclick="location.href='/memberForm/buyer.do'">회원가입</button>
                 </div>
             </form>
         </div>

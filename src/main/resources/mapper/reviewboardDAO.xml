@@ -7,12 +7,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- 컨트롤러가 호출하는 인터페이스 위치를 namespace로 설정 -->
 <mapper namespace="com.farm.service.ReviewBoardService">
 
-<select id="view" 
-		resultType="com.farm.dto.ReviewBoardDTO"
+<select id="getTotalCount" resultType="int"
 		parameterType="com.farm.dto.ReviewBoardDTO">
+		
+		SELECT COUNT(*) FROM review
+		
+		<if test="searchKeyword!=null and 
+			!searchKeyword.equals('')">
+		WHERE ${searchField} LIKE '%' || #{searchKeyword} || '%'	
+		</if>
+	</select>
+
+<!-- id="" -> 이 SQL의 이름(식별자).자바 코드에서 이걸 호출할 때 view()라고 부름-->
+<select id="selectView" 
+		resultType="com.farm.dto.ReviewBoardDTO">
 		<!-- WHERE review_id=#{review_id} BoardDTO 안의 review_id필드를 기준으로
 		해당 글 1개를 조회함 -->
-		SELECT * FROM review WHERE review_id=#{review_id}	
+  		SELECT * FROM review WHERE review_id = #{review_id}
 	</select>
 	<update id="visitCountPlus" parameterType="com.farm.dto.ReviewBoardDTO">
 		<!-- 리뷰게시판 테이블의 데이터를 수정함 -->
@@ -20,6 +31,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<!-- 기존 조회수에서 1 증가시킴 -->
 		visitcount = visitcount + 1
 		<!-- 해당 글 번호에 해당하는 행만 수정함 -->
+		WHERE review_id=#{review_id}
+	</update>
+	<insert id="write">
+		INSERT INTO review(member_id, title, content)
+		VALUES
+		(seq_review_id.nextval, #{member_id}, #{title}, #{content})
+	</insert>
+	<update id="edit" parameterType="com.farm.dto.ReviewBoardDTO">
+		UPDATE review SET
+		title=#{title}, content=#{content}
 		WHERE review_id=#{review_id}
 	</update>
 </mapper>

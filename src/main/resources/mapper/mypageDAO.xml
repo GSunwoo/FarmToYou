@@ -4,6 +4,7 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.farm.service.IMypageService">
+	<!--             구매자용 DAO                   -->
 	<!-- 해당 멤버의 결제완료된 구매건수 -->
 	<select id="getOrderCnt"
 		resultType="int">
@@ -19,7 +20,7 @@
 		SELECT COUNT(*)
 			FROM review 
 			WHERE 
-				member_id = #{member_id} AND
+				member_id = #{member_id}
 	</select>
 	<!-- 해당 멤버가 작성한 문의 수 -->
 	<select id="getInquiryCnt"
@@ -27,7 +28,71 @@
 		SELECT COUNT(*)
 			FROM inquiry 
 			WHERE 
-				member_id = #{member_id} AND
+				member_id = #{member_id}
 	</select>
 	
+	<!--             판매자용 DAO                   -->
+	<!-- 주문확인중인 주문수 -->
+	<select id="getCheckOrder"
+		resultType="int">
+		SELECT COUNT(*)
+			FROM purchase
+			INNER JOIN product
+				ON purchase.prod_id=product.prod_id
+			INNER JOIN member
+				ON product.member_id=member.member_id
+			WHERE 
+				member_id = #{member_id} AND
+				purc_state = 'chk_order'
+	</select>
+	<!-- 상품준비중인 주문수 -->
+	<select id="getPrepareOrder"
+		resultType="int">
+		SELECT COUNT(*)
+			FROM purchase
+			INNER JOIN product
+				ON purchase.prod_id=product.prod_id
+			INNER JOIN member
+				ON product.member_id=member.member_id
+			WHERE 
+				member_id = #{member_id} AND
+				purc_state = 'prepare_order'
+	</select>
+	<!-- 배송중인 주문수 -->
+	<select id="getDeliOrder"
+		resultType="int">
+		SELECT COUNT(*)
+			FROM purchase
+			INNER JOIN product
+				ON purchase.prod_id=product.prod_id
+			INNER JOIN member
+				ON product.member_id=member.member_id
+			WHERE 
+				member_id = #{member_id} AND
+				purc_state = 'deli_order'
+	</select>
+	<!-- 배송완료된 주문수 -->
+	<select id="getCompleteOrder"
+		resultType="int">
+		SELECT COUNT(*)
+			FROM purchase
+			INNER JOIN product
+				ON purchase.prod_id=product.prod_id
+			INNER JOIN member
+				ON product.member_id=member.member_id
+			WHERE 
+				member_id = #{member_id} AND
+				purc_state = 'cmpl_order'
+	</select>
+	<!-- 판매자에게 들어온 문의수 -->
+	<select id="getInquiryCnt_Seller"
+		resultType="int">
+		SELECT COUNT(*)
+			FROM inquiry 
+			INNER JOIN product
+				ON inquiry.prod_id=product.prod_id
+			INNER JOIN member
+				ON product.member_id=member.member_id
+			WHERE member_id=${member_id}
+	</select>
 </mapper>

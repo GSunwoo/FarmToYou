@@ -1,0 +1,84 @@
+@charset "UTF-8";
+/* 비밀번호 찾기 영역도 보호 */
+.mypw-container {
+  width: 600px;
+  margin: 140px auto 100px;
+  background: #fff;
+  padding: 40px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  box-sizing: border-box;
+  margin-top: 200px;
+}
+
+.mypw-title {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 12px;
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 8px;
+}
+
+.mypw-info-box {
+  background-color: #eaf1ff;
+  color: #4a69ad;
+  border: 1px solid #a9c1ff;
+  padding: 15px 20px;
+  margin-bottom: 25px;
+  font-size: 14px;
+  line-height: 1.4;
+  border-radius: 4px;
+}
+
+.mypw-container input[type="text"] {
+  width: 100%;
+  padding: 12px;
+  margin: 12px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  height: 48px;
+  box-sizing: border-box;
+}
+
+.mypw-btn {
+  width: 100%;
+  height: 48px;
+  padding: 12px 0;
+  background-color: #075830;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.mypw-footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  gap: 20px;
+}
+
+.divider {
+  text-align: center;
+  margin: 16px 0;
+  font-size: 14px;
+  color: #999
+}
+
+.mypw-footer {
+  margin-top: 16px;
+  gap: 12px;
+}
+
+.mypw-footer button {
+  width: 100%;
+  padding: 10px 0;
+  background: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  background: none;
+  cursor: pointer;
+}

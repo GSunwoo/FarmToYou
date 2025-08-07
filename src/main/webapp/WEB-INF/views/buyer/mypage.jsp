@@ -5,38 +5,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="/css/mainpage.css">
+<link rel="stylesheet" href="/css/myPageMain.css">
 <title>마이 페이지 메인</title>
 </head>
 <body>
-	<div class="sub-content">
-      <div class="side-bar">
-        <div class="sub-menu-box">
-          <h2>마이페이지</h2>
-          <ul class="sub-menu-mypage">
-            <li>
-              쇼핑정보
-              <ul class="sub-depth1">
-                <li><a href="myPageList.html">주문목록</a></li>
-              </ul>
-            </li>
-            <li>
-              고객센터
-              <ul class="sub-depth2">
-                <li><a href="#">상품문의</a></li>
-              </ul>
-            </li>
-            <li>
-              회원정보
-              <ul class="sub-depth3">
-                <li><a href="#">회원정보 변경</a></li>
-                <li><a href="#">회원 탈퇴</a></li>
-                <li><a href="#">배송지 관리</a></li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-      </div>
-
+	<%@ include file="../common/header.jsp" %>
+	<%@ include file="../common/header2.jsp" %>
       <div class="mypage-cont">
         <div class="mypage-info">
           <div class="mypage-info-cont">

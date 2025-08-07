@@ -1,7 +1,5 @@
 package com.farm.config.login;
 
-import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -53,10 +51,10 @@ public class LoginConfig {
 				// 어떤 요청 URL에 누가 접근 가능한지 설정하는 부분
 				.authorizeHttpRequests((request) -> request
 						.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
-						.requestMatchers("/","/memberForm/**").permitAll()
+						.requestMatchers("/","/memberForm/**", "/findPw.do").permitAll()
 						.requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
-						.requestMatchers("/buyer/**").hasAnyRole("buyer", "admin")
-						.requestMatchers("/seller/**").hasAnyRole("seller", "admin")
+						.requestMatchers("/buyer/**").hasAnyRole("BUYER", "ADMIN")
+						.requestMatchers("/seller/**").hasAnyRole("SELLER", "ADMIN")
 						.anyRequest()
 						.authenticated());
 
