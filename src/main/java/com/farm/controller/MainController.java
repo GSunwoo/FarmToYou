@@ -18,7 +18,7 @@ public class MainController {
 	@GetMapping("/")
 	public String main(@AuthenticationPrincipal CustomUserDetails userDetails) {
 		if(userDetails!=null) {
-			System.out.println(userDetails.getUsername());
+			System.out.println(userDetails.getMemberDTO().getUser_id());
 		}
 		return "main";
 	}

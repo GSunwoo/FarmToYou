@@ -9,12 +9,14 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.stereotype.Component;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@Configuration
+//@Configuration
+@Component
 public class LoginHandler implements AuthenticationFailureHandler {
 	
 	
@@ -24,6 +26,9 @@ public class LoginHandler implements AuthenticationFailureHandler {
 			HttpServletResponse response,
 			AuthenticationException exception) 
 					throws IOException, ServletException {
+		
+		System.out.println("로그인 실패시 여기로 옵니당");
+		
 		String errorMsg = "";
 		
 		//instanceof를 사용해서 BadCredentialsException 타입의 예외가

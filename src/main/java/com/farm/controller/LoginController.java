@@ -16,7 +16,7 @@ import com.farm.dto.MemberDTO;
 @Controller
 public class LoginController {
 	
-	@GetMapping("/myLogin.do")
+	@RequestMapping("/myLogin.do")
 	public String login0() {
 		return "login";
 	}
