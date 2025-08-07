@@ -12,8 +12,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	const loginForm = document.querySelector('form');
 	loginForm.addEventListener('submit', (e) => {
-		const id = document.querySelector('input[type="text"]').value.trim();
-		const pw = document.querySelector('input[type="password"]').value.trim();
+		const id = document.getElementById("id").value.trim();
+		const pw = document.getElementById("pw").value.trim();
 
 		if (!id || !pw) {
 			e.preventDefault();

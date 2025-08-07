@@ -14,12 +14,18 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import com.farm.handler.LoginHandler;
 
+import jakarta.annotation.PostConstruct;
 import jakarta.servlet.DispatcherType;
 
 //config -> 설정
 @Configuration
 public class LoginConfig {
 
+	@PostConstruct
+    public void init() {
+        System.out.println("LoginConfig 빈이 등록되어 Security 설정이 적용됩니다.");
+    }
+	
 	@Autowired
 	public LoginHandler myAuthFailureHandler;
 
@@ -57,6 +63,7 @@ public class LoginConfig {
 		http.formLogin((formLogin) -> formLogin
 				.loginPage("/myLogin.do")
 				.loginProcessingUrl("/myLoginAction.do")
+				.defaultSuccessUrl("/")
 				.failureHandler(myAuthFailureHandler)
 				.usernameParameter("my_id")
 				.passwordParameter("my_pass")
@@ -66,6 +73,7 @@ public class LoginConfig {
 
 		http.exceptionHandling((expHandling) -> expHandling.accessDeniedPage("/denied.do"));
 
+		
 		return http.build();
 	}
 }

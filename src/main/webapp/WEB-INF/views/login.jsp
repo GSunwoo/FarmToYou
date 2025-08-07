@@ -29,9 +29,9 @@
                 <div class="tab">일반 회원</div>
             </div>
 
-            <form>
-                <input type="text" id="" name="my_id" placeholder="아이디를 입력해 주세요" required>
-                <input type="password" id="" name="my_pass" placeholder="비밀번호를 입력해 주세요" required>
+            <form action="/myLoginAction.do" method="post" >
+                <input type="text" id="id" name="my_id" placeholder="아이디를 입력해 주세요" required>
+                <input type="password" id="pw" name="my_pass" placeholder="비밀번호를 입력해 주세요" required>
 
                 <div class="login-options">
                     <label><input type="checkbox">기억하기</label>
