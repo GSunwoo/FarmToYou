@@ -11,12 +11,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.farm.config.login.CustomUserDetails;
+import com.farm.dto.MemberDTO;
 
 @Controller
 public class MainController {
 
 	@GetMapping("/")
-	public String main(@AuthenticationPrincipal CustomUserDetails userDetails) {
+	public String main(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
+		MemberDTO member = userDetails.getMemberDTO();
+		
+		model.addAttribute("memberName", member.getName());
 		if(userDetails!=null) {
 			System.out.println(userDetails.getMemberDTO().getUser_id());
 		}
