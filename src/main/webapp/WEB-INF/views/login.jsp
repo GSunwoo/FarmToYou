@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -65,7 +65,12 @@
         </div>
 	<div class="login-container">
             <div class="logo">Login</div>
-
+			<c:if test="${param.error != null}">
+			<p>
+				Login Error! <br />
+				${errorMsg}
+			</p>
+			</c:if>
             <div class="tabs">
                 <div class="tab">관리자</div>
                 <div class="tab">판매 회원</div>
