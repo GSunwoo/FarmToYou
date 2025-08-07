@@ -63,7 +63,7 @@ public class LoginConfig {
 		http.formLogin((formLogin) -> formLogin
 				.loginPage("/myLogin.do")
 				.loginProcessingUrl("/myLoginAction.do")
-				.defaultSuccessUrl("/")
+				.defaultSuccessUrl("/", true)
 				.failureHandler(myAuthFailureHandler)
 				.usernameParameter("my_id")
 				.passwordParameter("my_pass")

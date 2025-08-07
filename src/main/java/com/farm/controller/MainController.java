@@ -17,7 +17,7 @@ public class MainController {
 
 	@GetMapping("/")
 	public String main(@AuthenticationPrincipal CustomUserDetails userDetails) {
-		if(!userDetails.getUsername().isEmpty()) {
+		if(userDetails!=null) {
 			System.out.println(userDetails.getUsername());
 		}
 		return "main";
