@@ -28,10 +28,10 @@ public class CustomUserDetailsService implements UserDetailsService{
 		if (memberDTO == null) {
 			throw new UsernameNotFoundException("유저를 찾을수 없습니다." + username); 
 		}
-		if(memberDTO.getUser_type().equals("buyer")) {
+		if(memberDTO.getUser_type().equals("ROLE_BUYER")) {
 			memberDTO = dao.selectBuyerData(memberDTO);
 		}
-		else if(memberDTO.getUser_type().equals("seller")) {
+		else if(memberDTO.getUser_type().equals("ROLE_SELLER")) {
 			memberDTO = dao.selectSellerData(memberDTO);
 		}
 		

@@ -1,16 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+
 	<div class="top-util">
     <ul>
-        <li><a href="">로그인</a></li>
+    <sec:authorize access="isAuthenticated()">
+    <p>${ memberName }님 환영합니다.</p>
+	</sec:authorize>
+    <sec:authorize access="isAnonymous()">
+        <li><a href="/login.do">로그인</a></li> 
         <li>|</li>
-        <li><a href="#">회원가입</a></li>
+        <li><a href="/memberForm/buyer.do">회원가입</a></li>
+	</sec:authorize>
+	<sec:authorize access="isAuthenticated()">
+        <li><a href="/myLogout.do">로그아웃</a></li> 
         <li>|</li>
-        <li><a href="#">마이페이지</a></li>
+        <li><a href="/mypage.do">마이페이지</a></li>
+	</sec:authorize>
         <li>|</li>
         <li><a href="#">장바구니</a></li>
         <li>|</li>
-        <li><a href="#">1:1문의</a></li>
+        <li><a href="#">-</a></li>
     </ul>
 </div>
 
@@ -32,18 +43,18 @@
         </div>
     </div>
 
-    <a href="mainpage.html" class="logo-section">
+    <a href="/" class="logo-section">
         <img src="./images/shopping mall-Photoroom.png" alt="로고 이미지" style="transform: scaleX(2);">
     </a>
 
     <div class="category-bar">
         <ul class="category-menu">
             <li>상품</li>
-            <li>추천상품</li>
-            <li>추천리뷰</li>
-            <li>이달의추천</li>
-            <li>1:1문의</li>
-            <li>하나더추가</li>
+            <li>-</li>
+            <li>-</li>
+            <li>-</li>
+            <li>-</li>
+            <li>-</li>
         </ul>
     </div>
 </div>

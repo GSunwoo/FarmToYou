@@ -20,6 +20,7 @@ public class MainController {
 	public String main(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
 		if(userDetails!=null) {
 			MemberDTO member = userDetails.getMemberDTO();
+			System.out.println(member.getName());
 			model.addAttribute("memberName", member.getName());
 			System.out.println(userDetails.getMemberDTO().getUser_id());
 		}

@@ -10,7 +10,6 @@
   <!-- 필요한 스타일 -->
   <link rel="stylesheet" href="/css/mainpage.css">
   <link rel="stylesheet" href="/css/login.css">
-  <link rel="stylesheet" href="/css/header.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <script src="/js/loginForm.js"></script>
 </head>
@@ -33,12 +32,16 @@
       </div>
 
       <form action="/myLoginAction.do" method="post" >
-        <input type="text" id="id" name="my_id" placeholder="아이디를 입력해 주세요" required>
-        <input type="password" id="pw" name="my_pass" placeholder="비밀번호를 입력해 주세요" required>
+        <input type="text" id="id" name="my_id" placeholder="아이디를 입력해 주세요" required
+        value="aaaaaaaa"
+        >
+        <input type="password" id="pw" name="my_pass" placeholder="비밀번호를 입력해 주세요" required
+        value="A123456&"
+        >
 
         <div class="login-options">
           <label><input type="checkbox">기억하기</label>
-          <a href="findPw.html">비밀번호를 잊어버리셨나요?</a>
+          <a href="/findPw.do">비밀번호를 잊어버리셨나요?</a>
         </div>
 
         <button type="submit" class="login-btn">로그인</button>

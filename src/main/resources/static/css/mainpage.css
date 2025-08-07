@@ -86,15 +86,14 @@ body {
   color: #444;
 }
 
+
 /* 메인 배너 영역 */
 .banner {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0;
-  background-color: #e8f0f5;
+  position: relative;
   width: 100%;
-  margin: 0 auto;
+  overflow: hidden;
+  background-color: #e8f0f5;
+  margin-top: 150px; /* ← 이 값 조정 */
 }
 
 .banner-image {
@@ -139,11 +138,10 @@ body {
 }
 
 .banner-carousel {
-  position: relative;
-  width: 100%;
-  max-height: 700px;
-  overflow: hidden;
-  background-color: #e8f0f5;
+  margin-top: 130px;      /* 헤더+카테고리 합한 높이 */
+  display: block;         
+  overflow: auto;         /* margin collapse 방지 */
+  z-index: 1;
 }
 
 .banner-wrapper {
@@ -596,7 +594,6 @@ body {
   cursor: pointer;
   margin-top: 10px;
 }
-
 
 /* 다른 css 배제 */
 .simple-page .banner-carousel,

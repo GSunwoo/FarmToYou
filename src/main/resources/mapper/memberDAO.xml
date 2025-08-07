@@ -15,7 +15,7 @@
 		parameterType="com.farm.dto.MemberDTO"
 		resultType="com.farm.dto.MemberDTO">
 		SELECT user_id, user_pw, user_type, enable, phone_num,
-				name, email, member_id, trust_score, regidate
+				name, emailid, emaildomain, member_id, trust_score, regidate
 		FROM member
 		WHERE user_id = #{user_id} 
 	</select>
@@ -23,7 +23,7 @@
 		parameterType="com.farm.dto.MemberDTO"
 		resultType="com.farm.dto.MemberDTO">
 		SELECT user_id, user_pw, user_type, enable, phone_num,
-				name, email, member_id, regidate
+				name, emailid, emaildomain, member_id, regidate
 		FROM member
 		WHERE user_id = #{user_id} 
 	</select>

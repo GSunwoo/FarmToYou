@@ -20,6 +20,11 @@ public class LoginController {
 	public String login0() {
 		return "login";
 	}
+	
+	@RequestMapping("/findPw.do")
+	public String login4() {
+		return "findPw";
+	}
 
 //	  // 이 부분을 추가
 //    @PostMapping("/myLoginAction.do")
