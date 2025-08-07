@@ -16,6 +16,13 @@ public interface ReviewBoardService {
 	//뷰
 	public ReviewBoardDTO view(ReviewBoardDTO reviewboardDTO);
 	//조회수 증가
-	public void visitCountPlus(ReviewBoardDTO dto);
+	public void visitCountPlus(ReviewBoardDTO reviewboardDTO);
 	
+	public ReviewBoardDTO selectView(Long review_id);
+
+	public int write(String member_id, String title, String content);
+	
+	public int getReviewById(Long review_id);
+	
+	public int edit(ReviewBoardDTO reviewboardDTO);
 }

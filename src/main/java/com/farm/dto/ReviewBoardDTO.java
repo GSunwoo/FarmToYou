@@ -7,8 +7,8 @@ import lombok.Data;
 @Data
 public class ReviewBoardDTO {
 	
-	private String review_id;
-	private String member_id;
+	private Long review_id;
+	private Long member_id;
 	private LocalDate postdate;
 	private String title;
  	private String content;
