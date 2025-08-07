@@ -19,7 +19,7 @@ public class CustomUserDetails implements UserDetails {
 
 	@Override
 	public List<GrantedAuthority> getAuthorities() {
-		return List.of(new SimpleGrantedAuthority("ROLE_" + memberDTO.getUser_type()));
+		return List.of(new SimpleGrantedAuthority(memberDTO.getUser_type()));
 	}
 
 	@Override
