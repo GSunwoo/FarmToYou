@@ -6,7 +6,7 @@
 	<div class="top-util">
     <ul>
     <sec:authorize access="isAuthenticated()">
-    <p>${ memberName }님 환영합니다.</p>
+    <li><span>${ memberName }님 환영합니다.</span></li>
 	</sec:authorize>
     <sec:authorize access="isAnonymous()">
         <li><a href="/login.do">로그인</a></li> 

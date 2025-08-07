@@ -27,25 +27,6 @@
   margin-bottom: 20px;
 }
 
-.login-container .tabs {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
-}
-
-.login-container .tab {
-  display: inline-block;
-  padding: 10px 20px;
-  cursor: pointer;
-  border-bottom: 2px solid transparent;
-}
-
-.login-container .tab.active {
-  font-weight: bold;
-  color: #075830;
-  border-bottom: 2px solid #075830;
-}
-
 .login-container input[type="text"],
 .login-container input[type="password"] {
   width: 100%;
@@ -119,63 +100,4 @@
 
 .login-container .signup-btn:hover {
   background: #f5f5f5;
-}
-
-/* 비밀번호 찾기 영역도 보호 */
-.mypw-container {
-  width: 600px;
-  margin: 100px auto;
-  background: #fff;
-  padding: 40px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  box-sizing: border-box;
-}
-
-.mypw-title {
-  text-align: center;
-  margin-bottom: 12px;
-  border-bottom: 2px solid #ccc;
-  padding-bottom: 8px;
-}
-
-.mypw-info-box {
-  background-color: #eaf1ff;
-  color: #4a69ad;
-  border: 1px solid #a9c1ff;
-  padding: 15px 20px;
-  margin-bottom: 25px;
-  font-size: 14px;
-  line-height: 1.4;
-  border-radius: 4px;
-}
-
-.mypw-btn {
-  width: 100%;
-  padding: 12px 0;
-  background-color: #075830;
-  border: none;
-  border-radius: 4px;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.mypw-footer {
-  display: flex;
-  justify-content: center;
-  margin-top: 30px;
-  gap: 20px;
-}
-
-.mypw-footer button {
-  width: 100%;
-  padding: 10px 0;
-  background: none;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 14px;
-  cursor: pointer;
-  color: #333;
-  transition: background-color 0.25s ease;
 }

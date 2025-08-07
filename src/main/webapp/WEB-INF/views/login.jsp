@@ -25,12 +25,6 @@
         <p>Login Error!<br />${errorMsg}</p>
       </c:if>
 
-      <div class="tabs">
-        <div class="tab active">관리자</div>
-        <div class="tab">판매 회원</div>
-        <div class="tab">일반 회원</div>
-      </div>
-
       <form action="/myLoginAction.do" method="post" >
         <input type="text" id="id" name="my_id" placeholder="아이디를 입력해 주세요" required
         value="aaaaaaaa"
