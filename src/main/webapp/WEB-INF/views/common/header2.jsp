@@ -1,7 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-
-<div class="sub-content">
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div class="sub-content">
 	<div class="side-bar">
 		<div class="sub-menu-box">
 			<h2>마이페이지</h2>
@@ -27,3 +33,5 @@
 		</div>
 	</div>
 </div>
+</body>
+</html>
