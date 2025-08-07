@@ -30,8 +30,14 @@ public class MypageController {
 	@GetMapping("/buyer/mypage.do")
 	public String buyerMypage(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
 		MemberDTO member = userDetails.getMemberDTO();
-		
+		Long member_id = member.getMember_id();
+		int orderCnt = dao.getOrderCnt(member_id);
+		int reviewCnt = dao.getReviewCnt(member_id);
+		int inquiryCnt = dao.getInquiryCnt(member_id);
 		model.addAttribute("member", member);
+		model.addAttribute("orderCnt", orderCnt);
+		model.addAttribute("reviewCnt", reviewCnt);
+		model.addAttribute("inquiryCnt", inquiryCnt);
 		return "buyer/mypage";
 	}
 	@GetMapping("/seller/mypage.do")
