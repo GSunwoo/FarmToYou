@@ -20,7 +20,7 @@
 		SELECT COUNT(*)
 			FROM review 
 			WHERE 
-				member_id = #{member_id} AND
+				member_id = #{member_id}
 	</select>
 	<!-- 해당 멤버가 작성한 문의 수 -->
 	<select id="getInquiryCnt"
@@ -28,7 +28,7 @@
 		SELECT COUNT(*)
 			FROM inquiry 
 			WHERE 
-				member_id = #{member_id} AND
+				member_id = #{member_id}
 	</select>
 	
 	<!--             판매자용 DAO                   -->
