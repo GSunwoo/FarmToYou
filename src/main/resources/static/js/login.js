@@ -2,6 +2,7 @@
 로그인 자바스크립트()
 */
 document.addEventListener("DOMContentLoaded", () => {
+	//상단 판매회원 일반회원 탭 전환
 	const tabs = document.querySelectorAll('.tab');
 	tabs.forEach(tab => {
 		tab.addEventListener('click', () => {
@@ -9,7 +10,8 @@ document.addEventListener("DOMContentLoaded", () => {
 			tab.classList.add('active');
 		});
 	});
-
+	
+	//로그인 유효성 검사
 	const loginForm = document.querySelector('form');
 	loginForm.addEventListener('submit', (e) => {
 		const id = document.getElementById("id").value.trim();

@@ -14,8 +14,8 @@
     <h2>판매자 회원가입</h2>
     <p>가입을 통해 더 다양한 서비스를 만나보세요!</p>
 
-    <form id="registerForm" method="post" action="SellerRegisterServlet">
-
+    <form id="registerForm" method="post" action="/memberForm/seller.regist.do">
+	  <input type="text" name="user_type" value="ROLE_SELLER" hidden="hidden" />
       <!-- 1. 아이디 -->
       <div class="form-line">
         <label for="userid">아이디</label>
@@ -49,8 +49,8 @@
       <div class="form-line">
         <label for="emailId">이메일</label>
         <div class="form-group email-group">
-          <input type="text" id="emailId" placeholder="이메일 주소" required /> @
-          <input type="text" id="emailDomain" readonly required />
+          <input type="text" id="emailId" name="emailid" placeholder="이메일 주소" required /> @
+          <input type="text" id="emailDomain" name="emaildomain" readonly required />
           <select id="domainSelect" onchange="handleDomainSelect(this)">
             <option value="">도메인 선택</option>
             <option value="self">직접입력</option>
