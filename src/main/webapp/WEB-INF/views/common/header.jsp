@@ -49,7 +49,7 @@
 
     <div class="category-bar">
         <ul class="category-menu">
-            <li><a href="/productList.do">상품</a></li>
+            <li><a href="/guest/productList.do">상품</a></li>
             <li><a href="#"></a>-</li>
             <li>-</li>
             <li>-</li>

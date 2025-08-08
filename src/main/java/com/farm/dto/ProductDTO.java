@@ -10,7 +10,7 @@ public class ProductDTO {
 	//상품
 	private int prod_id;		// 상품 아이디
 	private String prod_name;	// 명
-	private int prod_pirce;		// 가격
+	private int prod_price;		// 가격
 	private int prod_stock;		// 재고
 	private String prod_cate;	// 카테고리
 	private int prodimg_id;		// 이미지 아이디

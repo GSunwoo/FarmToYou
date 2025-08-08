@@ -11,11 +11,39 @@
 			(#{prod_price}, #{prod_stock}, #{member_id}, #{prod_id}, #{prod_cate}, #{prod_content}, #{prod_name})
 	</insert>
 	
+	<select id="getTotalCount" 
+		resultType="int"
+		parameterType="com.farm.dto.ParameterDTO">
+		
+		SELECT COUNT(*) FROM product
+		
+		<!-- 검색어가 있는 경우에만 where절을 조건부로 추가한다. -->
+		<if test="searchWord!=null and 
+			!searchWord.equals('')">
+		WHERE puduct_name LIKE '%' || #{searchWord} || '%'	
+		</if>
+	</select>
+	
+	
+	
 	<select id="selectProduct"
-		parameterType="com.farm.dto.ProductDTO"
+		parameterType="com.farm.dto.ParameterDTO"
 		resultType="com.farm.dto.ProductDTO">
 		SELECT prod_price, prod_stock, member_id, prod_id, prod_cate, prod_content, prod_name
-		FROM product
+		FROM (SELECT Tb.*, rownum rNum FROM (
+				SELECT * FROM product
+				<if test="searchWords != null and !searchWords.equals('') ">
+					WHERE 
+					<foreach collection="searchWords" item="sw" 
+						separator="or" open="(" close=")">
+					prod_name LIKE '%' || #{sw} || '%'
+					</foreach>
+				</if>
+				ORDER BY prod_id DESC
+			) Tb
+			WHERE rownum<![CDATA[<=]]>#{end}
+		)
+		WHERE rNum <![CDATA[>=]]>#{start}
 	</select>
 	
 	<select id="selectProductView"
