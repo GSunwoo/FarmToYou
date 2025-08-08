@@ -49,8 +49,8 @@
 
     <div class="category-bar">
         <ul class="category-menu">
-            <li>상품</li>
-            <li>-</li>
+            <li><a href="/productList.do">상품</a></li>
+            <li><a href="#"></a>-</li>
             <li>-</li>
             <li>-</li>
             <li>-</li>
