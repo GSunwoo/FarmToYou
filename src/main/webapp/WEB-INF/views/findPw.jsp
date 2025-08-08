@@ -23,10 +23,14 @@
             </div>
 
             <form>
-                <label for="userId">사용자 이메일 주소</label>
-                <input type="text" name="userId" id="userId" placeholder="회원가입 시 등록한 이메일 계정을 입력 해주세요.">
+                <label for="user_id">사용자 계정</label>
+                <input type="text" id="user_id" name="user_id" placeholder="아이디를 입력 해 주세요">
+                <label for="name">사용자 이름</label>
+                <input type="text" id="name" name="name" placeholder="이름를 입력 해 주세요">
+                <label for="email">사용자 이메일 주소</label>
+                <input type="text" id="email" name="email" placeholder="이메일을 입력 해 주세요">
 
-                <button type="submit" class="mypw-btn">비밀번호 초기화</button>
+                <button type="submit" class="mypw-btn">비밀번호 전송</button>
 
                 <div class="divider"><span>or</span></div>
 
