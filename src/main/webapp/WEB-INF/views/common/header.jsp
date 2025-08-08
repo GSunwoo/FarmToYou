@@ -44,7 +44,7 @@
     </div>
 
     <a href="/" class="logo-section">
-        <img src="./images/shopping mall-Photoroom.png" alt="로고 이미지" style="transform: scaleX(2);">
+        <img src="${pageContext.request.contextPath}/images/shopping_mall-Photoroom.png" alt="로고 이미지" style="transform: scaleX(2);">
     </a>
 
     <div class="category-bar">
