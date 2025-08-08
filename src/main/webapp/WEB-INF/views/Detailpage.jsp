@@ -49,6 +49,7 @@
 			</li>
 		</ul>
 		
+		
 		<div class="dp-qty">
 			<button type="button" class="qty-btn" data-delta="-1">-</button>
 			<input id="qty" type="text" value="1" readonly>
@@ -56,13 +57,14 @@
 		</div>
 		
 		<!-- 백엔드 연결 시 name, value, 액션경로 세팅 -->
+		    <!-- 액션 버튼 -->
 		<div class="dp-actions">
-			<form methon="post" action="#">
+			<form method="post" action="#">
 				<input type="hidden" name="" value="${productDTO.prod_id }">
 				<input type="hidden" id="qtyInput" name="" value="1">
 				<button type="submit" class="btn-outline">장바구니</button>
 				<!-- 장바구니로 가는 경로 세팅 -->
-				<a href="#" class="btn-soild">바로결제</a>
+				<a href="#" class="btn-solid">바로결제</a>
 			</form>
 		</div>
 		
