@@ -9,7 +9,7 @@
 <body>
 	<h2>게시판 작성(Mybatis)</h2>
 	<form name="writeFrm" method="post"
-		action="./write.do" onsubmit="return validateForm(this);">
+		action="/guest/review/write.do" onsubmit="return validateForm(this);">
 	<table border="1" width="90%">
 	    <tr>
 	        <td>작성자</td>
