@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.farm.config.login.CustomUserDetails;
 import com.farm.dto.MemberDTO;
+import com.farm.dto.ProductDTO;
+import com.farm.dto.ReviewBoardDTO;
 import com.farm.service.IMypageService;
 
 @Controller
@@ -100,6 +102,15 @@ public class MypageController {
 			// 날짜별 판매량/매출(지난 5일간)
 			// Object로 보내서 list로 변환필요
 			model.addAttribute(soldData);
+			
+			/****** 등록한 상품 목록  ******/
+			List<ProductDTO> myProducts = dao.getMyProducts(member_id); // 모든 항목(현재는 페이징x)
+			model.addAttribute("myProducts", myProducts);
+			
+			/****** 내 상품의 리뷰  ******/
+			List<ReviewBoardDTO> myReviews = dao.getMyReviews(member_id); // 모든 항목(현재는 페이징x)
+			model.addAttribute("myReviews", myReviews);
+			
 		}
 		return "seller/mypage";
 	}
