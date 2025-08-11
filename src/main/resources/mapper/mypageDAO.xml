@@ -107,7 +107,7 @@
 	</select>
 	
 	<select id="getSales"
-		resultMap="int">
+		resultType="int">
 		SELECT SUM(pr.prod_price)
 			FROM purchase pu
 			INNER JOIN product pr
