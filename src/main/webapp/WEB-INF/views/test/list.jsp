@@ -52,7 +52,7 @@
                 (((maps.pageNum-1) * maps.pageSize)	+ loop.index)}
             </td>
             <td align="left"> 
-                <a href="./view.do?idx=${ row.review_id }">${ row.title }</a> 
+                <a href="./view.do?review_id=${ row.review_id }">${ row.title }</a> 
             </td> 
             <td>${ row.content }</td> 
             <td>${ row.postdate }</td> 

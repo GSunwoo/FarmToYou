@@ -9,7 +9,6 @@ import com.farm.dto.ReviewBoardDTO;
 
 @Mapper
 public interface ReviewBoardService {
-	
 	//목록, 게시물 갯수 카운트
 	public int getTotalCount(ReviewBoardDTO reviewboardDTO);
 	

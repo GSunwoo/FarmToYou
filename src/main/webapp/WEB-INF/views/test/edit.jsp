@@ -9,28 +9,28 @@
 <body>
 	<h2>게시판 수정(Mybatis)</h2>
 	<form name="writeFrm" method="post"
-		action="./edit.do" onsubmit="return validateForm(this);">
-	<input type="hid-den" name="idx" value="${boardDTO.idx }" />
+		action="./edit.do">
+	<input type="hid-den" name="review_id" value="${reviewboardDTO.review_id }" />
 	<table border="1" width="90%">
 	    <tr>
 	        <td>작성자</td>
 	        <td>
 	            <input type="text" name="name" style="width:150px;" 
-	            	value="${boardDTO.name }" />
+	            	value="${reviewboardDTO.member_id }" />
 	        </td>
 	    </tr>
 	    <tr>
 	        <td>제목</td>
 	        <td>
 	            <input type="text" name="title" style="width:90%;" 
-	            	value="${boardDTO.title }"/>
+	            	value="${reviewboardDTO.title }"/>
 	        </td>
 	    </tr>
 	    <tr>
 	        <td>내용</td>
 	        <td>
 	            <textarea name="content" style="width:90%;
-	            	height:100px;">${boardDTO.content }</textarea>
+	            	height:100px;">${reviewboardDTO.content }</textarea>
 	        </td>
 	    </tr>
 	    <!-- <tr>
