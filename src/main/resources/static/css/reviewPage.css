@@ -1,0 +1,132 @@
+@charset "UTF-8";
+/* ===== 공통 ===== */
+.review-hero-cont,
+.review-grid-lists {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.review-hero-cont h3 {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #222;
+}
+
+.review-hero-cont p {
+  font-size: 16px;
+  color: #555;
+  line-height: 1.5;
+}
+
+/* ===== 베스트 리뷰 영역 ===== */
+.review-best-items {
+  margin-top: 30px;
+}
+
+.review-top-card {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.review-top-card .review-info {
+  flex-shrink: 0;
+  width: 200px;
+}
+
+.review-top-card .review-img img {
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.review-top-card .rating {
+  margin-top: 10px;
+  color: #ffb400;
+  font-size: 18px;
+}
+
+.review-content {
+  flex-grow: 1;
+  font-size: 15px;
+  color: #444;
+  line-height: 1.6;
+}
+
+.review-author {
+  margin-top: auto;
+  font-size: 14px;
+  color: #777;
+}
+
+.review-author .author {
+  font-weight: bold;
+  color: #333;
+}
+
+/* ===== 리뷰 리스트 (하단) ===== */
+.review-grid-lists {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 20px;
+  margin-top: 40px;
+}
+
+.review-cards {
+  border: 1px solid #eee;
+  border-radius: 8px;
+  background: #fff;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.review-imgs img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.bottom-rating {
+  padding: 10px;
+  color: #ffb400;
+  font-size: 16px;
+}
+
+.review-bottom-content {
+  flex-grow: 1;
+  padding: 0 10px 10px 10px;
+  font-size: 14px;
+  color: #444;
+}
+
+.review-bottom-author {
+  padding: 10px;
+  font-size: 13px;
+  color: #777;
+  border-top: 1px solid #f0f0f0;
+}
+
+.review-bottom-author .author {
+  font-weight: bold;
+  color: #333;
+}
+
+/* ===== 반응형 ===== */
+@media screen and (max-width: 768px) {
+  .review-top-card {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .review-top-card .review-info {
+    width: 100%;
+    text-align: center;
+  }
+}

@@ -1,0 +1,185 @@
+@charset "UTF-8";
+
+/* ====== 상세페이지 컨테이너 ====== */
+.dp-wrap{
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 16px;
+  display: grid;
+  grid-template-columns: 520px 1fr;   /* 좌: 큰 이미지, 우: 정보 */
+  gap: 64px;
+  align-items: start;
+  margin-top: 200px;
+}
+
+/* ====== 좌측 이미지 영역 ====== */
+.dp-left{ min-width: 0; }
+.dp-mainimg{
+  border: 1px solid #eee;
+  background: #fafafa;
+}
+.dp-mainimg img{
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  margin-top: 0; /* 불필요 여백 제거 */
+}
+
+/* ====== 우측 정보 영역 ====== */
+.dp-right{ padding-top: 4px; } /* 이미지 상단과 자연스럽게 맞춤 */
+.dp-tit{
+  font-size: 24px;
+  font-weight: 700;
+  color: #111;
+  margin: 0 0 16px;
+  line-height: 1.35;
+}
+
+/* ====== 가격/상품 정보 리스트 ====== */
+.dp-info{
+  list-style: none;
+  margin: 0 0 18px;
+  padding: 8px 0 0;
+  border-top: 1px solid #efefef;
+}
+.dp-info li{
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid #f5f5f5;
+}
+.lb{
+  width: 72px;
+  min-width: 72px;
+  color: #8a8f98;
+  font-size: 14px;
+}
+.val{
+  color: #333;
+  font-size: 15px;
+  line-height: 1.6;
+}
+.val.strong{
+  font-size: 20px;
+  font-weight: 800;
+}
+.val.strike{
+  text-decoration: line-through;
+  color: #b7bcc3;
+}
+
+/* ====== 수량 선택 박스 ====== */
+.dp-qty{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 16px 0 22px;
+}
+.qty-btn{
+  width: 32px; height: 32px;
+  border: 1px solid #ddd;
+  background: #fff;
+  cursor: pointer;
+  font-size: 16px; line-height: 1;
+}
+#qty{
+  width: 56px; height: 32px;
+  text-align: center;
+  border: 1px solid #ddd;
+  background: #fff;
+  font-size: 14px;
+}
+
+/* ====== 액션 버튼 ====== */
+.dp-actions form{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 10px 0 26px;
+}
+.btn-outline, .btn-solid{
+  display: inline-block;
+  min-width: 180px;            /* 버튼을 넓게 */
+  padding: 12px 18px;
+  text-align: center;
+  border-radius: 6px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all .2s ease-in-out;
+}
+.btn-outline{
+  border: 1px solid #222;
+  background: #fff;
+  color: #222;
+}
+.btn-outline:hover{ background:#222; color:#fff; }
+.btn-solid{
+  border: 1px solid #0a8043;
+  background: #0a8043;
+  color: #fff;
+}
+.btn-solid:hover{ opacity:.9; }
+
+/* ===== 상세 하단: 좌측 레이블 + 우측 내용 ===== */
+.dp-detail{
+  margin: 48px auto 0;
+  max-width: 1200px;
+  padding: 0 16px;
+  border-top: 1px solid #e9ecef;
+  padding-top: 24px;
+}
+
+.dp-tabwrap{
+  display: grid;
+  grid-template-columns: 180px 1fr; /* 좌 레이블 / 우 내용 */
+  gap: 32px;
+  align-items: start;
+}
+
+/* 좌측 사이드 */
+.dp-tab-aside{
+  border-right: 1px solid #edf0f2;  /* 중앙 세로 구분선 */
+  padding-right: 24px;
+}
+.dp-tabmenu{ list-style:none; margin:0; padding:0; }
+.tab-label{
+  display:inline-block;
+  font-size:16px;
+  color:#8a94a6;
+}
+.tab-label.is-active{ color:#333; font-weight:600; }
+
+/* 우측 내용 */
+.dp-tabcontent .tab-panel{
+  color:#566070;
+  line-height:1.9;
+}
+.dp-tabcontent .tab-panel p{
+  margin:0 0 18px;
+  white-space:pre-wrap; /* 줄바꿈 유지 */
+}
+
+/* ====== 반응형 ====== */
+@media (max-width: 960px){
+  .dp-wrap{
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .btn-outline, .btn-solid{
+    min-width: 0;
+    flex: 1; /* 버튼이 가로로 꽉 차게 */
+  }
+  .dp-detail{
+    margin-top: 32px;
+  }
+  .dp-tabwrap{
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .dp-tab-aside{
+    border-right: 0;
+    padding-right: 0;
+  }
+}

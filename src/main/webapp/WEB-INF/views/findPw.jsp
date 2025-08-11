@@ -22,7 +22,7 @@
                 새로운 비밀번호를 만들기 위해 이메일을 통한 링크를 받게됩니다.
             </div>
 
-            <form>
+            <form action="/guest/findPw.do" method="post">
                 <label for="user_id">사용자 계정</label>
                 <input type="text" id="user_id" name="user_id" placeholder="아이디를 입력 해 주세요">
                 <label for="name">사용자 이름</label>
