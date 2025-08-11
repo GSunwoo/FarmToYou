@@ -62,6 +62,8 @@ public class Product {
 	private List<Review> review = new ArrayList<>();
 	@OneToMany(mappedBy = "product")
 	private List<Wishlist> wishlist = new ArrayList<>();
+	@OneToMany(mappedBy = "product")
+	private List<ProductImg> productImg = new ArrayList<>();
 	
 	@PrePersist
 	protected void onPrePersist() {

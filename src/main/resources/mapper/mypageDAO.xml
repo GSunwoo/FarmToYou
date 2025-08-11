@@ -118,17 +118,26 @@
 	<!-- 판매자가 등록한 상품 -->
 	<select id="getMyProducts"
 		resultType="com.farm.dto.ProductDTO">
-		SELECT * FROM product
+		<!-- SELECT  -->
+		SELECT *
+			FROM product
 			WHERE member_id=#{member_id}
 			ORDER BY prod_date DESC
 	</select>
+
 	<!-- 판매자의 상품에 등록된 리뷰 -->
 	<select id="getMyReviews"
 		resultType="com.farm.dto.ReviewBoardDTO">
-		SELECT * 
+		<!-- SELECT re.review_id, re.member_id, re.postdate, re.title, re.content, re.star, 
+				    re.evaluation, re.review_like, re.prod_id, pr.prod_name, mb.name -->
+		SELECT re.review_id, re.member_id, re.postdate, re.title, re.content, re.star, 
+			   re.evaluation, re.review_like, re.prod_id
 			FROM review re
 			INNER JOIN product pr
 				ON re.prod_id=pr.prod_id
+			INNER JOIN member mb
+				ON re.member_id=mb.member_id
 			WHERE pr.member_id=#{member_id}
 	</select>
+	
 </mapper>

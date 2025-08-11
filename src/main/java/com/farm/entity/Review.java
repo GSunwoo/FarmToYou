@@ -44,8 +44,6 @@ public class Review {
 	private int star;
 	private String evaluation;
 	@Column(nullable = false, columnDefinition = "NUMBER DEFAULT 0")
-	private int visitcount;
-	@Column(nullable = false, columnDefinition = "NUMBER DEFAULT 0")
 	private int review_like;
 	
 	@ManyToOne
@@ -57,11 +55,12 @@ public class Review {
 	
 	@OneToMany(mappedBy = "review")
     private List<Purchase> purchase = new ArrayList<>();
+	@OneToMany(mappedBy = "review")
+	private List<ReviewImg> reviewImg = new ArrayList<>();
 	
 	@PrePersist
 	protected void onPrePersist() {
 		this.postdate = new Date(System.currentTimeMillis());
-		this.visitcount = 0;
 		this.review_like = 0;
 	}
 }
