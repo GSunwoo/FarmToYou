@@ -8,7 +8,7 @@ import com.farm.dto.ReviewBoardDTO;
 
 @Mapper
 public interface ReviewBoardService {
-	
+	int write(ReviewBoardDTO dto);
 	//목록, 게시물 갯수 카운트
 	public int getTotalCount(ReviewBoardDTO reviewboardDTO);
 	
@@ -20,7 +20,7 @@ public interface ReviewBoardService {
 	
 	public ReviewBoardDTO selectView(Long review_id);
 
-	public int write(String member_id, String title, String content);
+	public int write(String title, String content);
 	
 	public int getReviewById(Long review_id);
 	
