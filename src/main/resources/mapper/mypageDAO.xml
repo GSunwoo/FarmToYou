@@ -97,7 +97,7 @@
 	</select>
 	
 	<select id="getSoldNum"
-		resultMap="int">
+		resultType="int">
 		SELECT COUNT(*)
 			FROM purchase
 			INNER JOIN product pr
