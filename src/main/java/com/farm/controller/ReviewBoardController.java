@@ -8,13 +8,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.farm.config.login.CustomUserDetails;
+import com.farm.dto.MemberDTO;
 import com.farm.dto.PageDTO;
 import com.farm.dto.ReviewBoardDTO;
 import com.farm.service.ReviewBoardService;
@@ -24,16 +25,9 @@ import jakarta.servlet.http.HttpServletRequest;
 @Controller
 public class ReviewBoardController {
 
-	//메인
-	@RequestMapping("/")
-	public String main() {
-		return "main";
-	}
 	
 	@Autowired
 	ReviewBoardService dao;
-	@Autowired
-	private ReviewBoardService reviewBoardService;
 	
 	//목록
 	@GetMapping("/guest/review/list.do")
@@ -62,7 +56,7 @@ public class ReviewBoardController {
 		maps.put("pageNum", pageNum);
 		model.addAttribute("maps", maps);
 		
-		ArrayList<ReviewBoardDTO> lists = dao.listPage(reviewboardDTO);
+		ArrayList<ReviewBoardDTO> lists = dao.listPage(pageDTO);
 		model.addAttribute("lists", lists);
 		
 		//페이지 네비게이션 바를 HTM
@@ -84,8 +78,6 @@ public class ReviewBoardController {
 		
 		//사용자가 선택한 글의 상세 정보를 가져오기 
 		reviewboardDTO = dao.view(reviewboardDTO);
-		//조회수 증가
-		dao.visitCountPlus(reviewboardDTO);
 		//화면에 줄바꿈이 잘 보이도록해줌
 		reviewboardDTO.setContent(reviewboardDTO.getContent()
 					.replace("\r\n", "<br/>"));
@@ -95,29 +87,28 @@ public class ReviewBoardController {
 		return "boardview";
 	}
 	
-	@GetMapping("/guest/review/write.do")
+	@GetMapping("/buyer/review/write.do")
 	   public String reviewWrite(Model model) {
 	      return "test/write";
 	   }
 	
 	//쓰기
-	@PostMapping("/guest/review/write.do")
-	public String write(@ModelAttribute ReviewBoardDTO reviewboardDTO, Model model, HttpServletRequest req) {
+	@PostMapping("/buyer/review/write.do")
+	public String write(ReviewBoardDTO reviewboardDTO, Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
 		
-		String member_id = req.getParameter("member_id");
-		String title = req.getParameter("title");
-		String content = req.getParameter("content");
-		
-		int result = dao.write(title, content);
+		//memberDTO을 가져옴
+		MemberDTO member = userDetails.getMemberDTO();
+		// 로그인 된 아이디를 가져옴
+		reviewboardDTO.setMember_id(member.getMember_id());
+		reviewboardDTO.setProd_id((long) 1);
+		int result = dao.write(reviewboardDTO);
 		System.out.println("글쓰기결과 : " + result);
 		
 		return "redirect:/guest/review/list.do";
 	}
-	
-	
-	
+
 	//수정
-	@GetMapping("/guest/review/edit.do")
+	@GetMapping("/buyer/review/edit.do")
 	public String boardEditGet(Model model, ReviewBoardDTO reviewboardDTO) {
 		//열람에서 사용했던 메서드를 그대로 사용
 		reviewboardDTO = dao.view(reviewboardDTO);
@@ -126,7 +117,7 @@ public class ReviewBoardController {
 	}
 	
 	//수정2 : 사용자가 입력한 내용을 전송하여 update 처리
-	@PostMapping("/guest/review/edit.do")
+	@PostMapping("/buyer/review/edit.do")
 	public String boardEditPost(ReviewBoardDTO reviewboardDTO) {
 		
 		//수정 후 결과는 int형으로 반환됨

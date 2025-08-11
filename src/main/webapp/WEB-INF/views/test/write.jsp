@@ -9,14 +9,8 @@
 <body>
 	<h2>게시판 작성(Mybatis)</h2>
 	<form name="writeFrm" method="post"
-		action="/guest/review/write.do" onsubmit="return validateForm(this);">
+		action="/buyer/review/write.do">
 	<table border="1" width="90%">
-	    <tr>
-	        <td>작성자</td>
-	        <td>
-	            <input type="text" name="name" style="width:150px;" />
-	        </td>
-	    </tr>
 	    <tr>
 	        <td>제목</td>
 	        <td>
@@ -27,6 +21,12 @@
 	        <td>내용</td>
 	        <td>
 	            <textarea name="content" style="width:90%;height:100px;"></textarea>
+	        </td>
+	    </tr>
+	    <tr>
+	        <td>별점</td>
+	        <td>
+				<input type="number" name="star" style="width:90%;" />
 	        </td>
 	    </tr>
 	    <tr>
