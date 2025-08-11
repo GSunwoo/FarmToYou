@@ -95,4 +95,24 @@
 				ON product.member_id=member.member_id
 			WHERE member_id=${member_id}
 	</select>
+	
+	<select id="getSoldNum"
+		resultMap="int">
+		SELECT COUNT(*)
+			FROM purchase
+			INNER JOIN product pr
+				ON pu.prod_id=pr.prod_id
+			WHERE pr.member_id=${member_id} AND
+				pu.purc_date BETWEEN #{start_date} AND #{end_date}
+	</select>
+	
+	<select id="getSales"
+		resultMap="int">
+		SELECT SUM(pr.prod_price)
+			FROM purchase pu
+			INNER JOIN product pr
+				ON pu.prod_id=pr.prod_id
+			WHERE pr.member_id=#{member_id} AND
+				pu.purc_date BETWEEN #{start_date} AND #{end_date}
+	</select>
 </mapper>
