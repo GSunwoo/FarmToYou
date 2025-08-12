@@ -33,7 +33,7 @@
 	<select id="selectProduct"
 		parameterType="com.farm.dto.ParameterDTO"
 		resultType="com.farm.dto.ProductDTO">
-		SELECT prod_price, prod_stock, member_id, prod_id, prod_cate, prod_content, prod_name
+		SELECT prod_price, prod_stock, member_id, prod_id, prod_cate, prod_content, prod_name, filename
 		FROM (SELECT Tb.*, rownum rNum FROM (
 				SELECT * FROM product
 				<if test="searchWords != null and !searchWords.equals('') ">
@@ -46,8 +46,10 @@
 				ORDER BY prod_id DESC
 			) Tb
 			WHERE rownum<![CDATA[<=]]>#{end}
-		)
-		WHERE rNum <![CDATA[>=]]>#{start}
+		) pro, 
+		LEFT JOIN product_img img
+			ON pro.prod_id = img.prod_id and main = 'main'
+		WHERE rNum <![CDATA[>=]]>#{start} 
 	</select>
 	
 	<select id="selectProductView"

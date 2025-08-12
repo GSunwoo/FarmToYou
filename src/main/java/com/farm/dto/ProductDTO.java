@@ -18,4 +18,5 @@ public class ProductDTO {
 	private String prod_content;// 설명
 	private int prod_like;		// 좋아요
 	private LocalDate prod_date;// 등록날짜
+	private String filename;
 }

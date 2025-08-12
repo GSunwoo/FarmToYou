@@ -2,7 +2,9 @@
 <!DOCTYPE mapper
    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
+   
+   
+<!-- 상품목록의 섬네일이미지는 게시물DAO쪽에서 관리중 -->
 <mapper namespace="com.farm.service.IProductService">
 	<insert id="insertImg"
 		parameterType="com.farm.dto.ProductImgDTO">
@@ -13,6 +15,7 @@
 	</insert>
 	
 	<select id="selectImg"
+		parameterType="Long"
 		resultType="com.farm.dto.ProductImgDTO">
 		SELECT prodimg_id, filename, idx, main, prod_id
 			FROM productimg ORDERBY IDX ASC

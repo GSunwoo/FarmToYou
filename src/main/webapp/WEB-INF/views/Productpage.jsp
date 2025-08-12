@@ -71,10 +71,10 @@
               <c:forEach var="prod" items="${lists}" >
                 <li>
                   <div class="item-photo-box">
-                  <c:if test="${prod.prodimg_id } != null">
+                  <c:if test="${prod.filename } != null">
                     <img
-                      src="${pageContext.request.contextPath}/images/${prod.prodimg_id}"
-                      alt="${prod.prodimg_id}"
+                      src="${pageContext.request.contextPath}/uploads/prodimg/prod_id/${prod.prod_id}/${prod.filename}"
+                      alt="${prod.filename}"
                       onclick="location.href='${pageContext.request.contextPath}/guest/Detailpage.do?prod_id=${prod.prod_id}'">
                   </c:if>
                   </div>

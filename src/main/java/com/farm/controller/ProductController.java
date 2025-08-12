@@ -30,6 +30,7 @@ import com.farm.service.IProductService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.Part;
+import jakarta.transaction.Transactional;
 import utils.PagingUtil;
 import utils.UploadUtils;
 
@@ -58,14 +59,14 @@ public class ProductController {
 	@PostMapping("/seller/write.do")
 	public String sellerWrite2(
 			@AuthenticationPrincipal CustomUserDetails userDetails,
-			ProductDTO productDTO, HttpServletRequest req,
-			ProductImgDTO productImgDTO) {
+			ProductDTO productDTO, ProductImgDTO productImgDTO,
+			@RequestParam("image") List<MultipartFile> files) {
 		productDTO.setMember_id(userDetails.getMemberDTO().getMember_id());
 		int prodResult = proDao.productWrite(productDTO);
 		Long prod_id = productDTO.getProd_id();
 		
 
-		int imgResult = insertImg(prod_id, req, productImgDTO);
+		insertImg(prod_id, productImgDTO, files);
 		
 		
 
@@ -73,42 +74,44 @@ public class ProductController {
 	}
 	
 
-	public int insertImg(Long prod_id, HttpServletRequest req,
-			ProductImgDTO productImgDTO) {
+	public void insertImg(Long prod_id, ProductImgDTO productImgDTO,
+			List<MultipartFile> files) {
 		
 		try {
 			
 			String uploadDir = ResourceUtils.getFile(
 					"classpath:static/uploads/prodimg/prod_id/").toPath().toString();
-			String sep = File.separator;
 			System.out.println("저장경로 : " + uploadDir);
-			File dir = new File(uploadDir + sep + prod_id);
+			File dir = new File(uploadDir, String.valueOf(prod_id));
 			if(!dir.exists()) {
 				dir.mkdirs();
 			}
 			
 			
 			long i = 1;
-			Collection<Part> parts = req.getParts();
-			for(Part part : parts) {
-				if (!part.getName().equals("ofile")) {
+			for(MultipartFile file : files) {
+				if (!file.isEmpty()) {
 					continue;
 				}
-				
-				String partHeader = part.getHeader("content-disposition");
-				String[] phArr = partHeader.split("filename=");
-				String originalFileName = phArr[1].trim().replace("\"", "");
+	
 				String savedFileName =
-						UploadUtils.getNewFileName(originalFileName);
+						UploadUtils.getNewFileName(file.getOriginalFilename());
+				File dest = new File(dir, savedFileName);
+				file.transferTo(dest);
 				
-				if (!savedFileName.isEmpty()) {
-					part.write(uploadDir + sep +prod_id +sep+ savedFileName);
-				}
+				
 				productImgDTO.setFilename(savedFileName);
 				productImgDTO.setIdx(i);
 				productImgDTO.setProd_id(prod_id);
 				
-				imgDao.insertImg(productImgDTO);
+				int insertResult = imgDao.insertImg(productImgDTO);
+				
+				if(insertResult == 1) {
+					System.out.printf("전체 파일 %d 중 %d번째 파일업로드 성공", files.size(), i);
+				}
+				else {
+					System.err.printf("전체 파일 %d 중 %d번째 파일업로드 실패", files.size(), i);
+				}
 				i++;
 			}
 			
@@ -118,8 +121,8 @@ public class ProductController {
 			e.printStackTrace();
 		}
 		
-		int result = 1;
-		return result;
+		
+
 	}
 	
 	
@@ -172,12 +175,18 @@ public class ProductController {
 	
 	@GetMapping("/guest/Detailpage.do")
 	public String productView(ProductDTO productDTO, Model model,
-			@RequestParam("prod_id") Long prod_id) {
+			@RequestParam("prod_id") Long prod_id,
+			ProductImgDTO productImgDTO) {
 		
 		productDTO = proDao.selectProductView(prod_id);
 		productDTO.setProd_content(productDTO.getProd_content()
 				.replace("\r\n", "<br/>"));
+		
+		ArrayList<ProductImgDTO> imglist = imgDao.selectImg(prod_id);
+		
 		model.addAttribute("productDTO", productDTO);
+		model.addAttribute("imglist", imglist);
+		
 		
 		return "Detailpage";
 	}
