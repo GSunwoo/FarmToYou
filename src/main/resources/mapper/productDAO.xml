@@ -58,7 +58,7 @@
 		WHERE prod_id = #{prod_id}
 	</select>
 	
-	<update id="updateProduct"
+	<update id="productUpdate"
 		parameterType="com.farm.dto.ProductDTO">
 		UPDATE product set(
 			prod_price = #{prod_price}, 
@@ -70,7 +70,7 @@
 		WHERE prod_id = #{prod_id}
 	</update>
 	
-	<delete id="deleteProduct"
+	<delete id="productDelete"
 		parameterType="Long">
 		DELETE FROM product WHERE prod_id = #{prod_id}
 	</delete>
