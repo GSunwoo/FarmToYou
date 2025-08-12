@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.farm.service.IAdminConfirmService">
+	<!-- 요청 상태인 상품 불러오기 -->
+	<select id="selectRequestProducts"
+		resultType="com.farm.dto.ProductDTO">
+		SELECT * FROM product
+			WHERE confirm='request'	
+	</select>
+	
+	<!-- 상품 승인 -->
+	<update id="confirmProduct">
+		UPDATE product
+			SET confirm='confirmed'
+			WHERE prod_id=#{prod_id}
+	</update>
+	<!-- 상품 반려 -->
+	<update id="rejectProduct">
+		UPDATE product
+			SET confirm='rejected'
+			WHERE prod_id=#{prod_id}
+	</update>
+	
+	<!-- 요청 상태인 농장 불러오기 -->
+	<select id="selectRequestFarms"
+		resultType="com.farm.dto.FarmDTO">
+		SELECT * FROM farm
+			WHERE confirm='request'	
+	</select>
+	<!-- 상품 승인 -->
+	<update id="confirmFarm">
+		UPDATE farm
+			SET confirm='confirmed'
+			WHERE farm_id=#{farm_id}
+	</update>
+	<!-- 상품 반려 -->
+	<update id="rejectFarm">
+		UPDATE farm
+			SET confirm='rejected'
+			WHERE farm_id=#{farm_id}
+	</update>
+</mapper>

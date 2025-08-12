@@ -4,6 +4,7 @@ package com.farm.controller;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.farm.dto.ParameterDTO;
 import com.farm.dto.ProductDTO;
+import com.farm.service.IAdminConfirmService;
 import com.farm.service.IProductService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,6 +33,11 @@ public class AdminController {
 	// 상품 DAO
 	@Autowired
 	IProductService prodDAO;
+	
+	// 승인 DAO
+	@Autowired
+	IAdminConfirmService confirmDAO;
+	
 	
 	// 페이지 설정
 	@Value("${board.pageSize}")
@@ -59,6 +66,11 @@ public class AdminController {
 		ArrayList<ProductDTO> products = prodDAO.selectProduct(parameterDTO);
 		// 상품리스트 전달
 		model.addAttribute("products", products);
+		
+		// 요청중인 상품리스트 가져오기
+		List<ProductDTO> requestProducts = confirmDAO.selectRequestProducts();
+		// 전달
+		model.addAttribute("requestProducts", requestProducts);
 		
 		// 페이징 관련 변수 Map으로 전달
 		int totalCount = prodDAO.getTotalCount(parameterDTO);
