@@ -1,0 +1,85 @@
+/* ===== 모니터링 박스 레이아웃 (간결/반응형) ===== */
+.dashboard-wrapper-2rows {
+  display: grid;
+  grid-template-columns: 1fr; /* 🔹 1열 구성 */
+  grid-template-rows: auto auto auto; /* 세로 3줄 */
+  gap: 20px;
+  padding: 20px;
+  background-color: #f7f7f7;
+}
+
+/* 모바일/태블릿: 1열로 쌓기 */
+@media (max-width: 1024px) {
+  .dashboard-wrapper-2rows {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===== 카드 공통 ===== */
+.card {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 18px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+/* 제목 */
+.card-title {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 0 0 12px;
+}
+
+/* ===== 상단 전체(스마트팜) ===== */
+.card-full {
+  grid-column: 1 / -1;
+  min-height: 160px;
+}
+
+/* 판매 통계 */
+.card-half:nth-of-type(2) {
+  grid-column: 1 / -1; /* 가로 전체 사용 */
+}
+
+/* 최근 등록된 농작물 */
+.card-half:nth-of-type(3) {
+  grid-column: 1 / -1; /* 가로 전체 사용 */
+}
+
+/* ===== 하단 좌/우 ===== */
+.card-half {
+  height: auto;             /* 고정 높이 제거 */
+  min-height: 280px;        /* 보기 좋은 최소 높이 */
+}
+
+.chart-wrap { height: 320px; }              /* 원하는 높이로 조절 */
+.chart-wrap canvas { width:100% !important; height:100% !important; }
+
+/* ===== 최근 등록된 농작물 ===== */
+.crop-image {
+  width: 100%;
+  max-height: 180px;        /* 이미지 너무 길어지지 않게 */
+  object-fit: contain;
+  border-radius: 6px;
+  border: 1px solid #e5e5e5;
+}
+
+.crop-result {
+  margin-top: 12px;
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.result-ok   { color: #1d9d4a; }
+.result-error{ color: #d23b3b; }
+
+.update-time {
+  font-size: 12px;
+  color: #888;
+  margin-top: 6px;
+}
+
+.loading-text {
+  color: #666;
+  font-size: 14px;
+}

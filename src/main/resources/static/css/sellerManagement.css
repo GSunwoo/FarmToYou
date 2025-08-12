@@ -1,0 +1,148 @@
+* 공통 페이지 */
+.buyer-page {
+  padding: 30px;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+.buyer-page h2 {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* 섹션 타이틀 */
+.order-section { margin-bottom: 28px; }
+.section-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 14px;
+  display: flex; align-items: center; gap: 10px;
+}
+.section-sub {
+  font-size: 13px; font-weight: 400; color: #8a8a8a;
+}
+
+/* 테이블 기본 (기존 톤 그대로) */
+.buyer-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  border: 1px solid #e0e0e0;
+}
+.buyer-table th,
+.buyer-table td {
+  padding: 14px 12px;
+  border: 1px solid #e0e0e0;
+  text-align: center;
+  font-size: 15px;
+}
+.buyer-table th {
+  background-color: #f2f2f2;
+  font-weight: 600;
+}
+.buyer-table tr:hover { background-color: #f9f9f9; }
+
+.text-left { text-align: left; }
+.empty-state { color: #9a9a9a; padding: 40px 0; }
+
+.order-status {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+}
+.status-step {
+  display: flex;
+  align-items: center;
+}
+/* 상태 아이템 */
+.status-item{ display:flex; flex-direction:column; align-items:center; gap:8px; min-width:90px; }
+
+
+.status-item:hover .status-circle {
+  background: #e4e4e4;
+}
+
+
+
+/* 동그라미 숫자 */
+.status-circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #e0e0e0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+
+.status-circle span{ font-size:16px; line-height:1; }
+
+/* 라벨 */
+.status-label{ font-size:14px; color:#555; }
+
+/* 구분 화살표 */
+.status-sep{ color:#999; font-size:20px; user-select:none; }
+
+/* 선택된 상태 강조 */
+.status-item.active .status-circle {
+  background: #3770ff;
+  color: #fff;
+}
+.status-item.active .status-label {
+  color: #3770ff;
+  font-weight: 700;
+}
+
+.status-arrow {
+  margin: 0 15px;
+  font-size: 18px;
+  color: #888;
+}
+
+/* 최근 주문 테이블 */
+.orders-table .order-no { font-weight: 700; }
+.orders-table .order-date { font-size: 12px; color: #888; margin-top: 4px; }
+/* 2025.08.12 추가분 */
+/* 진행중 주문 상태바 */
+.orders-status-bar{margin:12px 0 16px}
+.status-list{display:flex;gap:12px;list-style:none;padding:0;margin:0}
+.status-item{border:1px solid #e0e0e0;border-radius:10px;padding:8px 12px;cursor:pointer;background:#fff}
+.status-item.active{border-color:#2d7ef7;box-shadow:0 0 0 3px rgba(45,126,247,.15)}
+
+/* 주문 테이블 */
+.orders-table{width:100%;border-collapse:collapse}
+.orders-table th,.orders-table td{border-bottom:1px solid #eee;padding:10px 12px;text-align:left}
+
+
+/* 배지 */
+.badge{display:inline-block;border-radius:999px;padding:4px 10px;font-size:12px;font-weight:700}
+.badge-chk_order{background:#e9f2ff;color:#1f4fbf}
+.badge-prepare_order{background:#fff6e6;color:#bf7a1f}
+.badge-deli_order{background:#eaf7ff;color:#0e6aa7}
+.badge-cmpl_order{background:#eaf6ec;color:#1e7e34}
+/* 리뷰 링크 버튼 */
+.link-btn {
+  background: none;
+  border: none;
+  color: #3770ff;
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 14px;
+  padding: 0;
+}
+.link-btn:hover { opacity: 0.8; }
+
+/* 반응형 대응 */
+@media (max-width: 768px) {
+  .order-status {
+    grid-template-columns: repeat(3, 1fr); /* 작은 화면에서는 3칸씩 */
+    row-gap: 20px;
+  }
+}

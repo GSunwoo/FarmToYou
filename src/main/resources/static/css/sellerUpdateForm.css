@@ -1,0 +1,77 @@
+.seller-update-section .form-wrapper {
+  width: 640px;
+  margin: 40px auto;
+  padding: 32px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.seller-update-section .form-line {
+  display: flex;
+  border-bottom: 1px solid #ddd;
+  min-height: 56px;
+}
+
+.seller-update-section .form-line label {
+  width: 150px;
+  background-color: #f2f2f2;
+  color: #333;
+  font-weight: bold;
+  padding: 14px 12px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  border-right: 1px solid #ddd;
+}
+
+.seller-update-section .form-group {
+  flex: 1;
+  padding: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  background-color: #fff;
+}
+
+.seller-update-section input[type="text"],
+.seller-update-section select {
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  min-width: 100px;
+}
+
+.seller-update-section input[readonly],
+.seller-update-section .readonly {
+  background: #f7f7f7;
+  cursor: not-allowed;
+}
+
+.seller-update-section button {
+  padding: 8px 16px;
+  background-color: #2d8cf0;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.seller-update-section button:hover { background-color: #1a73e8; }
+
+.seller-update-section .half-width { width: 100px; }
+.seller-update-section .account-group select { min-width: 120px; }
+
+.seller-update-section .submit-area { text-align: center; margin-top: 30px; }
+.seller-update-section .submit-btn {
+  padding: 12px 32px; font-size: 16px; background-color: #2d8cf0;
+  color: white; border: none; border-radius: 6px; cursor: pointer;
+}
+.seller-update-section .submit-btn:disabled { background-color: #ccc; cursor: not-allowed; }
+
+.seller-update-section .section-divider-top { border-top: 2px solid #999; }
+.seller-update-section .section-divider-bottom { border-bottom: 2px solid #999; }

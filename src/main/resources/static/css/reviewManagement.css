@@ -1,0 +1,177 @@
+/* ReviewManagement.css */
+
+/* 섹션 래퍼 */
+.rm-wrap{
+  margin-top: 24px;
+  padding: 0 16px 40px;
+}
+
+/* 섹션 헤더 */
+.rm-header{ display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
+.rm-title{ font-size:20px; font-weight:700; color:#111; margin:0; }
+
+/* ===== 그리드: 3 × 5 ===== */
+.rm-grid{
+  list-style:none; margin:0; padding:0;
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px 20px;
+}
+
+/* 카드 */
+.rm-card{
+  background:#fff;
+  border:1px solid #eaeaea;
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,.04);
+  transition: box-shadow .2s ease, transform .2s ease;
+}
+.rm-card:hover{ box-shadow: 0 6px 18px rgba(0,0,0,.08); transform: translateY(-2px); }
+
+.rm-card__link{ display:block; color:inherit; text-decoration:none; height:100%; }
+
+.rm-card__thumb{ position:relative; aspect-ratio: 4 / 3; background:#f6f6f6; overflow:hidden; }
+.rm-card__img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+/* 카드 본문 */
+.rm-card__body{ padding:14px 14px 12px; display:flex; flex-direction:column; gap:8px; }
+
+/* 제목 */
+.rm-card__title{
+  margin:0; font-size:16px; font-weight:700; color:#111;
+  display:-webkit-box; -webkit-line-clamp:1; -webkit-box-orient:vertical; overflow:hidden; text-overflow:ellipsis;
+}
+
+/* 별점(정수) — 기존 오버레이 방식(미사용 전환용) */
+.rm-card__rating,
+.rm-modal__rating{
+  --score: 0;
+  position:relative; height:18px;
+}
+.rm-card__rating::before,
+.rm-modal__rating::before{
+  content: "★★★★★";
+  letter-spacing:2px;
+  font-size:14px; color:#ddd;
+}
+.rm-card__rating::after,
+.rm-modal__rating::after{
+  content: "★★★★★";
+  letter-spacing:2px;
+  font-size:14px;
+  color:#f5a623;
+  position:absolute; left:0; top:0; width: calc(var(--score) / 5 * 100%);
+  overflow:hidden; white-space:nowrap;
+}
+
+/* 메타 */
+.rm-card__meta{ display:flex; gap:8px; align-items:center; color:#666; font-size:13px; }
+.rm-card__author{ font-weight:600; color:#444; }
+.rm-card__date{ color:#888; }
+
+/* 상품명(링크 자리) */
+.rm-card__product{ margin-top:4px; }
+.rm-card__product-link{ color:#2b6cb0; text-decoration:none; font-size:13px; }
+.rm-card__product-link:hover{ text-decoration:underline; }
+
+/* ===== 페이지네이션 ===== */
+.rm-pagination{
+  display:flex; align-items:center; justify-content:center;
+  gap:10px; margin-top:24px; user-select:none;
+}
+.rm-page__list{ list-style:none; display:flex; gap:6px; padding:0; margin:0; }
+
+.rm-page__num,
+.rm-page__first,
+.rm-page__prev,
+.rm-page__next{
+  border:1px solid #e0e0e0; background:#fff; color:#333;
+  padding:8px 12px; border-radius:8px; font-size:14px; cursor:pointer;
+}
+.rm-page__num.is-active{
+  background:#111; color:#fff; border-color:#111; font-weight:700;
+}
+.rm-page__num:disabled,
+.rm-page__first:disabled,
+.rm-page__prev:disabled,
+.rm-page__next:disabled{
+  opacity:.45; cursor:not-allowed;
+}
+
+/* ===== 모달 ===== */
+.rm-modal[hidden]{ display:none !important; }
+.rm-modal{ position:fixed; inset:0; z-index:1000; }
+.rm-modal__overlay{ position:absolute; inset:0; background:rgba(0,0,0,.5); }
+.rm-modal__dialog{
+  position:relative; width:min(980px, 94vw); margin: 60px auto;
+  background:#fff; border-radius:16px; box-shadow: 0 20px 60px rgba(0,0,0,.25); overflow:hidden;
+}
+.rm-modal__close{
+  position:absolute; right:12px; top:10px; width:36px; height:36px;
+  border:none; background:#fff; border-radius:50%;
+  box-shadow:0 2px 8px rgba(0,0,0,.12); cursor:pointer; font-size:18px;
+}
+.rm-modal__content{ display:grid; grid-template-columns: 58% 42%; gap:0; min-height:520px; }
+.rm-modal__left{ background:#000; display:flex; align-items:center; justify-content:center; }
+.rm-modal__figure{ margin:0; width:100%; height:100%; display:flex; flex-direction:column; }
+.rm-modal__img{ width:100%; height:100%; object-fit:contain; background:#000; }
+
+.rm-modal__product{ background:#f7f7f7; padding:10px 14px; font-size:14px; }
+.rm-modal__product-link{ color:#2b6cb0; text-decoration:none; }
+.rm-modal__product-link:hover{ text-decoration:underline; }
+
+/* 모달 제목 위 상품명 링크 */
+.rm-modal__product-top{ margin: 0 0 6px; font-size:14px; }
+.rm-modal__product-top .rm-modal__product-link{ color:#2b6cb0; text-decoration:none; }
+.rm-modal__product-top .rm-modal__product-link:hover{ text-decoration:underline; }
+
+
+.rm-modal__right{ padding:18px 18px 20px; overflow:auto; }
+.rm-modal__title{ margin:0 0 8px; font-size:20px; font-weight:800; color:#111; }
+.rm-modal__meta{ display:flex; gap:10px; align-items:center; color:#666; font-size:13px; margin-top:6px; margin-bottom:12px; }
+.rm-modal__author{ font-weight:600; color:#444; }
+.rm-modal__date{ color:#888; }
+.rm-modal__body{ line-height:1.7; color:#333; font-size:15px; white-space:pre-wrap; }
+
+/* 도움이 됐어요 버튼 */
+.rm-modal__footer{ margin-top:16px; display:flex; justify-content:flex-start; }
+.rm-help{
+  display:inline-flex; align-items:center; gap:8px;
+  border:1px solid #e0e0e0; background:#fff; color:#333;
+  padding:10px 14px; border-radius:999px; cursor:pointer; font-weight:600;
+  transition: box-shadow .2s ease, transform .04s ease;
+}
+.rm-help:hover{ box-shadow:0 4px 12px rgba(0,0,0,.08); }
+.rm-help:active{ transform: translateY(1px); }
+.rm-help__count{ font-weight:700; }
+
+/* 유틸 */
+.is-hidden{ display:none !important; }
+.is-loading{ opacity:.6; pointer-events:none; }
+
+/* 반응형 */
+@media (max-width: 1100px){
+  .rm-modal__content{ grid-template-columns: 1fr; }
+  .rm-modal__left{ height: 46vh; }
+}
+@media (max-width: 900px){
+  .rm-grid{ grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 560px){
+  .rm-grid{ grid-template-columns: 1fr; }
+  .rm-modal__dialog{ margin: 24px auto; }
+}
+
+/* ===== 텍스트 별점 모드(★/☆) ===== */
+.rm-rating--text{ line-height:1; font-size:14px; letter-spacing:2px; }
+/* 오버레이 비활성화(충돌 방지) */
+.rm-rating--text::before,
+.rm-rating--text::after{ content:none !important; }
+.rm-rating--text .filled{ color:#f5a623; }
+.rm-rating--text .empty{ color:#ddd; }
+
+/* (이전 data-rating 방식은 유지해도 되지만 이제 사용하지 않음)
+.rm-card__rating[data-rating]{ --score: attr(data-rating number); }
+.rm-modal__rating[data-rating]{ --score: attr(data-rating number); }
+*/

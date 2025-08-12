@@ -1,0 +1,60 @@
+/* === 공통 include 레이아웃 대응 === */
+.simple-page .mypage-wrapper{
+  max-width:1200px; margin:24px auto; padding:0 16px;
+  display:grid; grid-template-columns:260px 1fr; gap:24px;
+}
+.simple-page .sidebar{ /* 공통 사이드바 */
+  position: sticky; top: 16px; align-self:start;
+}
+.simple-page .sub-content{
+  background:#fff; border:1px solid #ddd; border-radius:16px;
+  padding:24px; min-height:60vh;
+}
+
+/* 구 레이아웃 클래스도 함께 대응(.side-bar -> .sidebar) */
+.sidebar, .side-bar{
+  width:260px;
+  background:#fff;
+  border:1px solid #ddd;
+  border-radius:12px;
+  padding:20px;
+}
+
+/* 카드/그리드 보강 */
+.dashboard-wrapper-2rows{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: minmax(240px, auto);
+  gap: 20px;
+}
+.card{ border:1px solid #eee; border-radius:12px; padding:16px; background:#fff; }
+.card-full{ grid-column: 1 / -1; }
+.card-half{ grid-column: auto; }
+.card-title{ margin:0 0 12px; font-size:18px; font-weight:700; }
+
+/* 차트 영역: 부모 높이 지정 -> JS에서 maintainAspectRatio:false */
+.chart-wrap{
+  width:100%;
+  height:320px;   /* 필요시 조절 */
+}
+.chart-wrap canvas{
+  width:100% !important;
+  height:100% !important;
+  display:block;
+}
+
+/* 농작물 이미지/판정 배지 */
+.crop-image{
+  width:100%; height:220px; object-fit:cover; border-radius:10px; border:1px solid #eee;
+  display:block; margin-bottom:10px;
+}
+.crop-result{
+  display:inline-block; padding:6px 10px; border-radius:999px; font-size:13px; font-weight:600;
+}
+.crop-result.result-ok{
+  background:#e9f7ef; color:#1e7e34; border:1px solid #c3e6cb;
+}
+.crop-result.result-error{
+  background:#fdecea; color:#a71d2a; border:1px solid #f5c2c7;
+}
+.update-time{ margin-top:8px; font-size:12px; color:#666; }
