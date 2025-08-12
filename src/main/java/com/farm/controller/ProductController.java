@@ -1,7 +1,9 @@
 package com.farm.controller;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,17 +13,24 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.farm.config.login.CustomUserDetails;
 import com.farm.dto.MemberDTO;
 import com.farm.dto.ParameterDTO;
 import com.farm.dto.ProductDTO;
+import com.farm.dto.ProductImgDTO;
+import com.farm.service.IProductImgService;
 import com.farm.service.IProductService;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.Part;
 import utils.PagingUtil;
+import utils.UploadUtils;
 
 
 
@@ -38,6 +47,9 @@ public class ProductController {
 	@Autowired
 	IProductService proDao;
 	
+	@Autowired
+	IProductImgService imgDao;
+	
 	@GetMapping("/seller/write.do")
 	public String sellerWrite() {
 		return "seller/write";
@@ -45,12 +57,62 @@ public class ProductController {
 	@PostMapping("/seller/write.do")
 	public String sellerWrite2(
 			@AuthenticationPrincipal CustomUserDetails userDetails,
-			ProductDTO productDTO) {
+			ProductDTO productDTO, HttpServletRequest req,
+			ProductImgDTO productImgDTO) {
 		productDTO.setMember_id(userDetails.getMemberDTO().getMember_id());
-		int result = proDao.productWrite(productDTO);
+		int prodResult = proDao.productWrite(productDTO);
+		Long prod_id = productDTO.getProd_id();
 		
+//		이미지 업로드 시작
+		int imgResult = insertImg(prod_id, req, productImgDTO);
+		
+		
+//		이미지 업로드 종료
 		return "redirect:/Detailpage";
 	}
+	
+
+	public int insertImg(Long prod_id, HttpServletRequest req,
+			ProductImgDTO productImgDTO) {
+		
+		try {
+			String uploadDir = ResourceUtils.getFile(
+					"classpath:static/uploads/prodimg/"+prod_id).toPath().toString();
+			System.out.println("저장경로 : " + uploadDir);
+			
+			long i = 1;
+			Collection<Part> parts = req.getParts();
+			for(Part part : parts) {
+				if (!part.getName().equals("ofile")) {
+					continue;
+				}
+				
+				String partHeader = part.getHeader("content-disposition");
+				String[] phArr = partHeader.split("filename=");
+				String originalFileName = phArr[1].trim().replace("\"", "");
+				String savedFileName =
+						UploadUtils.renameFile(uploadDir, originalFileName);
+				if (!originalFileName.isEmpty()) {
+					part.write(uploadDir + File.separator + savedFileName);
+				}
+				
+				productImgDTO.setFilename(savedFileName);
+				productImgDTO.setIdx(i);
+			}
+			
+		}
+		catch (Exception e) {
+			System.out.println("이미지 업로드 실패 : ");
+			e.printStackTrace();
+		}
+		
+		int result = 1;
+		return result;
+	}
+	
+	
+	
+	
 	
 	@GetMapping("/guest/productList.do")
 	public String productList(HttpServletRequest req,
