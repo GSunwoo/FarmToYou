@@ -12,6 +12,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -43,6 +44,8 @@ public class Farm {
 	private String bank;
 	@Column(nullable = false)
 	private String account;
+	@Column(nullable = false, columnDefinition = "VARCHAR(10) DEFAULT 'request'")
+	private String confirm;
 	
 	@ManyToOne
 	@JoinColumn(name = "member_id", nullable = false)
@@ -50,4 +53,9 @@ public class Farm {
 	
 	@OneToOne(mappedBy = "farm")
 	private TradeImg tradeImg;
+	
+	@PrePersist
+	protected void onPrePersist() {
+		this.confirm = "request";
+	}
 }

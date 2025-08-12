@@ -49,6 +49,8 @@ public class Product {
 	private int prod_like;
 	@Column(nullable = false, columnDefinition = "DATE DEFAULT SYSDATE")
 	private Date prod_date;
+	@Column(nullable = false, columnDefinition = "VARCHAR(10) DEFAULT 'request'")
+	private String confirm;
 	
 	@ManyToOne
 	@JoinColumn(name = "member_id", nullable = false)
@@ -68,5 +70,6 @@ public class Product {
 	@PrePersist
 	protected void onPrePersist() {
 		this.prod_date = new Date(System.currentTimeMillis());
+		this.confirm = "request";
 	}
 }
