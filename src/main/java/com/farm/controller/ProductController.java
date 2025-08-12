@@ -99,7 +99,7 @@ public class ProductController {
 				String[] phArr = partHeader.split("filename=");
 				String originalFileName = phArr[1].trim().replace("\"", "");
 				String savedFileName =
-						UploadUtils.renameFile(uploadDir, originalFileName);
+						UploadUtils.getNewFileName(originalFileName);
 				
 				if (!savedFileName.isEmpty()) {
 					part.write(uploadDir + sep +prod_id +sep+ savedFileName);

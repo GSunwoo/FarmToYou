@@ -19,24 +19,14 @@ public class UploadUtils {
 	}
 	
 	//파일명 변경
-	public static String renameFile(String sDirectory,
-			String fileName) {
-		
-		//파일의 확장자를 파일명의 끝에서부터 잘라낸다.
-		String ext = fileName.substring(fileName.lastIndexOf("."));
-		//UUID를 통해 파일명으로 사용할 문자열을 얻어온다.
-		String now = getUuid();
-		//둘을 합쳐서 새로운 파일명을 만든다.
-		String newFileName = now + ext;
-		
-		//File인스턴스 생성한 후 파일명을 변경한다.
-		File oldFile = new File(sDirectory +
-				File.separator + fileName);
-		File newFile = new File(sDirectory +
-				File.separator + newFileName);
-		oldFile.renameTo(newFile);
-		
-		//변경된 파일명을 반환한다.
-		return newFileName;
-	}
+	 public static String getNewFileName(String originalFileName) {
+	        // 확장자 추출
+	        String ext = "";
+	        int dotIndex = originalFileName.lastIndexOf(".");
+	        if (dotIndex != -1) {
+	            ext = originalFileName.substring(dotIndex);
+	        }
+	        // 새 파일명 = UUID + 확장자
+	        return getUuid() + ext;
+	    }
 }
