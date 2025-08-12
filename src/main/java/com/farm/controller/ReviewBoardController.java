@@ -3,26 +3,35 @@ package com.farm.controller;
 
 
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.farm.config.login.CustomUserDetails;
 import com.farm.dto.MemberDTO;
 import com.farm.dto.PageDTO;
 import com.farm.dto.ReviewBoardDTO;
+import com.farm.dto.ReviewImgDTO;
 import com.farm.service.ReviewBoardService;
+import com.farm.service.ReviewImgService;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.Part;
+import utils.UploadUtils;
 
 @Controller
 public class ReviewBoardController {
@@ -30,6 +39,9 @@ public class ReviewBoardController {
 	
 	@Autowired
 	ReviewBoardService dao;
+	
+	@Autowired
+	ReviewImgService Imgdao;
 	
 	//목록
 	@GetMapping("/guest/review/list.do")
@@ -70,6 +82,7 @@ public class ReviewBoardController {
 		return "review/reviewPage";
 	}
 	
+	//열람
 	@GetMapping("/guest/review/view.do")
 	//DTO를 사용해서 model이라는 공간에 넘겨줌
 	public String view(@RequestParam("review_id") Long reviewId ,Model model) {
@@ -84,9 +97,11 @@ public class ReviewBoardController {
 	      return "review/reviewPage";
 	   }
 	
+	
 	//쓰기
 	@PostMapping("/buyer/review/write.do")
-	public String write(ReviewBoardDTO reviewboardDTO, Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
+	public String write(ReviewBoardDTO reviewboardDTO, Model model, @AuthenticationPrincipal CustomUserDetails userDetails,
+			HttpServletRequest req) {
 		
 		//memberDTO을 가져옴
 		MemberDTO member = userDetails.getMemberDTO();
@@ -98,7 +113,55 @@ public class ReviewBoardController {
 		
 		return "redirect:/guest/review/list.do";
 	}
-
+	
+	public int insertImg(Long review_id, HttpServletRequest req,
+			 List<MultipartFile> files, ReviewImgDTO reviewimgDTO) {
+		 
+		//업로드 과정에서 에러가 날 수 있으니 예외처리 시작
+		 try {
+	         // 물리적 경로 얻어오기
+	         String uploadDir = ResourceUtils.getFile(
+	        		 "classpath:static/uploads/reviewimg/prod_id").toPath().toString();
+	         System.out.println("저장경로 : " + uploadDir);
+	         String sep = File.separator;
+	         File dir = new File(uploadDir + sep + review_id);
+	         if(!dir.exists()) {
+				 dir.mkdirs();
+			}
+	         
+	         long i = 1;
+	         Collection<Part> parts = req.getParts();
+	         for(Part part: parts) {
+	            if(!part.getName().equals("ofile")) {
+	               continue;
+	            }
+	            
+	            String partHeader = part.getHeader("content-disposition");
+	            String[] phArr = partHeader.split("filename=");
+	            String originalFileName = phArr[1].trim().replace("\"", "");
+	            String saveFile =
+	            		UploadUtils.getNewFileName(originalFileName);
+	            
+	            if(!saveFile.isEmpty()) {
+	               part.write(uploadDir+ sep +review_id + sep+ saveFile);
+	            }
+	            reviewimgDTO.setFilename(saveFile);
+	            reviewimgDTO.setIdx(i);
+	            reviewimgDTO.setReview_id(review_id);
+	            
+	            Imgdao.insertImg(reviewimgDTO);
+				i++;
+	         }
+	         
+	      }
+	      catch(Exception e) {
+	         System.out.println("업로드 실패");
+	         e.printStackTrace();
+	      }
+		 
+		 int result = 1;
+		 return result;
+	}
 	//수정
 	@GetMapping("/buyer/review/edit.do")
 	public String boardEditGet(Model model, ReviewBoardDTO reviewboardDTO) {
@@ -140,6 +203,7 @@ public class ReviewBoardController {
 		
 		return "redirect:/guest/review/view.do?review_id=" + reviewboardDTO.getReview_id();
 	}
+	
 	//API 경로
 	//@PostMapping("/buyer/review")
 	
