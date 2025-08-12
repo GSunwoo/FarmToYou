@@ -59,14 +59,15 @@ public class ProductController {
 	@PostMapping("/seller/write.do")
 	public String sellerWrite2(
 			@AuthenticationPrincipal CustomUserDetails userDetails,
-			ProductDTO productDTO, ProductImgDTO productImgDTO,
-			@RequestParam("image") List<MultipartFile> files) {
+			@RequestParam("main_idx") int main_idx,
+			@RequestParam("image") List<MultipartFile> files,
+			ProductDTO productDTO) {
 		productDTO.setMember_id(userDetails.getMemberDTO().getMember_id());
 		int prodResult = proDao.productWrite(productDTO);
 		Long prod_id = productDTO.getProd_id();
 		
 
-		insertImg(prod_id, productImgDTO, files);
+		insertImg(prod_id, main_idx, files);
 		
 		
 
@@ -74,7 +75,7 @@ public class ProductController {
 	}
 	
 
-	public void insertImg(Long prod_id, ProductImgDTO productImgDTO,
+	public void insertImg(Long prod_id, int main_idx,
 			List<MultipartFile> files) {
 		
 		try {
@@ -99,10 +100,14 @@ public class ProductController {
 				File dest = new File(dir, savedFileName);
 				file.transferTo(dest);
 				
+				ProductImgDTO productImgDTO = new ProductImgDTO();
 				
 				productImgDTO.setFilename(savedFileName);
 				productImgDTO.setIdx(i);
 				productImgDTO.setProd_id(prod_id);
+				if(i == main_idx) {
+					productImgDTO.setMain("main");
+				}
 				
 				int insertResult = imgDao.insertImg(productImgDTO);
 				
@@ -182,10 +187,13 @@ public class ProductController {
 		productDTO.setProd_content(productDTO.getProd_content()
 				.replace("\r\n", "<br/>"));
 		
-		ArrayList<ProductImgDTO> imglist = imgDao.selectImg(prod_id);
-		
 		model.addAttribute("productDTO", productDTO);
+				
+		
+		// 이미지 불러오기 시작
+		ArrayList<ProductImgDTO> imglist = imgDao.selectImg(prod_id);
 		model.addAttribute("imglist", imglist);
+		
 		
 		
 		return "Detailpage";
@@ -206,7 +214,7 @@ public class ProductController {
 			
 			if(login_id == write_id && login_id != null && write_id != null) {
 				model.addAttribute("productDTO", productDTO);
-				return "seller/update.do";
+				return "seller/update";
 			}
 			
 			
@@ -222,25 +230,35 @@ public class ProductController {
 	}
 	
 	@PostMapping("/seller/update.do")
-	public String productUpdate2(ProductDTO productDTO) {
-		int result = proDao.productUpdate(productDTO);
-		if(result == 1) {
+	public String productUpdate2(ProductDTO productDTO,
+			@RequestParam("main_idx") int main_idx,
+			@RequestParam("image") List<MultipartFile> files){
+		int prod_result = proDao.productUpdate(productDTO);
+		Long prod_id = productDTO.getProd_id();
+		
+		//이미지 전체 삭제 후 삽입
+		int img_result = imgDao.deleteImg(prod_id);
+		if(img_result == 1) {
+			insertImg(prod_id, main_idx, files);
+		}
+		if(prod_result == 1) {
 			System.out.println("상품 수정신청이 들어왔습니다.");
 		}
 		else {
-			System.out.println("상품 수정신청에 실패했습니다. : " + result);
+			System.out.println("상품 수정신청에 실패했습니다. : " + prod_result);
 		}
 		return "seller/myPageList";
 	}
 	
 	@PostMapping("/seller/delete.do")
 	public String delete(@RequestParam("prod_id") Long prod_id){
-		int result = proDao.productDelete(prod_id);
-		if(result == 1) {
-			System.out.println("상품 삭제가 완료되었습니다 : " + result);
+		int prod_result = proDao.productDelete(prod_id);
+		int img_result = imgDao.deleteImg(prod_id);
+		if(prod_result == 1 && img_result == 1) {
+			System.out.println("상품 삭제가 완료되었습니다 : " + prod_result);
 		}
 		else {
-			System.out.println("상품 삭제에 실패하였습니다. : " + result);
+			System.out.println("상품 삭제에 실패하였습니다. : " + prod_result);
 		}
 		return "seller/myPageList";
 	}

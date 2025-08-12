@@ -5,10 +5,10 @@
    
    
 <!-- 상품목록의 섬네일이미지는 게시물DAO쪽에서 관리중 -->
-<mapper namespace="com.farm.service.IProductService">
+<mapper namespace="com.farm.service.IProductImgService">
 	<insert id="insertImg"
 		parameterType="com.farm.dto.ProductImgDTO">
-		INSERT INTO productimg
+		INSERT INTO product_img
 			(prodimg_id, filename, idx, main, prod_id)	
 		VALUES
 			(#{prodimg_id}, #{filename} ,#{idx} , #{main} ,#{prod_id})
@@ -18,12 +18,13 @@
 		parameterType="Long"
 		resultType="com.farm.dto.ProductImgDTO">
 		SELECT prodimg_id, filename, idx, main, prod_id
-			FROM productimg ORDERBY IDX ASC
+			FROM product_img 
 				WHERE prod_id = #{prod_id}
+					ORDER BY IDX ASC
 	</select>
 	
 	<delete id="deleteImg"
 		parameterType="com.farm.dto.ProductImgDTO">
-		DELETE FROM productimg WHERE prod_id = #{prod_id}	
+		DELETE FROM product_img WHERE prod_id = #{prod_id}	
 	</delete>
 </mapper>
