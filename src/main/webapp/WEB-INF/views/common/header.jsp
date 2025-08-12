@@ -50,7 +50,7 @@
     <div class="category-bar">
         <ul class="category-menu">
             <li><a href="/guest/productList.do">상품</a></li>
-            <li><a href="#"></a>-</li>
+            <li><a href="/guest/review/list.do">리뷰</a></li>
             <li>-</li>
             <li>-</li>
             <li>-</li>

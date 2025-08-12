@@ -18,13 +18,14 @@
 					<div class="rating modal-rating"></div>
 					<div class="review-content modal-content-text"></div>
 					<div class="modal-actions">
-						<button type="button" class="like-btn" data-like-url-base=
-						"${pageContext.request.contextPath}/reviews" data-review-id="" >
+						<button type="button" class="like-btn" 
+								data-like-url-base="${pageContext.request.contextPath}/buyer/review" 
+								data-review-id="${review.id }" >
 							<span class="heart">♥</span>
-							<span class="like-count">0</span>
+							<span class="like-count">${review.review_like }</span>
 						</button>
 					</div>
-					<input type="hidden" class="modal-review-id" value="">
+					<div class="evaluation modal-evaluation"></div>
 				</div>
 			</div>		
 		</div>
