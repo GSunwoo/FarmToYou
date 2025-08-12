@@ -27,7 +27,7 @@
 
       <form action="/myLoginAction.do" method="post" >
         <input type="text" id="id" name="my_id" placeholder="아이디를 입력해 주세요" required
-        value="hhhhhhhh"
+        value="aaaaaaaa"
         >
         <input type="password" id="pw" name="my_pass" placeholder="비밀번호를 입력해 주세요" required
         value="A123456&"

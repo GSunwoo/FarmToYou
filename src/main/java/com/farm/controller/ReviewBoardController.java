@@ -13,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.farm.config.login.CustomUserDetails;
 import com.farm.dto.MemberDTO;
@@ -65,31 +67,21 @@ public class ReviewBoardController {
 				//req.getContextPath()+"/list.do?");
 		//model.addAttribute("pagingImg", pagingImg);
 		
-		return "test/list";
+		return "review/reviewPage";
 	}
 	
 	@GetMapping("/guest/review/view.do")
 	//DTO를 사용해서 model이라는 공간에 넘겨줌
-	public String view(HttpServletRequest req ,Model model, ReviewBoardDTO reviewboardDTO) {
+	public String view(@RequestParam("review_id") Long reviewId ,Model model) {
 		
-		String id = req.getParameter("review_id");
-		ReviewBoardDTO dto = dao.selectView(reviewboardDTO.getReview_id());
-		model.addAttribute("review", dto);
-		
-		//사용자가 선택한 글의 상세 정보를 가져오기 
-		reviewboardDTO = dao.view(reviewboardDTO);
-		//화면에 줄바꿈이 잘 보이도록해줌
-		reviewboardDTO.setContent(reviewboardDTO.getContent()
-					.replace("\r\n", "<br/>"));
-		//화면에서 글 정보를 쓸 수 있게 넘겨주는 작업
-		model.addAttribute("reviewboardDTO", reviewboardDTO);
-		
-		return "boardview";
+		ReviewBoardDTO dto = dao.selectView(reviewId);
+	    model.addAttribute("reviewboardDTO", dto);
+		return "review/reviewPage";
 	}
 	
 	@GetMapping("/buyer/review/write.do")
 	   public String reviewWrite(Model model) {
-	      return "test/write";
+	      return "review/reviewPage";
 	   }
 	
 	//쓰기
@@ -111,21 +103,45 @@ public class ReviewBoardController {
 	@GetMapping("/buyer/review/edit.do")
 	public String boardEditGet(Model model, ReviewBoardDTO reviewboardDTO) {
 		//열람에서 사용했던 메서드를 그대로 사용
-		reviewboardDTO = dao.view(reviewboardDTO);
+		reviewboardDTO = dao.selectView(reviewboardDTO.getReview_id());
 		model.addAttribute("reviewboardDTO", reviewboardDTO);
-		return "edit";
+		return "seller/reviewPage";
 	}
 	
 	//수정2 : 사용자가 입력한 내용을 전송하여 update 처리
 	@PostMapping("/buyer/review/edit.do")
-	public String boardEditPost(ReviewBoardDTO reviewboardDTO) {
+	public String boardEditPost(ReviewBoardDTO reviewboardDTO, @AuthenticationPrincipal CustomUserDetails userDetails,
+			RedirectAttributes redirectAttributes) {
 		
-		//수정 후 결과는 int형으로 반환됨
-		int result = dao.edit(reviewboardDTO);
-		System.out.println("글 수정 결과 : " + result);
-		//수정이 완료되면 열람페이지로 이동. 일련번호가 파라미터로 전달됨
-		return "redirect:view.do?reviw_id=" + reviewboardDTO.getReview_id();
+		 try {
+		        MemberDTO member = userDetails.getMemberDTO();
+		        
+		        // 로그인된 사용자 ID 설정
+		        reviewboardDTO.setMember_id(member.getMember_id());
+		        
+		        // 상품 ID는 폼에서 받아와야 함 (hidden input 등으로)
+		        // reviewboardDTO.setProd_id(실제값);
+		        
+		        // 수정 실행
+		        int result = dao.edit(reviewboardDTO);
+		        
+		        if (result > 0) {
+		            System.out.println("리뷰 수정 성공: " + result);
+		            redirectAttributes.addFlashAttribute("message", "리뷰가 성공적으로 수정되었습니다.");
+		        } else {
+		            System.out.println("리뷰 수정 실패: " + result);
+		            redirectAttributes.addFlashAttribute("error", "리뷰 수정에 실패했습니다.");
+		        }
+		        
+		    } catch (Exception e) {
+		        System.err.println("리뷰 수정 중 오류 발생: " + e.getMessage());
+		        redirectAttributes.addFlashAttribute("error", "시스템 오류가 발생했습니다.");
+		    }
+		
+		return "redirect:/guest/review/view.do?review_id=" + reviewboardDTO.getReview_id();
 	}
+	//API 경로
+	//@PostMapping("/buyer/review")
 	
 	
 	

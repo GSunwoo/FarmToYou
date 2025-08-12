@@ -139,5 +139,5 @@
 				ON re.member_id=mb.member_id
 			WHERE pr.member_id=#{member_id}
 	</select>
-	
+
 </mapper>

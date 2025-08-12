@@ -13,7 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT COUNT(*) FROM review
 		
 		<if test="searchKeyword!=null and 
-			!searchKeyword.equals('')">
+			!searchKeyword.equals('')"> 
 		WHERE ${searchField} LIKE '%' || #{searchKeyword} || '%'	
 		</if>
 </select>
@@ -30,10 +30,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <!-- id="" -> 이 SQL의 이름(식별자).자바 코드에서 이걸 호출할 때 view()라고 부름-->
 <select id="selectView" 
+		parameterType="long"
 		resultType="com.farm.dto.ReviewBoardDTO">
 		<!-- WHERE review_id=#{review_id} BoardDTO 안의 review_id필드를 기준으로
 		해당 글 1개를 조회함 -->
   		SELECT * FROM review WHERE review_id = #{review_id}
+  		
+  		<!-- SELECT COUNT(*)
+			FROM member
+			INNER JOIN purchase
+				ON member.member_id=purchase.member_id
+			INNER JOIN member
+				ON purchase.member_id=member.member_id
+			WHERE 
+				member_id = #{user_id} AND
+				purc_state = 'prepare_order' -->
 	</select>
 	
 	

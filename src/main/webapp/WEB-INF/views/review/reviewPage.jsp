@@ -9,6 +9,7 @@
 <title>리뷰 홈페이지 메인</title>
 <!-- 필요한 스타일 -->
 <link rel="stylesheet" href="/css/mainpage.css">
+<link rel="stylesheet" href="/css/reviewPage.css">
 <!-- 돋보기, 별 css -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <script src="/js/reviewModal.js"></script>
@@ -17,7 +18,7 @@
 </head>
 
 <body>
-	<%@ include file="./common/header.jsp"%>
+	<%@ include file="../common/header.jsp"%>
 	<!-- 베스트 리뷰 섹션 -->
 	<section>
 		<div class="review-hero-cont">
@@ -39,7 +40,6 @@
 								</c:otherwise>
 							</c:choose>
 						</div>
-						<!-- 내용 -->
 						<div class="review-content">
 							<p>${best.content }</p>
 						</div>
@@ -47,14 +47,11 @@
 						<div class="rating">
 							<c:forEach var="i" begin="1" end="5">
 								<c:choose>
-									<!-- 백에서 연결하는 rating 값 교체 -->
 									<c:when test="${i <= best.star }">
 										<i class="fa-solid fa-star"></i>
-										<!-- 채운 별 -->
 									</c:when>
 									<c:otherwise>
 										<i class="fa-regular fa-star"></i>
-										<!-- 빈 별 -->
 									</c:otherwise>
 								</c:choose>
 							</c:forEach>
@@ -73,20 +70,17 @@
 						</span>
 						
 						<c:choose>
-							<!-- postdate(LocalDate) 있으면 그대로, 없으면 date(java.util.Date) 포맷해서 출력 -->
 							<c:when test="${not empty best.postdate }">
 								<time class="review-date" datetime="${best.postdate }">${best.postdate }</time>
 							</c:when>
 							<c:otherwise>
-								<!-- 백에서 연결하는 날짜 dto 받기 -->
 								<fmt:formatDate value="${best.date}" pattern="yyyy-MM-dd"
-									var="isoBest" /> <!-- 기계식 표현 yyyy-MM-dd -->
+									var="isoBest" /> 
 								<fmt:formatDate value="${best.date}" pattern="yyyy년 M월 d일"
-									var="humanBest" /> <!-- 사람용 표현 yyyy- m월 d일 -->
-		
-								<!-- 태그 속성에 기계표현, 태그 안 텍스트에 사람표현 -->
+									var="humanBest" /> 
+								
 								<time class="review-date" datetime="${isoBest}">${humanBest}</time>
-								<!-- 백에서 연결하는 이름 dto 받기 -->
+								
 							</c:otherwise>
 						</c:choose>
 					</div>
@@ -111,7 +105,6 @@
 							</c:otherwise>
 						</c:choose>
 					</div>
-					<!-- 내용 -->
 					<div class="review-bottom-content">
 						<h5 class="review-title">${review.title }</h5>
 					</div>
@@ -119,14 +112,11 @@
 					<div class="bottom-rating">
 						<c:forEach var="i" begin="1" end="5">
 							<c:choose>
-								<!-- 백에서 연결하는 rating 값 교체 -->
 								<c:when test="${i <= review.star }">
 									<i class="fa-solid fa-star"></i>
-									<!-- 채운 별 -->
 								</c:when>
 								<c:otherwise>
 									<i class="fa-regular fa-star"></i>
-									<!-- 빈 별 -->
 								</c:otherwise>
 							</c:choose>
 						</c:forEach>
@@ -145,16 +135,14 @@
 						</span>
 						
 						<c:choose>
-							<!-- postdate(LocalDate) 있으면 그대로, 없으면 date(java.util.Date) 포맷해서 출력 -->
 							<c:when test="${not empty review.postdate }">
 								<time class="review-date" datetime="${review.postdate }">${review.postdate }</time>
 							</c:when>
 							<c:otherwise>
-								<!-- 백에서 연결하는 날짜 dto 받기 -->
 								<fmt:formatDate value="${review.date}" pattern="yyyy-MM-dd"
-									var="iso" /> <!-- 기계식 표현 yyyy-MM-dd -->
+									var="iso" /> 
 								<fmt:formatDate value="${review.date}" pattern="yyyy년 M월 d일"
-									var="human" /> <!-- 사람용 표현 yyyy- m월 d일 -->
+									var="human" /> 
 		
 								<!-- 태그 속성에 기계표현, 태그 안 텍스트에 사람표현 -->
 								<time class="review-date" datetime="${iso}">${human}</time>

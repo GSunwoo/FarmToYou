@@ -11,7 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalContent = modal.querySelector('.modal-content-text');
   const likeBtn = modal.querySelector('.like-btn');
   const likeCount = modal.querySelector('.like-count');
-  const modalReviewId = modal.querySelector('.modal-review-id');
+  const modalEvaluation = modal.querySelector('.modal-evaluation');
+
   
   // 카드클릭 -> 모달 열기
   document.querySelectorAll('.review-cards').forEach(card => { //카드가 여러개라 모든 카드에 클릭 이벤트 생성
@@ -27,6 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		const content = card.querySelector('.review-content')?.textContent.trim();// review-title인 요소를 찾아 안에있는 내용을 가져온다
 		const likes = +card.dataset.likes  || 0; // 카드의 요소 data-likes 사용자 정의 속성 값을 가져와 숫자로 변환
 		const reviewId = card.dataset.reviewId || ''; // data-review-id 사용자 정의 속성 값을 가져온다.
+		const evaluation = card.dataset.evaluation || ''; 
 		
 		modalImage.src = imgSrc || ''; //이미지
 		modalAuthor.textContent = author || ''; //작성자
@@ -35,8 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
 		modalContent.textContent = content || ''; // 카드에서 가져온 리뷰내용
 		likeCount.textContent = likes; // 좋아요 수 표시
 		likeBtn.dataset.reviewId = reviewId; //버튼을 어떤 리뷰를 눌렀는지 기록
-		modalReviewId.value = reviewId;  //숨은 input에도 같은 ID 보관
-	
+		
+		modalEvaluation.textContent = evaluation;
 		
 		modalRating.innerHTML = ''; //별점요소의 기존 HTML 내용을 모두 지운다.
 		for(let i=1; i<=5; i++){
