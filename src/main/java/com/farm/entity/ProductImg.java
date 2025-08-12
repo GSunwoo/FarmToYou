@@ -31,6 +31,8 @@ public class ProductImg {
 	@GeneratedValue(generator = "productImgSequence")
 	private Long prodimg_id;
 	private String filename;
+	private Long idx;
+	private String main;
 	
 	@ManyToOne
 	@JoinColumn(name = "prod_id", nullable = false)

@@ -5,10 +5,14 @@
 
 <mapper namespace="com.farm.service.IProductService">
 	<insert id="productWrite" parameterType="com.farm.dto.ProductDTO">
+		<selectKey keyProperty="prod_id" resultType="long" order="BEFORE">
+			SELECT seq_product_id.nextval FROM dual
+		</selectKey>
+	
 		INSERT INTO product
 			(prod_price, prod_stock, member_id, prod_id, prod_cate, prod_content, prod_name	) 
 		VALUES
-			(#{prod_price}, #{prod_stock}, #{member_id}, seq_product_id.nextval, #{prod_cate}, #{prod_content}, #{prod_name})
+			(#{prod_price}, #{prod_stock}, #{member_id}, #{prod_id}, #{prod_cate}, #{prod_content}, #{prod_name})
 	</insert>
 	
 	<select id="getTotalCount" 
@@ -70,5 +74,7 @@
 		parameterType="com.farm.dto.ProductDTO">
 		DELETE FROM product WHERE prod_id = #{prod_id}
 	</delete>
+
+	
 </mapper>
    
