@@ -63,11 +63,11 @@ public class ProductController {
 		int prodResult = proDao.productWrite(productDTO);
 		Long prod_id = productDTO.getProd_id();
 		
-//		이미지 업로드 시작
+
 		int imgResult = insertImg(prod_id, req, productImgDTO);
 		
 		
-//		이미지 업로드 종료
+
 		return "redirect:/Detailpage";
 	}
 	
@@ -76,9 +76,16 @@ public class ProductController {
 			ProductImgDTO productImgDTO) {
 		
 		try {
+			
 			String uploadDir = ResourceUtils.getFile(
-					"classpath:static/uploads/prodimg/"+prod_id).toPath().toString();
+					"classpath:static/uploads/prodimg/prod_id/").toPath().toString();
+			String sep = File.separator;
 			System.out.println("저장경로 : " + uploadDir);
+			File dir = new File(uploadDir + sep + prod_id);
+			if(!dir.exists()) {
+				dir.mkdirs();
+			}
+			
 			
 			long i = 1;
 			Collection<Part> parts = req.getParts();
@@ -92,12 +99,13 @@ public class ProductController {
 				String originalFileName = phArr[1].trim().replace("\"", "");
 				String savedFileName =
 						UploadUtils.renameFile(uploadDir, originalFileName);
-				if (!originalFileName.isEmpty()) {
-					part.write(uploadDir + File.separator + savedFileName);
-				}
 				
+				if (!originalFileName.isEmpty()) {
+					part.write(uploadDir + sep +prod_id +sep+ savedFileName);
+				}
 				productImgDTO.setFilename(savedFileName);
 				productImgDTO.setIdx(i);
+				productImgDTO.setProd_id(prod_id);
 			}
 			
 		}
@@ -159,9 +167,10 @@ public class ProductController {
 	}
 	
 	@GetMapping("/guest/Detailpage.do")
-	public String productView(ProductDTO productDTO, Model model) {
+	public String productView(ProductDTO productDTO, Model model,
+			@RequestParam("prod_id") Long prod_id) {
 		
-		productDTO = proDao.selectProductView(productDTO);
+		productDTO = proDao.selectProductView(prod_id);
 		productDTO.setProd_content(productDTO.getProd_content()
 				.replace("\r\n", "<br/>"));
 		model.addAttribute("productDTO", productDTO);
@@ -173,9 +182,10 @@ public class ProductController {
 	@GetMapping("/seller/update.do")
 	public String productUpdate(
 			@AuthenticationPrincipal CustomUserDetails userDetails,
+			@RequestParam("prod_id") Long prod_id,
 			ProductDTO productDTO, Model model) {
 		Long login_id = userDetails.getMemberDTO().getMember_id();
-		productDTO = proDao.selectProductView(productDTO);
+		productDTO = proDao.selectProductView(prod_id);
 		Long write_id = productDTO.getMember_id();
 		
 		
