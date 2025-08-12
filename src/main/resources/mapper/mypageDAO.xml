@@ -42,8 +42,8 @@
 			INNER JOIN member
 				ON product.member_id=member.member_id
 			WHERE 
-				member_id = #{member_id} AND
-				purc_state = 'chk_order'
+				product.member_id = #{member_id} AND
+				purchase.purc_state = 'chk_order'
 	</select>
 	<!-- 상품준비중인 주문수 -->
 	<select id="getPrepareOrder"
@@ -55,8 +55,8 @@
 			INNER JOIN member
 				ON product.member_id=member.member_id
 			WHERE 
-				member_id = #{member_id} AND
-				purc_state = 'prepare_order'
+				product.member_id = #{member_id} AND
+				purchase.purc_state = 'prepare_order'
 	</select>
 	<!-- 배송중인 주문수 -->
 	<select id="getDeliOrder"
@@ -68,8 +68,8 @@
 			INNER JOIN member
 				ON product.member_id=member.member_id
 			WHERE 
-				member_id = #{member_id} AND
-				purc_state = 'deli_order'
+				product.member_id = #{member_id} AND
+				purchase.purc_state = 'deli_order'
 	</select>
 	<!-- 배송완료된 주문수 -->
 	<select id="getCompleteOrder"
@@ -81,8 +81,8 @@
 			INNER JOIN member
 				ON product.member_id=member.member_id
 			WHERE 
-				member_id = #{member_id} AND
-				purc_state = 'cmpl_order'
+				product.member_id = #{member_id} AND
+				purchase.purc_state = 'cmpl_order'
 	</select>
 	<!-- 판매자에게 들어온 문의수 -->
 	<select id="getInquiryCnt_Seller"
@@ -93,13 +93,13 @@
 				ON inquiry.prod_id=product.prod_id
 			INNER JOIN member
 				ON product.member_id=member.member_id
-			WHERE member_id=${member_id}
+			WHERE product.member_id=${member_id}
 	</select>
 	<!-- 지난 5일간 판매량-->
 	<select id="getSoldNum"
 		resultType="int">
 		SELECT COUNT(*)
-			FROM purchase
+			FROM purchase pu
 			INNER JOIN product pr
 				ON pu.prod_id=pr.prod_id
 			WHERE pr.member_id=${member_id} AND

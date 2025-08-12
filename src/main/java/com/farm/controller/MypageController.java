@@ -112,6 +112,6 @@ public class MypageController {
 			model.addAttribute("myReviews", myReviews);
 			
 		}
-		return "seller/mypage";
+		return "seller/seller_myPage";
 	}
 }
