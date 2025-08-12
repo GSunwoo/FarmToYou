@@ -67,7 +67,7 @@ public class ReviewBoardController {
 				//req.getContextPath()+"/list.do?");
 		//model.addAttribute("pagingImg", pagingImg);
 		
-		return "test/list";
+		return "review/reviewPage";
 	}
 	
 	@GetMapping("/guest/review/view.do")
@@ -76,12 +76,12 @@ public class ReviewBoardController {
 		
 		ReviewBoardDTO dto = dao.selectView(reviewId);
 	    model.addAttribute("reviewboardDTO", dto);
-		return "test/view";
+		return "review/reviewPage";
 	}
 	
 	@GetMapping("/buyer/review/write.do")
 	   public String reviewWrite(Model model) {
-	      return "test/write";
+	      return "review/reviewPage";
 	   }
 	
 	//쓰기
@@ -105,7 +105,7 @@ public class ReviewBoardController {
 		//열람에서 사용했던 메서드를 그대로 사용
 		reviewboardDTO = dao.selectView(reviewboardDTO.getReview_id());
 		model.addAttribute("reviewboardDTO", reviewboardDTO);
-		return "test/edit";
+		return "seller/reviewPage";
 	}
 	
 	//수정2 : 사용자가 입력한 내용을 전송하여 update 처리
@@ -140,6 +140,8 @@ public class ReviewBoardController {
 		
 		return "redirect:/guest/review/view.do?review_id=" + reviewboardDTO.getReview_id();
 	}
+	//API 경로
+	//@PostMapping("/buyer/review")
 	
 	
 	

@@ -17,7 +17,7 @@
 </head>
 
 <body>
-	<%@ include file="./common/header.jsp"%>
+	<%@ include file="../common/header.jsp"%>
 	<!-- 베스트 리뷰 섹션 -->
 	<section>
 		<div class="review-hero-cont">
@@ -167,6 +167,6 @@
 		</div>
 	</section>
 	
-	<%@ include file="./reviewModal.jsp" %>
+	<%@ include file="../reviewModal.jsp" %>
 </body>
 </html>

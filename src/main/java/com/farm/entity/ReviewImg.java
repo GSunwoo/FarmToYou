@@ -1,5 +1,6 @@
 package com.farm.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -27,7 +28,11 @@ public class ReviewImg {
 		)
 	@GeneratedValue(generator = "reviewImgSequence")
 	private Long reviewimg_id;
-	private String filename; // 서버에 저장될 파일의 이름
+	@Column(nullable = false)
+	private String filename ; // 서버에 저장될 파일의 이름
+	@Column(name = "sort_order", nullable = false)
+    private Integer sortOrder;
+
 	
 	@ManyToOne
 	@JoinColumn(name = "review_id", nullable = false)
