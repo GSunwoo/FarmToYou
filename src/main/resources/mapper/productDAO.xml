@@ -71,7 +71,7 @@
 	</update>
 	
 	<delete id="deleteProduct"
-		parameterType="com.farm.dto.ProductDTO">
+		parameterType="Long">
 		DELETE FROM product WHERE prod_id = #{prod_id}
 	</delete>
 

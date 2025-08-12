@@ -9,5 +9,5 @@ public class ProductImgDTO {
 	private String filename;
 	private Long idx;
 	private String main;
-	private String prod_id;
+	private Long prod_id;
 }

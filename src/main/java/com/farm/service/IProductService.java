@@ -17,6 +17,6 @@ public interface IProductService {
 	//검색어 O
 	public ArrayList<ProductDTO> selectProduct(ParameterDTO parameterDTO);
 	public int productUpdate(ProductDTO productDTO);
-	public int productDelete(ProductDTO productDTO);
+	public int productDelete(@Param("prod_id") Long prod_id);
 
 }

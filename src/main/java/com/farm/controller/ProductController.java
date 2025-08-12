@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -100,12 +101,15 @@ public class ProductController {
 				String savedFileName =
 						UploadUtils.renameFile(uploadDir, originalFileName);
 				
-				if (!originalFileName.isEmpty()) {
+				if (!savedFileName.isEmpty()) {
 					part.write(uploadDir + sep +prod_id +sep+ savedFileName);
 				}
 				productImgDTO.setFilename(savedFileName);
 				productImgDTO.setIdx(i);
 				productImgDTO.setProd_id(prod_id);
+				
+				imgDao.insertImg(productImgDTO);
+				i++;
 			}
 			
 		}
@@ -221,8 +225,8 @@ public class ProductController {
 	}
 	
 	@PostMapping("/seller/delete.do")
-	public String delete(ProductDTO productDTO){
-		int result = proDao.productDelete(productDTO);
+	public String delete(@RequestParam("prod_id") Long prod_id){
+		int result = proDao.productDelete(prod_id);
 		if(result == 1) {
 			System.out.println("상품 삭제가 완료되었습니다 : " + result);
 		}
