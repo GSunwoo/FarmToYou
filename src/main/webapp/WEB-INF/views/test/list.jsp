@@ -52,10 +52,9 @@
                 (((maps.pageNum-1) * maps.pageSize)	+ loop.index)}
             </td>
             <td align="left"> 
-                <a href="./view.do?idx=${ row.idx }">${ row.title }</a> 
+                <a href="./view.do?idx=${ row.review_id }">${ row.title }</a> 
             </td> 
-            <td>${ row.name }</td> 
-            <td>${ row.visitcount }</td> 
+            <td>${ row.content }</td> 
             <td>${ row.postdate }</td> 
         </tr>
         </c:forEach>        
@@ -70,7 +69,7 @@
                 ${ pagingImg }
             </td>
             <td width="100"><button type="button"
-                onclick="location.href='./write.do';">글쓰기</button></td>
+                onclick="location.href='/buyer/review/write.do';">글쓰기</button></td>
         </tr>
     </table>
 </body>

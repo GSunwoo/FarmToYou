@@ -21,7 +21,9 @@
       <div class="form-line">
         <label for="userid">아이디</label>
         <div class="form-group row-group">
-          <input type="text" id="userid" name="user_id" placeholder="아이디 입력 (7자리 이상)" required />
+          <input type="text" id="userid" name="user_id" placeholder="아이디 입력 (7자리 이상)" required 
+          value="aaaaaaaa"
+          />
           <button type="button" onclick="checkDuplicateId()">중복 확인</button>
         </div>
       </div>
@@ -30,7 +32,9 @@
       <div class="form-line">
         <label for="password">비밀번호</label>
         <div class="form-group">
-          <input type="password" id="password" name="user_pw" required />
+          <input type="password" id="password" name="user_pw" required 
+          value="A123456&"
+          />
           <p id="pwFormatMsg" class="warning-text" style="display:none;">
             첫 글자 대문자, 특수기호 포함, 7자리 이상이어야 합니다.
           </p>
@@ -41,7 +45,9 @@
       <div class="form-line">
         <label for="password2">비밀번호 확인</label>
         <div class="form-group">
-          <input type="password" id="password2" placeholder="비밀번호 재입력" required />
+          <input type="password" id="password2" placeholder="비밀번호 재입력" required 
+           value="A123456&"
+          />
           <p id="pwMismatchMsg" class="warning-text" style="display: none;">비밀번호가 틀립니다. 다시입력하세요.</p>
         </div>
       </div>
@@ -50,7 +56,9 @@
       <div class="form-line">
         <label for="emailId">이메일</label>
         <div class="form-group email-group">
-          <input type="text" id="emailId" name="emailid" placeholder="이메일 주소" required /> @
+          <input type="text" id="emailId" name="emailid" placeholder="이메일 주소" required 
+          value="asdfasdf"
+          /> @
           <input type="text" id="emailDomain" name="emaildomain" readonly required />
           <select id="domainSelect" onchange="handleDomainSelect(this)">
             <option value="">도메인 선택</option>
@@ -58,7 +66,7 @@
             <option value="naver.com">naver.com</option>
             <option value="daum.net">daum.net</option>
           </select>
-          <input type="hidden" id="email" name="email" value="" />
+<!--           <input type="hidden" id="email" name="email" value="" /> -->
         </div>
       </div>
 
@@ -66,7 +74,9 @@
       <div class="form-line">
         <label for="name">이름</label>
         <div class="form-group">
-          <input type="text" id="name" name="name" placeholder="이름을 입력하세요" required />
+          <input type="text" id="name" name="name" placeholder="이름을 입력하세요" required 
+           value="asdfasd"
+          />
         </div>
       </div>
 

@@ -14,5 +14,6 @@ public class ReviewBoardDTO {
  	private String content;
 	private int star;
 	private String evaluation;
-	private int visitcount;
+	private int review_like; //좋아요
+	private Long prod_id; //상품 아이디
 }

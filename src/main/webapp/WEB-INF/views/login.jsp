@@ -35,7 +35,7 @@
 
         <div class="login-options">
           <label><input type="checkbox">기억하기</label>
-          <a href="/findPw.do">비밀번호를 잊어버리셨나요?</a>
+          <a href="/guest/findPw.do">비밀번호를 잊어버리셨나요?</a>
         </div>
 
         <button type="submit" class="login-btn">로그인</button>
