@@ -101,7 +101,7 @@ public class MypageController {
 			}
 			// 날짜별 판매량/매출(지난 5일간)
 			// Object로 보내서 list로 변환필요
-			model.addAttribute(soldData);
+			model.addAttribute("soldData",soldData);
 			
 			/****** 등록한 상품 목록  ******/
 			List<ProductDTO> myProducts = dao.getMyProducts(member_id); // 모든 항목(현재는 페이징x)

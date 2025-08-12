@@ -8,11 +8,13 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.farm.config.login.CustomUserDetails;
 import com.farm.dto.MemberDTO;
 import com.farm.dto.ParameterDTO;
 import com.farm.dto.ProductDTO;
@@ -38,13 +40,16 @@ public class ProductController {
 	
 	@GetMapping("/seller/write.do")
 	public String sellerWrite() {
-		
 		return "seller/write";
 	}
 	@PostMapping("/seller/write.do")
-	public String sellerWrite2(MemberDTO memberDTO) {
+	public String sellerWrite2(
+			@AuthenticationPrincipal CustomUserDetails userDetails,
+			ProductDTO productDTO) {
+		productDTO.setMember_id(userDetails.getMemberDTO().getMember_id());
+		int result = proDao.productWrite(productDTO);
 		
-		return "redirect:/myPageMain";
+		return "redirect:/Detailpage";
 	}
 	
 	@GetMapping("/guest/productList.do")
@@ -102,6 +107,58 @@ public class ProductController {
 		return "Detailpage";
 	}
 	
+	
+	@GetMapping("/seller/update.do")
+	public String productUpdate(
+			@AuthenticationPrincipal CustomUserDetails userDetails,
+			ProductDTO productDTO, Model model) {
+		Long login_id = userDetails.getMemberDTO().getMember_id();
+		productDTO = proDao.selectProductView(productDTO);
+		Long write_id = productDTO.getMember_id();
+		
+		
+		try {
+			
+			if(login_id == write_id && login_id != null && write_id != null) {
+				model.addAttribute("productDTO", productDTO);
+				return "seller/update.do";
+			}
+			
+			
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("로긴아이디 : " + ((login_id!=null) ? login_id : "null"));
+			System.out.println("작성자아이디 : " + ((write_id!=null) ?login_id : "null"));
+		}
+			
+			
+		return "redirect:/";
+	}
+	
+	@PostMapping("/seller/update.do")
+	public String productUpdate2(ProductDTO productDTO) {
+		int result = proDao.productUpdate(productDTO);
+		if(result == 1) {
+			System.out.println("상품 수정신청이 들어왔습니다.");
+		}
+		else {
+			System.out.println("상품 수정신청에 실패했습니다. : " + result);
+		}
+		return "seller/myPageList";
+	}
+	
+	@PostMapping("/seller/delete.do")
+	public String delete(ProductDTO productDTO){
+		int result = proDao.productDelete(productDTO);
+		if(result == 1) {
+			System.out.println("상품 삭제가 완료되었습니다 : " + result);
+		}
+		else {
+			System.out.println("상품 삭제에 실패하였습니다. : " + result);
+		}
+		return "seller/myPageList";
+	}
 	
 	
 }
