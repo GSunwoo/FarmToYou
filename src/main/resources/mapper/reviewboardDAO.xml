@@ -23,7 +23,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       parameterType="com.farm.dto.PageDTO"
       resultType="com.farm.dto.ReviewBoardDTO">
       SELECT review_id, member_id, postdate, title, content, star, evaluation, review_like, prod_id
-      FROM review
+      FROM (SELECT Tb.*, rownum rNum FROM (
+				SELECT * FROM product
+				ORDER BY prod_id DESC
+			) Tb
+			WHERE rownum<![CDATA[<=]]>#{end}
+		) pro
+		LEFT JOIN product_img img
+			ON pro.prod_id = img.prod_id and img.main = 'main'
+		WHERE rNum <![CDATA[>=]]>#{start} 
+      
+      
       
       	
 </select>
@@ -35,22 +45,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<!-- WHERE review_id=#{review_id} BoardDTO 안의 review_id필드를 기준으로
 		해당 글 1개를 조회함 -->
   		SELECT * FROM review WHERE review_id = #{review_id}
-  		
-  		<!-- SELECT COUNT(*)
-			FROM member
-			INNER JOIN purchase
-				ON member.member_id=purchase.member_id
-			INNER JOIN member
-				ON purchase.member_id=member.member_id
-			WHERE 
-				member_id = #{user_id} AND
-				purc_state = 'prepare_order' -->
 	</select>
 	
 	
 	<insert id="write" parameterType="com.farm.dto.ReviewBoardDTO">
 	  INSERT INTO review(review_id, member_id, title, content, star, prod_id)
 	  VALUES (seq_review_id.nextval, #{member_id}, #{title}, #{content}, #{star}, #{prod_id})
+	  
+	   SELECT COUNT(*)
+			FROM review
+			INNER JOIN member
+				ON review.member_id=member.member_id
+			INNER JOIN product
+				ON product.member_id=purchase.member_id
+			WHERE review.review_id = #{review_id}
 	</insert>
 	
 	<update id="edit" parameterType="com.farm.dto.ReviewBoardDTO">

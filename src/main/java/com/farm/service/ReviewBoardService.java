@@ -23,4 +23,6 @@ public interface ReviewBoardService {
 	public int getReviewById(Long review_id);
 	
 	public int edit(ReviewBoardDTO reviewboardDTO);
+	
+	public ArrayList<ReviewBoardDTO> getReviewPage(ReviewBoardDTO reviewboardDTO);
 }

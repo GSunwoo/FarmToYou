@@ -17,7 +17,9 @@ import org.springframework.ui.Model;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -28,6 +30,7 @@ import com.farm.dto.ReviewBoardDTO;
 import com.farm.dto.ReviewImgDTO;
 import com.farm.service.ReviewBoardService;
 import com.farm.service.ReviewImgService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.Part;
@@ -48,39 +51,52 @@ public class ReviewBoardController {
 	//HttpServletRequest : 사용자가 웹 페이지에서 서버에게 요청한 내용을 다 들고 있는 객체
 	public String list(Model model, HttpServletRequest req,
 			ReviewBoardDTO reviewboardDTO, PageDTO pageDTO) {
-		
-		
-		//무한스크롤로 전체 목록보기 
-		 int pageSize = 20;
-	        int pageNum = req.getParameter("pageNum") == null
-	            ? 1
-	            : Integer.parseInt(req.getParameter("pageNum"));
-
-	        int start = (pageNum - 1) * pageSize + 1;
-	        int end   = pageNum * pageSize;
-	        pageDTO.setStart(start);
-	        pageDTO.setEnd(end);
-		
-		/*
-		string이 key고 object가 value인 Map자료구조를 만든다.*/
-		Map<String, Object> maps = new HashMap<String, Object>();
-		
-		//maps.put("totalCount", totalCount);
-		maps.put("pageSize", pageSize);
-		maps.put("pageNum", pageNum);
-		model.addAttribute("maps", maps);
-		
+		pageDTO.setStart(1);
+		pageDTO.setEnd(20);
 		ArrayList<ReviewBoardDTO> lists = dao.listPage(pageDTO);
 		model.addAttribute("lists", lists);
 		
 		//페이지 네비게이션 바를 HTM
 		//String pagingImg = com.edu.springboot.utils.PagingUtil.pagingImg(
-				//totalCount, pageSize, blockPage, pageNum, 
-				//req.getContextPath()+"/list.do?");
+				//totalCount, pageSize, bloc t.do?");
 		//model.addAttribute("pagingImg", pagingImg);
-		
+
 		return "review/reviewPage";
 	}
+	
+	@RequestMapping("/guest/review/restApi.do")
+	@ResponseBody
+	public List<Map<String,Object>> newList(PageDTO pageDTO, HttpServletRequest req,
+			ReviewBoardDTO reviewboardDTO){
+		int pageSize = 20;
+		int pageNum = req.getParameter("pageNum") == null
+				? 1
+						: Integer.parseInt(req.getParameter("pageNum"));
+		
+		int start = (pageNum - 1) * pageSize + 1;
+		int end   = pageNum * pageSize;
+		pageDTO.setStart(start);
+		pageDTO.setEnd(end);
+		
+		List<Map<String, Object>> list = new ArrayList<>();
+		ObjectMapper objectMapper = new ObjectMapper();
+		List<ReviewBoardDTO> selectReviewList = dao.listPage(pageDTO);
+		
+		for(ReviewBoardDTO review : selectReviewList){
+		    Map<String, Object> reviewMap = objectMapper.convertValue(review, Map.class);
+		    list.add(reviewMap);
+		}
+		Map<String, Object> maps = new HashMap<String, Object>();
+	
+		
+        
+        maps.put("pageSize", pageSize);
+		maps.put("pageNum", pageNum);
+		
+		return list;
+		
+	}
+	
 	
 	//열람
 	@GetMapping("/guest/review/view.do")
