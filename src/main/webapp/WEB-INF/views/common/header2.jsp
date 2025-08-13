@@ -21,6 +21,7 @@
 						<li><a href="#">회원 탈퇴</a></li>
 						<li><a href="#">배송지 관리</a></li>
 						<li><a href="#">결제 수단 관리</a></li>
+						<li><a href="#">리뷰 관리</a></li>
 					</ul>
 				</li>
 			</ul>
