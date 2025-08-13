@@ -22,32 +22,32 @@
         <div class="goods-list-tit"><h2>금주의 추천상품</h2></div>
 
         <c:choose>
-          <c:when test="${not empty weeklyProducts}">
+          <c:when test="${not empty bests}">
             <ul class="good-list-items-content three-items-per-row">
-              <c:forEach var="p" items="${weeklyProducts}">
+              <c:forEach var="best" items="${bests}">
                 <li>
                   <div class="item-photo-box">
                     <img
-                      src="${pageContext.request.contextPath}/images/${prod.prodimg_id}"
-                      alt="${prod.prod_name}"
-                      onclick="location.href='${pageContext.request.contextPath}/product/detail/${p.id}'">
+                      src="${pageContext.request.contextPath}/uploads/prodimg/prod_id/${best.prod_id}/${best.filename}"
+                      alt="${best.filename}"
+                      onclick="location.href='${pageContext.request.contextPath}/guest/Detailpage.do?prod_id=${best.prod_id}'">
                   </div>
                   <div class="item-info-box">
                     <div class="item-info-cont">
                       <div class="item-tit-box">
-                        <a href="${pageContext.request.contextPath}/product/detail/${p.id}">
-                          ${p.name}
+                        <a href="${pageContext.request.contextPath}/guest/Detailpage.do?prod_id=${best.prod_id}">
+                          ${best.prod_name}
                         </a>
                       </div>
                       <div class="item-money-box">
-                        <c:if test="${p.originalPrice gt p.salePrice}">
-                          <del><fmt:formatNumber value="${p.originalPrice}"/>원</del>
-                        </c:if>
-                        <div class="price-inline">
+                        <%-- <c:if test="${p.originalPrice gt p.salePrice}"> --%>
+                          <del><fmt:formatNumber value="${best.prod_price}"/>원</del>
+                        <%-- </c:if> --%>
+                        <%-- <div class="price-inline">
                           <strong class="item-price">
                             <span><fmt:formatNumber value="${p.salePrice}"/>원</span>
                           </strong>
-                        </div>
+                        </div> --%>
                       </div>
                     </div>
                   </div>

@@ -16,6 +16,7 @@ public interface IProductService {
 	public int getTotalCount(ParameterDTO parameterDTO);
 	//검색어 O
 	public ArrayList<ProductDTO> selectProduct(ParameterDTO parameterDTO);
+	public ArrayList<ProductDTO> selectBestProd(ParameterDTO parameterDTO);
 	public int productUpdate(ProductDTO productDTO);
 	public int productDelete(@Param("prod_id") Long prod_id);
 

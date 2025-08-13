@@ -45,6 +45,8 @@ public class ProductController {
 	@Value("${board.blockPage}")
 	private int blockPage;
 	
+	@Value("${board.bestSize}")
+	private int bestSize;
 	
 	@Autowired
 	IProductService proDao;
@@ -158,6 +160,13 @@ public class ProductController {
 		int totalCount = proDao.getTotalCount(parameterDTO);
 		System.out.println("totalcount" + totalCount);
 		ArrayList<ProductDTO> lists = proDao.selectProduct(parameterDTO);
+		//베스트상품 불러오기
+		parameterDTO.setEnd(bestSize);
+		ArrayList<ProductDTO> bests = proDao.selectBestProd(parameterDTO);
+		model.addAttribute("bests", bests);
+		//베스트상품 끝
+		
+		
 		 Map<String, Object> paramMap = new HashMap<>();
 		 	paramMap.put("totalCount", totalCount);
 		    paramMap.put("pageSize", pageSize);
