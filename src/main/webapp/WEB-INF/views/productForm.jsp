@@ -18,8 +18,12 @@
     <label for="prod_stock">재고:</label>
     <input type="number" id="prod_stock" name="prod_stock"><br><br>
 
-    <label for="prod_cate">카테고리:</label>
-    <input type="text" id="prod_cate" name="prod_cate"><br><br>
+     <label for="prod_cate">카테고리</label>
+      <select id="prod_cate" name="prod_cate">
+        <option value="">선택하세요</option>
+        <option value="fruit">과일</option>
+        <option value="vegetable">채소</option>
+      </select>
 
     <label for="member_id">판매자 일련번호:</label>
     <input type="text" id="member_id" name="member_id"><br><br>
