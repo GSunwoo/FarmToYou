@@ -19,8 +19,7 @@
   <form id="review" action="/buyer/review/write.do" method="post">
     <!-- 내부/자동 값 -->
     <input type="hidden" id="review_id" name="review_id"> <!-- 신규 작성이므로 비움 -->
-    <input type="hidden" id="review_like" name="review_like" value="0">
-    <input type="hidden" id="review_liked" name="review_liked" value="false">
+    <input type="hidden" id="review_like" name="review_like">
 
     <!-- 작성자(로그인 세션) -->
     <label for="member_id">회원 ID</label>
