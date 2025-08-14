@@ -16,6 +16,7 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script src="/js/Detailpage.js"></script>
+<script src="/js/wishlist.js"></script>
 </head>
 <body>
 	<%@ include file="./common/header.jsp"%>
@@ -57,11 +58,11 @@
 
 		<!-- 백엔드 연결 시 name, value, 액션경로 세팅 -->
 		<!-- 액션 버튼 -->
-		<div class="dp-actions">
-			<form method="post" action="#">
-				<input type="hidden" name="" value="${productDTO.prod_id }">
-				<input type="hidden" id="qtyInput" name="" value="1">
-				<button type="submit" class="btn-outline">장바구니</button>
+		<div class="dp-actions" >
+			<form id="cart_form">
+				<input type="hidden" name="prod_id" value="${productDTO.prod_id }">
+				<input type="hidden" id="qtyInput" name="prod_qty" value="1">
+				<button type="submit" class="btn-outline" id="wishlist-add-btn">장바구니 담기</button>
 				<!-- 장바구니로 가는 경로 세팅 -->
 				<a href="#" class="btn-solid">바로결제</a>
 			</form>
