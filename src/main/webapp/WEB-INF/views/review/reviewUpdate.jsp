@@ -17,6 +17,7 @@
   <!-- prod_id는 쿼리스트링 ?prod_id=... 로 전달된다고 가정 -->
 
   <form id="review" action="/buyer/review/write.do" method="post">
+  
     <!-- 내부/자동 값 -->
     <input type="hidden" id="review_id" name="review_id"> <!-- 신규 작성이므로 비움 -->
     <input type="hidden" id="review_like" name="review_like">
@@ -56,6 +57,31 @@
     <!-- 평가 (자유 텍스트; 필요 시 select로 변경 가능) -->
     <label for="evaluation">평가</label>
     <input type="text" id="evaluation" name="evaluation" maxlength="50" placeholder="예: 아주 좋아요"><br><br>
+    
+    <!-- 내부에서 설정할 값 -->
+    <input type="hidden" id="reviewimg_id" name="reviewimg_id">
+    <input type="hidden" id="idx" name="idx">
+
+    <!-- 리뷰 ID (연결용) -->
+    <label for="review_id">리뷰 ID:</label>
+    <input type="text" id="review_id" name="review_id" required><br><br>
+
+    <!-- 메인 여부 -->
+    <label for="main">메인 여부:</label>
+    <select id="main" name="main">
+      <option value="Y">Y</option>
+      <option value="N" selected>N</option>
+    </select><br><br>
+
+    <!-- 파일명 (서버에서 자동 생성 가능) -->
+    <label for="filename">파일명:</label>
+    <input type="text" id="filename" name="filename" placeholder="업로드 시 자동 설정 가능"><br><br>
+
+    <!-- 실제 이미지 업로드 -->
+    <label for="uploadFile">이미지 선택:</label>
+    <input type="file" id="uploadFile" name="uploadFile" accept="image/*" required><br><br>
+
+    <input type="submit" value="이미지 업로드">
 
     <input type="submit" value="리뷰 등록">
   </form>
