@@ -36,57 +36,50 @@
      <section class="product-form-page">
   <h3>상품판매등록</h3>
 
-  <form id="productForm" class="product-form" method="post" enctype="multipart/form-data">
-    <div class="form-row">
-      <label for="prod_name">상품명</label>
-      <input id="prod_name" type="text" name="prod_name" placeholder="상품명" />
-    </div>
+  <form id="productForm" class="product-form" method="post" 
+      enctype="multipart/form-data" action="/seller/write.do">
 
-    <div class="form-row">
-      <label for="prod_content">설명</label>
-      <textarea id="prod_content" name="prod_content" placeholder="설명" rows="4"></textarea>
-    </div>
 
-    <div class="form-row">
-      <label for="prod_stock">재고</label>
-      <input id="prod_stock" type="number" name="prod_stock" placeholder="재고" />
-    </div>
+  <div class="form-row">
+    <label for="prod_name">상품명</label>
+    <input id="prod_name" type="text" name="prod_name" placeholder="상품명" />
+  </div>
 
-    <div class="form-row">
-      <label for="prod_pirce">가격 (원)</label>
-      <input id="prod_pirce" type="number" name="prod_pirce" placeholder="가격 (원)" />
-    </div>
+  <div class="form-row">
+    <label for="prod_content">설명</label>
+    <textarea id="prod_content" name="prod_content" placeholder="설명" rows="4"></textarea>
+  </div>
 
-    <div class="form-row">
-      <label for="farm_name">농가</label>
-      <input id="farm_name" type="text" name="farm_name" placeholder="농가" />
-    </div>
+  <div class="form-row">
+    <label for="prod_stock">재고</label>
+    <input id="prod_stock" type="number" name="prod_stock" placeholder="재고" />
+  </div>
 
-    <div class="form-row">
-      <label for="prod_cate">카테고리</label>
-      <select id="prod_cate" name="prod_cate">
-        <option value="">선택하세요</option>
-        <option value="fruit">과일</option>
-        <option value="vegetable">채소</option>
-      </select>
-    </div>
+  <div class="form-row">
+    <label for="prod_price">가격 (원)</label>
+    <input id="prod_price" type="number" name="prod_price" placeholder="가격 (원)" />
+  </div>
 
-    <div class="form-row">
-      <label for="imageInput">상품 이미지</label>
-      <input id="imageInput" type="file" accept="image/*" />
-    </div>
 
-    <div class="image-preview" id="previewWrap" style="display:none;">
-      <img id="previewImg" alt="미리보기" />
-    </div>
+  <div class="form-row">
+    <label for="prod_cate">카테고리</label>
+    <select id="prod_cate" name="prod_cate">
+      <option value="">선택하세요</option>
+      <option value="fruit">과일</option>
+      <option value="vegetable">채소</option>
+    </select>
+  </div>
 
-    <div id="errorMsg" class="error" style="display:none;"></div>
+  <div class="form-row">
+    <label for="imageInput">상품 이미지</label>
+    <input id="imageInput" type="file" name="image" accept="image/*" multiple />
+  </div>
 
-    <div class="button-group">
-      <button type="submit">등록</button>
-      <button type="button" id="cancelBtn">취소</button>
-    </div>
-  </form>
+  <div class="button-group">
+    <button type="submit">등록</button>
+    <button type="button" id="cancelBtn">취소</button>
+  </div>
+</form>
 </section>
 
     </main>

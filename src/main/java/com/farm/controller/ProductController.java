@@ -68,12 +68,14 @@ public class ProductController {
 		int prodResult = proDao.productWrite(productDTO);
 		Long prod_id = productDTO.getProd_id();
 		
-
-		insertImg(prod_id, main_idx, files);
+		
+		if(!files.isEmpty()) {			
+			insertImg(prod_id, main_idx, files);
+		}
 		
 		
 
-		return "redirect:/Detailpage";
+		return "redirect:/guest/Detailpage.do?prod_id="+prod_id;
 	}
 	
 
@@ -108,7 +110,7 @@ public class ProductController {
 				productImgDTO.setIdx(i);
 				productImgDTO.setProd_id(prod_id);
 				if(i == main_idx) {
-					productImgDTO.setMain("main");
+					productImgDTO.setMain_idx(main_idx);
 				}
 				
 				int insertResult = imgDao.insertImg(productImgDTO);
