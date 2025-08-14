@@ -56,7 +56,8 @@ public class ProductController {
 	
 	@GetMapping("/seller/write.do")
 	public String sellerWrite() {
-		return "/seller/productRegistraion";
+
+		return "productForm";
 	}
 	@PostMapping("/seller/write.do")
 	public String sellerWrite2(
