@@ -4,9 +4,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/myPageMain.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/mainpage.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/myPageMain.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <title>마이 페이지 메인</title>
 </head>
 <body class="simple-page">
@@ -14,16 +14,18 @@
 
   <div class="mypage-wrapper">
     <div class="sub-content">
-      <%@ include file="../common/header2.jsp" %>  <!-- 이제 side-bar만 출력됨 -->
+      <%@ include file="../common/header2.jsp" %>  <!-- 사이드바 -->
 
-      <div class="mypage-cont">
-        <div class="mypage-info">
-          <div class="mypage-info-cont">
+      <div class="mypage-main-cont">
+        <div class="mypage-main-info">
+
+          <!-- 최근 주문 정보 -->
+          <div class="mypage-main-info-cont">
             <h2>최근 주문 정보
               <span class="order-info-subtext">최근 30일 내에 주문하신 내역입니다</span>
             </h2>
 
-            <div class="mypage-table-type">
+            <div class="mypage-main-table-type">
               <table>
                 <colgroup>
                   <col style="width:15%;">
@@ -48,32 +50,34 @@
                 </tbody>
               </table>
             </div>
+          </div><!-- .mypage-main-info-cont -->
 
-            <div class="mypage-info-cont">
-              <h2>최근 본 상품
-                <span class="order-info-subtext">일반회원님께서 본 최근 상품입니다.</span>
-              </h2>
-              <div class="mypage-table-type">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>최근 본 상품</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td style="text-align:center;">상품이 존재하지 않습니다.</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <!-- 최근 본 상품 -->
+          <div class="mypage-main-info-cont">
+            <h2>최근 본 상품
+              <span class="order-info-subtext">일반회원님께서 본 최근 상품입니다.</span>
+            </h2>
+            <div class="mypage-main-table-type">
+              <table>
+                <thead>
+                  <tr>
+                    <th>최근 본 상품</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td style="text-align:center;">상품이 존재하지 않습니다.</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </div><!-- .mypage-main-info-cont -->
 
-          </div><!-- .mypage-info-cont -->
-        </div><!-- .mypage-info -->
-      </div><!-- .mypage-cont -->
+        </div><!-- .mypage-main-info -->
+      </div><!-- .mypage-main-cont -->
 
     </div><!-- .sub-content -->
   </div><!-- .mypage-wrapper -->
 </body>
 </html>
+

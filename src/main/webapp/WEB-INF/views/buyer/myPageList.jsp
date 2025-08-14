@@ -8,7 +8,7 @@
 <title>주문목록/배송조회</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/myPageMain.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/mainpage.css">
-<link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <!-- flatpickr CSS -->
 <link rel="stylesheet"href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <!-- flatpickr JS -->
@@ -17,28 +17,7 @@
 <body>
 	<div class="sub-content">
 		<div class="side-bar">
-			<div class="sub-menu-box">
-				<h2>마이페이지</h2>
-				<ul class="sub-menu-mypage">
-					<li>쇼핑정보
-						<ul class="sub-depth1">
-							<li><a href="#">주문목록</a></li>
-						</ul>
-					</li>
-					<li>고객센터
-						<ul class="sub-depth2">
-							<li><a href="#">상품문의</a></li>
-						</ul>
-					</li>
-					<li>회원정보
-						<ul class="sub-depth3">
-							<li><a href="#">회원정보 변경</a></li>
-							<li><a href="#">회원 탈퇴</a></li>
-							<li><a href="#">배송지 관리</a></li>
-						</ul>
-					</li>
-				</ul>
-			</div>
+			<%@ include file="../common/header2.jsp" %>
 		</div>
 
 		<div class="mypage-cont">

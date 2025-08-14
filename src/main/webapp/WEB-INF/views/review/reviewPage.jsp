@@ -40,8 +40,9 @@
 							<div class="review-info">
 								<div class="review-img">
 									<c:choose>
-										<c:when test="${not empty best.image}">
-											<img src="${best.image}" alt="${best.title}" />
+										<!-- 이미지 이름 넣기 -->
+										<c:when test="${not empty best.}">
+											<img src="${best.}" alt="${best.title}" />
 										</c:when>
 										<c:otherwise>
 											<img alt="${best.title}" />
@@ -81,9 +82,9 @@
 										<time class="review-date" datetime="${best.postdate}">${best.postdate}</time>
 									</c:when>
 									<c:otherwise>
-										<fmt:formatDate value="${best.date}" pattern="yyyy-MM-dd"
+										<fmt:formatDate value="${best.postdate}" pattern="yyyy-MM-dd"
 											var="isoBest" />
-										<fmt:formatDate value="${best.date}" pattern="yyyy년 M월 d일"
+										<fmt:formatDate value="${best.postdate}" pattern="yyyy년 M월 d일"
 											var="humanBest" />
 										<time class="review-date" datetime="${isoBest}">${humanBest}</time>
 									</c:otherwise>
@@ -108,8 +109,9 @@
 
 					<div class="review-imgs">
 						<c:choose>
-							<c:when test="${not empty review.image }">
-								<img src="${review.image}" alt="${review.title }" />
+							<!-- 이미지 이름 넣기 -->
+							<c:when test="${not empty review.}">
+								<img src="" alt="${review.title }" />
 							</c:when>
 							<c:otherwise>
 								<img alt="${review.title }" />
@@ -149,9 +151,9 @@
 								<time class="review-date" datetime="${review.postdate }">${review.postdate }</time>
 							</c:when>
 							<c:otherwise>
-								<fmt:formatDate value="${review.date}" pattern="yyyy-MM-dd"
+								<fmt:formatDate value="${review.postdate}" pattern="yyyy-MM-dd"
 									var="iso" />
-								<fmt:formatDate value="${review.date}" pattern="yyyy년 M월 d일"
+								<fmt:formatDate value="${review.postdate}" pattern="yyyy년 M월 d일"
 									var="human" />
 
 								<!-- 태그 속성에 기계표현, 태그 안 텍스트에 사람표현 -->
