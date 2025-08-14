@@ -114,4 +114,30 @@ public class MypageController {
 		}
 		return "seller/seller_myPage";
 	}
+
+    @GetMapping("/sellerManagement")
+    public String sellerManagement() {
+        return "seller/sellerManagement"; // /WEB-INF/views/seller/sellerManagement.jsp
+    }
+
+    @GetMapping("/productRegistration")
+    public String productRegistration() {
+        return "seller/productRegistration";
+    }
+
+    @GetMapping("/seller/monitoring")
+    public String monitoring() {
+        return "seller/seller_myPage";
+    }
+
+    @GetMapping("/sellerUpdateForm")
+    public String sellerUpdateForm() {
+        return "seller/sellerUpdateForm";
+    }
+
+    @GetMapping("/reviewManagement")
+    public String reviewManagement() {
+        return "seller/reviewManagement";
+    }
+	
 }

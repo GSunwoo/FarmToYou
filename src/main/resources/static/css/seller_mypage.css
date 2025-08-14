@@ -58,3 +58,90 @@
   background:#fdecea; color:#a71d2a; border:1px solid #f5c2c7;
 }
 .update-time{ margin-top:8px; font-size:12px; color:#666; }
+
+#cropResultWrap{ margin-top:10px; }/* 스마트팜 카드 안 여백 */
+
+#cropResultWrap {
+  margin-top: 10px;   /* 판정결과 위쪽 여백 */
+  margin-bottom: 6px; /* 아래쪽 여백 */
+}
+
+#updateTime {
+  margin-top: 4px;    /* 최근 업데이트 위쪽 여백 */
+}
+
+.stat-wrap { display:flex; align-items:baseline; gap:12px; padding:8px 4px; }
+.stat-num { font-size:32px; font-weight:800; line-height:1; }
+.stat-label { color:#666; }
+.stat-link { margin-left:auto; font-size:14px; color:#0a58ca; text-decoration:none; }
+.stat-link:hover { text-decoration:underline; }
+
+
+/* ========== 요청 반영 오버라이드 ========== */
+
+/* 1) 좌측 사이드바: 테두리 안 보이게 + 배경 제거 + 스크롤 따라오기(이미 sticky) */
+.simple-page .sidebar {
+  position: sticky;   /* 스크롤 따라오기 */
+  top: 16px;
+}
+.sidebar, .side-bar {
+  border: none !important;          /* 테두리 숨김 */
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+/* 2) 모니터링(우측 컨텐츠) 최외곽 박스 테두리 안 보이게 */
+.simple-page .sub-content {
+  border: none !important;          /* 테두리 숨김 */
+  box-shadow: none !important;
+  background: transparent;          /* 필요 시 흰 배경 유지하려면 제거 */
+  padding: 0;                        /* 카드 여백만 쓰고 싶으면 0, 기존처럼이면 이 줄 지워도 OK */
+}
+
+/* 3) 카드들은 기존처럼 보이도록(안전) */
+.card {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+/* 컬럼 래퍼 */
+.simple-page .mypage-wrapper{
+  max-width:1200px; margin:24px auto; padding:0 16px;
+  display:grid; grid-template-columns:260px 1fr; gap:24px;
+}
+
+/* 사이드바: 바깥 테두리는 숨기고, 내부 .sidebar-card만 보이게 */
+.sidebar{
+  position: sticky; top:16px;
+  border: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+/* 사이드바를 하나의 카드로 보이게 */
+.sidebar-card{
+  background:#fff; border:1px solid #eaeaea; border-radius:12px;
+  padding:20px; box-shadow:0 2px 8px rgba(0,0,0,.04);
+}
+
+/* ★ 스크롤 따라오게: 실제 사용하는 클래스 .side-bar 에 sticky 적용 */
+.side-bar{
+  position: sticky;
+  top: 96px;          /* 고정 헤더가 있으면 80~120px 사이로 맞춰보세요 */
+  height: max-content;
+  border: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+}
+/* 사이드바 목록 기본 정리 */
+.sidebar-card ul{ list-style:none; margin:0; padding:0; }
+.sidebar-card li{ margin:8px 0; }
+.sidebar-card a{ text-decoration:none; }
+
+/* sticky 방해 요소 제거 */
+.simple-page .mypage-wrapper,
+.simple-page .sub-content {
+  overflow: visible !important;
+}
