@@ -117,8 +117,12 @@
 .status-item.active{border-color:#2d7ef7;box-shadow:0 0 0 3px rgba(45,126,247,.15)}
 
 /* 주문 테이블 */
-.orders-table{width:100%;border-collapse:collapse}
-.orders-table th,.orders-table td{border-bottom:1px solid #eee;padding:10px 12px;text-align:left}
+/*.orders-table{width:100%;border-collapse:collapse}*/
+/*.orders-table th,.orders-table td{border-bottom:1px solid #eee;padding:10px 12px;text-align:left}*/
+
+/* 표 기본 */
+.orders-table { width:100%; table-layout:fixed; border-collapse:collapse; }
+.orders-table th, .orders-table td { padding:14px 12px; }
 
 
 /* 배지 */
@@ -139,6 +143,79 @@
 }
 .link-btn:hover { opacity: 0.8; }
 
+
+/* ========= [추가] 확인 열 우측 정렬 + 버튼 스타일 ========= */
+/*.orders-table thead th:last-child,
+.orders-table tbody td.confirm-cell {
+  text-align: right;
+  padding-right: 16px;
+}*/
+/* 
+마지막 열(확인) 고정 폭 + 우측 정렬
+.orders-table td:last-child,
+.orders-table tbody td.cell-confirm {
+  display:flex; justify-content:flex-end; align-items:center; gap:8px;
+} */
+/* .cell-confirm {
+  border: none !important;
+} */
+
+/* ✅ 확인 열: 표 기본 라인/간격과 동일하게 */
+.orders-table th:last-child,
+.orders-table td:last-child,
+.orders-table tbody td.cell-confirm{
+  display: table-cell !important;   /* flex 해제 */
+  text-align: center;                /* 우측 정렬 (가운데 원하면 center) */
+  padding: 14px 12px;               /* 다른 셀과 동일 */
+  vertical-align: middle;           /* 세로 가운데 */
+  border: 1px solid #e0e0e0;        /* 표 기본 보더 유지 */
+  
+}
+
+/* 버튼 디자인은 그대로, 위치만 조정 */
+.orders-table td:last-child .btn-confirm,
+.orders-table td:last-child .next-btn{
+  margin: 0;            /* 밖으로 튀지 않게 */
+  float: none;
+  position: static;
+}
+
+/* 버튼 위치 재설정 (밖으로 튀지 않게) */
+/* .btn-confirm {
+  position:static !important;
+  float:none !important;
+  margin:0; 
+  display:inline-flex; align-items:center; justify-content:center;
+  min-width:84px; height:32px; padding:0 12px; border-radius:16px;
+  border:1px solid #e0e0e0; background:#fff; font-size:14px;
+} */
+
+
+/* 테이블 안 다음/완료 버튼 */
+/* .next-btn{
+  display:inline-block;
+  padding:6px 12px;
+  font-size:13px;
+  border-radius:999px;
+  border:1px solid #d8d8d8;
+  background:#fff;
+  cursor:pointer;
+} */
+.next-btn:hover{ background:#f6f6f6; }
+.next-btn[disabled]{ color:#9aa0a6; background:#f2f2f2; border-color:#e6e6e6; cursor:default; }
+
+/* 우상단에 떠 있는 기존 고정 버튼이 있다면 숨김 */
+.page-fab, .floating-complete-btn { display:none !important; }
+
+
+/* ========= [추가] 상태 배지 camelCase 호환 ========= */
+/* DB에서 status_code가 chkOrder / preOrder / deliOrder / cmplOrder 로 내려오는 경우를 위한 별칭 */
+.badge-chkOrder   { background:#e9f2ff; color:#1f4fbf; } /* = .badge-chk_order */
+.badge-preOrder   { background:#fff6e6; color:#bf7a1f; } /* = .badge-prepare_order */
+.badge-deliOrder  { background:#eaf7ff; color:#0e6aa7; } /* = .badge-deli_order */
+.badge-cmplOrder  { background:#eaf6ec; color:#1e7e34; } /* = .badge-cmpl_order */
+
+
 /* 반응형 대응 */
 @media (max-width: 768px) {
   .order-status {
@@ -146,3 +223,5 @@
     row-gap: 20px;
   }
 }
+
+

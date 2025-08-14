@@ -1,4 +1,4 @@
-// 검색창 드롭다운(없어도 안전하게 동작)
+// 검색창 드롭다운
 document.addEventListener('DOMContentLoaded', function SAFE_SEARCH_BIND() {
   try {
     const searchInput = document.querySelector('.search-box input');
@@ -10,26 +10,19 @@ document.addEventListener('DOMContentLoaded', function SAFE_SEARCH_BIND() {
   } catch (e) { console.warn('search box bind skipped', e); }
 });
 
-const initialChartData = [
-  { date: "08-01", sales: 120, revenue: 240000 },
-  { date: "08-02", sales: 95,  revenue: 190000 },
-  { date: "08-03", sales: 140, revenue: 280000 },
-  { date: "08-04", sales: 110, revenue: 220000 },
-  { date: "08-05", sales: 160, revenue: 320000 },
-];
-
+// === 판매 통계: soldData [{date, sold, sales}] 사용 ===
 let chart;
 
-function renderChart(data) {
+function renderChart(rows) {
   const canvas = document.getElementById("salesRevenueChart");
   if (!canvas) return;
 
-  // 부모 크기에 맞춰 canvas 크기 제어
+  // 부모 크기에 맞추기
   const wrap = canvas.parentElement;
   if (wrap) {
     const rect = wrap.getBoundingClientRect();
     canvas.width = rect.width;
-    canvas.height = rect.height; // CSS에서 높이 지정(예: 320px)
+    canvas.height = rect.height;
   }
 
   if (chart) chart.destroy();
@@ -37,16 +30,15 @@ function renderChart(data) {
   chart = new Chart(canvas, {
     type: "bar",
     data: {
-      labels: data.map(d => d.date),
+      labels: rows.map(r => r.date),
       datasets: [
-        { label: "판매량",  data: data.map(d => d.sales),   yAxisID: "ySales" },
-        { label: "매출(원)", data: data.map(d => d.revenue), yAxisID: "yRevenue" },
+        { label: "판매량",  data: rows.map(r => r.sold ?? 0),  yAxisID: "ySales" },
+        { label: "매출(원)", data: rows.map(r => r.sales ?? 0), yAxisID: "yRevenue" }
       ],
     },
     options: {
       responsive: true,
-      maintainAspectRatio: false, // 부모 높이에 맞춤
-      interaction: { mode: "nearest", axis: "x", intersect: true },
+      maintainAspectRatio: false,
       plugins: {
         legend: { display: true },
         tooltip: {
@@ -59,13 +51,26 @@ function renderChart(data) {
         }
       },
       scales: {
-        ySales:    { type: "linear", position: "left",  title: { display: true, text: "판매량" }, ticks: { precision: 0 } },
-        yRevenue:  { type: "linear", position: "right", title: { display: true, text: "매출(원)" }, grid: { drawOnChartArea: false },
-                     ticks: { callback: v => Number(v).toLocaleString() } },
-        x:         { title: { display: true, text: "날짜" } },
+        ySales:   { type: "linear", position: "left",  title: { display: true, text: "판매량" }, ticks: { precision: 0 } },
+        yRevenue: { type: "linear", position: "right", title: { display: true, text: "매출(원)" }, grid: { drawOnChartArea: false },
+                    ticks: { callback: v => Number(v).toLocaleString() } },
+        x:        { title: { display: true, text: "날짜" } },
       }
     },
   });
+}
+
+// API에서 판매 통계 로드
+function loadSoldData(memberId) {
+  fetch(`/seller/api/sold-stats?memberId=${memberId}`)
+    .then(res => res.json())
+    .then(soldData => {
+      renderChart(Array.isArray(soldData) ? soldData : []);
+    })
+    .catch(err => {
+      console.error('판매통계 불러오기 실패', err);
+      renderChart([]);
+    });
 }
 
 // 부모 크기 변하면 차트 재렌더
@@ -74,28 +79,36 @@ function attachResizeObserver() {
   if (!canvas || !canvas.parentElement) return;
   const ro = new ResizeObserver(() => {
     if (!chart) return;
-    // 데이터 유지한 채 리사이즈만
     renderChart(chart.data.labels.map((_, i) => ({
       date: chart.data.labels[i],
-      sales: chart.data.datasets[0].data[i],
-      revenue: chart.data.datasets[1].data[i]
+      sold: chart.data.datasets[0].data[i],
+      sales: chart.data.datasets[1].data[i]
     })));
   });
   ro.observe(canvas.parentElement);
 }
 
+// 농작물 표시
 function renderCrop(data) {
-  const container = document.getElementById("cropContainer");
-  const updateTime = document.getElementById("updateTime");
-  if (!container) return;
+  const imgWrap = document.getElementById("cropImageWrap");   // 최근등록농작물 카드
+  const resultWrap = document.getElementById("cropResultWrap"); // 스마트팜 카드
+  const updateTime = document.getElementById("updateTime");     // 스마트팜 카드
+  if (!resultWrap) return;
 
-  const isOk = String(data.result || "").includes("정상");
+  const url = data?.imageUrl || "";
+  const resultText = data?.result || "-";
+  const isOk = String(resultText).includes("정상");
   const resultClass = "crop-result " + (isOk ? "result-ok" : "result-error");
 
-  container.innerHTML = `
-    <img src="${data.imageUrl || ""}" alt="농작물" class="crop-image" />
-    <div class="${resultClass}">판정 결과: ${data.result || "-"}</div>
-  `;
+  // 이미지: 없으면 placeholder 박스
+  if (imgWrap) {
+    imgWrap.innerHTML = url
+      ? `<img src="${url}" alt="" class="crop-image" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'crop-image',textContent:'이미지 없음',style:'display:flex;align-items:center;justify-content:center;opacity:.5;' }))">`
+      : `<div class="crop-image" style="display:flex;align-items:center;justify-content:center;opacity:.5;">이미지 없음</div>`;
+  }
+
+  // 판정 결과 배지(스마트팜 카드)
+  resultWrap.innerHTML = `<div class="${resultClass}">판정 결과: ${resultText}</div>`;
 
   if (updateTime) {
     updateTime.style.display = "block";
@@ -103,25 +116,9 @@ function renderCrop(data) {
   }
 }
 
-function loadLast5(memberId){
-  fetch(`/api/dashboard/last5?memberId=${memberId}`)
-    .then(res => res.json())
-    .then(list => {
-      if (!Array.isArray(list) || list.length === 0) return;
-      renderChart(list);
-    })
-    .catch(err => {
-      console.error('판매통계 불러오기 실패', err);
-      renderChart([
-        { date: "—", sales: 0, revenue: 0 },
-        { date: "—", sales: 0, revenue: 0 },
-        { date: "—", sales: 0, revenue: 0 },
-        { date: "—", sales: 0, revenue: 0 },
-        { date: "—", sales: 0, revenue: 0 }
-      ]);
-    });
-}
 
+
+// 농작물 API 호출
 function fetchCropData() {
   fetch("/api/crop-latest")
     .then(res => res.json())
@@ -133,11 +130,11 @@ function fetchCropData() {
     });
 }
 
+// 초기 실행
 document.addEventListener("DOMContentLoaded", () => {
-  renderChart(initialChartData);      // 더미 데이터 먼저
-  attachResizeObserver();             // 레이아웃에 맞춰 반응형
+  attachResizeObserver();
   const memberId = window.LOGIN_MEMBER_ID || 1;
-  loadLast5(memberId);                // 실데이터 들어오면 교체
-  fetchCropData();                    // 최근 농작물
-  setInterval(fetchCropData, 10000);  // 10초마다 갱신
+  loadSoldData(memberId);
+  fetchCropData();
+  setInterval(fetchCropData, 10000);
 });

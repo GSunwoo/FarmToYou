@@ -4,7 +4,7 @@
 <html lang="ko">
 <head>
   <meta charset="utf-8" />
-  <title>판매자 마이페이지 - 상품판매등록</title>
+  <title>판매자 마이페이지 - 상품판매변경</title>
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
   <!-- 공통 CSS -->
@@ -34,49 +34,39 @@
     <!-- 우측 컨텐츠 -->
     <main class="sub-content">
      <section class="product-form-page">
-  <h3>상품판매등록</h3>
+  <h3>상품판매변경</h3>
 
   <form id="productForm" class="product-form" method="post" 
-      enctype="multipart/form-data" action="/seller/write.do">
+      enctype="multipart/form-data" action="/seller/update.do">
 
 
   <div class="form-row">
     <label for="prod_name">상품명</label>
-    <input id="prod_name" type="text" name="prod_name" placeholder="상품명" />
+    <input id="prod_name" type="text" name="prod_name" value="${prod_name}" />
   </div>
 
   <div class="form-row">
     <label for="prod_content">설명</label>
-    <textarea id="prod_content" name="prod_content" placeholder="설명" rows="4"></textarea>
+    <textarea id="prod_content" name="prod_content" value="${prod_content}" rows="4"></textarea>
   </div>
 
   <div class="form-row">
     <label for="prod_stock">재고</label>
-    <input id="prod_stock" type="number" name="prod_stock" placeholder="재고" />
+    <input id="prod_stock" type="number" name="prod_stock" value="${prod_stock}" />
   </div>
 
   <div class="form-row">
     <label for="prod_price">가격 (원)</label>
-    <input id="prod_price" type="number" name="prod_price" placeholder="가격 (원)" />
-  </div>
-
-
-  <div class="form-row">
-    <label for="prod_cate">카테고리</label>
-    <select id="prod_cate" name="prod_cate">
-      <option value="">선택하세요</option>
-      <option value="fruit">과일</option>
-      <option value="vegetable">채소</option>
-    </select>
+    <input id="prod_price" type="number" name="prod_price" value="${prod_price}" />
   </div>
 
   <div class="form-row">
     <label for="imageInput">상품 이미지</label>
-    <input id="imageInput" type="file" name="image" accept="image/*" multiple />
+    <input id="imageInput" type="file" name="image" accept="image/*" multiple value="${image}"/>
   </div>
 
   <div class="button-group">
-    <button type="submit">등록</button>
+    <button type="submit">수정</button>
     <button type="button" id="cancelBtn">취소</button>
   </div>
 </form>

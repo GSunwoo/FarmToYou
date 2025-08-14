@@ -45,6 +45,8 @@ public class ProductController {
 	@Value("${board.blockPage}")
 	private int blockPage;
 	
+	@Value("${board.bestSize}")
+	private int bestSize;
 	
 	@Autowired
 	IProductService proDao;
@@ -54,7 +56,7 @@ public class ProductController {
 	
 	@GetMapping("/seller/write.do")
 	public String sellerWrite() {
-		return "seller/write";
+		return "productForm";
 	}
 	@PostMapping("/seller/write.do")
 	public String sellerWrite2(
@@ -66,12 +68,14 @@ public class ProductController {
 		int prodResult = proDao.productWrite(productDTO);
 		Long prod_id = productDTO.getProd_id();
 		
-
-		insertImg(prod_id, main_idx, files);
+		
+		if(!files.isEmpty()) {			
+			insertImg(prod_id, main_idx, files);
+		}
 		
 		
 
-		return "redirect:/Detailpage";
+		return "redirect:/guest/Detailpage.do?prod_id="+prod_id;
 	}
 	
 
@@ -106,7 +110,7 @@ public class ProductController {
 				productImgDTO.setIdx(i);
 				productImgDTO.setProd_id(prod_id);
 				if(i == main_idx) {
-					productImgDTO.setMain("main");
+					productImgDTO.setMain_idx(main_idx);
 				}
 				
 				int insertResult = imgDao.insertImg(productImgDTO);
@@ -158,6 +162,13 @@ public class ProductController {
 		int totalCount = proDao.getTotalCount(parameterDTO);
 		System.out.println("totalcount" + totalCount);
 		ArrayList<ProductDTO> lists = proDao.selectProduct(parameterDTO);
+		//베스트상품 불러오기
+		parameterDTO.setEnd(bestSize);
+		ArrayList<ProductDTO> bests = proDao.selectBestProd(parameterDTO);
+		model.addAttribute("bests", bests);
+		//베스트상품 끝
+		
+		
 		 Map<String, Object> paramMap = new HashMap<>();
 		 	paramMap.put("totalCount", totalCount);
 		    paramMap.put("pageSize", pageSize);

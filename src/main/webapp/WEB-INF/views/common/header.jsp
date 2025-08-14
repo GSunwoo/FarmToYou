@@ -21,7 +21,7 @@
         <li><a href="/mypage.do">판매자 마이페이지</a></li>
 	</sec:authorize>
         <li>|</li>
-        <li><a href="#">장바구니</a></li>
+        <li><a href="/wishlist/list.do">장바구니</a></li>
         <li>|</li>
         <li><a href="#">-</a></li>
     </ul>

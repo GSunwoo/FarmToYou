@@ -13,6 +13,11 @@
   <!-- 페이지 CSS -->
   <link href="<c:url value='/css/sellerUpdateForm.css' />" rel="stylesheet" />
 </head>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/myPageMain.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/mainpage.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<script src="<c:url value='/js/seller_myPage.js' />"></script>
 
 <body class="simple-page">
   <!-- 상단 공통 헤더 -->
@@ -21,7 +26,6 @@
   <!-- 레이아웃 래퍼 -->
   <div class="mypage-wrapper">
     <!-- 좌측: 판매자 사이드바 -->
-      <form id="seller" method="post" action="/seller/mypage.do">
     <jsp:include page="/WEB-INF/views/common/header3.jsp">
       <jsp:param name="active" value="update" />
     </jsp:include>
@@ -58,54 +62,38 @@
           </div>
 
           <!-- 주소 -->
-          <div class="form-line">
-            <label for="zipcode">우편번호</label>
-            <div class="form-group">
-              <input type="text" id="zipcode" class="half-width" readonly />
-              <button type="button">주소검색</button>
+          <!-- 사업장 주소 -->
+            <div class="form-line">
+              <label for="zipcode">사업장 주소</label>
+              <div class="form-group">
+                <input type="text" id="zipcode" name="com_zip" placeholder="우편번호" class="half-width" readonly />
+                <input type="text" id="address" name="com_addr1" placeholder="기본주소" readonly />
+                <input type="text" id="detailAddress" name="com_addr2" placeholder="상세주소" />
+              </div>
             </div>
-          </div>
-          <div class="form-line">
-            <label for="address">기본주소</label>
-            <div class="form-group">
-              <input type="text" id="address" readonly />
-            </div>
-          </div>
-          <div class="form-line">
-            <label for="detailAddress">상세주소</label>
-            <div class="form-group">
-              <input type="text" id="detailAddress" />
-            </div>
-          </div>
 
           <!-- 정산정보 -->
           <div class="form-line">
             <label for="managerName">예금주</label>
             <div class="form-group">
-              <input type="text" id="managerName" readonly class="readonly" />
+              <input type="text" id="managerName" name="entryman" readonly class="readonly" />
             </div>
           </div>
           <div class="form-line">
             <label for="accountNumber">정산 계좌</label>
             <div class="form-group account-group">
-              <select id="bank">
+              <select id="bank" name="bank">
                 <option value="">은행 선택</option>
                 <option value="국민">국민</option>
                 <option value="신한">신한</option>
                 <option value="우리">우리</option>
                 <option value="하나">하나</option>
               </select>
-              <input type="text" id="accountNumber" />
+              <input type="text" id="accountNumber" name="account" readonly class="readonly"/>
             </div>
-          </div>
-
-          <div class="form-line section-divider-bottom">
-            <label>확인</label>
-            <div class="form-group">
-              <div class="submit-area">
+          	</div>
+          	<div class="section-divider-top">
                 <button type="submit" id="submitBtn" class="submit-btn" disabled>신청</button>
-              </div>
-            </div>
           </div>
         </form>
       </section>

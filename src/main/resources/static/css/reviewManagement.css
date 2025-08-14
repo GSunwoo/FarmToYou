@@ -1,9 +1,31 @@
 /* ReviewManagement.css */
 
 /* 섹션 래퍼 */
-.rm-wrap{
+/* .rm-wrap{
   margin-top: 24px;
   padding: 0 16px 40px;
+} */
+/* 드롭다운이 잘 보이도록 우선순위 부여 */
+.recent-search-box {
+  position: absolute;
+  z-index: 9999 !important;
+  background-color: white; /* 필요한 경우 */
+  display: block; /* 테스트 시 강제로 보이게 */
+}
+.main-content, .order-grid, .rm-grid, .seller-update-section {
+  overflow: visible !important;
+  position: relative; /* 부모가 absolute 자식 위치 기준이 되도록 */
+  z-index: auto;
+}
+.rm-wrap {
+  margin-top: 0;        /* 기존 24px → 제거 */
+  padding: 24px 24px 40px; /* 좌우 여백 조정 */
+}
+
+/* 메인패널 폭 조정 필요 시 */
+.main-panel {
+  flex: 1;
+  min-width: 0;
 }
 
 /* 섹션 헤더 */

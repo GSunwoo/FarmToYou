@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 버튼 클릭(문서 전체 위임) — DOM이 약간 어긋나도 잡힘
   document.addEventListener("click", (e)=>{
-    const btn = e.target.closest(".next-btn, .btn-next");
+    const btn = e.target.closest(".btn-confirm, .btn-next");
     if (!btn) return;
     const tr = btn.closest("tr");
     if (!tr) return;

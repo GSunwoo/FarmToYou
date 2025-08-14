@@ -11,10 +11,11 @@
 <link rel="stylesheet" href="/css/mainpage.css">
 <link rel="stylesheet" href="/css/reviewPage.css">
 <!-- 돋보기, 별 css -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <script src="/js/reviewModal.js"></script>
-<script src="/js/reviewInfiniteScroll.js"></script>
-
+<script src="/js/reviewInfiniteScroll.js" defer></script>
+<script src="/js/reviewLikeHandler.js" defer></script>
 </head>
 
 <body>
@@ -23,78 +24,88 @@
 	<section>
 		<div class="review-hero-cont">
 			<div class="rhc-wrapper">
-				<h3> 베스트 리뷰로 <br /> 선정된 리뷰들입니다. </h3>
-				<p> 생생한 리뷰를 작성해 주시면, 베스트 리뷰로 선정됩니다. <br /> 많은 관심 부탁드립니다. </p>
+				<h3>
+					베스트 리뷰로 <br /> 선정된 리뷰들입니다.
+				</h3>
+				<p>
+					생생한 리뷰를 작성해 주시면, 베스트 리뷰로 선정됩니다. <br /> 많은 관심 부탁드립니다.
+				</p>
 			</div>
 
 			<div class="review-best-items">
-				<div class="review-top-card">
-					<div class="review-info">
-						<div class="review-img">
-							<c:choose>
-								<c:when test="${not empty best.image }">
-									<img src="${best.image}" alt="${best.title }" />
-								</c:when>
-								<c:otherwise>
-									<img alt="${best.title }" />
-								</c:otherwise>
-							</c:choose>
-						</div>
-						<div class="review-content">
-							<p>${best.content }</p>
-						</div>
-						
-						<div class="rating">
-							<c:forEach var="i" begin="1" end="5">
+				<c:forEach var="best" items="${bestList}" varStatus="status">
+					<c:if test="${status.index < 4}">
+						<!-- 최대 4개만 -->
+						<div class="review-top-card">
+							<div class="review-info">
+								<div class="review-img">
+									<c:choose>
+										<c:when test="${not empty best.image}">
+											<img src="${best.image}" alt="${best.title}" />
+										</c:when>
+										<c:otherwise>
+											<img alt="${best.title}" />
+										</c:otherwise>
+									</c:choose>
+								</div>
+								<div class="review-content">
+									<p>${best.content}</p>
+								</div>
+
+								<div class="rating">
+									<c:forEach var="i" begin="1" end="5">
+										<c:choose>
+											<c:when test="${i <= best.star}">
+												<i class="fa-solid fa-star"></i>
+											</c:when>
+											<c:otherwise>
+												<i class="fa-regular fa-star"></i>
+											</c:otherwise>
+										</c:choose>
+									</c:forEach>
+								</div>
+							</div>
+							<div class="review-author">
+								<span class="author"> <c:choose>
+										<c:when test="${not empty best.name}">
+                                ${best.name}
+                            </c:when>
+										<c:otherwise>
+                                회원 ${best.member_id}
+                            </c:otherwise>
+									</c:choose>
+								</span>
+
 								<c:choose>
-									<c:when test="${i <= best.star }">
-										<i class="fa-solid fa-star"></i>
+									<c:when test="${not empty best.postdate}">
+										<time class="review-date" datetime="${best.postdate}">${best.postdate}</time>
 									</c:when>
 									<c:otherwise>
-										<i class="fa-regular fa-star"></i>
+										<fmt:formatDate value="${best.date}" pattern="yyyy-MM-dd"
+											var="isoBest" />
+										<fmt:formatDate value="${best.date}" pattern="yyyy년 M월 d일"
+											var="humanBest" />
+										<time class="review-date" datetime="${isoBest}">${humanBest}</time>
 									</c:otherwise>
 								</c:choose>
-							</c:forEach>
+							</div>
 						</div>
-					</div>
-					<div class="review-author">
-						<span class="author">
-							<c:choose>
-								<c:when test="${not empty best.memberName }">
-									${best.memberName }
-								</c:when>
-								<c:otherwise>
-									회원 ${best.member_id }
-								</c:otherwise>
-							</c:choose>		
-						</span>
-						
-						<c:choose>
-							<c:when test="${not empty best.postdate }">
-								<time class="review-date" datetime="${best.postdate }">${best.postdate }</time>
-							</c:when>
-							<c:otherwise>
-								<fmt:formatDate value="${best.date}" pattern="yyyy-MM-dd"
-									var="isoBest" /> 
-								<fmt:formatDate value="${best.date}" pattern="yyyy년 M월 d일"
-									var="humanBest" /> 
-								
-								<time class="review-date" datetime="${isoBest}">${humanBest}</time>
-								
-							</c:otherwise>
-						</c:choose>
-					</div>
-				</div>
+					</c:if>
+				</c:forEach>
 			</div>
 		</div>
 	</section>
-	
+
 	<!-- 일반 리뷰 섹션 -->
 	<section>
-		<div class="review-grid-lists">
+		<div id="review-grid-lists" class="review-grid-lists">
 			<!-- 임시확인용. 백엔드에서 제어시 비긴,앤드 제거 -->
-			<c:forEach var="review" items="${reviewList }" begin="0" end="4">
-				<div class="review-cards">
+			<c:forEach var="review" items="${reviewList }">
+				<div class="review-cards" data-review-id="${review.review_id}"
+					data-star="${review.star}" data-likes="${review.review_like}"
+					data-evaluation="${review.evaluation}"
+					data-content="${review.content}">
+
 					<div class="review-imgs">
 						<c:choose>
 							<c:when test="${not empty review.image }">
@@ -121,29 +132,28 @@
 							</c:choose>
 						</c:forEach>
 					</div>
-					
+
 					<div class="review-bottom-author">
-						<span class="author">
-							<c:choose>
-								<c:when test="${not empty review.memberName }">
-									${review.memberName }
+						<span class="author"> <c:choose>
+								<c:when test="${not empty review.name }">
+									${review.name }
 								</c:when>
 								<c:otherwise>
 									회원 ${review.member_id }
 								</c:otherwise>
-							</c:choose>		
+							</c:choose>
 						</span>
-						
+
 						<c:choose>
 							<c:when test="${not empty review.postdate }">
 								<time class="review-date" datetime="${review.postdate }">${review.postdate }</time>
 							</c:when>
 							<c:otherwise>
 								<fmt:formatDate value="${review.date}" pattern="yyyy-MM-dd"
-									var="iso" /> 
+									var="iso" />
 								<fmt:formatDate value="${review.date}" pattern="yyyy년 M월 d일"
-									var="human" /> 
-		
+									var="human" />
+
 								<!-- 태그 속성에 기계표현, 태그 안 텍스트에 사람표현 -->
 								<time class="review-date" datetime="${iso}">${human}</time>
 								<!-- 백에서 연결하는 이름 dto 받기 -->
@@ -152,9 +162,10 @@
 					</div>
 				</div>
 			</c:forEach>
+			<div id="sentinel" aria-hidden="true"></div>
 		</div>
 	</section>
-	
-	<%@ include file="./reviewModal.jsp" %>
+
+	<%@ include file="./reviewModal.jsp"%>
 </body>
 </html>

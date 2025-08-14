@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+<mapper namespace="com.farm.service.IWishlistService">
+	<insert id="addWishlist"
+		parameterType="com.farm.dto.WishlistDTO">
+		INSERT INTO wishlist
+			(prod_qty, member_id, prod_id, wish_id)
+		VALUES
+			(#{prod_qty}, #{member_id}, #{prod_id}, seq_wishlist_id.nextval)
+	</insert>
+	
+	<select id="selectWishlist"
+		parameterType="Long"
+		resultType="com.farm.dto.WishlistDTO">
+		SELECT prod_qty, wish.prod_id, prod_name, prod_price
+			FROM wishlist wish
+			LEFT JOIN product prod
+				ON wish.prod_id = prod.prod_id
+				WHERE wish.member_id = #{member_id} 
+	</select>
+</mapper>
