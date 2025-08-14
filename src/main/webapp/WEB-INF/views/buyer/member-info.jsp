@@ -13,8 +13,8 @@
   <div class="form-wrapper">
     <h2>회원정보 변경</h2>
     <p>변경하실 비밀번호와 전화번호를 입력해주세요</p>
-
-    <form id="registerForm" method="post" action="">
+	
+    <form id="registerForm" method="post" action="/buyer/member-info.do">
 	  <input type="text" name="user_type" value="ROLE_BUYER" hidden="hidden" />
       <!-- 1. 아이디 -->
       <div class="form-line">
