@@ -54,7 +54,7 @@ public class LoginConfig {
 				.authorizeHttpRequests((request) -> request
 						.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
 						.requestMatchers("/","/memberForm/**", "/guest/**" ).permitAll()
-						.requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
+						.requestMatchers("/css/**", "/js/**", "/images/**", "/uploads/**").permitAll()
 						.requestMatchers("/buyer/**", "/wishlist/**").hasAnyRole("BUYER", "ADMIN")
 						.requestMatchers("/seller/**").hasAnyRole("SELLER", "ADMIN")
 						.anyRequest()

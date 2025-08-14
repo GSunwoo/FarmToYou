@@ -9,18 +9,25 @@
 	<insert id="insertImg"
 		parameterType="com.farm.dto.ProductImgDTO">
 		INSERT INTO product_img
-			(prodimg_id, filename, idx, main, prod_id)	
+			(prodimg_id, filename, idx, main_idx, prod_id)	
 		VALUES
-			(#{prodimg_id}, #{filename} ,#{idx} , #{main} ,#{prod_id})
+			(seq_productimg_id.nextval, #{filename} ,#{idx} , #{main_idx} ,#{prod_id})
 	</insert>
 	
 	<select id="selectImg"
 		parameterType="Long"
 		resultType="com.farm.dto.ProductImgDTO">
-		SELECT prodimg_id, filename, idx, main, prod_id
+		SELECT prodimg_id, filename, idx, main_idx, prod_id
 			FROM product_img 
-				WHERE prod_id = #{prod_id}
+				WHERE prod_id = #{prod_id} and main_idx != 1
 					ORDER BY IDX ASC
+	</select>
+	<select id="selectMain"
+		parameterType="Long"
+		resultType="com.farm.dto.ProductImgDTO">
+		SELECT prodimg_id, filename, idx, main_idx, prod_id
+			FROM product_img 
+				WHERE prod_id = #{prod_id} and main_idx = 1
 	</select>
 	
 	<delete id="deleteImg"

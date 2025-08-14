@@ -61,7 +61,7 @@ public class ProductController {
 	@PostMapping("/seller/write.do")
 	public String sellerWrite2(
 			@AuthenticationPrincipal CustomUserDetails userDetails,
-			@RequestParam("main_idx") int main_idx,
+			@RequestParam("main_idx") Long main_idx,
 			@RequestParam("image") List<MultipartFile> files,
 			ProductDTO productDTO) {
 		productDTO.setMember_id(userDetails.getMemberDTO().getMember_id());
@@ -79,23 +79,25 @@ public class ProductController {
 	}
 	
 
-	public void insertImg(Long prod_id, int main_idx,
+	public void insertImg(Long prod_id, Long main_idx,
 			List<MultipartFile> files) {
 		
 		try {
 			
 			String uploadDir = ResourceUtils.getFile(
-					"classpath:static/uploads/prodimg/prod_id/").toPath().toString();
+					"classpath:static/uploads/prodimg/prod_id").toPath().toString();
 			System.out.println("저장경로 : " + uploadDir);
 			File dir = new File(uploadDir, String.valueOf(prod_id));
+
 			if(!dir.exists()) {
 				dir.mkdirs();
 			}
-			
+
 			
 			long i = 1;
 			for(MultipartFile file : files) {
-				if (!file.isEmpty()) {
+				if (file.isEmpty()) {
+					System.out.println("파일 빔?");
 					continue;
 				}
 	
@@ -104,13 +106,15 @@ public class ProductController {
 				File dest = new File(dir, savedFileName);
 				file.transferTo(dest);
 				
+				 System.out.println("저장 성공: " + dest.getAbsolutePath());
+				
 				ProductImgDTO productImgDTO = new ProductImgDTO();
 				
 				productImgDTO.setFilename(savedFileName);
 				productImgDTO.setIdx(i);
 				productImgDTO.setProd_id(prod_id);
 				if(i == main_idx) {
-					productImgDTO.setMain_idx(main_idx);
+					productImgDTO.setMain_idx(1);
 				}
 				
 				int insertResult = imgDao.insertImg(productImgDTO);
@@ -203,6 +207,8 @@ public class ProductController {
 		
 		// 이미지 불러오기 시작
 		ArrayList<ProductImgDTO> imglist = imgDao.selectImg(prod_id);
+		ProductImgDTO main = imgDao.selectMain(prod_id);
+		model.addAttribute("main", main);
 		model.addAttribute("imglist", imglist);
 		
 		
@@ -242,7 +248,7 @@ public class ProductController {
 	
 	@PostMapping("/seller/update.do")
 	public String productUpdate2(ProductDTO productDTO,
-			@RequestParam("main_idx") int main_idx,
+			@RequestParam("main_idx") Long main_idx,
 			@RequestParam("image") List<MultipartFile> files){
 		int prod_result = proDao.productUpdate(productDTO);
 		Long prod_id = productDTO.getProd_id();
