@@ -56,7 +56,7 @@ public class ProductController {
 	
 	@GetMapping("/seller/write.do")
 	public String sellerWrite() {
-		return "seller/write";
+		return "/seller/productRegistraion";
 	}
 	@PostMapping("/seller/write.do")
 	public String sellerWrite2(
@@ -68,12 +68,13 @@ public class ProductController {
 		int prodResult = proDao.productWrite(productDTO);
 		Long prod_id = productDTO.getProd_id();
 		
-
-		insertImg(prod_id, main_idx, files);
+		if(!files.isEmpty()) {
+			insertImg(prod_id, main_idx, files);			
+		}
 		
 		
 
-		return "redirect:/Detailpage";
+		return "redirect:/guest/Detailpage.do?prod_id="+prod_id;
 	}
 	
 
