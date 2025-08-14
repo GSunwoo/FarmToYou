@@ -22,11 +22,11 @@
 	<%@ include file="./common/header.jsp"%>
 
 	<div class="dp-wrap">
-		<c:if test="${productDTO.prodimg_id}!= null">
+		<c:if test="${not empty main}">
 			<div class="dp-left">
 				<div class="dp-mainimg">
-					<img src="${productDTO.prodimg_id }"
-						alt="${productDTO.prodimg_id }" />
+					<img src="${pageContext.request.contextPath}/uploads/prodimg/prod_id/${main.prod_id}/${main.filename}"
+						alt="${main.filename}" />
 				</div>
 			</div>
 		</c:if>
@@ -64,7 +64,7 @@
 				<input type="hidden" id="qtyInput" name="prod_qty" value="1">
 				<button type="submit" class="btn-outline" id="wishlist-add-btn">장바구니 담기</button>
 				<!-- 장바구니로 가는 경로 세팅 -->
-				<a href="#" class="btn-solid">바로결제</a>
+				<a href="/buyer/pay/checkout.do" class="btn-solid">바로결제</a>
 			</form>
 		</div>
 
@@ -75,6 +75,7 @@
 					<ul class="dp-tabmenu">
 						<li><span class="tab-label is-active">설명</span></li>
 					</ul>
+					
 				</aside>
 
 				<!-- 우측 내용 -->
@@ -82,7 +83,16 @@
 					<div class="tab-panel is-active">
 						<p>${productDTO.prod_content}</p>
 						<%-- 필요하면 더미 문단 추가해서 줄수 맞춰보기 --%>
-						<p>simple data</p>
+						<c:if test="${not empty imglist}">
+							<c:forEach var="img" items="${imglist}">
+								<div class="dp-left">
+									<div class="dp-mainimg">
+										<img src="${pageContext.request.contextPath}/uploads/prodimg/prod_id/${img.prod_id}/${img.filename}"
+											alt="${img.filename}" />
+									</div>
+								</div>
+							</c:forEach>
+						</c:if>
 					</div>
 				</div>
 			</div>

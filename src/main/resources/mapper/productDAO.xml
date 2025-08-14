@@ -48,7 +48,7 @@
 			WHERE rownum<![CDATA[<=]]>#{end}
 		) pro
 		LEFT JOIN product_img img
-			ON pro.prod_id = img.prod_id and img.main = 'main'
+			ON pro.prod_id = img.prod_id and img.main_idx = 1
 		WHERE rNum <![CDATA[>=]]>#{start} 
 	</select>
 	
@@ -70,7 +70,7 @@
 			WHERE rownum<![CDATA[<=]]>#{end}
 		) pro
 		LEFT JOIN product_img img
-			ON pro.prod_id = img.prod_id and img.main = 'main'
+			ON pro.prod_id = img.prod_id and img.main_idx = 1
 		WHERE rNum <![CDATA[>=]]>#{start} 
 	</select>
 	

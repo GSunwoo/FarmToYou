@@ -35,7 +35,7 @@ public class Member {
 	private Long member_id;
 	@Column(nullable = false)
 	private String user_type;
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private String user_id;
 	@Column(nullable = false)
 	private String user_pw;

@@ -1,134 +1,105 @@
-@charset "UTF-8";
+/* 전체 레이아웃 */
+.mypage-wrapper { 
+  padding: 24px 0;
+  background: #f6f7f9;   /* 연한 배경으로 메인 패널이 가운데 떠 보이게 */
+}
 
-/* 마이페이지 전체 영역 */
-.mypage-wrapper .sub-content {
+/* 사이드바 + 메인 영역 가로 배치 */
+.sub-content{
   display: flex;
-  max-width: 1200px;
-  margin: 40px auto;
-  gap: 30px;
+  gap: 24px;             /* 사이 간격 */
+  align-items: flex-start;
+  max-width: 1200px;     /* 페이지 전체 최대 폭 */
+  margin: 0 auto;        /* 화면 가운데 정렬 */
+  padding: 0 16px;
 }
 
-/* 좌측 사이드바 */
-.mypage-wrapper .side-bar {
-  width: 220px;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  padding: 20px;
-  font-size: 15px;
-  margin-top: 110px;
+/* header2.jsp(사이드바) 박스가 너무 넓지 않게 */
+.sub-content .left-sidebar,      /* 혹시 사이드바에 이 클래스가 있으면 적용 */
+.sub-content .mypage-sidebar,    /* 다른 프로젝트에서 쓰던 네이밍 호환 */
+.sub-content aside {
+  width: 240px;          /* 사이드바 고정폭 */
+  flex: 0 0 240px;
 }
 
-.mypage-wrapper .sub-menu-box h2 {
-  font-size: 18px;
-  margin-bottom: 20px;
-  color: #333;
-}
-
-.mypage-wrapper .sub-menu-mypage > li {
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.mypage-wrapper .sub-menu-mypage ul {
-  margin-top: 5px;
-  padding-left: 15px;
-}
-
-.mypage-wrapper .sub-menu-mypage ul li {
-  margin-bottom: 5px;
-  font-weight: normal;
-  font-size: 14px;
-}
-
-.mypage-wrapper .sub-menu-mypage a {
-  text-decoration: none;
-  color: #444;
-}
-
-.mypage-wrapper .sub-menu-mypage a:hover {
-  color: #000;
-  font-weight: bold;
-}
-
-/* 본문 영역 */
-.mypage-wrapper .mypage-cont {
-  flex: 1;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  padding: 30px;
-  margin-top: 150px;
-}
-
-/* 주문목록 제목 */
-.mypage-wrapper .mypage-zone-tit {
+/* 메인 컨테이너: 남는 공간 전부 차지 */
+.mypage-main-cont{
+  flex: 1 1 auto;
+  min-width: 0;
   display: flex;
-  justify-content: space-between; 
-  align-items: center;
-  border-bottom: 2px solid #eee;
-  padding-bottom: 10px;
-  margin-bottom: 25px;
+  justify-content: center;     /* 내부 메인 패널을 가운데로 */
 }
 
-.mypage-wrapper .mypage-zone-tit h3 {
-  font-size: 22px;
-  font-weight: bold;
-  margin: 0;
+/* 실제 가운데 카드(패널) */
+.mypage-main-info{
+  width: 100%;
+  max-width: 960px;           /* 메인 패널 최대 폭 (원하면 880~1100 사이로 조절) */
+  background: #fff;
+  border: 1px solid #e9eef3;
+  border-radius: 12px;
+  box-shadow: 0 4px 18px rgba(0,0,0,.05);
+  padding: 24px;
 }
 
-.mypage-wrapper .btn-inquiry {
-  padding: 6px 12px;
-  background-color: #234D3C;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
+/* 섹션 간격 */
+.mypage-main-info-cont + .mypage-main-info-cont{
+  margin-top: 28px;
 }
 
-.mypage-wrapper .btn-inquiry:hover {
-  background-color: #1c3d2f;
+/* 타이틀 스타일 */
+.mypage-main-info-cont > h2{
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-size: 20px;
+  margin: 0 0 12px;
+}
+.order-info-subtext{
+  font-size: 13px;
+  color: #6b7684;
 }
 
-.mypage-wrapper .mypage-info-cont {
-  margin-top: 30px;
-}
-
-.mypage-wrapper .order-info-subtext {
-  font-size: 0.6em;     
-  color: #888;          
-  margin-top: 5px;      
-}
-
-.mypage-wrapper .pick-list-num {
-  display: block;
-  margin-bottom: 20px;
-  border-bottom: 2px solid #a1a1a1;
-}
-
-.mypage-wrapper .mypage-table-type table {
+/* 테이블 공통 */
+.mypage-main-table-type table{
   width: 100%;
   border-collapse: collapse;
+  background: #fff;
 }
-
-.mypage-wrapper .mypage-table-type thead th {
-  background-color: #f5f5f5;
-  padding: 12px;
-  font-size: 14px;
-  font-weight: bold;
-  border: 1px solid #ddd;
+.mypage-main-table-type thead th{
+  background: #f2f5f9;
+  color: #333;
+  font-weight: 600;
+  border-bottom: 1px solid #e5e8eb;
+  padding: 12px 10px;
   text-align: center;
 }
-
-.mypage-wrapper .mypage-table-type tbody td {
-  padding: 14px;
-  text-align: center;
-  border: 1px solid #eee;
-  font-size: 14px;
-  color: #444;
+.mypage-main-table-type tbody td{
+  border-bottom: 1px solid #eef2f6;
+  padding: 14px 10px;
+  vertical-align: middle;
+}
+.mypage-main-table-type td p{
+  margin: 0; color:#7b858e;
+  padding: 24px 0; text-align:center;
 }
 
-.mypage-wrapper .mypage-table-type p {
-  margin: 30px 0;
-  font-size: 15px;
-  color: #888;
+/* 반응형 (태블릿/모바일) */
+@media (max-width: 1024px){
+  .sub-content{ gap:16px; }
+  .mypage-main-info{ padding:20px; }
+}
+@media (max-width: 768px){
+  .sub-content{
+    display: block;         /* 세로 스택 */
+    max-width: 640px;
+  }
+  .sub-content .left-sidebar,
+  .sub-content .mypage-sidebar,
+  .sub-content aside{
+    width: 100%;
+    margin-bottom: 16px;
+  }
+  .mypage-main-info{ border-radius: 10px; }
+  .mypage-main-table-type thead{ display: none; } /* 필요 시 모바일 단순화 */
+  .mypage-main-table-type tbody td{ padding:12px 8px; }
 }

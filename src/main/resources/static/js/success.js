@@ -10,7 +10,7 @@ async function confirm() {
 		amount: urlParams.get("amount"),
 	};
 
-	const response = await fetch("/confirm", {
+	const response = await fetch("/buyer/pay/confirm.do", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
@@ -23,7 +23,7 @@ async function confirm() {
 	if (!response.ok) {
 		// TODO: 결제 실패 비즈니스 로직을 구현하세요.
 		console.log(json);
-		window.location.href = `/fail?message=${json.message}&code=${json.code}`;
+		window.location.href = `/buyer/pay/fail.do?message=${json.message}&code=${json.code}`;
 	}
 
 	// TODO: 결제 성공 비즈니스 로직을 구현하세요.

@@ -14,6 +14,11 @@
     <title>토스페이먼츠 샘플 프로젝트</title>
     <!-- 결제위젯 SDK 추가 -->
     <script src="https://js.tosspayments.com/v1/payment-widget"></script>
+    <script>
+    const widgetClientKey = '${widgetClientKey}';
+    const customerKey = '${customerKey}';
+    </script>
+    
   </head>
 
   <body>

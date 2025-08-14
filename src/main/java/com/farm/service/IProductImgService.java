@@ -11,5 +11,6 @@ import com.farm.dto.ProductImgDTO;
 public interface IProductImgService {
 	public int insertImg(ProductImgDTO productImgDTO);
 	public ArrayList<ProductImgDTO> selectImg(@Param("prod_id") Long prod_id);
+	public ProductImgDTO selectMain(@Param("prod_id") Long prod_id);
 	public int deleteImg(@Param("prod_id") Long prod_id);
 }
