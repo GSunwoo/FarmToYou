@@ -20,9 +20,9 @@
 					<div class="modal-actions">
 						<button type="button" class="like-btn" 
 								data-like-url-base="${pageContext.request.contextPath}/buyer/review" 
-								data-review-id="${review.id }" >
+								data-review-id="" >
 							<span class="heart">♥</span>
-							<span class="like-count">${review.review_like }</span>
+							<span class="like-count"></span>
 						</button>
 					</div>
 					<div class="evaluation modal-evaluation"></div>
