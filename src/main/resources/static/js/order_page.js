@@ -170,10 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
 
   /* ============ 2) 장바구니 기반 배송 박스 자동 생성 ============ */
-  const CART = window.CART || [
-    { id: 202, name: '크라운 참크래커 40개(개별포장)', qty: 1, eta: '2025-08-12' },
-    { id: 101, name: '오리온 뉴퍽지 75g', qty: 3, eta: '2025-08-13' },
-  ];
+  
 
   function formatKoreanETA(iso) {
     if (!iso) return '';
@@ -190,7 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (ae && be && ae !== be) return ae.localeCompare(be);
       if (ae && !be) return -1;
       if (!ae && be) return 1;
-      return (a.name || '').localeCompare(b.name || '', 'ko');
+      return (a.prod_name || '').localeCompare(b.prod_name || '', 'ko');
     });
 
     const total = sorted.length;
@@ -200,7 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
           배송 ${total}건 중 ${idx + 1}${it.eta ? ` <span class="ship-sub">${formatKoreanETA(it.eta)}</span>` : ''}
         </div>
         <div class="ship-bd">
-          <div class="ship-ttl">${it.name}</div>
+          <div class="ship-ttl">${it.prod_name}</div>
           <div class="ship-sub">수량 ${it.qty}개 / 무료배송</div>
         </div>
       </section>
@@ -219,5 +216,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const sum = cart.reduce((a, b) => a + (b.qty || 0) * (b.price || 0), 0);
     if ($('#sumProducts')) $('#sumProducts').textContent = won(sum);
   }
-  // calcTotals(CART); // price 값이 있다면 주석 해제
+   function calcTotals(cart) {
+      const sum = cart.reduce((a, b) =>
+		  a + (Number(b.price) || 0) * (Number(b.qty) || 0), 0
+      );
+      const formatted = won(sum);
+      if ($('#sumProducts')) $('#sumProducts').textContent = formatted;   // 총상품금액
+     if ($('#sumPayment'))  $('#sumPayment').textContent  = formatted;   // 총결제금액
+     if ($('#total_price')) $('#total_price').value = sum;               // hidden 필요 시
+   }
+   calcTotals(CART);
 });

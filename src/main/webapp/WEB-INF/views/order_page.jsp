@@ -17,7 +17,10 @@
 
 <!-- 다음(카카오) 우편번호 API -->
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+const CART = '${cart}';
 
+</script>
 <body>
   <!-- 상단 유틸 -->
   
@@ -61,24 +64,6 @@
             <input type="hidden" name="addr2" value="<c:out value='${addr2}'/>">
           </div>
         </section>
-		
-		        <!-- 주문자 인적사항 -->
-        <section class="card">
-            <div class="card-hd">
-            <strong>주문자 인적 사항</strong>
-          </div>
-          <div class="card-bd">
-            <label for="ordererName">이름: </label>
-            <input type="text" class="input-lg" id="ordererName" name="name" placeholder="이름을 입력하세요" required> <br><br>
-            <label for="ordererPhone">전화번호:</label>
-          <input type="text" class="input-lg" value="010" readonly style="max-width:80px;">
-          <input type="text" class="input-lg" id="phone2" maxlength="4" placeholder="" required
-            style="max-width:100px;">
-          <input type="text" class="input-lg" id="phone3" maxlength="4" placeholder="" required
-            style="max-width:100px;">
-            <input type="hidden" id="phone_num" name="phone_num" value="" />	
-          </div>
-      </section>
         <!-- 배송 요청사항 -->
         <section class="card">
           <div class="card-hd">
