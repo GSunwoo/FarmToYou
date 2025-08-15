@@ -74,6 +74,8 @@
     <label for="imageInput">상품 이미지</label>
     <input id="imageInput" type="file" name="image" accept="image/*" multiple />
   </div>
+  
+  
 
   <div class="button-group">
     <button type="submit">등록</button>

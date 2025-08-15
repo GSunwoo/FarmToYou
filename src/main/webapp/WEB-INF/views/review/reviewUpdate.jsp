@@ -79,9 +79,7 @@
 
     <!-- 실제 이미지 업로드 -->
     <label for="uploadFile">이미지 선택:</label>
-    <input type="file" id="uploadFile" name="uploadFile" accept="image/*" required><br><br>
-
-    <input type="submit" value="이미지 업로드">
+    <input type="file" id="uploadFile" name="uploadFile" accept="image/*" multiple required><br><br>
 
     <input type="submit" value="리뷰 등록">
   </form>

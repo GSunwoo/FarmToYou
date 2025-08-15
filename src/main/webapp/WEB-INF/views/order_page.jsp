@@ -20,52 +20,20 @@
 
 <body>
   <!-- 상단 유틸 -->
-  <div class="top-util">
-    <ul style="font-size: 1em;">
-      <li><a href="<c:url value='/login'/>">로그인</a></li>
-      <li>|</li>
-      <li><a href="<c:url value='/member/join'/>">회원가입</a></li>
-      <li>|</li>
-      <li><a href="<c:url value='/mypage'/>">마이페이지</a></li>
-      <li>|</li>
-      <li><a href="<c:url value='/cart'/>">장바구니</a></li>
-      <li>|</li>
-      <li><a href="<c:url value='/qna'/>">1:1문의</a></li>
-    </ul>
-  </div>
+  
 
-  <div class="search-logo-line">
-    <div class="search-box">
-      <input type="text" placeholder="과일 전문 쇼핑몰" style="border-bottom:#888;">
-      <button type="button"><i class="fas fa-search"></i></button>
+   <jsp:include page="/WEB-INF/views/common/header.jsp" />
 
-      <div id="search-dropdown" class="custom-search-dropdown">
-        <div class="recent-keywords">
-          <strong>최근검색어</strong>
-          <ul>
-            <li>1. 사과</li>
-            <li>2. 바나나</li>
-            <li>3. 레몬</li>
-          </ul>
-        </div>
-      </div>
-    </div>
+  <!-- 레이아웃 래퍼 -->
+  <div class="mypage-wrapper">
+    <!-- 좌측: 판매자 사이드바 -->
+    <jsp:include page="/WEB-INF/views/common/header3.jsp">
+      <jsp:param name="active" value="update" />
+    </jsp:include>
 
     <a href="<c:url value='/'/>" class="logo-section">
       <img src="<c:url value='/images/shopping mall-Photoroom.png'/>" style="transform:scaleX(2);" alt="로고">
     </a>
-
-    <div class="category-bar">
-      <ul class="category-menu">
-        <li style="font-size:1.3em;">상품</li>
-        <li style="font-size:1.3em;">추천상품</li>
-        <li style="font-size:1.3em;">추천리뷰</li>
-        <li style="font-size:1.3em;">이달의추천</li>
-        <li style="font-size:1.3em;">1:1문의</li>
-        <li style="font-size:1.3em;">하나더추가</li>
-      </ul>
-    </div>
-  </div>
 
   <!-- ===================== 구매페이지 시작 ===================== -->
   <section class="order-wrap">
