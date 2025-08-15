@@ -15,7 +15,7 @@ public class PaymentRestController {
 	@Value("${toss.secretKey}")
     private String WIDGET_SECRET_KEY; // 토스 시크릿 키
 
-    @PostMapping("/buyer/pay/confirm")
+    @PostMapping("/buyer/pay/confirm.do")
     public ResponseEntity<?> confirmPayment(@RequestBody Map<String, Object> request) {
         String paymentKey = (String) request.get("paymentKey");
         String orderId = (String) request.get("orderId");

@@ -2,14 +2,11 @@ const button = document.getElementById("payment-button");
 const coupon = document.getElementById("coupon-box");
 const generateRandomString = () =>
 	window.btoa(Math.random()).slice(0, 20);
-const amount = 500;
 console.log("checkout")
 // ------  결제위젯 초기화 ------
 // TODO: clientKey는 개발자센터의 결제위젯 연동 키 > 클라이언트 키로 바꾸세요.
 // TODO: 구매자의 고유 아이디를 불러와서 customerKey로 설정하세요. 이메일・전화번호와 같이 유추가 가능한 값은 안전하지 않습니다.
 // @docs https://docs.tosspayments.com/reference/widget-sdk#sdk-설치-및-초기화
-const widgetClientKey = `${widgetClientKey}`;
-const customerKey = `${customerKey}`;
 const paymentWidget = PaymentWidget(widgetClientKey, customerKey); // 회원 결제
 // const paymentWidget = PaymentWidget(widgetClientKey, PaymentWidget.ANONYMOUS); // 비회원 결제
 
@@ -42,13 +39,5 @@ coupon.addEventListener("change", function() {
 button.addEventListener("click", function() {
 	// 결제를 요청하기 전에 orderId, amount를 서버에 저장하세요.
 	// 결제 과정에서 악의적으로 결제 금액이 바뀌는 것을 확인하는 용도입니다.
-	paymentWidget.requestPayment({
-		orderId: generateRandomString(),
-		orderName: "토스 티셔츠 외 2건",
-		successUrl: window.location.origin + "/success",
-		failUrl: window.location.origin + "/fail",
-		customerEmail: "customer123@gmail.com",
-		customerName: "김토스",
-		customerMobilePhone: "01012341234",
-	});
+	paymentWidget.requestPayment(orderInfo);
 });

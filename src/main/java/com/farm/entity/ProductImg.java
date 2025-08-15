@@ -32,7 +32,7 @@ public class ProductImg {
 	private Long prodimg_id;
 	private String filename;
 	private Long idx;
-	private String main;
+	private int main_idx;
 	
 	@ManyToOne
 	@JoinColumn(name = "prod_id", nullable = false)

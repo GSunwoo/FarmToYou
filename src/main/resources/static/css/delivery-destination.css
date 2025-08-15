@@ -1,0 +1,136 @@
+@charset "UTF-8";
+/* ===================== 구매페이지(ORDER SECTION) 스타일 ===================== */
+.order-wrap {
+  max-width: 1200px;
+  margin: 80px auto 24px;
+  padding: 0 16px
+}
+
+.order-grid {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 24px;
+  align-items: start
+}
+.order-grid { align-items: start; }                    
+.order-right { position: sticky; top: 24px; height: max-content; margin-top: 60px;} 
+
+.order-right .sticky {
+  position: sticky;
+  top: 80px;
+  align-self: start;
+}
+
+.card {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #fff;
+  margin-bottom: 14px
+}
+
+.card-hd {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  background: #f3f4f6;
+  border-bottom: 1px solid #e5e7eb;
+  border-radius: 12px 12px 0 0
+}
+
+.card-bd {
+  padding: 16px
+}
+
+.badge {
+  display: none !important;
+}
+
+.addr-text {
+  margin: 6px 0
+}
+
+.btn-sm {
+  height: 32px;
+  padding: 0 10px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  cursor: pointer
+}
+
+.btn-sm.ghost {
+  color: #374151
+}
+
+.btn-sm.solid {
+  background: #2563eb;
+  color: #fff;
+  border-color: #2563eb
+}
+
+.sticky {
+  position: sticky;
+  top: 20px
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, .45);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 9999
+}
+
+.modal.on {
+  display: flex
+}
+
+.panel {
+  width: min(640px, 100%);
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px
+}
+
+.panel-hd {
+  padding: 12px 14px;
+  border-bottom: 1px solid #e5e7eb;
+  font-weight: 700
+}
+
+.panel-bd {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px
+}
+
+.panel-ft {
+  padding: 12px 14px;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px
+}
+
+.input-lg {
+  height: 40px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 0 12px
+}
+
+.row {
+  display: flex;
+  gap: 8px;
+  align-items: center
+}
+
+.bar {
+  color: #9ca3af;
+  margin: 0 6px
+}

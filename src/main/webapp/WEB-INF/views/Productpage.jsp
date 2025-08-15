@@ -76,6 +76,7 @@
                       src="${pageContext.request.contextPath}/uploads/prodimg/prod_id/${prod.prod_id}/${prod.filename}"
                       alt="${prod.filename}"
                       onclick="location.href='${pageContext.request.contextPath}/guest/Detailpage.do?prod_id=${prod.prod_id}'">
+                      <img src="/uploads/prodimg/prod_id/${prod.prod_id}/${prod.filename}">
                   </c:if>
                   </div>
                   <div class="item-info-box">
