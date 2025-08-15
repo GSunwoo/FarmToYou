@@ -2,7 +2,6 @@ const button = document.getElementById("payment-button");
 const coupon = document.getElementById("coupon-box");
 const generateRandomString = () =>
 	window.btoa(Math.random()).slice(0, 20);
-const amount = 500;
 console.log("checkout")
 // ------  결제위젯 초기화 ------
 // TODO: clientKey는 개발자센터의 결제위젯 연동 키 > 클라이언트 키로 바꾸세요.
@@ -40,13 +39,5 @@ coupon.addEventListener("change", function() {
 button.addEventListener("click", function() {
 	// 결제를 요청하기 전에 orderId, amount를 서버에 저장하세요.
 	// 결제 과정에서 악의적으로 결제 금액이 바뀌는 것을 확인하는 용도입니다.
-	paymentWidget.requestPayment({
-		orderId: generateRandomString(),
-		orderName: "토스 티셔츠 외 2건",
-		successUrl: window.location.origin + "/buyer/pay/success.do",
-		failUrl: window.location.origin + "/buyer/pay/fail.do",
-		customerEmail: "customer123@gmail.com",
-		customerName: "김토스",
-		customerMobilePhone: "01012341234",
-	});
+	paymentWidget.requestPayment(orderInfo);
 });
