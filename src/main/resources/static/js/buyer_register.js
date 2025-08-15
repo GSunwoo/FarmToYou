@@ -79,7 +79,14 @@ document.addEventListener("DOMContentLoaded", () => {
 		updateHiddenEmail();
 		checkFormValidity();
 	});
-
+	
+	phone1.addEventListener("input", () => {
+			phone1.value = phone1.value.replace(/[^0-9]/g, "");
+			if (phone1.value.length === 3) phone2.focus();
+			updateHiddenPhone();
+			checkFormValidity();
+		});
+		
 	phone2.addEventListener("input", () => {
 		phone2.value = phone2.value.replace(/[^0-9]/g, "");
 		if (phone2.value.length === 4) phone3.focus();
@@ -153,13 +160,14 @@ function checkFormValidity() {
 
 	const pw = document.getElementById("password").value.trim();
 	const pw2 = document.getElementById("password2").value.trim();
+	const phone1 = document.getElementById("phone1").value.trim();
 	const phone2 = document.getElementById("phone2").value.trim();
 	const phone3 = document.getElementById("phone3").value.trim();
 	const name = document.getElementById("name").value.trim();
 
 	const pwValid = validatePassword(pw);
 	const pwMatch = pwValid && pw === pw2;
-	const phoneValid = phone2.length === 4 && phone3.length === 4;
+	const phoneValid = phone1.length === 3 && phone2.length === 4 && phone3.length === 4;
 	const nameValid = name.length >= 2;
 
 	const submitBtn = document.querySelector(".submit-btn");
