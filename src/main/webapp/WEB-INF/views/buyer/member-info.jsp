@@ -20,7 +20,7 @@
       <div class="form-line">
         <label for="userid">아이디</label>
         <div class="form-group row-group">
-          <input type="text" id="userid" name="user_id" value="${memberDTO.user_id }"/>
+          <input type="text" id="userid" name="user_id" value="${memberDTO.user_id }" readonly/>
         </div>
       </div>
 
@@ -28,7 +28,7 @@
       <div class="form-line">
         <label for="password">비밀번호</label>
         <div class="form-group">
-          <input type="password" id="password" name="user_pw" placeholder="새 비밀번호 입력" value=""/>
+          <input type="password" id="password" name="user_pw" placeholder="새 비밀번호 입력" required value=""/>
           <p id="pwFormatMsg" class="warning-text" style="display:none;">
             첫 글자 대문자, 특수기호 포함, 7자리 이상이어야 합니다.
           </p>
@@ -39,9 +39,7 @@
       <div class="form-line">
         <label for="password2">비밀번호 확인</label>
         <div class="form-group">
-          <input type="password" id="password2" placeholder="비밀번호 재입력" required 
-           value=""
-          />
+          <input type="password" id="password2" placeholder="비밀번호 재입력" required value=""/>
           <p id="pwMismatchMsg" class="warning-text" style="display: none;">비밀번호가 틀립니다. 다시입력하세요.</p>
         </div>
       </div>
