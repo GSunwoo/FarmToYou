@@ -6,7 +6,9 @@
 	<div class="top-util">
     <ul>
     <sec:authorize access="isAuthenticated()">
-    <li><span>${ memberName }님 환영합니다.</span></li>
+    	<c:if test="${isMainPage == true }">
+		    <li><span>${ memberName }님 환영합니다.</span></li>
+    	</c:if>
 	</sec:authorize>
     <sec:authorize access="isAnonymous()">
         <li><a href="/login.do">로그인</a></li> 
@@ -17,8 +19,6 @@
         <li><a href="/myLogout.do">로그아웃</a></li> 
         <li>|</li>
         <li><a href="/mypage.do">마이페이지</a></li>
-        <li>|</li>
-        <li><a href="/mypage.do">판매자 마이페이지</a></li>
 	</sec:authorize>
         <li>|</li>
         <li><a href="/wishlist/list.do">장바구니</a></li>
