@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	const form = document.getElementById("registerForm");
 	const pwInput = document.getElementById("password");
 	const pwCheckInput = document.getElementById("password2");
+	const phone1 = document.getElementById("phone1");
 	const phone2 = document.getElementById("phone2");
 	const phone3 = document.getElementById("phone3");
 	const submitBtn = document.querySelector(".submit-btn");
@@ -112,12 +113,13 @@ function updateHiddenEmail() {
 
 // 전화번호 자동 조합
 function updateHiddenPhone() {
+	const phone1 = document.getElementById("phone1").value.trim();
 	const phone2 = document.getElementById("phone2").value.trim();
 	const phone3 = document.getElementById("phone3").value.trim();
 	const hiddenPhone = document.getElementById("phone_num");
 
 	if (hiddenPhone) {
-		hiddenPhone.value = phone2 && phone3 ? `010-${phone2}-${phone3}` : "";
+		hiddenPhone.value =phone1 && phone2 && phone3 ? `${phone1}${phone2}${phone3}` : "";
 	}
 }
 
