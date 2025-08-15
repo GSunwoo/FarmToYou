@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,6 +31,7 @@
               <table>
                 <colgroup>
                   <col style="width:15%;">
+                  <col style="width:12%;">
                   <col>
                   <col style="width:15%;">
                   <col style="width:15%;">
@@ -37,16 +40,49 @@
                 <thead>
                   <tr>
                     <th>날짜/주문번호</th>
-                    <th>상품명/옵션</th>
+                    <th>상품 사진</th>
+                    <th>상품명</th>
                     <th>상품금액/수량</th>
                     <th>주문상태</th>
-                    <th>확인/리뷰</th>
+                    <th>리뷰</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td colspan="5"><p>조회내역이 없습니다.</p></td>
-                  </tr>
+                	<c:choose>
+                		<c:when test="${not empty orders }">
+                			<c:forEach var="o" items="orders">
+                				<tr>
+                					<td>
+										<time><fmt:formatDate value="${o.order_date }" pattern="yyyy-MM-dd"></fmt:formatDate></time><br />
+										#<c:out value="${o.order_id }" />             					
+                					</td>
+                					<td style="text-align:center;">
+                						<a href="${pageContext.request.contextPath}/Detailpage?prod_id=${o.prod_id}">
+                							<img src="${o.img}" alt="${o.product_name}" class="thumb" loading="lazy" decoding="async">
+                						</a>
+                					</td>
+                					<td>
+                						<a href="${pageContext.request.contextPath}/Detailpage?prod_id=${o.prod_id}">
+                							<c:out value="${o.product_name }" />
+                						</a>
+                					</td>
+                					<td>
+                						<fmt:formatNumber value="${o.price }" pattern="#,###" />원 / <c:out value="${o.qty }" />개
+                					</td>
+                					<td>
+                						<c:out value="${o.status }"></c:out>
+                					</td>
+                					<td>
+                						<!-- 나중에 리뷰페이지  -->
+										<a class="btn-sm" href="">리뷰작성</a>
+                					</td>
+                				</tr>
+                			</c:forEach>
+                		</c:when>	
+                		<c:otherwise>
+                			<tr><td colspan="6"><p>조회내역이 없습니다.</p></td></tr>
+                		</c:otherwise>
+                	</c:choose>
                 </tbody>
               </table>
             </div>
@@ -55,7 +91,7 @@
           <!-- 최근 본 상품 -->
           <div class="mypage-main-info-cont">
             <h2>최근 본 상품
-              <span class="order-info-subtext">일반회원님께서 본 최근 상품입니다.</span>
+              <span class="order-info-subtext">${ memberName }님께서 본 최근 상품입니다.</span>
             </h2>
             <div class="mypage-main-table-type">
               <table>
@@ -65,9 +101,23 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td style="text-align:center;">상품이 존재하지 않습니다.</td>
-                  </tr>
+                  <c:choose>
+                		<c:when test="${not empty Views }">
+                			<c:forEach var="v" items="${Views }">
+                				<tr>
+                					<td>
+                						<a href="${pageContext.request.contextPath}/Detailpage?prod_id=${v.prod_id}">
+                							<img src="${rv.img}" alt="${rv.prod_name}" class="thumb-sm" loading="lazy" decoding="async">
+                							<span class="rv-name"><c:out value="${v.prod_name }"></c:out></span>
+                						</a>
+                					</td>
+                				</tr>
+                			</c:forEach>
+                		</c:when>
+                		<c:otherwise>
+                			<tr><td style="text-align: center"><p>최근 본 상품이 없습니다.</p></td></tr>
+                		</c:otherwise>
+                	</c:choose>
                 </tbody>
               </table>
             </div>

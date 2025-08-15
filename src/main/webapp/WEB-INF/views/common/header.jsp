@@ -6,7 +6,9 @@
 	<div class="top-util">
     <ul>
     <sec:authorize access="isAuthenticated()">
-    <li><span>${ memberName }님 환영합니다.</span></li>
+    	<c:if test="${isMainPage == true }">
+		    <li><span>${ memberName }님 환영합니다.</span></li>
+    	</c:if>
 	</sec:authorize>
     <sec:authorize access="isAnonymous()">
         <li><a href="/login.do">로그인</a></li> 
