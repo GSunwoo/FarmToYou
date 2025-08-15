@@ -87,13 +87,30 @@
 
             <!-- 화면 값 보관용 (DB 컬럼명 유지) -->
             <input type="hidden" name="name" value="<c:out value='${name}'/>">
-            <input type="hidden" id="phone_num" name="phone_num" value="<c:out value='${phone_num}'/>">
+            <!--              <input type="hidden" id="phone_num" name="phone_num" value="<c:out value='${phone_num}'/>">-->
             <input type="hidden" name="zipcode" value="<c:out value='${zipcode}'/>">
             <input type="hidden" name="addr1" value="<c:out value='${addr1}'/>">
             <input type="hidden" name="addr2" value="<c:out value='${addr2}'/>">
           </div>
         </section>
-
+		
+		        <!-- 주문자 인적사항 -->
+        <section class="card">
+            <div class="card-hd">
+            <strong>주문자 인적 사항</strong>
+          </div>
+          <div class="card-bd">
+            <label for="ordererName">이름: </label>
+            <input type="text" class="input-lg" id="ordererName" name="name" placeholder="이름을 입력하세요" required> <br><br>
+            <label for="ordererPhone">전화번호:</label>
+          <input type="text" class="input-lg" value="010" readonly style="max-width:80px;">
+          <input type="text" class="input-lg" id="phone2" maxlength="4" placeholder="" required
+            style="max-width:100px;">
+          <input type="text" class="input-lg" id="phone3" maxlength="4" placeholder="" required
+            style="max-width:100px;">
+            <input type="hidden" id="phone_num" name="phone_num" value="" />	
+          </div>
+      </section>
         <!-- 배송 요청사항 -->
         <section class="card">
           <div class="card-hd">
@@ -152,17 +169,17 @@
         <li class="saved-addr-item">저장된 배송지가 없습니다.</li>
       </c:when>
       <c:otherwise>
-        <c:forEach var="it" items="${savedAddresses}" varStatus="st">
+        <c:forEach var="it" items="${savedAddresses}" varStatus="st"> 
           <li class="saved-addr-item">
             <label style="display:flex; gap:10px; width:100%; cursor:pointer">
-              <input type="radio" name="savedAddr" value="${st.index}"
-                     data-name="${it.name}"
-                     data-phone="${it.phone_num}"
+           	<!-- 이름을 직접 받아와서 작성한다. -->
+              <input type="radio" name="${it.addr_id}" value="${st.index}"
+                     data-addr_id	="${it.addr_id}"
                      data-zipcode="${it.zipcode}"
                      data-addr1="${it.addr1}"
                      data-addr2="${it.addr2}">
               <div>
-                <div><strong>${it.name}</strong> <span class="saved-addr-meta">(${it.phone_num})</span></div>
+                <div><strong>${it.addr_id}</strong> <span class="saved-addr-meta">(${it.phone_num})</span></div>
                 <div>${it.zipcode} · ${it.addr1} ${it.addr2}</div>
               </div>
             </label>
