@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     prod_name: form.elements["prod_name"],
     prod_content: form.elements["prod_content"],
     prod_stock: form.elements["prod_stock"],
-    prod_pirce: form.elements["prod_pirce"],
+    prod_price: form.elements["prod_price"],
     prod_cate: form.elements["prod_cate"],
   };
 
@@ -26,9 +26,9 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   el.prod_stock.addEventListener("keydown", blockNonNumericKeys);
-  el.prod_pirce.addEventListener("keydown", blockNonNumericKeys);
+  el.prod_price.addEventListener("keydown", blockNonNumericKeys);
   el.prod_stock.addEventListener("input", () => stripNonDigits(el.prod_stock));
-  el.prod_pirce.addEventListener("input", () => stripNonDigits(el.prod_pirce));
+  el.prod_price.addEventListener("input", () => stripNonDigits(el.prod_price));
 
   // 이미지 미리보기
   imageInput.addEventListener("change", (e) => {
@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
       el.prod_name.value.trim(),
       el.prod_content.value.trim(),
       el.prod_stock.value.trim(),
-      el.prod_pirce.value.trim(),
+      el.prod_price.value.trim(),
       el.prod_cate.value.trim(),
     ];
 
@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
     fd.append("prod_name", el.prod_name.value.trim());
     fd.append("prod_content", el.prod_content.value.trim());
     fd.append("prod_stock", el.prod_stock.value.trim());
-    fd.append("prod_pirce", el.prod_pirce.value.trim());
+    fd.append("prod_price", el.prod_price.value.trim());
     fd.append("prod_cate", el.prod_cate.value.trim());
 
     console.log(
