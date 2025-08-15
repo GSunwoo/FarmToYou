@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const imageInput = document.getElementById("imageInput");
   const previewContainer = document.getElementById("previewContainer");
-  const mainIdxInput = document.getElementById("main_idx"); // 선택된 메인 이미지
+  const mainIdxInput = document.getElementById("main_idx"); // hidden input
   const errorMsg = document.getElementById("errorMsg");
   const cancelBtn = document.getElementById("cancelBtn");
 
@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 이미지 미리보기 + 메인 선택
   imageInput.addEventListener("change", (e) => {
-    previewContainer.innerHTML = ''; // 기존 초기화
+    previewContainer.innerHTML = ''; 
     const files = Array.from(e.target.files);
 
     files.forEach((file, index) => {
@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
         wrapper.style.margin = '10px';
         wrapper.style.textAlign = 'center';
 
-        // 이미지 미리보기
+        // 미리보기 이미지
         const img = document.createElement('img');
         img.src = event.target.result;
         img.style.width = '100px';
@@ -53,10 +53,10 @@ document.addEventListener("DOMContentLoaded", () => {
         // 메인 이미지 라디오 버튼
         const radio = document.createElement('input');
         radio.type = 'radio';
-        radio.name = 'main_radio'; // 라디오 그룹 이름
+        radio.name = 'main_radio';
         radio.value = index + 1;
         radio.addEventListener('change', () => {
-          mainIdxInput.value = radio.value; // hidden input에 값 반영
+          mainIdxInput.value = radio.value; 
         });
 
         const label = document.createElement('label');
@@ -71,7 +71,6 @@ document.addEventListener("DOMContentLoaded", () => {
       reader.readAsDataURL(file);
     });
 
-    // 메인 이미지 초기화
     if(mainIdxInput) mainIdxInput.value = '';
   });
 
@@ -93,29 +92,34 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // FormData 구성
+    if(!mainIdxInput.value){
+      showError("메인 이미지를 선택해주세요.");
+      return;
+    }
+
+    // FormData → 컨트롤러에 맞게 수정
     const fd = new FormData();
     fd.append("prod_name", el.prod_name.value.trim());
     fd.append("prod_content", el.prod_content.value.trim());
     fd.append("prod_stock", el.prod_stock.value.trim());
     fd.append("prod_price", el.prod_price.value.trim());
     fd.append("prod_cate", el.prod_cate.value.trim());
+    fd.append("main_idx", mainIdxInput.value); // ✅ 컨트롤러 변수명과 동일
 
     const files = imageInput.files;
     for(let i=0; i<files.length; i++){
-      fd.append("images", files[i]);
-      // main 여부: 선택된 이미지 = 1, 나머지 = 0
-      let mainValue = (mainIdxInput.value == (i+1).toString()) ? 1 : 0;
-      fd.append("main", mainValue);
+      fd.append("image", files[i]); // ✅ 컨트롤러 변수명과 동일
     }
 
-    // 서버 전송 예시 (fetch 사용)
     fetch(form.action, {
       method: 'POST',
       body: fd
     })
-    .then(res => res.json())
-    .then(data => {
+    .then(res => {
+      if(!res.ok) throw new Error("서버 오류");
+      return res.text(); // redirect라 JSON 아님
+    })
+    .then(() => {
       alert("상품이 등록되었습니다!");
       form.reset();
       previewContainer.innerHTML = '';
@@ -128,7 +132,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // 취소
   cancelBtn.addEventListener("click", () => {
     form.reset();
     previewContainer.innerHTML = '';

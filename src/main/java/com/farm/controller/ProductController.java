@@ -117,6 +117,9 @@ public class ProductController {
 				if(i == main_idx) {
 					productImgDTO.setMain_idx(1);
 				}
+				else {
+					productImgDTO.setMain_idx(0);
+				}
 				
 				int insertResult = imgDao.insertImg(productImgDTO);
 				
