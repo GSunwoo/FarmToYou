@@ -15,10 +15,24 @@
 	<select id="selectWishlist"
 		parameterType="Long"
 		resultType="com.farm.dto.WishlistDTO">
-		SELECT prod_qty, wish.prod_id, prod_name, prod_price
+		SELECT prod_qty, wish.prod_id, prod_name, prod_price, wish_id
 			FROM wishlist wish
 			LEFT JOIN product prod
 				ON wish.prod_id = prod.prod_id
-				WHERE wish.member_id = #{member_id} 
+				WHERE wish.member_id = #{member_id}
+					ORDER BY wish_id DESC
 	</select>
+	
+	<update id="updateWishlist"
+		parameterType="Long">
+		UPDATE wishlist 
+			SET	prod_qty = #{prod_qty}
+				WHERE wish_id = #{wish_id}
+	</update>
+	
+	<delete id="deleteWishlist"
+		parameterType="Long">
+		DELETE FROM wishlist WHERE wish_id = #{wish_id}
+	</delete>	
+
 </mapper>
