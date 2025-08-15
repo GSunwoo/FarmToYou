@@ -17,8 +17,6 @@
         <li><a href="/myLogout.do">로그아웃</a></li> 
         <li>|</li>
         <li><a href="/mypage.do">마이페이지</a></li>
-        <li>|</li>
-        <li><a href="/mypage.do">판매자 마이페이지</a></li>
 	</sec:authorize>
         <li>|</li>
         <li><a href="/wishlist/list.do">장바구니</a></li>

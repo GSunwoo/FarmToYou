@@ -84,7 +84,7 @@
       <div class="form-line">
         <label for="phone2">전화번호</label>
         <div class="form-group row-group phone-row">
-          <input type="text" value="010" readonly />
+          <input type="text" id="phone1" maxlength="3" value=""  required/>
           <input type="text" id="phone2" maxlength="4" required />
           <input type="text" id="phone3" maxlength="4" required />
           <input type="hidden" id="phone_num" name="phone_num" value="" />
