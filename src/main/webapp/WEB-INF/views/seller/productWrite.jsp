@@ -20,7 +20,7 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <!-- 페이지 JS -->
 <script src="<c:url value='/js/seller_myPage.js' />"></script>
-<script defer src="<c:url value='/js/productRegistration.js' />"></script>
+<script defer src="<c:url value='/js/productWrite.js' />"></script>
 <script defer src="<c:url value='/js/prodimage/image.js' />"></script>
 <link href="<c:url value='/css/productRegistration.css' />"
 	rel="stylesheet" />
@@ -78,16 +78,10 @@
 						</select>
 					</div>
 
-					<div class="form-row">
-						<label for="imageInput">상품 이미지</label> <input id="imageInput"
-							type="file" name="image" accept="image/*" multiple />
-					</div>
-
-
-
 					<div id="previewContainer"></div>
 					<input id="imageInput" type="file" name="image" accept="image/*"
-						multiple /> <input type="hidden" name="main_idx" id="main_idx" />
+						multiple /> 
+					<input type="hidden" name="main_idx" id="main_idx" />
 
 
 					<div class="button-group">

@@ -17,6 +17,13 @@
     <script>
     const widgetClientKey = '${widgetClientKey}';
     const customerKey = '${customerKey}';
+    const orderInfo = JSON.parse('${orderInfo}');
+    const amount = '${amount}';
+    console.log(orderInfo);
+    // URL에 window.location.origin 추가
+    orderInfo.successUrl = window.location.origin + orderInfo.successUrl;
+    orderInfo.failUrl = window.location.origin + orderInfo.failUrl;
+    console.log(orderInfo);
     </script>
     
   </head>

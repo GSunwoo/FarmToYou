@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.farm.config.login.CustomUserDetails;
@@ -46,6 +47,7 @@ public class WishlistController {
 		return result;
 	}
 	
+	
 	@GetMapping("/wishlist/list.do")
 	public String wishlist(@AuthenticationPrincipal CustomUserDetails usesrDetails,
 			Model model) {
@@ -55,6 +57,37 @@ public class WishlistController {
 		
 		
 		return "wishlist/list";
+	}
+	
+	@ResponseBody
+	@PostMapping("/wishlist/updateQty.do")
+	public String updateWishlist(@RequestParam("prod_qty") Long prod_qty,
+			@RequestParam("wish_id") Long wish_id) {
+		System.out.println("[updateQty 요청] wish_id=" + wish_id + ", prod_qty=" + prod_qty);
+		
+		
+		int result = wishDao.updateWishlist(prod_qty, wish_id);
+		if(result == 1) {
+			return "success";
+		}
+		else {
+			return "fail";
+		}
+	}
+	
+	@ResponseBody
+	@PostMapping("/wishlist/delete.do")
+	public String deleteWishlist(
+			@RequestParam("wish_id") Long wish_id) {
+	    System.out.println("[delete 요청] wish_id=" + wish_id);
+		int result = wishDao.deleteWishlist(wish_id);
+		
+		if(result == 1) {
+			return "success";
+		}
+		else {
+			return "fail";
+		}
 	}
 	
 }

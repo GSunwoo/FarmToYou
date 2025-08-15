@@ -20,6 +20,7 @@
 <script src="<c:url value='/js/seller_myPage.js' />"></script>
 
 <body class="simple-page">
+<form action="/seller/update.do" method="post">
   <!-- 상단 공통 헤더 -->
   <jsp:include page="/WEB-INF/views/common/header.jsp" />
 

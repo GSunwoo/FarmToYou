@@ -1,2 +1,0 @@
-let widgetClientKey;
-let customerKey;
