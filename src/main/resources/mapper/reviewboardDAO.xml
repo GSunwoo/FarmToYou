@@ -22,15 +22,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <select id="listPage"
       parameterType="com.farm.dto.PageDTO"
       resultType="com.farm.dto.ReviewBoardDTO">
-      SELECT review_id, member_id, postdate, title, content, star, evaluation, review_like, prod_id
+      SELECT rev.review_id, rev.member_id, rev.postdate, rev.title, rev.content, rev.star, rev.evaluation, rev.review_like, rev.prod_id
       FROM (SELECT Tb.*, rownum rNum FROM (
-				SELECT * FROM product
-				ORDER BY prod_id DESC
+				SELECT * FROM review
+				ORDER BY review_id DESC
 			) Tb
 			WHERE rownum<![CDATA[<=]]>#{end}
-		) pro
-		LEFT JOIN product_img img
-			ON pro.prod_id = img.prod_id and img.main = 'main'
+		) rev
+		LEFT JOIN review_img img
+			ON rev.review_id = img.review_id and img.main = 'main'
 		WHERE rNum <![CDATA[>=]]>#{start} 
       
       
@@ -52,15 +52,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  INSERT INTO review(review_id, member_id, title, content, star, prod_id)
 	  VALUES (seq_review_id.nextval, #{member_id}, #{title}, #{content}, #{star}, #{prod_id})
 	  
-	   SELECT COUNT(*)
-			FROM review
-			INNER JOIN member
-				ON review.member_id=member.member_id
-			INNER JOIN product
-				ON product.member_id=purchase.member_id
-			WHERE review.review_id = #{review_id}
 	</insert>
-	
 	<update id="edit" parameterType="com.farm.dto.ReviewBoardDTO">
 		UPDATE review SET
 		title=#{title}, content=#{content}

@@ -32,6 +32,7 @@ public class ReviewImg {
 	private String filename ; // 서버에 저장될 파일의 이름
 	@Column(name = "sort_order", nullable = false)
     private Integer sortOrder;
+	private String main;
 
 	
 	@ManyToOne

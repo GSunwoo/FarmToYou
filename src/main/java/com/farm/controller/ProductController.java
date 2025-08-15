@@ -113,6 +113,8 @@ public class ProductController {
 				productImgDTO.setFilename(savedFileName);
 				productImgDTO.setIdx(i);
 				productImgDTO.setProd_id(prod_id);
+				
+				
 				if(i == main_idx) {
 					productImgDTO.setMain_idx(1);
 				}

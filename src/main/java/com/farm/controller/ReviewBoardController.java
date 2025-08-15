@@ -54,7 +54,7 @@ public class ReviewBoardController {
 		pageDTO.setStart(1);
 		pageDTO.setEnd(20);
 		ArrayList<ReviewBoardDTO> lists = dao.listPage(pageDTO);
-		model.addAttribute("lists", lists);
+		model.addAttribute("reviewList", lists);
 		
 		//페이지 네비게이션 바를 HTM
 		//String pagingImg = com.edu.springboot.utils.PagingUtil.pagingImg(
@@ -110,7 +110,7 @@ public class ReviewBoardController {
 	
 	@GetMapping("/buyer/review/write.do")
 	   public String reviewWrite(Model model) {
-	      return "review/reviewPage";
+	      return "review/reviewUpdate";
 	   }
 	
 	
@@ -123,15 +123,14 @@ public class ReviewBoardController {
 		MemberDTO member = userDetails.getMemberDTO();
 		// 로그인 된 아이디를 가져옴
 		reviewboardDTO.setMember_id(member.getMember_id());
-		reviewboardDTO.setProd_id((long) 1);
 		int result = dao.write(reviewboardDTO);
 		System.out.println("글쓰기결과 : " + result);
 		
+		insertImg(reviewboardDTO.getReview_id(),req);
 		return "redirect:/guest/review/list.do";
 	}
 	
-	public int insertImg(Long review_id, HttpServletRequest req,
-			 List<MultipartFile> files, ReviewImgDTO reviewimgDTO) {
+	public int insertImg(Long review_id, HttpServletRequest req) {
 		 
 		//업로드 과정에서 에러가 날 수 있으니 예외처리 시작
 		 try {
@@ -145,13 +144,13 @@ public class ReviewBoardController {
 				 dir.mkdirs();
 			}
 	         
-	         long i = 1;
+	         long idx = 1;
 	         Collection<Part> parts = req.getParts();
 	         for(Part part: parts) {
-	            if(!part.getName().equals("ofile")) {
+	            if(!part.getName().equals("uploadFile")) {
 	               continue;
 	            }
-	            
+	            ReviewImgDTO reviewimgDTO = new ReviewImgDTO();
 	            String partHeader = part.getHeader("content-disposition");
 	            String[] phArr = partHeader.split("filename=");
 	            String originalFileName = phArr[1].trim().replace("\"", "");
@@ -162,11 +161,23 @@ public class ReviewBoardController {
 	               part.write(uploadDir+ sep +review_id + sep+ saveFile);
 	            }
 	            reviewimgDTO.setFilename(saveFile);
-	            reviewimgDTO.setIdx(i);
+	            reviewimgDTO.setIdx(idx);
 	            reviewimgDTO.setReview_id(review_id);
 	            
-	            Imgdao.insertImg(reviewimgDTO);
-				i++;
+	            
+	            if(idx == 1) {
+	            	reviewimgDTO.setMain("main");
+				}
+				
+				int Result = Imgdao.insertImg(reviewimgDTO);
+				
+				if(Result == 1) {
+					System.out.printf("전체 파일 %d 중 %d번째 파일업로드 성공", parts.size(), idx);
+				}
+				else {
+					System.err.printf("전체 파일 %d 중 %d번째 파일업로드 실패", parts.size(), idx);
+				}
+				idx++;
 	         }
 	         
 	      }

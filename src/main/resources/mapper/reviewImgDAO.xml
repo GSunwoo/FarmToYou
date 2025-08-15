@@ -10,7 +10,7 @@
 		INSERT INTO review_img
 			(reviewimg_id, filename, idx, main, review_id)	
 		VALUES
-			(#{reviewimg_id}, #{filename} ,#{idx} , #{main} ,#{review_id})
+			(seq_reviewimg_id.nextval, #{filename} ,#{idx} , #{main} ,#{review_id})
 	</insert>
 	
 	<!-- 이미지 조회 -->
