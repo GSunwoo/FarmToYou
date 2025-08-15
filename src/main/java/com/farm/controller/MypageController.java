@@ -115,14 +115,9 @@ public class MypageController {
 		return "seller/seller_myPage";
 	}
 
-    @GetMapping("/sellerManagement")
+    @GetMapping("/seller/sellerManagement")
     public String sellerManagement() {
         return "seller/sellerManagement"; // /WEB-INF/views/seller/sellerManagement.jsp
-    }
-
-    @GetMapping("/productRegistration")
-    public String productRegistration() {
-        return "seller/productRegistration";
     }
 
     @GetMapping("/seller/monitoring")
@@ -130,12 +125,12 @@ public class MypageController {
         return "seller/seller_myPage";
     }
 
-    @GetMapping("/sellerUpdateForm")
+    @GetMapping("/seller/sellerUpdateForm")
     public String sellerUpdateForm() {
         return "seller/sellerUpdateForm";
     }
 
-    @GetMapping("/reviewManagement")
+    @GetMapping("/seller/reviewManagement")
     public String reviewManagement() {
         return "seller/reviewManagement";
     }

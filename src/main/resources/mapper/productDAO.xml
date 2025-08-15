@@ -82,6 +82,15 @@
 		WHERE prod_id = #{prod_id}
 	</select>
 	
+	<!-- 나의상품목록 조회 -->
+	<select id="selectMyprod"
+		parameterType="Long"
+		resultType="com.farm.dto.ProductDTO">
+		SELECT prod_price, prod_stock, member_id, prod_id, prod_cate, prod_content, prod_name
+		FROM product
+		WHERE member_id = ${member_id}
+	</select>
+	
 	<update id="productUpdate"
 		parameterType="com.farm.dto.ProductDTO">
 		UPDATE product set(

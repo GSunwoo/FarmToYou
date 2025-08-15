@@ -12,6 +12,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.ResourceUtils;
@@ -56,7 +57,7 @@ public class ProductController {
 	
 	@GetMapping("/seller/write.do")
 	public String sellerWrite() {
-		return "productForm";
+		return "seller/productWrite";
 	}
 	@PostMapping("/seller/write.do")
 	public String sellerWrite2(
@@ -139,7 +140,18 @@ public class ProductController {
 	}
 	
 	
-	
+	@GetMapping("/seller/mylist.do")
+	public String mylist(@AuthenticationPrincipal CustomUserDetails userDetails,
+			Model model) {
+		
+		Long member_id = userDetails.getMemberDTO().getMember_id();
+		
+		ArrayList<ProductDTO> mylist = proDao.selectMyprod(member_id);
+		model.addAttribute("mylist", mylist);
+		
+		
+		return "seller/myprodlist";
+	}
 	
 	
 	@GetMapping("/guest/productList.do")
@@ -223,15 +235,23 @@ public class ProductController {
 			@RequestParam("prod_id") Long prod_id,
 			ProductDTO productDTO, Model model) {
 		Long login_id = userDetails.getMemberDTO().getMember_id();
+		
 		productDTO = proDao.selectProductView(prod_id);
 		Long write_id = productDTO.getMember_id();
+		
+		productDTO.setProd_content(productDTO.getProd_content()
+				.replaceAll("\r\n", "<br/>"));
 		
 		
 		try {
 			
 			if(login_id == write_id && login_id != null && write_id != null) {
 				model.addAttribute("productDTO", productDTO);
-				return "seller/update";
+				ArrayList<ProductImgDTO> imglist = imgDao.selectAllImg(prod_id);
+				ProductImgDTO main = imgDao.selectMain(prod_id);
+				model.addAttribute("main", main);
+				model.addAttribute("imglist", imglist);
+				return "seller/productUpdate";
 			}
 			
 			
@@ -248,8 +268,10 @@ public class ProductController {
 	
 	@PostMapping("/seller/update.do")
 	public String productUpdate2(ProductDTO productDTO,
-			@RequestParam("main_idx") Long main_idx,
+			@RequestParam("main_idx") String idx,
 			@RequestParam("image") List<MultipartFile> files){
+		
+		Long main_idx = idx != null ? Long.parseLong(idx) : 0L;
 		int prod_result = proDao.productUpdate(productDTO);
 		Long prod_id = productDTO.getProd_id();
 		

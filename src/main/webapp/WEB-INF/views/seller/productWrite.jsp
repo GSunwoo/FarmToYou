@@ -20,7 +20,7 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <!-- 페이지 JS -->
 <script src="<c:url value='/js/seller_myPage.js' />"></script>
-<script defer src="<c:url value='/js/productRegistration.js' />"></script>
+<script defer src="<c:url value='/js/productWrite.js' />"></script>
 <script defer src="<c:url value='/js/prodimage/image.js' />"></script>
 <link href="<c:url value='/css/productRegistration.css' />"
 	rel="stylesheet" />

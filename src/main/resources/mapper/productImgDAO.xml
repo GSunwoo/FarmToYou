@@ -30,6 +30,15 @@
 				WHERE prod_id = #{prod_id} and main_idx = 1
 	</select>
 	
+	<select id="selectAllImg"
+		parameterType="Long"
+		resultType="com.farm.dto.ProductImgDTO">
+		SELECT prodimg_id, filename, idx, main_idx, prod_id
+			FROM product_img 
+				WHERE prod_id = #{prod_id}
+					ORDER BY IDX ASC
+	</select>
+	
 	<delete id="deleteImg"
 		parameterType="com.farm.dto.ProductImgDTO">
 		DELETE FROM product_img WHERE prod_id = #{prod_id}	

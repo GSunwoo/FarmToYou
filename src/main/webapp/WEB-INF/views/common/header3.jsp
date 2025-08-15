@@ -7,11 +7,12 @@
       <div class="sub-menu-box">
         <h2>판매자 마이페이지</h2>
         <ul class="sub-menu-mypage">
-       	    <li><a href="${pageContext.request.contextPath}/sellerManagement">주문상태</a></li>
-			<li><a href="${pageContext.request.contextPath}/productRegistration">상품판매등록</a></li>
+       	    <li><a href="${pageContext.request.contextPath}/seller/sellerManagement">주문상태</a></li>
+			<li><a href="${pageContext.request.contextPath}/seller/write.do">상품판매등록</a></li>
+			<li><a href="${pageContext.request.contextPath}/seller/mylist.do">나의상품목록</a></li>
 			<li><a href="${pageContext.request.contextPath}/seller/monitoring">모니터링</a></li>
-			<li><a href="${pageContext.request.contextPath}/sellerUpdateForm">판매자 정보 변경</a></li>
-			<li><a href="${pageContext.request.contextPath}/reviewManagement">리뷰</a></li>
+			<li><a href="${pageContext.request.contextPath}/seller/sellerUpdateForm">판매자 정보 변경</a></li>
+			<li><a href="${pageContext.request.contextPath}/seller/reviewManagement">리뷰</a></li>
         </ul>
       </div>
     </div>
