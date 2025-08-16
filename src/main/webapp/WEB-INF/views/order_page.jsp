@@ -8,6 +8,7 @@
   <title>구매페이지</title>
 
   <!-- CSS -->
+  <link rel="stylesheet" href="<c:url value='/'/>">
   <link rel="stylesheet" href="<c:url value='/css/order_page.css' />">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
@@ -24,15 +25,15 @@ const CART = '${cart}';
 <body>
   <!-- 상단 유틸 -->
   
-
+	
    <jsp:include page="/WEB-INF/views/common/header.jsp" />
 
   <!-- 레이아웃 래퍼 -->
   <div class="mypage-wrapper">
     <!-- 좌측: 판매자 사이드바 -->
-    <jsp:include page="/WEB-INF/views/common/header3.jsp">
+    <%-- <jsp:include page="/WEB-INF/views/common/header3.jsp">
       <jsp:param name="active" value="update" />
-    </jsp:include>
+    </jsp:include> --%>
 
     <a href="<c:url value='/'/>" class="logo-section">
       <img src="<c:url value='/images/shopping mall-Photoroom.png'/>" style="transform:scaleX(2);" alt="로고">
