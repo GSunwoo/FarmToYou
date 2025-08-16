@@ -76,7 +76,7 @@
 
       <button type="button" class="submit-btn" onclick="location.href='/buyer/mypage.do'">이전</button>
       <!-- 가입 버튼 -->
-      <button type="submit" class="submit-btn" id="submitBtn" disabled>회원정보수정</button>
+      <button type="submit" class="submit-btn" id="submitBtn">회원정보수정</button>
     </form>
   </div>
 </body>

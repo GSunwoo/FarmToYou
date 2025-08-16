@@ -109,7 +109,6 @@
 
 					<div class="review-imgs">
 						<c:choose>
-							<!-- 이미지 이름 넣기 -->
 							<c:when test="${not empty review.}">
 								<img src="" alt="${review.title }" />
 							</c:when>

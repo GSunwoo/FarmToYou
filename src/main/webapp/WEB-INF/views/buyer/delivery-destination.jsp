@@ -26,7 +26,7 @@
 
       <section class="card">
         <div class="card-hd">
-          <strong>배송지</strong> <span class="bar">|</span> <span id="recvName">성명</span>
+          <strong>배송지</strong> <span class="bar">|</span> <span id="recvName">${AddressDTO.name }</span>
           <button type="button" class="btn-sm ghost" id="btnAddrEdit">배송지 변경</button>
           <button type="button" class="btn-sm solid" id="btnAddrNew" style="margin-left:8px">새 배송지 추가</button>
           

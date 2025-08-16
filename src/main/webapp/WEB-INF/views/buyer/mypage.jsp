@@ -50,20 +50,20 @@
                 <tbody>
                 	<c:choose>
                 		<c:when test="${not empty orders }">
-                			<c:forEach var="o" items="orders">
+                			<c:forEach var="o" items="${orders}" end="4">
                 				<tr>
                 					<td>
 										<time><fmt:formatDate value="${o.order_date }" pattern="yyyy-MM-dd"></fmt:formatDate></time><br />
 										#<c:out value="${o.order_id }" />             					
                 					</td>
                 					<td style="text-align:center;">
-                						<a href="${pageContext.request.contextPath}/Detailpage?prod_id=${o.prod_id}">
-                							<img src="${o.img}" alt="${o.product_name}" class="thumb" loading="lazy" decoding="async">
+                						<a href="${pageContext.request.contextPath}/Detailpage?prod_id=${o.ProductDTO.prod_id}">
+                							<img src="${o.ProductDTO.img}" alt="${o.ProductDTO.product_name}" class="thumb" loading="lazy" decoding="async">
                 						</a>
                 					</td>
                 					<td>
-                						<a href="${pageContext.request.contextPath}/Detailpage?prod_id=${o.prod_id}">
-                							<c:out value="${o.product_name }" />
+                						<a href="${pageContext.request.contextPath}/Detailpage?prod_id=${o.ProductDTO.prod_id}">
+                							<c:out value="${o.ProductDTO.product_name }" />
                 						</a>
                 					</td>
                 					<td>
@@ -90,9 +90,7 @@
 
           <!-- 최근 본 상품 -->
           <div class="mypage-main-info-cont">
-            <h2>최근 본 상품
-              <span class="order-info-subtext">${ memberName }님께서 본 최근 상품입니다.</span>
-            </h2>
+            <h2>최근 본 상품</h2>
             <div class="mypage-main-table-type">
               <table>
                 <thead>
@@ -106,9 +104,9 @@
                 			<c:forEach var="v" items="${Views }">
                 				<tr>
                 					<td>
-                						<a href="${pageContext.request.contextPath}/Detailpage?prod_id=${v.prod_id}">
-                							<img src="${rv.img}" alt="${rv.prod_name}" class="thumb-sm" loading="lazy" decoding="async">
-                							<span class="rv-name"><c:out value="${v.prod_name }"></c:out></span>
+                						<a href="${pageContext.request.contextPath}/Detailpage?prod_id=${v.ProductDTO.prod_id}">
+                							<img src="${v.ProductDTO.img}" alt="${v.ProductDTO.product_name}" class="thumb-sm" loading="lazy" decoding="async">
+                							<span class="rv-name"><c:out value="${v.ProductDTO.prod_name }"></c:out></span>
                 						</a>
                 					</td>
                 				</tr>
