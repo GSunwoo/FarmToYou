@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.farm.config.login.CustomUserDetails;
 import com.farm.dto.InquiryDTO;
 import com.farm.dto.PageDTO;
+import com.farm.dto.ParameterDTO;
 import com.farm.service.IInquiryService;
 
 import jakarta.servlet.http.HttpServletRequest;
+import utils.PagingUtil;
 
 @Controller
 public class InquiryController {
@@ -66,14 +68,20 @@ public class InquiryController {
 		pageDTO.setStart(start);
 		pageDTO.setEnd(end);
 		
-//		Map<String, Object> maps = new HashMap()<String, Object>();
-//		maps.put("totalCount", totalCount);
-//		maps.put("pageSize", pageSize);
-//		maps.put("pageNum", pageNum);
-		
+		Map<String, Object> maps = new HashMap<String, Object>();
+		maps.put("totalCount", totalCount);
+		maps.put("pageSize", pageSize);
+		maps.put("pageNum", pageNum);
+		model.addAttribute("maps", maps);
 		
 		ArrayList<InquiryDTO> list = inqDao.selectInq(member_id);
 		model.addAttribute("list", list);
+		
+		String pagingImg = 
+				PagingUtil.pagingImg(totalCount, pageSize, blockPage, pageNum,
+						req.getContextPath()+"/list.do?");
+		model.addAttribute("pagingImg", pagingImg);
+		
 		return "buyer/inquiryList";
 	}
 

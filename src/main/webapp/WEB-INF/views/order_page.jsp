@@ -25,7 +25,6 @@
       id: ${row.id},
       prod_name: '<c:out value="${row.prod_name}" />',
       qty: ${row.qty},
-      eta: '<c:out value="${row.eta}" default="" />',
       price: ${row.price}
     }<c:if test="${!st.last}">,</c:if> 
   </c:forEach>

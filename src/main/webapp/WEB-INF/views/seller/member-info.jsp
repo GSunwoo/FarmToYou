@@ -14,7 +14,7 @@
     <h2>회원정보 변경</h2>
     <p>변경하실 비밀번호와 전화번호를 입력해주세요</p>
 	
-    <form id="registerForm" method="post" action="/buyer/member-info.do">
+    <form id="registerForm" method="post" action="/seller/member-info.do">
 	  <input type="text" name="user_type" value="ROLE_BUYER" hidden="hidden" />
       <!-- 1. 아이디 -->
       <div class="form-line">
@@ -74,9 +74,9 @@
         </div>
       </div>
 
-      <button type="button" class="submit-btn" onclick="location.href='/buyer/mypage.do'">이전</button>
+      <button type="button" class="submit-btn" onclick="location.href='/seller/mypage.do'">이전</button>
       <!-- 가입 버튼 -->
-      <button type="submit" class="submit-btn" id="submitBtn">회원정보수정</button>
+      <button type="submit" class="submit-btn" id="submitBtn" disabled>회원정보수정</button>
     </form>
   </div>
 </body>
