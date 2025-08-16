@@ -69,9 +69,10 @@ public class ProductController {
 		productDTO.setMember_id(userDetails.getMemberDTO().getMember_id());
 		int prodResult = proDao.productWrite(productDTO);
 		Long prod_id = productDTO.getProd_id();
+		Long last_idx = null;
 		
 		if(!files.isEmpty()) {			
-			insertImg(prod_id, main_idx, files);
+			insertImg(prod_id, main_idx, files, last_idx);
 		}
 		
 		
@@ -81,7 +82,7 @@ public class ProductController {
 	
 
 	public void insertImg(Long prod_id, Long main_idx,
-			List<MultipartFile> files) {
+			List<MultipartFile> files, Long last_idx) {
 		
 		try {
 			
@@ -95,7 +96,7 @@ public class ProductController {
 			}
 
 			
-			long i = 1;
+			Long i = (last_idx != null) ? last_idx + 1 : 1L;
 			for(MultipartFile file : files) {
 				if (file.isEmpty()) {
 					System.out.println("파일 빔?");
@@ -268,9 +269,11 @@ public class ProductController {
 	}
 	
 	@PostMapping("/seller/update.do")
-	public String productUpdate2(ProductDTO productDTO,
-			@RequestParam("main_idx") String idx,
-			@RequestParam("image") List<MultipartFile> files){
+	@ResponseBody
+	public int productUpdate2(ProductDTO productDTO,
+	        @RequestParam("main_idx") Long main_idx,
+	        @RequestParam("image") List<MultipartFile> files,
+	        @RequestParam("last_idx") Long last_idx) { 
 		
 		productDTO.setProd_content(productDTO.getProd_content()
 				.replaceAll("\r\n", "<br/>"));
@@ -323,17 +326,33 @@ public class ProductController {
 		return result;
 	}
 	
+	
 	@PostMapping("/seller/delete.do")
-	public String delete(@RequestParam("prod_id") Long prod_id){
+	public String deleteProduct(@RequestParam("prod_id") Long prod_id){
 		int prod_result = proDao.productDelete(prod_id);
-		int img_result = imgDao.deleteImg(prod_id);
+		int img_result = imgDao.deleteAllImg(prod_id);
 		if(prod_result == 1 && img_result == 1) {
 			System.out.println("상품 삭제가 완료되었습니다 : " + prod_result);
 		}
 		else {
 			System.out.println("상품 삭제에 실패하였습니다. : " + prod_result);
 		}
-		return "seller/myPageList";
+		return "seller/myprodlist";
+	}
+	
+	
+	@PostMapping("/seller/deleteImg.do")
+	@ResponseBody
+	public String deleteImg(
+	        @RequestParam("prod_id") Long prod_id,
+	        @RequestParam("idx") Long idx) {
+	    try {
+	        int result = imgDao.deleteImg(prod_id, idx);
+	        return (result > 0) ? "success" : "fail";
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return "error";
+	    }
 	}
 	
 	
