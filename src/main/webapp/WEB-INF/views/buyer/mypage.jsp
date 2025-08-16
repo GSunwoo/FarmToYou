@@ -31,7 +31,7 @@
               <table>
                 <colgroup>
                   <col style="width:15%;">
-                  <col style="width:12%;">
+                  <col style="width:20%;">
                   <col>
                   <col style="width:15%;">
                   <col style="width:15%;">
@@ -50,7 +50,7 @@
                 <tbody>
                 	<c:choose>
                 		<c:when test="${not empty orders }">
-                			<c:forEach var="o" items="orders">
+                			<c:forEach var="o" items="${orders }">
                 				<tr>
                 					<td>
 										<time><fmt:formatDate value="${o.order_date }" pattern="yyyy-MM-dd"></fmt:formatDate></time><br />
@@ -90,9 +90,7 @@
 
           <!-- 최근 본 상품 -->
           <div class="mypage-main-info-cont">
-            <h2>최근 본 상품
-              <span class="order-info-subtext">${ memberName }님께서 본 최근 상품입니다.</span>
-            </h2>
+            <h2>최근 본 상품</h2>
             <div class="mypage-main-table-type">
               <table>
                 <thead>

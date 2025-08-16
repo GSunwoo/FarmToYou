@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.farm.service.IPurchaseService">
+	<select id="selectProduct"
+		resultType="com.farm.dto.WishlistDTO">
+		SELECT prod_name, prod_id, prod_name, prod_price 
+		FROM product
+		WHERE prod_id=#{prod_id}
+	</select>
+	
+	<select id="selectProducts"
+		resultType="com.farm.dto.WishlistDTO">
+		SELECT prod_name, pr.prod_id, prod_name, prod_price, prod_qty
+		FROM wishlist wl
+		INNER JOIN product pr
+		ON pr.prod_id = wl.prod_id
+		WHERE wish_id IN
+		<foreach collection="wish_ids" item="id" open="(" separator="," close=")">
+		    #{id}
+		</foreach>
+	</select>
+</mapper>
