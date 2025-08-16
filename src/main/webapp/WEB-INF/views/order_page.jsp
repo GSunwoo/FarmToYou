@@ -30,6 +30,7 @@
     }<c:if test="${!st.last}">,</c:if> 
   </c:forEach>
   ];
+  
 </script>
 <body>
 <form action="" method="post" id="pay" ></form>
