@@ -31,16 +31,18 @@
 					생생한 리뷰를 작성해 주시면, 베스트 리뷰로 선정됩니다. <br /> 많은 관심 부탁드립니다.
 				</p>
 			</div>
-<!--
+
 			<div class="review-best-items">
 				<c:forEach var="best" items="${bestList}" varStatus="status">
 					<c:if test="${status.index < 4}">
+						<!-- 최대 4개만 -->
 						<div class="review-top-card">
 							<div class="review-info">
 								<div class="review-img">
 									<c:choose>
-										<c:when test="${not empty best.filename}">
-											<img src="${best.filename}" alt="${best.title}" />
+										<!-- 이미지 이름 넣기 -->
+										<c:when test="${not empty best.}">
+											<img src="${best.}" alt="${best.title}" />
 										</c:when>
 										<c:otherwise>
 											<img alt="${best.title}" />
@@ -91,7 +93,7 @@
 						</div>
 					</c:if>
 				</c:forEach>
-			</div>-->
+			</div>
 		</div>
 	</section>
 
@@ -107,8 +109,8 @@
 
 					<div class="review-imgs">
 						<c:choose>
-							<c:when test="${not empty review.filename}">
-								 <img src="/uploads/reviewimg/${review.filename}" alt="${review.title }" /> 
+							<c:when test="${not empty review.}">
+								<img src="" alt="${review.title }" />
 							</c:when>
 							<c:otherwise>
 								<img alt="${review.title }" />
