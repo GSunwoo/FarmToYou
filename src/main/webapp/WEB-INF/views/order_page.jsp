@@ -49,11 +49,9 @@
     <a href="<c:url value='/'/>" class="logo-section">
       <img src="<c:url value='/images/shopping mall-Photoroom.png'/>" style="transform:scaleX(2);" alt="로고">
     </a>
-	<!-- JSP에서 합계 계산 (장바구니 단건/다건 공통) -->
 	<c:set var="total_price" value="0" />
 	<c:forEach var="row" items="${cart}">
-	  <!-- price × qty 누적 -->
-	  <c:set var="total_price" value="${total_price + (row.price * row.qty)}" />
+	  <c:set var="total_price" value="${total_price + (row.prod_price * row.prod_qty)}" />
 	</c:forEach>
   <!-- ===================== 구매페이지 시작 ===================== -->
   <section class="order-wrap">
@@ -143,7 +141,6 @@
         <c:forEach var="it" items="${savedAddresses}" varStatus="st"> 
           <li class="saved-addr-item">
             <label style="display:flex; gap:10px; width:100%; cursor:pointer">
-           	<!-- 이름을 직접 받아와서 작성한다. -->
               <input type="radio" name="${it.addr_id}" value="${st.index}"
                      data-addr_id	="${it.addr_id}"
                      data-zipcode="${it.zipcode}"
