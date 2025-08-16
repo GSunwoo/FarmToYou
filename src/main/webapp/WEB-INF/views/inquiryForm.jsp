@@ -53,7 +53,6 @@
           </table>
         </div>
       </div>
-    </div>
       
       <div class="btn-center-box">
         <button type="button" class="btn-before" onclick=""><strong>이전</strong></button>
