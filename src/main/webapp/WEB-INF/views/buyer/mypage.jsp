@@ -73,7 +73,7 @@
                 						<c:out value="${o.status }"></c:out>
                 					</td>
                 					<td>
-                						<!-- 나중에 리뷰페이지  -->
+                						<!-- 나중에 리뷰페이지작성 경로 따오기  -->
 										<a class="btn-sm" href="">리뷰작성</a>
                 					</td>
                 				</tr>
