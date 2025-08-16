@@ -5,14 +5,14 @@
 
 <mapper namespace="com.farm.service.IPurchaseService">
 	<select id="selectProduct"
-		resultType="com.farm.dto.wishlistDTO">
+		resultType="com.farm.dto.WishlistDTO">
 		SELECT prod_name, prod_id, prod_name, prod_price 
 		FROM product
 		WHERE prod_id=#{prod_id}
 	</select>
 	
 	<select id="selectProducts"
-		resultType="com.farm.dto.wishlistDTO">
+		resultType="com.farm.dto.WishlistDTO">
 		SELECT prod_name, pr.prod_id, prod_name, prod_price, prod_qty
 		FROM wishlist wl
 		INNER JOIN product pr
