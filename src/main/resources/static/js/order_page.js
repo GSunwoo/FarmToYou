@@ -1,5 +1,5 @@
 // === Phone helpers: split inputs -> hidden (#phone_num) ===
-/*function updateHiddenPhone() {
+function updateHiddenPhone() {
   const p2 = document.getElementById('phone2');
   const p3 = document.getElementById('phone3');
   const hidden = document.getElementById('phone_num');
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (p2.value.length === 4) p3?.focus(); 
   });
   if (p3) p3.addEventListener('input', updateHiddenPhone);
-});*/
+});
 
 // 1) 검색창 드롭다운 표시/숨김
 document.addEventListener('DOMContentLoaded', () => {
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // 열기 버튼
   $('#btnAddrEdit')?.addEventListener('click', () => openM('#modalAddr'));
   // ✅ 모달 열 때 hidden 값에서 phone2/phone3 미리 채움
-  /*$('#btnAddrEdit')?.addEventListener('click', () => {
+  $('#btnAddrEdit')?.addEventListener('click', () => {
     const cur = $('#phone_num')?.value || '';
     const m = cur.match(/^010-(\d{0,4})-(\d{0,4})$/);
     if (m) {
@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if ($('#phone3')) $('#phone3').value = m[2];
     }
     updateHiddenPhone();
-  });*/
+  });
 
   $('#btnReqEdit')?.addEventListener('click', () => openM('#modalReq'));
 
@@ -70,18 +70,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 배송지 저장(검증 + 카드 즉시 갱신)
   $('#saveAddr')?.addEventListener('click', () => {
-    /*const recv = $('#m_recv')?.value?.trim();*/
-    /*const phone = $('#phone_num')?.value?.trim();            // ✅ 변경*/
+    const recv = $('#m_recv')?.value?.trim();
+    const phone = $('#phone_num')?.value?.trim();            // ✅ 변경
     const zip = $('#m_zip')?.value?.trim();
     const a1 = $('#m_addr1')?.value?.trim();
     const a2 = $('#m_addr2')?.value?.trim();
     if (!recv || !phone || !zip || !a1) {
-      alert('주소를 입력하세요.');
+      alert('받는분/연락처/주소를 입력하세요.');
       return;
     }
     if ($('#recvName')) $('#recvName').textContent = recv;
     if ($('#addrText')) $('#addrText').textContent = `${a1} ${a2 || ''}`;
-    /*if ($('#addrPhone')) $('#addrPhone').textContent = `휴대폰 : ${phone}`; // ✅ 카드 표시 갱신*/
+    if ($('#addrPhone')) $('#addrPhone').textContent = `휴대폰 : ${phone}`; // ✅ 카드 표시 갱신
     closeM('#modalAddr');
   });
 
@@ -127,14 +127,14 @@ document.addEventListener('DOMContentLoaded', () => {
 	  const zipcode = r.dataset.zipcode || '';
 	  const addr1 = r.dataset.addr1 || '';
 	  const addr2 = r.dataset.addr2 || '';
-	  /*const phone = r.dataset.phone || '';*/
-	  /*const {p2, p3} = formatPhoneToParts(phone);*/
+	  const phone = r.dataset.phone || '';
+	  const {p2, p3} = formatPhoneToParts(phone);
 	  document.getElementById('m_recv').value = name;
 	  document.getElementById('m_zip').value = zipcode;
 	  document.getElementById('m_addr1').value = addr1;
 	  document.getElementById('m_addr2').value = addr2;
-	  /*document.getElementById('phone2').value = p2;
-	  document.getElementById('phone3').value = p3;*/
+	  document.getElementById('phone2').value = p2;
+	  document.getElementById('phone3').value = p3;
 	});
 
     new daum.Postcode({
@@ -157,11 +157,11 @@ document.addEventListener('DOMContentLoaded', () => {
     'click',
     () => {
       const recv = $('#m_recv')?.value?.trim();
-      /*const phone = $('#phone_num')?.value?.trim();          // ✅ 변경*/
+      const phone = $('#phone_num')?.value?.trim();          // ✅ 변경
       const a1 = $('#m_addr1')?.value?.trim();
       const a2 = $('#m_addr2')?.value?.trim();
       if (recv) $('#recvName').textContent = recv;
-      /*if (phone) $('#addrPhone').textContent = `휴대폰 : ${phone}`; // ✅ 카드 표시 갱신*/
+      if (phone) $('#addrPhone').textContent = `휴대폰 : ${phone}`; // ✅ 카드 표시 갱신
       if (a1) $('#addrText').textContent = `${a1}${a2 ? ' ' + a2 : ''}`;
     },
     { capture: false }
@@ -194,7 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const html = sorted.map((it, idx) => `
       <section class="ship-summary">
         <div class="ship-hd">
-          배송 ${total}건 중 ${idx + 1}
+          배송 ${total}건 중 ${idx + 1}${it.eta ? ` <span class="ship-sub">${formatKoreanETA(it.eta)}</span>` : ''}
         </div>
         <div class="ship-bd">
           <div class="ship-ttl">${it.prod_name}</div>

@@ -63,11 +63,8 @@
 				<input type="hidden" name="prod_id" value="${productDTO.prod_id }">
 				<input type="hidden" id="qtyInput" name="prod_qty" value="1">
 				<button type="submit" class="btn-outline" id="wishlist-add-btn">장바구니 담기</button>
-				
 				<!-- 장바구니로 가는 경로 세팅 -->
 				<a href="/buyer/pay/checkout.do" class="btn-solid">바로결제</a>
-				<a href="/buyer/inquiryForm.do?prod_name=${productDTO.prod_name}&prod_id=${productDTO.prod_id}" 
-				class="btn-outline">상품문의쓰기</a>
 			</form>
 		</div>
 

@@ -39,8 +39,26 @@
 					ORDER BY IDX ASC
 	</select>
 	
+	<update id="makeZero"
+		parameterType="Long">
+		UPDATE product_img SET
+			main_idx = 0
+			WHERE prod_id = #{prod_id}
+	</update>
+	<update id="updateMainImg"
+		parameterType="Long">
+		UPDATE product_img SET
+			main_idx = 1
+			WHERE prod_id = #{prod_id} AND idx=#{main_idx}
+	</update>
+	
 	<delete id="deleteImg"
-		parameterType="com.farm.dto.ProductImgDTO">
+		parameterType="Long">
+		DELETE FROM product_img 
+			WHERE prod_id = #{prod_id} and idx = #{idx}	
+	</delete>
+	<delete id="deleteAllImg"
+		parameterType="Long">
 		DELETE FROM product_img WHERE prod_id = #{prod_id}	
 	</delete>
 </mapper>

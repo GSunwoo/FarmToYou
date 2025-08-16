@@ -6,8 +6,9 @@
 <head>
   <meta charset="UTF-8" />
   <title>구매페이지</title>
-	
+
   <!-- CSS -->
+  <link rel="stylesheet" href="<c:url value='/'/>">
   <link rel="stylesheet" href="<c:url value='/css/order_page.css' />">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
@@ -18,41 +19,26 @@
 <!-- 다음(카카오) 우편번호 API -->
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
-  // CART를 항상 배열로 생성 (단건/다건 동일)
-  const CART = [
-  <c:forEach var="row" items="${cart}" varStatus="st">
-    {
-      id: ${row.id},
-      prod_name: '<c:out value="${row.prod_name}" />',
-      qty: ${row.qty},
-      price: ${row.price}
-    }<c:if test="${!st.last}">,</c:if> 
-  </c:forEach>
-  ];
+const CART = '${cart}';
+
 </script>
 <body>
-<form action="" method="post" id="pay" ></form>
   <!-- 상단 유틸 -->
   
-
+	
    <jsp:include page="/WEB-INF/views/common/header.jsp" />
 
   <!-- 레이아웃 래퍼 -->
   <div class="mypage-wrapper">
     <!-- 좌측: 판매자 사이드바 -->
-    <jsp:include page="/WEB-INF/views/common/header3.jsp">
+    <%-- <jsp:include page="/WEB-INF/views/common/header3.jsp">
       <jsp:param name="active" value="update" />
-    </jsp:include>
+    </jsp:include> --%>
 
     <a href="<c:url value='/'/>" class="logo-section">
       <img src="<c:url value='/images/shopping mall-Photoroom.png'/>" style="transform:scaleX(2);" alt="로고">
     </a>
-	<!-- JSP에서 합계 계산 (장바구니 단건/다건 공통) -->
-	<c:set var="total_price" value="0" />
-	<c:forEach var="row" items="${cart}">
-	  <!-- price × qty 누적 -->
-	  <c:set var="total_price" value="${total_price + (row.price * row.qty)}" />
-	</c:forEach>
+
   <!-- ===================== 구매페이지 시작 ===================== -->
   <section class="order-wrap">
     <div class="order-grid">
@@ -69,7 +55,7 @@
           <div class="card-bd">
             <span class="badge">최근배송지</span>
             <div class="addr-text" id="addrText">주소: <c:out value="${addr1}" /> <c:out value="${addr2}" /></div>
-            <!-- <div class="addr-phone" id="addrPhone">휴대폰 : <c:out value="${phone_num}" /></div>  -->
+            <div class="addr-phone" id="addrPhone">휴대폰 : <c:out value="${phone_num}" /></div>
 
             <!-- 화면 값 보관용 (DB 컬럼명 유지) -->
             <input type="hidden" name="name" value="<c:out value='${name}'/>">
@@ -103,7 +89,7 @@
             <div class="line">
               <span>총 상품 가격</span>
               <span id="sumProducts">
-                <fmt:formatNumber value="${total_price}" type="number"/>원
+                <fmt:formatNumber value="${empty total_price ? 0 : total_price}" type="number"/>원
               </span>
             </div>
             <div class="line"><span>배송비</span><span>0원</span></div>
@@ -111,17 +97,16 @@
             <div class="line total">
               <span>총 결제 금액</span>
               <span id="sumTotal">
-                <fmt:formatNumber value="${total_price}" type="number"/>원
+                <fmt:formatNumber value="${empty total_price ? 0 : total_price}" type="number"/>원
               </span>
             </div>
             <label class="agree">
               <input type="checkbox" id="agreeAll">
               <span>구매조건/결제대행 약관에 동의합니다.</span>
             </label>
-            <button type="submit" class="btn-lg solid" id="btnPay">toss결제</button> <!-- type을 submit으로 변경  -->
+            <button type="button" class="btn-lg solid" id="btnPay">toss결제</button>
           </div>
         </div>
-        <input type="hidden" id="total_price" name="total_price" value="${total_price}" />
       </aside>
     </div>
   </section>
@@ -163,11 +148,11 @@
         <input class="input-lg" id="m_recv" name="name" placeholder="받는분" value="<c:out value='${name}'/>">
 
         <!-- 휴대폰 3분할 입력 (010 고정 + 4자리 + 4자리) -->
-       <!--  <div class="row" id="phoneRow">
+        <div class="row" id="phoneRow">
           <input type="text" class="input-lg" value="010" readonly style="max-width:80px;">
           <input type="text" class="input-lg" id="phone2" maxlength="4" placeholder="####" required style="max-width:100px;">
           <input type="text" class="input-lg" id="phone3" maxlength="4" placeholder="####" required style="max-width:100px;">
-        </div> -->
+        </div>
 
         <div class="row">
           <input class="input-lg" id="m_zip" name="zipcode" placeholder="우편번호" style="max-width:140px" value="<c:out value='${zipcode}'/>" readonly>

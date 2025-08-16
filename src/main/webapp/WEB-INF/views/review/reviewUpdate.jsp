@@ -16,31 +16,27 @@
   <!-- sessionScope.member_id, sessionScope.name  -->
   <!-- prod_id는 쿼리스트링 ?prod_id=... 로 전달된다고 가정 -->
 
-  <form id="review" action="/buyer/review/write.do" method="post">
+  <form id="review" action="/buyer/review/write.do" method="post" enctype="multipart/form-data">
   
-	    <!-- 내부/자동 값 -->
-	<input type="hidden" id="review_id" name="review_id" value="">
-	<input type="hidden" id="review_like" name="review_like" value="0">
-	
-	<!-- 작성자(로그인 세션) - 화면 표시용 -->
+    <!-- 내부/자동 값 -->
+    <input type="hidden" id="review_id" name="review_id"> <!-- 신규 작성이므로 비움 -->
+    <input type="hidden" id="review_like" name="review_like">
+
+    <!-- 작성자(로그인 세션) - 화면 표시용 -->
 	<label for="member_id_view">회원 ID</label>
-	<input type="text" id="member_id_view"
-	       value="<c:out value='${sessionScope.member_id}'/>" readonly><br><br>
+	<input type="text" id="member_id" name="member_id"
+	       value="'${param.member_id}'"readonly><br><br>
 	
 	<!-- 실제 전송용 (파라미터로 넘어감) -->
-	<input type="hidden" id="member_id" name="member_id"
-	       value="<c:out value='${sessionScope.member_id}'/>"><br><br>
+	<input type="hidden" id="name" name="name"
+	       value="'${param.name}'" readonly><br><br>
 
     <!-- 상품 ID (쿼리스트링에서 받기) -->
     <label for="prod_id">상품 ID</label>
     <input type="text" id="prod_id" name="prod_id"
-           value="${param.prod_id}" readonly><br><br>
+           value="${prod_id}" readonly><br><br>
 
-    <!-- 작성일(오늘 날짜 기본) -->
-    <label for="postdate">작성일</label>
-    <input type="date" id="postdate" name="postdate"
-           value="<fmt:formatDate value='${now}' pattern='yyyy-MM-dd'/>" readonly><br><br>
-
+   
     <!-- 제목 -->
     <label for="title">제목</label>
     <input type="text" id="title" name="title" required maxlength="100"><br><br>
@@ -69,7 +65,7 @@
     <!-- 실제 이미지 업로드 -->
     <label for="uploadFile">이미지 선택:</label>
     <input type="file" id="uploadFile" name="uploadFile" accept="image/*" multiple required><br><br>
-
+	
     <input type="submit" value="리뷰 등록">
   </form>
 </body>

@@ -13,7 +13,6 @@
 			<li><a href="${pageContext.request.contextPath}/seller/monitoring">모니터링</a></li>
 			<li><a href="${pageContext.request.contextPath}/seller/sellerUpdateForm">판매자 정보 변경</a></li>
 			<li><a href="${pageContext.request.contextPath}/seller/reviewManagement">리뷰</a></li>
-			<li><a href="${pageContext.request.contextPath}/seller/member-info">회원정보변경</a></li>
         </ul>
       </div>
     </div>

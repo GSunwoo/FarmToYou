@@ -67,15 +67,6 @@
       <input type="text" id="evaluation" name="evaluation" value="${review.evaluation}">
     </div>
 
-    <!-- 메인 여부 -->
-    <div>
-      <label for="main">메인 여부</label>
-      <select id="main" name="main">
-        <option value="Y" <c:if test="${reviewImage.main eq 'Y'}">selected</c:if>>Y</option>
-        <option value="N" <c:if test="${reviewImage.main eq 'N'}">selected</c:if>>N</option>
-      </select>
-    </div>
-
     <!-- 기존 이미지 파일명 -->
     <div>
       <label for="filename">기존 파일명</label>

@@ -137,12 +137,30 @@
 							<i class="fas fa-phone"></i> <span>1577-1577</span>
 						</div>
 						<div>
-							<i class="fas fa-fax"></i> <span>010-2272-2272</span>
+							<i class="fas fa-fax"></i> <span>02-2272-2272</span>
 						</div>
 						<div>
 							<i class="fas fa-envelope"></i> <span>wlstjr2867@gmail.com</span>
 						</div>
 					</div>
+				</div>
+
+				<div class="contact-right">
+					<div class="input-row">
+						<input type="text" placeholder="성명"> <input type="text"
+							placeholder="휴대폰">
+					</div>
+					<textarea placeholder="전달사항을 적어주세요"></textarea>
+
+					<div class="agree-row">
+						<input type="checkbox" id="agree"> <label for="agree">개인정보수집
+							및 이용안내 <span class="check-guide">(동의함)</span>
+						</label> <a href="#" class="view-detail">자세히보기</a>
+					</div>
+
+					<button class="inquiry-btn">
+						상담문의 <i class="fas fa-arrow-right"></i>
+					</button>
 				</div>
 			</div>
 		</div>

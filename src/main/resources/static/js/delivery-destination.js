@@ -150,8 +150,7 @@
 		    const recvNameEl = $('#recvName');
 		    const addrTextEl = $('#addrText');
 		    const addrPhoneEl = $('#addrPhone');
-			
-			//화면을 동적으로 갱신
+		
 		    if (recvNameEl) recvNameEl.textContent = result.name || recv;
 			if (addrTextEl) addrTextEl.textContent =
 			 `(${result.zipcode || zip}) ${result.addr1 || a1}${result.addr2 ? ' ' + result.addr2 : ''}`;
