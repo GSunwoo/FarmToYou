@@ -23,10 +23,10 @@
   const CART = [
   <c:forEach var="row" items="${cart}" varStatus="st">
     {
-      id: ${row.id},
+      id: ${row.prod_id},
       prod_name: '<c:out value="${row.prod_name}" />',
-      qty: ${row.qty},
-      price: ${row.price}
+      qty: ${row.prod_qty},
+      price: ${row.prod_price}
     }<c:if test="${!st.last}">,</c:if> 
   </c:forEach>
   ];
