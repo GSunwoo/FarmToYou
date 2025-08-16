@@ -18,19 +18,18 @@
 
   <form id="review" action="/buyer/review/write.do" method="post">
   
-    <!-- 내부/자동 값 -->
-    <input type="hidden" id="review_id" name="review_id"> <!-- 신규 작성이므로 비움 -->
-    <input type="hidden" id="review_like" name="review_like">
-
-    <!-- 작성자(로그인 세션) -->
-    <label for="member_id">회원 ID</label>
-    <input type="text" id="member_id" name="member_id"
-           value="${sessionScope.member_id}" readonly><br><br>
-
-    <!-- 작성자명(세션) -->
-    <label for="name">작성자명</label>
-    <input type="text" id="name" name="name"
-           value="${sessionScope.name}" readonly><br><br>
+	    <!-- 내부/자동 값 -->
+	<input type="hidden" id="review_id" name="review_id" value="">
+	<input type="hidden" id="review_like" name="review_like" value="0">
+	
+	<!-- 작성자(로그인 세션) - 화면 표시용 -->
+	<label for="member_id_view">회원 ID</label>
+	<input type="text" id="member_id_view"
+	       value="<c:out value='${sessionScope.member_id}'/>" readonly><br><br>
+	
+	<!-- 실제 전송용 (파라미터로 넘어감) -->
+	<input type="hidden" id="member_id" name="member_id"
+	       value="<c:out value='${sessionScope.member_id}'/>"><br><br>
 
     <!-- 상품 ID (쿼리스트링에서 받기) -->
     <label for="prod_id">상품 ID</label>
@@ -62,16 +61,6 @@
     <input type="hidden" id="reviewimg_id" name="reviewimg_id">
     <input type="hidden" id="idx" name="idx">
 
-    <!-- 리뷰 ID (연결용) -->
-    <label for="review_id">리뷰 ID:</label>
-    <input type="text" id="review_id" name="review_id" required><br><br>
-
-    <!-- 메인 여부 -->
-    <label for="main">메인 여부:</label>
-    <select id="main" name="main">
-      <option value="Y">Y</option>
-      <option value="N" selected>N</option>
-    </select><br><br>
 
     <!-- 파일명 (서버에서 자동 생성 가능) -->
     <label for="filename">파일명:</label>
