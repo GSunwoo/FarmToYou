@@ -108,7 +108,7 @@
 					<div class="review-imgs">
 						<c:choose>
 							<c:when test="${not empty review.filename}">
-								<img src="" alt="${review.title }" />
+								 <img src="/uploads/reviewimg/${review.filename}" alt="${review.title }" /> 
 							</c:when>
 							<c:otherwise>
 								<img alt="${review.title }" />

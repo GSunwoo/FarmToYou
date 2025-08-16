@@ -1,6 +1,7 @@
 package com.farm.dto;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import jakarta.persistence.Embeddable;
 import lombok.Data;
@@ -16,10 +17,23 @@ import lombok.NoArgsConstructor;
 @Data
 
 //복합키 클래스 만들기
-public class OrderProductId implements Serializable {
+public class LikeId implements Serializable {
 
 	private Long prod_id;
 	private Long member_id;
 	
+	 @Override
+	    public boolean equals(Object o) {
+	        if (this == o) return true;
+	        if (!(o instanceof LikeId)) return false;
+	        LikeId that = (LikeId) o;
+	        return Objects.equals(prod_id, that.prod_id) &&
+	               Objects.equals(member_id, that.member_id);
+	    }
+
+	    @Override
+	    public int hashCode() {
+	        return Objects.hash(prod_id, member_id);
+	    }
 	
 }

@@ -30,8 +30,8 @@ public class ReviewImg {
 	private Long reviewimg_id;
 	@Column(nullable = false)
 	private String filename ; // 서버에 저장될 파일의 이름
-	@Column(name = "sort_order", nullable = false)
-    private Integer sortOrder;
+	@Column(nullable = false)
+    private Integer idx;
 	private String main;
 
 	

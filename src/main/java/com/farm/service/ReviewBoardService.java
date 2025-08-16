@@ -25,4 +25,6 @@ public interface ReviewBoardService {
 	public int edit(ReviewBoardDTO reviewboardDTO);
 	
 	public ArrayList<ReviewBoardDTO> getReviewPage(ReviewBoardDTO reviewboardDTO);
+	//좋아요기능
+	public boolean toggleLike(String memberId, Long review_id);
 }

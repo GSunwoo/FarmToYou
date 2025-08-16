@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.farm.config.login.CustomUserDetails;
@@ -55,11 +54,6 @@ public class ReviewBoardController {
 		pageDTO.setEnd(20);
 		ArrayList<ReviewBoardDTO> lists = dao.listPage(pageDTO);
 		model.addAttribute("reviewList", lists);
-		
-		//페이지 네비게이션 바를 HTM
-		//String pagingImg = com.edu.springboot.utils.PagingUtil.pagingImg(
-				//totalCount, pageSize, bloc t.do?");
-		//model.addAttribute("pagingImg", pagingImg);
 
 		return "review/reviewPage";
 	}
@@ -109,7 +103,14 @@ public class ReviewBoardController {
 	}
 	
 	@GetMapping("/buyer/review/write.do")
-	   public String reviewWrite(Model model) {
+	   public String reviewWrite(@AuthenticationPrincipal
+			   CustomUserDetails userDetails
+			   , Model model /*, @RequestParam("prod_id") Long prod_id*/) {
+
+
+		Long member_id = userDetails.getMemberDTO().getMember_id();
+		model.addAttribute("member_id", member_id);
+		model.addAttribute("prod_id", 1/*prod_id*/);
 	      return "review/reviewUpdate";
 	   }
 	
@@ -136,7 +137,7 @@ public class ReviewBoardController {
 		 try {
 	         // 물리적 경로 얻어오기
 	         String uploadDir = ResourceUtils.getFile(
-	        		 "classpath:static/uploads/reviewimg/prod_id").toPath().toString();
+	        		 "classpath:static/uploads/reviewimg/").toPath().toString();
 	         System.out.println("저장경로 : " + uploadDir);
 	         String sep = File.separator;
 	         File dir = new File(uploadDir + sep + review_id);
@@ -158,7 +159,7 @@ public class ReviewBoardController {
 	            		UploadUtils.getNewFileName(originalFileName);
 	            
 	            if(!saveFile.isEmpty()) {
-	               part.write(uploadDir+ sep +review_id + sep+ saveFile);
+	               part.write(uploadDir + sep + review_id + sep + saveFile);
 	            }
 	            reviewimgDTO.setFilename(saveFile);
 	            reviewimgDTO.setIdx(idx);
@@ -231,8 +232,6 @@ public class ReviewBoardController {
 		return "redirect:/guest/review/view.do?review_id=" + reviewboardDTO.getReview_id();
 	}
 	
-	//API 경로
-	//@PostMapping("/buyer/review")
 	
 	
 	
