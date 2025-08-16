@@ -94,7 +94,7 @@ public class ReviewBoardController {
 	
 	@GetMapping("/buyer/review/write.do")
 	   public String reviewWrite(Model model) {
-	      return "review/reviewPage";
+	      return "review/reviewUpdate";
 	   }
 	
 	
