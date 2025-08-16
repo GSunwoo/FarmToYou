@@ -194,7 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const html = sorted.map((it, idx) => `
       <section class="ship-summary">
         <div class="ship-hd">
-          배송 ${total}건 중 ${idx + 1}${it.eta ? ` <span class="ship-sub">${formatKoreanETA(it.eta)}</span>` : ''}
+          배송 ${total}건 중 ${idx + 1}
         </div>
         <div class="ship-bd">
           <div class="ship-ttl">${it.prod_name}</div>
