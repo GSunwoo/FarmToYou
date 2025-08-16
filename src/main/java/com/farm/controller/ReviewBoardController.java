@@ -17,8 +17,9 @@ import org.springframework.ui.Model;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.farm.config.login.CustomUserDetails;
@@ -28,6 +29,7 @@ import com.farm.dto.ReviewBoardDTO;
 import com.farm.dto.ReviewImgDTO;
 import com.farm.service.ReviewBoardService;
 import com.farm.service.ReviewImgService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.Part;
@@ -48,39 +50,47 @@ public class ReviewBoardController {
 	//HttpServletRequest : 사용자가 웹 페이지에서 서버에게 요청한 내용을 다 들고 있는 객체
 	public String list(Model model, HttpServletRequest req,
 			ReviewBoardDTO reviewboardDTO, PageDTO pageDTO) {
-		
-		
-		//무한스크롤로 전체 목록보기 
-		 int pageSize = 20;
-	        int pageNum = req.getParameter("pageNum") == null
-	            ? 1
-	            : Integer.parseInt(req.getParameter("pageNum"));
-
-	        int start = (pageNum - 1) * pageSize + 1;
-	        int end   = pageNum * pageSize;
-	        pageDTO.setStart(start);
-	        pageDTO.setEnd(end);
-		
-		/*
-		string이 key고 object가 value인 Map자료구조를 만든다.*/
-		Map<String, Object> maps = new HashMap<String, Object>();
-		
-		//maps.put("totalCount", totalCount);
-		maps.put("pageSize", pageSize);
-		maps.put("pageNum", pageNum);
-		model.addAttribute("maps", maps);
-		
+		pageDTO.setStart(1);
+		pageDTO.setEnd(20);
 		ArrayList<ReviewBoardDTO> lists = dao.listPage(pageDTO);
-		model.addAttribute("lists", lists);
-		
-		//페이지 네비게이션 바를 HTM
-		//String pagingImg = com.edu.springboot.utils.PagingUtil.pagingImg(
-				//totalCount, pageSize, blockPage, pageNum, 
-				//req.getContextPath()+"/list.do?");
-		//model.addAttribute("pagingImg", pagingImg);
-		
+		model.addAttribute("reviewList", lists);
+
 		return "review/reviewPage";
 	}
+	
+	@RequestMapping("/guest/review/restApi.do")
+	@ResponseBody
+	public List<Map<String,Object>> newList(PageDTO pageDTO, HttpServletRequest req,
+			ReviewBoardDTO reviewboardDTO){
+		int pageSize = 20;
+		int pageNum = req.getParameter("pageNum") == null
+				? 1
+						: Integer.parseInt(req.getParameter("pageNum"));
+		
+		int start = (pageNum - 1) * pageSize + 1;
+		int end   = pageNum * pageSize;
+		pageDTO.setStart(start);
+		pageDTO.setEnd(end);
+		
+		List<Map<String, Object>> list = new ArrayList<>();
+		ObjectMapper objectMapper = new ObjectMapper();
+		List<ReviewBoardDTO> selectReviewList = dao.listPage(pageDTO);
+		
+		for(ReviewBoardDTO review : selectReviewList){
+		    Map<String, Object> reviewMap = objectMapper.convertValue(review, Map.class);
+		    list.add(reviewMap);
+		}
+		Map<String, Object> maps = new HashMap<String, Object>();
+	
+		
+        
+        maps.put("pageSize", pageSize);
+		maps.put("pageNum", pageNum);
+		
+		return list;
+		
+	}
+	
 	
 	//열람
 	@GetMapping("/guest/review/view.do")
@@ -93,8 +103,15 @@ public class ReviewBoardController {
 	}
 	
 	@GetMapping("/buyer/review/write.do")
-	   public String reviewWrite(Model model) {
-	      return "review/reviewPage";
+	   public String reviewWrite(@AuthenticationPrincipal
+			   CustomUserDetails userDetails
+			   , Model model /*, @RequestParam("prod_id") Long prod_id*/) {
+
+
+		Long member_id = userDetails.getMemberDTO().getMember_id();
+		model.addAttribute("member_id", member_id);
+		model.addAttribute("prod_id", 1/*prod_id*/);
+	      return "review/reviewUpdate";
 	   }
 	
 	
@@ -107,21 +124,20 @@ public class ReviewBoardController {
 		MemberDTO member = userDetails.getMemberDTO();
 		// 로그인 된 아이디를 가져옴
 		reviewboardDTO.setMember_id(member.getMember_id());
-		reviewboardDTO.setProd_id((long) 1);
 		int result = dao.write(reviewboardDTO);
 		System.out.println("글쓰기결과 : " + result);
 		
+		insertImg(reviewboardDTO.getReview_id(),req);
 		return "redirect:/guest/review/list.do";
 	}
 	
-	public int insertImg(Long review_id, HttpServletRequest req,
-			 List<MultipartFile> files, ReviewImgDTO reviewimgDTO) {
+	public int insertImg(Long review_id, HttpServletRequest req) {
 		 
 		//업로드 과정에서 에러가 날 수 있으니 예외처리 시작
 		 try {
 	         // 물리적 경로 얻어오기
 	         String uploadDir = ResourceUtils.getFile(
-	        		 "classpath:static/uploads/reviewimg/prod_id").toPath().toString();
+	        		 "classpath:static/uploads/reviewimg/").toPath().toString();
 	         System.out.println("저장경로 : " + uploadDir);
 	         String sep = File.separator;
 	         File dir = new File(uploadDir + sep + review_id);
@@ -129,13 +145,13 @@ public class ReviewBoardController {
 				 dir.mkdirs();
 			}
 	         
-	         long i = 1;
+	         long idx = 1;
 	         Collection<Part> parts = req.getParts();
 	         for(Part part: parts) {
-	            if(!part.getName().equals("ofile")) {
+	            if(!part.getName().equals("uploadFile")) {
 	               continue;
 	            }
-	            
+	            ReviewImgDTO reviewimgDTO = new ReviewImgDTO();
 	            String partHeader = part.getHeader("content-disposition");
 	            String[] phArr = partHeader.split("filename=");
 	            String originalFileName = phArr[1].trim().replace("\"", "");
@@ -143,14 +159,26 @@ public class ReviewBoardController {
 	            		UploadUtils.getNewFileName(originalFileName);
 	            
 	            if(!saveFile.isEmpty()) {
-	               part.write(uploadDir+ sep +review_id + sep+ saveFile);
+	               part.write(uploadDir + sep + review_id + sep + saveFile);
 	            }
 	            reviewimgDTO.setFilename(saveFile);
-	            reviewimgDTO.setIdx(i);
+	            reviewimgDTO.setIdx(idx);
 	            reviewimgDTO.setReview_id(review_id);
 	            
-	            Imgdao.insertImg(reviewimgDTO);
-				i++;
+	            
+	            if(idx == 1) {
+	            	reviewimgDTO.setMain("main");
+				}
+				
+				int Result = Imgdao.insertImg(reviewimgDTO);
+				
+				if(Result == 1) {
+					System.out.printf("전체 파일 %d 중 %d번째 파일업로드 성공", parts.size(), idx);
+				}
+				else {
+					System.err.printf("전체 파일 %d 중 %d번째 파일업로드 실패", parts.size(), idx);
+				}
+				idx++;
 	         }
 	         
 	      }
@@ -204,8 +232,6 @@ public class ReviewBoardController {
 		return "redirect:/guest/review/view.do?review_id=" + reviewboardDTO.getReview_id();
 	}
 	
-	//API 경로
-	//@PostMapping("/buyer/review")
 	
 	
 	

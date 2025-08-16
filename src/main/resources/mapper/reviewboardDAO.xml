@@ -22,8 +22,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <select id="listPage"
       parameterType="com.farm.dto.PageDTO"
       resultType="com.farm.dto.ReviewBoardDTO">
-      SELECT review_id, member_id, postdate, title, content, star, evaluation, review_like, prod_id
-      FROM review
+      SELECT rev.review_id, rev.member_id, rev.postdate, rev.title, rev.content, rev.star, rev.evaluation, rev.review_like, rev.prod_id, img.filename
+      FROM (SELECT Tb.*, rownum rNum FROM (
+				SELECT * FROM review
+				ORDER BY review_id DESC
+			) Tb
+			WHERE rownum<![CDATA[<=]]>#{end}
+		) rev
+		LEFT JOIN review_img img
+			ON rev.review_id = img.review_id and img.main = 'main'
+		WHERE rNum <![CDATA[>=]]>#{start} 
+		
+      
+      
       
       	
 </select>
@@ -35,24 +46,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<!-- WHERE review_id=#{review_id} BoardDTO 안의 review_id필드를 기준으로
 		해당 글 1개를 조회함 -->
   		SELECT * FROM review WHERE review_id = #{review_id}
-  		
-  		<!-- SELECT COUNT(*)
-			FROM member
-			INNER JOIN purchase
-				ON member.member_id=purchase.member_id
-			INNER JOIN member
-				ON purchase.member_id=member.member_id
-			WHERE 
-				member_id = #{user_id} AND
-				purc_state = 'prepare_order' -->
 	</select>
 	
 	
 	<insert id="write" parameterType="com.farm.dto.ReviewBoardDTO">
+	<selectKey keyProperty="review_id" resultType="long" order="BEFORE">
+		SELECT seq_review_id.nextval FROM dual
+	</selectKey>
 	  INSERT INTO review(review_id, member_id, title, content, star, prod_id)
-	  VALUES (seq_review_id.nextval, #{member_id}, #{title}, #{content}, #{star}, #{prod_id})
+	  VALUES (#{review_id}, #{member_id}, #{title}, #{content}, #{star}, #{prod_id})
+	  
 	</insert>
-	
 	<update id="edit" parameterType="com.farm.dto.ReviewBoardDTO">
 		UPDATE review SET
 		title=#{title}, content=#{content}

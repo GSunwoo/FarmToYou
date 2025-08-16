@@ -16,32 +16,23 @@
   <!-- sessionScope.member_id, sessionScope.name  -->
   <!-- prod_id는 쿼리스트링 ?prod_id=... 로 전달된다고 가정 -->
 
-  <form id="review" action="/buyer/review/write.do" method="post">
+  <form id="review" action="/buyer/review/write.do" method="post" enctype="multipart/form-data">
   
-    <!-- 내부/자동 값 -->
-    <input type="hidden" id="review_id" name="review_id"> <!-- 신규 작성이므로 비움 -->
-    <input type="hidden" id="review_like" name="review_like">
-
-    <!-- 작성자(로그인 세션) -->
-    <label for="member_id">회원 ID</label>
-    <input type="text" id="member_id" name="member_id"
-           value="${sessionScope.member_id}" readonly><br><br>
-
-    <!-- 작성자명(세션) -->
-    <label for="name">작성자명</label>
-    <input type="text" id="name" name="name"
-           value="${sessionScope.name}" readonly><br><br>
+	    <!-- 내부/자동 값 -->
+	<input type="hidden" id="review_id" name="review_id" value="">
+	<input type="hidden" id="review_like" name="review_like" value="0">
+	
+	<!-- 작성자(로그인 세션) - 화면 표시용 -->
+	<label for="member_id_view">회원 ID</label>
+	<input type="text" id="member_id" name="member_id"
+	       value="${member_id}" readonly><br><br>
 
     <!-- 상품 ID (쿼리스트링에서 받기) -->
     <label for="prod_id">상품 ID</label>
     <input type="text" id="prod_id" name="prod_id"
-           value="${param.prod_id}" readonly><br><br>
+           value="${prod_id}" readonly><br><br>
 
-    <!-- 작성일(오늘 날짜 기본) -->
-    <label for="postdate">작성일</label>
-    <input type="date" id="postdate" name="postdate"
-           value="<fmt:formatDate value='${now}' pattern='yyyy-MM-dd'/>" readonly><br><br>
-
+   
     <!-- 제목 -->
     <label for="title">제목</label>
     <input type="text" id="title" name="title" required maxlength="100"><br><br>
@@ -62,25 +53,10 @@
     <input type="hidden" id="reviewimg_id" name="reviewimg_id">
     <input type="hidden" id="idx" name="idx">
 
-    <!-- 리뷰 ID (연결용) -->
-    <label for="review_id">리뷰 ID:</label>
-    <input type="text" id="review_id" name="review_id" required><br><br>
-
-    <!-- 메인 여부 -->
-    <label for="main">메인 여부:</label>
-    <select id="main" name="main">
-      <option value="Y">Y</option>
-      <option value="N" selected>N</option>
-    </select><br><br>
-
-    <!-- 파일명 (서버에서 자동 생성 가능) -->
-    <label for="filename">파일명:</label>
-    <input type="text" id="filename" name="filename" placeholder="업로드 시 자동 설정 가능"><br><br>
-
     <!-- 실제 이미지 업로드 -->
     <label for="uploadFile">이미지 선택:</label>
-    <input type="file" id="uploadFile" name="uploadFile" accept="image/*" multiple required><br><br>
-
+    <input type="file" id="insertImg" name="uploadFile" accept="image/*" multiple required><br><br>
+	
     <input type="submit" value="리뷰 등록">
   </form>
 </body>
