@@ -32,7 +32,7 @@
     </div>
     <script src="/js/success.js"></script>
     <script>
-    // success.jsp 혹은 success.html 안에
+    // 구매 페이지 -> 구매완료 페이지
     if (window.opener) {
         window.opener.location.href = "/buyer/purchase/complete.do";
     }

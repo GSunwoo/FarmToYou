@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.farm.config.login.CustomUserDetails;
+import com.farm.config.CustomUserDetails;
 import com.farm.dto.MemberDTO;
 import com.farm.dto.PageDTO;
 import com.farm.dto.ReviewBoardDTO;
@@ -40,6 +41,9 @@ public class ReviewBoardController {
 
 	@Autowired
 	ReviewImgService Imgdao;
+	
+	@Autowired
+	private ObjectMapper objectMapper;
 
 	// 목록
 	@GetMapping("/guest/review/list.do")
@@ -55,7 +59,7 @@ public class ReviewBoardController {
 
 	@RequestMapping("/guest/review/restApi.do")
 	@ResponseBody
-	public List<Map<String, Object>> newList(PageDTO pageDTO, HttpServletRequest req, ReviewBoardDTO reviewboardDTO) {
+	public List<JSONObject> newList(PageDTO pageDTO, HttpServletRequest req, ReviewBoardDTO reviewboardDTO) {
 		int pageSize = 20;
 		int pageNum = req.getParameter("pageNum") == null ? 1 : Integer.parseInt(req.getParameter("pageNum"));
 
@@ -64,18 +68,20 @@ public class ReviewBoardController {
 		pageDTO.setStart(start);
 		pageDTO.setEnd(end);
 
-		List<Map<String, Object>> list = new ArrayList<>();
-		ObjectMapper objectMapper = new ObjectMapper();
+		List<JSONObject> list = new ArrayList<>();
 		List<ReviewBoardDTO> selectReviewList = dao.listPage(pageDTO);
 
 		for (ReviewBoardDTO review : selectReviewList) {
 			Map<String, Object> reviewMap = objectMapper.convertValue(review, Map.class);
-			list.add(reviewMap);
+			JSONObject reviewJSON = new JSONObject(reviewMap);
+			list.add(reviewJSON);
 		}
 		Map<String, Object> maps = new HashMap<String, Object>();
 
 		maps.put("pageSize", pageSize);
 		maps.put("pageNum", pageNum);
+		
+
 
 		return list;
 

@@ -105,7 +105,7 @@
 					<div class="review-imgs">
 						<c:choose>
 							<c:when test="${not empty review.filename}">
-								<img src="${review.filename}" alt="${review.title }" />
+								<img src="${pageContext.request.contextPath}/uploads/reviewimg/${review.review_id}/${review.filename}" alt="${review.title }" />
 							</c:when>
 							<c:otherwise>
 								<img alt="${review.title }" />

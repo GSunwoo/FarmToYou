@@ -44,8 +44,8 @@
         <div class="addr-phone" id="addrPhone">
         	휴대폰 : 
         	<c:choose>
-        		<c:when test="${not empty AddressDTO }">
-        			<c:out value="${AddressDTO.phone_num }" />
+        		<c:when test="${not empty member }">
+        			<c:out value="${member.phone_num }" />
         		</c:when>
         		<c:otherwise>010-1111-1111</c:otherwise>
         	</c:choose>

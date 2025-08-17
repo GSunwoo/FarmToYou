@@ -9,8 +9,8 @@
 
   <!-- 공통 스타일 -->
   <script src="<c:url value='/js/seller_myPage.js' />"></script>
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/mainpage.css" />
   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/myPageMain.css" />
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/mainpage.css" />
   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/reviewManagement.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
@@ -24,13 +24,13 @@
     <!-- 레이아웃 래퍼 -->
     <div class="mypage-wrapper">
       <!-- 좌측: 판매자 전용 사이드바 -->
-
   <main class="sub-content">
       <jsp:include page="/WEB-INF/views/common/header3.jsp">
         <jsp:param name="active" value="reviewManagement" />
       </jsp:include>
-
+	<main class="sub-content">
     <div class="mypage-cont">
+    <div class="rm-wrap">
       <div class="mypage-info">
         <div class="mypage-zone-tit">
           <h3>리뷰</h3>
@@ -98,6 +98,8 @@
         </div>
 		</div>
       </div>
+    </div>
+    </div>
     </div>
   </main>
 

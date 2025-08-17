@@ -1,4 +1,4 @@
-package com.farm.config.login;
+package com.farm.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

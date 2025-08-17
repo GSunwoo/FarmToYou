@@ -2,12 +2,21 @@
 .simple-page .mypage-wrapper{
   max-width:1200px; margin:24px auto; padding:0 16px;
   display:grid; grid-template-columns:260px 1fr; gap:24px;
+  margin-top:150px;
+  background-color: rgba(0, 0, 0, 0); /* 검정 배경, 투명도 50% */
 }
+
 .simple-page .sidebar{ /* 공통 사이드바 */
   position: sticky; top: 16px; align-self:start;
+  margin-top:150px;
 }
 .simple-page .sub-content{
   background:#fff; border:1px solid #ddd; border-radius:16px;
+  padding:24px; min-height:60vh;
+  margin-top:150px;
+}
+.simple-page .mypage-cont{
+	background:#fff; border:1px solid #ddd; border-radius:16px;
   padding:24px; min-height:60vh;
 }
 

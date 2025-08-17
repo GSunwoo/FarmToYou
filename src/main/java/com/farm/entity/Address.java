@@ -35,6 +35,7 @@ public class Address {
 	@Column(nullable = false)
 	private String addr1;
 	private String addr2;
+	private Integer main;
 	@ManyToOne
 	@JoinColumn(name = "member_id")
 	private Member member;

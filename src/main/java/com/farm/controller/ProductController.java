@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.farm.config.login.CustomUserDetails;
+import com.farm.config.CustomUserDetails;
 import com.farm.dto.MemberDTO;
 import com.farm.dto.ParameterDTO;
 import com.farm.dto.ProductDTO;

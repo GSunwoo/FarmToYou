@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.farm.config.login.CustomUserDetails;
+import com.farm.config.CustomUserDetails;
 import com.farm.dto.MemberDTO;
 
 @Controller

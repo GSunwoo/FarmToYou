@@ -28,4 +28,11 @@
 		WHERE user_id = #{user_id} 
 	</select>
 	
+	<select id="selectAddress"
+		resultType="com.farm.dto.AddressDTO">
+	SELECT * 
+	FROM address
+	WHERE member_id=#{member_id} AND main=1
+	</select>
+	
 </mapper>

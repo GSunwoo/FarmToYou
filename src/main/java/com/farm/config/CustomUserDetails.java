@@ -1,4 +1,4 @@
-package com.farm.config.login;
+package com.farm.config;
 
 import java.util.Collection;
 import java.util.List;

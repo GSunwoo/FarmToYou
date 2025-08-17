@@ -13,7 +13,7 @@
 	let hasMore = true;
 	
 	async function fetchList(pageNum) {
-		const res = await fetch(`/guest/review/restApi/list?pageNum=${pageNum}`);
+		const res = await fetch(`/guest/review/restApi.do?pageNum=${pageNum}`);
 		if(!res.ok) throw new Error(`목록 로드 실패: ${res.status}`);
 		return res.json();
 	}
