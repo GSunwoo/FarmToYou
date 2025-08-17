@@ -13,7 +13,13 @@
     <sec:authorize access="isAnonymous()">
         <li><a href="/login.do">로그인</a></li> 
         <li>|</li>
-        <li><a href="/memberForm/buyer.do">회원가입</a></li>
+        <li class="join-dropdown">
+        <a href="#" class="join-toggle">회원가입 ▾</a>
+        <ul class="join-menu">
+            <li><a href="/memberForm/buyer.do">구매자 회원가입</a></li>
+            <li><a href="/memberForm/seller.do">판매자 회원가입</a></li>
+        </ul>
+    </li>
 	</sec:authorize>
 	<sec:authorize access="isAuthenticated()">
         <li><a href="/myLogout.do">로그아웃</a></li> 

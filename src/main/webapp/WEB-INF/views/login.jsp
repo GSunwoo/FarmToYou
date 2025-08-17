@@ -42,13 +42,7 @@
       </form>
 
       <div class="divider"><span>or</span></div>
-      <div class="signup-dropdown">
-		  <button class="signup-btn">회원가입 ▾</button>
-			  <ul class="signup-menu">
-			    <li><a href="/memberForm/buyer.do">구매자 회원가입</a></li>
-			    <li><a href="/memberForm/seller.do">판매자 회원가입</a></li>
-			  </ul>
-	  </div>
+      <button class="signup-btn">회원가입</button>
     </div>
   </div>
 

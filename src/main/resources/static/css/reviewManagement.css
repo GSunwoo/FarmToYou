@@ -197,3 +197,94 @@
 .rm-card__rating[data-rating]{ --score: attr(data-rating number); }
 .rm-modal__rating[data-rating]{ --score: attr(data-rating number); }
 */
+
+/* === 리뷰 페이지 레이아웃 빠른 패치 (override) === */
+
+/* 드롭다운 테스트용 강제 표시 제거 (지금 화면 깨뜨림 방지) */
+.recent-search-box { display: none !important; }
+
+/* 좌측 사이드바 옆에 콘텐츠가 꽉 차게 */
+.mypage-cont { 
+  flex: 1;
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
+
+/* 리뷰 섹션 기본 패딩 정리 */
+.rm-wrap { 
+  margin-top: 0;
+  padding: 16px 16px 32px;
+}
+
+/* 그리드가 좌측에 붙고, 카드 폭이 너무 좁지 않게 */
+.rm-grid{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(260px, 1fr));
+  gap: 20px 20px;
+  justify-items: stretch;
+}
+
+/* 페이지네이션이 애매하게 떠 보일 때 중앙 정렬 */
+.rm-pagination { 
+  justify-content: center; 
+  margin-top: 24px; 
+}
+
+/* 상위 컨테이너가 overflow로 가리는 문제 예방 */
+.main-content, .order-grid, .rm-grid, .seller-update-section {
+  overflow: visible !important;
+  position: relative;
+  z-index: auto;
+}
+
+.rm-card__wrapper {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 12px;
+  background: #fff;
+  transition: box-shadow 0.2s ease;
+}
+
+.rm-card__wrapper:hover {
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+/* === 리뷰 페이지 레이아웃 보정 (override) === */
+
+/* 2열 레이아웃: 좌 260px(사이드바), 우 가변(본문) */
+.sub-content {
+  display: grid !important;
+  grid-template-columns: 260px minmax(0, 1fr) !important;
+  column-gap: 24px !important;
+  align-items: start !important;
+  padding: 0 16px !important; /* 스샷2의 패딩값 유지 */
+}
+
+/* 사이드바 카드 폭·패딩을 일관되게 */
+.sidebar-card {
+  width: 260px !important;
+  box-sizing: border-box !important;
+  padding: 20px !important;            /* 스샷1과 동일 */
+  background: #fff !important;         /* 필요 시 주석 해제 */
+  border-radius: 8px;                   /* 선택 */
+}
+
+/* 본문 컨테이너가 제대로 확장되도록 */
+.mypage-cont {
+  min-width: 0 !important;   /* grid/flex 자식 줄바꿈 깨짐 방지 */
+  width: 100% !important;
+  background: transparent !important;
+  border: 0 !important;
+  padding: 0 !important;
+}
+
+/* 리뷰 섹션 여백/그리드 기본값 */
+.rm-wrap { margin-top: 0; padding: 16px 16px 32px; }
+.rm-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(260px, 1fr));
+  gap: 20px;
+}
+.rm-pagination { display:flex; justify-content:center; gap:10px; margin-top:24px; }
+

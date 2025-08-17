@@ -1,7 +1,9 @@
 /* ReviewManagement.js
  * - 텍스트 별점(★/☆) 적용
  * - 페이지네이션/모달/도움이 됐어요 유지
+ * - [PATCH] 빈 목록이어도 페이지네이션 표시 + 메시지 출력
  */
+
 
 (() => {
   const API_LIST = '/guest/review/api/list'; // GET ?pageNum=&pageSize=
@@ -10,8 +12,8 @@
   // DOM refs
   const gridEl = document.getElementById('reviewGrid');
   const pageListEl = document.getElementById('pageNumbers');
-  const firstBtn = document.querySelector('.rm-page__first'); // "<< 6"
-  const prevBtn = document.querySelector('.rm-page__prev');  // "‹" (옵션)
+  const firstBtn = document.querySelector('.rm-page__first'); // "<< 1"
+  const prevBtn = document.querySelector('.rm-page__prev');  // "‹"
   const nextBtn = document.querySelector('.rm-page__next');  // "›"
 
   const modalEl = document.getElementById('reviewModal');
@@ -21,7 +23,6 @@
   const modalDate = document.getElementById('rmModalDate');
   const modalRating = modalEl.querySelector('.rm-modal__rating');
   const modalContent = document.getElementById('rmModalContent');
-  // 교체
   const modalProdLink = document.getElementById('rmModalProductLink');
   const helpBtn = document.getElementById('rmHelpBtn');
   const helpCount = document.getElementById('rmHelpCount');
@@ -52,6 +53,9 @@
     li.dataset.reviewId = item.review_id;
     li.dataset.prodId = item.prod_id ?? '';
 
+	// 새로 추가된 wrapper
+	 const wrapper = ce('div', 'rm-card__wrapper');
+	 
     const a = ce('a', 'rm-card__link');
     a.href = '#';
     a.setAttribute('aria-label', '리뷰 자세히 보기');
@@ -87,59 +91,68 @@
 
     body.append(title, rating, meta, product);
     a.append(thumb, body);
-    li.appendChild(a);
+	// wrapper 안에 a를 넣음
+	wrapper.appendChild(a);
+	// li 안에 wrapper를 넣음
+	li.appendChild(wrapper);
     return li;
   }
 
+  // [PATCH] items가 비면 안내 메시지 출력
   function renderGrid(items) {
     gridEl.innerHTML = '';
+    if (!items || items.length === 0) {
+      gridEl.innerHTML = `<li class="rm-empty">데이터가 없습니다.</li>`;
+      return;
+    }
     const frag = document.createDocumentFragment();
     items.forEach(it => frag.appendChild(buildCard(it)));
     gridEl.appendChild(frag);
   }
 
-function renderPagination(){
-  pageListEl.innerHTML = '';
+  function renderPagination(){
+    pageListEl.innerHTML = '';
 
-  // 현재 페이지가 속한 5개 묶음
-  const blockStart = Math.floor((currentPage - 1) / 5) * 5 + 1;
-  const blockEnd   = Math.min(blockStart + 4, totalPages);
+    // 현재 페이지가 속한 5개 묶음
+    const blockStart = Math.floor((currentPage - 1) / 5) * 5 + 1;
+    const blockEnd   = Math.min(blockStart + 4, totalPages);
 
-  // 번호 버튼 (blockStart ~ blockEnd)
-  for (let n = blockStart; n <= blockEnd; n++) {
-    const li = document.createElement('li');
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'rm-page__num' + (n === currentPage ? ' is-active' : '');
-    btn.dataset.page = String(n);
-    btn.textContent = String(n);
-    li.appendChild(btn);
-    pageListEl.appendChild(li);
-  }
+    // 번호 버튼 (blockStart ~ blockEnd)
+    for (let n = blockStart; n <= blockEnd; n++) {
+      const li = document.createElement('li');
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'rm-page__num' + (n === currentPage ? ' is-active' : '');
+      btn.dataset.page = String(n);
+      btn.textContent = String(n);
+      li.appendChild(btn);
+      pageListEl.appendChild(li);
+    }
 
-  // << 1 : 첫 블록이 아니면 노출 (1페이지로 점프)
-  if (firstBtn) {
-    if (blockStart > 1) {
-      firstBtn.textContent = '<< 1';
-      firstBtn.hidden = false;
-      firstBtn.classList.remove('is-hidden');
-    } else {
-      firstBtn.hidden = true;
-      firstBtn.classList.add('is-hidden');
+    // << 1 : 첫 블록이 아니면 노출 (1페이지로 점프)
+    if (firstBtn) {
+      if (blockStart > 1) {
+        firstBtn.textContent = '<< 1';
+        firstBtn.hidden = false;
+        firstBtn.classList.remove('is-hidden');
+      } else {
+        firstBtn.hidden = true;
+        firstBtn.classList.add('is-hidden');
+      }
+    }
+
+    // ‹ / › : 한 페이지 이동 (빈 목록이면 1/1 기준으로 비활성)
+    if (prevBtn) {
+      prevBtn.classList.remove('is-hidden');
+      prevBtn.hidden = false;
+      prevBtn.disabled = (currentPage <= 1);
+    }
+    if (nextBtn) {
+      nextBtn.classList.remove('is-hidden');
+      nextBtn.hidden = false;
+      nextBtn.disabled = (currentPage >= totalPages);
     }
   }
-
-  // ‹ / › : 한 페이지 이동
-  if (prevBtn) {
-    prevBtn.classList.remove('is-hidden');
-    prevBtn.hidden = false;
-    prevBtn.disabled = (currentPage <= 1);
-  }
-  nextBtn.classList.remove('is-hidden');
-  nextBtn.hidden = false;
-  nextBtn.disabled = (currentPage >= totalPages);
-}
-
 
   async function fetchPage(pageNum) {
     const url = `${API_LIST}?pageNum=${pageNum}&pageSize=${PAGE_SIZE}`;
@@ -147,8 +160,9 @@ function renderPagination(){
     if (!res.ok) throw new Error('목록 조회 실패');
     const data = await res.json();
 
-    totalPages = Number(data.totalPages ?? 1);
-    currentPage = Number(data.pageNum ?? pageNum);
+    // [PATCH] 최소 1페이지 보장
+    totalPages = Math.max(1, Number(data.totalPages ?? 1));
+    currentPage = Math.min(Math.max(1, Number(data.pageNum ?? pageNum)), totalPages);
     const items = Array.isArray(data.items) ? data.items : [];
 
     cacheByPage.set(currentPage, items);
@@ -162,12 +176,15 @@ function renderPagination(){
     try {
       gridEl.setAttribute('aria-busy', 'true');
       if (!items) items = await fetchPage(n);
-      renderGrid(items);
       currentPage = n;
-      renderPagination();
+      renderGrid(items);          // [PATCH] 비어도 메시지 출력
+      renderPagination();         // [PATCH] 항상 호출 → 1/1 비활성 표시
     } catch (err) {
       console.error(err);
-      gridEl.innerHTML = `<li class="rm-card is-error">목록을 불러오지 못했습니다.</li>`;
+      gridEl.innerHTML = `<li class="rm-card is-error">데이터를 불러오지 못했습니다.</li>`;
+      // [PATCH] 에러 때도 1/1으로 표시
+      totalPages = 1; currentPage = 1;
+      renderPagination();
     } finally {
       gridEl.setAttribute('aria-busy', 'false');
     }
@@ -185,11 +202,11 @@ function renderPagination(){
       if (currentPage > 1) goPage(currentPage - 1);
     });
 
-    nextBtn.addEventListener('click', () => {
+    nextBtn?.addEventListener('click', () => {
       if (currentPage < totalPages) goPage(currentPage + 1);
     });
 
-    firstBtn.addEventListener('click', () => goPage(1));
+    firstBtn?.addEventListener('click', () => goPage(1));
 
     gridEl.addEventListener('click', (e) => {
       const link = e.target.closest('.rm-card__link');
@@ -211,7 +228,7 @@ function renderPagination(){
       if (e.key === 'Escape' && !modalEl.hasAttribute('hidden')) closeModal();
     });
 
-    helpBtn.addEventListener('click', onHelpClick);
+    helpBtn?.addEventListener('click', onHelpClick);
   }
 
   function openModal(item) {
@@ -222,7 +239,7 @@ function renderPagination(){
       modalDate.dateTime = item.postdate;
       modalDate.textContent = fmtDate(item.postdate);
     }
-    setStars(modalRating, item.star); // ← 텍스트 별점 적용
+    setStars(modalRating, item.star);
     modalContent.textContent = item.content ?? '';
 
     modalProdLink.textContent = item.productName ?? '';
@@ -250,16 +267,14 @@ function renderPagination(){
     helpCount.textContent = String(prev + 1);
 
     try {
-      // 2) 서버에 반영 요청 → 서버가 DB 갱신 후 "최신 카운트"를 JSON으로 반환한다고 가정
+      // 2) 서버 반영
       const res = await fetch(`${base}/${reviewId}/like`, {
         method: 'POST',
         headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }
-        // CSRF 사용 시 토큰 헤더 추가
       });
       if (!res.ok) throw new Error('도움이 됐어요 실패');
 
       const data = await res.json();
-      // 3) 서버(DB)에서 갱신된 "진짜 값"으로 덮어씀 ⇒ 화면/DB 동기화 보장
       const newCnt = Number(data.review_like ?? (prev + 1));
       helpCount.textContent = String(newCnt);
 
@@ -267,7 +282,6 @@ function renderPagination(){
       if (item) { item.review_like = newCnt; itemById.set(item.review_id, item); }
     } catch (err) {
       console.error(err);
-      // 실패 시 롤백
       helpCount.textContent = String(prev);
       alert('잠시 후 다시 시도해주세요.');
     }
@@ -278,10 +292,12 @@ function renderPagination(){
     try {
       const items = await fetchPage(1);
       renderGrid(items);
-      renderPagination();
+      renderPagination(); // [PATCH] 비어도 1/1 표시
     } catch (err) {
       console.error(err);
       gridEl.innerHTML = `<li class="rm-card is-error">데이터를 불러오지 못했습니다.</li>`;
+      totalPages = 1; currentPage = 1;
+      renderPagination();
     }
   }
 

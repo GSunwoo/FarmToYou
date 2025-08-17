@@ -34,6 +34,7 @@
     <!-- 우측 컨텐츠 -->
     <main class="sub-content">
       <!-- ▼▼ 반드시 main.sub-content 내부에 위치 ▼▼ -->
+      <div class="mypage-cont">
       <section class="seller-update-section">
         <div class="mypage-zone-tit"><h3>판매자 정보 변경 신청</h3></div>
 
@@ -101,7 +102,7 @@
       <!-- ▲▲ 반드시 main.sub-content 내부에 위치 ▲▲ -->
     </main>
   </div>
-
+	</div>
   <!-- 페이지 스크립트: 본문 뒤에서 로드 -->
   <script src="<c:url value='/js/sellerUpdateForm.js' />"></script>
 </body>

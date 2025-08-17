@@ -122,7 +122,7 @@ public class MypageController {
 
     @GetMapping("/seller/monitoring")
     public String monitoring() {
-        return "seller/seller_myPage";
+        return "seller/AI";
     }
 
     @GetMapping("/seller/sellerUpdateForm")
