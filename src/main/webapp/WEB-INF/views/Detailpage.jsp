@@ -71,6 +71,8 @@
 				<a id="order" class="btn-solid">바로결제</a>
 				<a href="/buyer/inquiryForm.do?prod_name=${productDTO.prod_name}&prod_id=${productDTO.prod_id}" 
 				class="btn-outline">상품문의쓰기</a>
+				
+				<a href="/buyer/review/write.do" class="btn-outline">리뷰쓰기</a>
 			</form>
 		</div>
      

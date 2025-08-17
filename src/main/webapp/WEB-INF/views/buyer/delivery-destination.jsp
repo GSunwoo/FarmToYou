@@ -41,15 +41,6 @@
           		<c:otherwise>상세주소</c:otherwise>
           	</c:choose>
         </div>
-        <div class="addr-phone" id="addrPhone">
-        	휴대폰 : 
-        	<c:choose>
-        		<c:when test="${not empty member }">
-        			<c:out value="${member.phone_num }" />
-        		</c:when>
-        		<c:otherwise>010-1111-1111</c:otherwise>
-        	</c:choose>
-        </div>
         </div>
       </section>
     </div>
@@ -63,7 +54,6 @@
 	    <div class="panel-hd">배송지 변경</div>
 	    <div class="panel-bd">
 	      <input class="input-lg" id="m_recv"  name="name"       placeholder="받는분"                value="${AddressDTO.name }">
-	      <input class="input-lg" id="m_phone" name="phone_num"  placeholder="휴대폰(010-0000-0000)" value="${AddressDTO.phone_num }">
 	      <div class="row">
 	        <input class="input-lg" id="m_zip"  name="zipcode"    placeholder="우편번호" style="max-width:140px" value="${AddressDTO.zipcode }" readonly>
 	        <button class="btn-sm ghost" id="btnPost">우편번호 찾기</button>
@@ -83,7 +73,6 @@
 			<div class="panel-hd">새 배송지 추가</div>
 			<div class="panel-bd">
 				<input class="input-lg" id="n_recv" name="name" placeholder="받는분">
-				<input class="input-lg" id="n_phone" name="phone_num" placeholder="휴대폰(010-0000-0000)">
 				<div class="row">
 					<input class="input-lg" id="n_zip" name="zipcode" placeholder="우편번호" style="max-width:140px" readonly/>
 					<button class="btn-sm ghost" id="btnPostNew" type="button">우편번호 찾기</button>

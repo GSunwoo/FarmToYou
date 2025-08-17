@@ -9,9 +9,9 @@
    resultType="com.farm.dto.InquiryDTO"
    >
    SELECT user_id, inquiry_id, prod_id, content, member_id, title
-         FROM inquiry WHERE member_id = #{member_Id}
+         FROM inquiry WHERE member_id = #{member_id}
    </select>
-   
+   <!-- 조인걸어서 가야돼 멤버 -->
    <!-- 문의 등록 -->
    <insert id="insertInq"
       parameterType="com.farm.dto.InquiryDTO">
