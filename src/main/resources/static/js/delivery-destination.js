@@ -46,125 +46,109 @@
   // 적용(저장) 버튼
   $('#saveAddr')?.addEventListener('click', async () => {
     const recv = $('#m_recv')?.value?.trim();
-    const phone= $('#m_phone')?.value?.trim();
     const zip  = $('#m_zip')?.value?.trim();
     const a1   = $('#m_addr1')?.value?.trim();
     const a2   = $('#m_addr2')?.value?.trim();
 
-    if (!recv || !phone || !zip || !a1) {
-      alert('받는분/연락처/주소를 입력하세요.');
+    if (!recv || !zip || !a1) {
+      alert('받는분/주소를 입력하세요.');
       return;
     }
 	
 	// 백엔드 DTO 필드명 일치
 	const deliveryData = {
 	      name: recv,
-	      phone_num: phone, 
 	      zipcode: zip,
 	      addr1: a1,
 	      addr2: a2 
 	    };
 	try{
-		//임시 경로 백엔드 확인
 		const response = await fetch('/buyer/api/delivery/updateAddress', {
 			method: 'POST',
-			headers: {'Content-Type': 'application/json',
-			},
+			headers: {'Content-Type': 'application/json'},
 			body: JSON.stringify(deliveryData)
 		});
 		
 		if(response.ok) {
-		const result = await response.json();
+		  const result = await response.json();
 		
-	    const recvNameEl = $('#recvName');
-	    const addrTextEl = $('#addrText');
-	    const addrPhoneEl = $('#addrPhone');
+	      const recvNameEl = $('#recvName');
+	      const addrTextEl = $('#addrText');
 	
-	    if (recvNameEl) recvNameEl.textContent = result.name || recv;
-		if (addrTextEl) addrTextEl.textContent =
-		 `(${result.zipcode || zip}) ${result.addr1 || a1}${result.addr2 ? ' ' + result.addr2 : ''}`;
-		if (addrPhoneEl) addrPhoneEl.textContent = `휴대폰 : ${result.phone_num || phone}`;
+	      if (recvNameEl) recvNameEl.textContent = result.name || recv;
+		  if (addrTextEl) addrTextEl.textContent =
+		   `(${result.zipcode || zip}) ${result.addr1 || a1}${result.addr2 ? ' ' + result.addr2 : ''}`;
 		
-		alert('배송지 정보가 성공적으로 변경되었습니다. ')
-	    closeM('#modalAddr');
+		  alert('배송지 정보가 성공적으로 변경되었습니다.');
+	      closeM('#modalAddr');
 		}
 	}
 	catch (err) {
 		console.error(err)
 		alert('배송지 변경 실패');
 	}
-});
-	// =========== 새 배송지 추가  모달=============================//
-	// 모달 열기
-	  $('#btnAddrNew')?.addEventListener('click', () => openM('#modalAddrNew'));
+  });
 
-	  // 모달 닫기
-	  $$('#modalAddrNew [data-close]')?.forEach(btn => {
-	    btn.addEventListener('click', e => {
-	      const targetSel = e.currentTarget.getAttribute('data-close');
-	      closeM(targetSel);
-	    });
-	  });
-	  $('#modalAddrNew')?.addEventListener('click', e => {
-	    if (e.target === $('#modalAddrNew')) closeM('#modalAddrNew');
-	  });
+  // =========== 새 배송지 추가 모달 =============================//
+  $('#btnAddrNew')?.addEventListener('click', () => openM('#modalAddrNew'));
+
+  $$('#modalAddrNew [data-close]')?.forEach(btn => {
+    btn.addEventListener('click', e => {
+      const targetSel = e.currentTarget.getAttribute('data-close');
+      closeM(targetSel);
+    });
+  });
+  $('#modalAddrNew')?.addEventListener('click', e => {
+    if (e.target === $('#modalAddrNew')) closeM('#modalAddrNew');
+  });
 	  
-	  $('#btnPostNew')?.addEventListener('click', e => {
-		e.preventDefault();
-		openPostcode(false);
-	  });
+  $('#btnPostNew')?.addEventListener('click', e => {
+	e.preventDefault();
+	openPostcode(false);
+  });
 
-	  // 적용(저장) 버튼
-	  $('#saveAddrNew')?.addEventListener('click', async () => {
-	    const recv = $('#n_recv')?.value?.trim();
-	    const phone= $('#n_phone')?.value?.trim();
-	    const zip  = $('#n_zip')?.value?.trim();
-	    const a1   = $('#n_addr1')?.value?.trim();
-	    const a2   = $('#n_addr2')?.value?.trim();
+  $('#saveAddrNew')?.addEventListener('click', async () => {
+    const recv = $('#n_recv')?.value?.trim();
+    const zip  = $('#n_zip')?.value?.trim();
+    const a1   = $('#n_addr1')?.value?.trim();
+    const a2   = $('#n_addr2')?.value?.trim();
 
-	    if (!recv || !phone || !zip || !a1) {
-	      alert('받는분/연락처/주소를 입력하세요.');
-	      return;
-	    }
+    if (!recv || !zip || !a1) {
+      alert('받는분/주소를 입력하세요.');
+      return;
+    }
 		
-		// 백엔드 DTO 필드명 일치
-		const deliveryData = {
-		      name: recv,
-		      phone_num: phone, 
-		      zipcode: zip,
-		      addr1: a1,
-		      addr2: a2 
-		    };
-		try{
-			//임시 경로 백엔드 확인
-			const response = await fetch('/buyer/api/delivery/addAddress', {
-				method: 'POST',
-				headers: {'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(deliveryData)
-			});
+	const deliveryData = {
+	      name: recv,
+	      zipcode: zip,
+	      addr1: a1,
+	      addr2: a2 
+	    };
+	try{
+		const response = await fetch('/buyer/api/delivery/addAddress', {
+			method: 'POST',
+			headers: {'Content-Type': 'application/json'},
+			body: JSON.stringify(deliveryData)
+		});
 			
-			if(response.ok) {
-			const result = await response.json();
+		if(response.ok) {
+		  const result = await response.json();
 			
-		    const recvNameEl = $('#recvName');
-		    const addrTextEl = $('#addrText');
-		    const addrPhoneEl = $('#addrPhone');
+	      const recvNameEl = $('#recvName');
+	      const addrTextEl = $('#addrText');
 			
-			//화면을 동적으로 갱신
-		    if (recvNameEl) recvNameEl.textContent = result.name || recv;
-			if (addrTextEl) addrTextEl.textContent =
-			 `(${result.zipcode || zip}) ${result.addr1 || a1}${result.addr2 ? ' ' + result.addr2 : ''}`;
-			if (addrPhoneEl) addrPhoneEl.textContent = `휴대폰 : ${result.phone_num || phone}`;
+		  if (recvNameEl) recvNameEl.textContent = result.name || recv;
+		  if (addrTextEl) addrTextEl.textContent =
+		   `(${result.zipcode || zip}) ${result.addr1 || a1}${result.addr2 ? ' ' + result.addr2 : ''}`;
 			
-			alert('배송지 정보가 성공적으로 추가되었습니다. ')
-		    closeM('#modalAddrNew');
-			}
+		  alert('배송지 정보가 성공적으로 추가되었습니다.');
+	      closeM('#modalAddrNew');
 		}
-		catch (err) {
-			console.error(err)
-			alert('배송지 추가 실패');
-		}
+	}
+	catch (err) {
+		console.error(err)
+		alert('배송지 추가 실패');
+	}
   });
   
 })();
