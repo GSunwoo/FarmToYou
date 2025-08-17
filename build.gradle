@@ -54,8 +54,11 @@ dependencies {
     
     // simpl-json
     implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+    // jackson
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.18.4'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
 }
+

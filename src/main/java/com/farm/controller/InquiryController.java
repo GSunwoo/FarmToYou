@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.farm.config.login.CustomUserDetails;
+import com.farm.config.CustomUserDetails;
 import com.farm.dto.InquiryDTO;
 import com.farm.dto.PageDTO;
 import com.farm.service.IInquiryService;

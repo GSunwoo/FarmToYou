@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.farm.config.login.CustomUserDetails;
+import com.farm.config.CustomUserDetails;
 import com.farm.dto.WishlistDTO;
 import com.farm.service.IWishlistService;
 
