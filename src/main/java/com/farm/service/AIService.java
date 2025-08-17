@@ -77,7 +77,12 @@ public class AIService {
         } catch (Exception e) {
             item.put("fileName", file.getName());
             item.put("file_path", ""); 
-            item.put("aiResult", "ERROR: " + e.getMessage());
+
+            if (e instanceof java.net.ConnectException || e.getCause() instanceof java.net.ConnectException) {
+                item.put("aiResult", "서버와의 연결이 끊겼습니다.");
+            } else {
+                item.put("aiResult", "ERROR: " + e.getMessage());
+            }
         }
         return item;
     }

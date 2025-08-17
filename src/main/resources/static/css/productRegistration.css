@@ -124,3 +124,189 @@ button[type="button"] {
     margin: 0 auto;
   }
 }
+
+/* =========================
+   상품 목록 테이블 디자인
+   ========================= */
+.products-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid #e9ecef;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fff;
+  margin-top: 20px;
+}
+
+/* 헤더 */
+.products-table thead th {
+  background: #f7f8fa;
+  color: #444;
+  font-weight: 600;
+  text-align: center;
+  padding: 12px 10px;
+  border-right: 1px solid #edf0f3;
+  border-bottom: 1px solid #e9ecef;
+}
+.products-table thead th:last-child {
+  border-right: none;
+}
+
+/* 데이터 행 */
+.products-table tbody td {
+  padding: 14px 10px;
+  border-right: 1px solid #f0f2f5;
+  border-bottom: 1px solid #f5f6f8;
+  vertical-align: middle;
+  text-align: center;   /* 상품명 포함 전체 가운데 정렬 */
+}
+.products-table tbody td:last-child {
+  border-right: none;
+}
+
+/* 버튼 영역 */
+.products-table tbody td .actions {
+  display: inline-flex;
+  gap: 8px;
+}
+.products-table tbody td .actions button {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #bbb;
+  background: #fff;
+  cursor: pointer;
+}
+.products-table tbody td .actions button:hover {
+  background: #f1f1f1;
+}
+
+/* 비어있을 때 메시지 */
+.products-table tbody td[colspan] {
+  text-align: center;
+  color: #888;
+  padding: 22px 10px;
+  background: #fff;
+}
+
+/* =========================
+   상품 수정 폼(클래스 없어도 적용)
+   ========================= */
+.sub-content form {
+  max-width: 520px;          /* 스샷 크기 느낌 */
+  width: 100%;
+  margin: 0;                 /* 좌측 정렬 */
+  padding: 24px;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* 레이블 */
+.sub-content form label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #666;
+  margin-bottom: 6px;
+}
+
+/* 입력요소 공통 */
+.sub-content form input[type="text"],
+.sub-content form input[type="number"],
+.sub-content form input[type="file"],
+.sub-content form textarea,
+.sub-content form select {
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 15px;
+  padding: 12px 14px;
+  border: 1px solid #e2e2e2;
+  border-radius: 8px;
+  background: #fff;
+  outline: none;
+}
+.sub-content form textarea { min-height: 110px; resize: vertical; }
+
+/* 파일 입력도 카드처럼 */
+.sub-content form input[type="file"] {
+  padding: 10px 12px;
+  background: #fafafa;
+}
+
+/* 읽기전용 */
+.sub-content form input[readonly] {
+  background-color: #f2f2f2;
+  color: #777;
+  cursor: not-allowed;
+}
+
+/* 버튼 그룹 */
+.sub-content form .button-group,
+.sub-content form .btns,
+.sub-content form .buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+/* 버튼 스타일 (등록/수정, 취소) */
+.sub-content form button[type="submit"],
+.sub-content form input[type="submit"] {
+  padding: 10px 16px;
+  min-width: 84px;
+  height: 38px;
+  font-size: 14px;
+  background-color: #4caf50;
+  color: #fff;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.sub-content form button[type="button"],
+.sub-content form input[type="button"] {
+  padding: 10px 16px;
+  min-width: 84px;
+  height: 38px;
+  font-size: 14px;
+  background-color: #bdbdbd;
+  color: #fff;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* 폼이 좁아질 때 중앙 정렬 */
+@media (max-width: 1024px) {
+  .mypage-wrapper { display: block; }
+  .sub-content form { max-width: 520px; margin: 0 auto; }
+}
+
+/* =========================
+   이미지 미리보기 동일 크기
+   ========================= */
+.preview-wrap {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 8px;
+}
+
+.preview-wrap img.preview-img {
+  width: 120px;      /* 원하는 고정 크기 */
+  height: 120px;
+  object-fit: cover; /* 비율 유지하며 잘라내기 */
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+/* 라디오 버튼 + 텍스트 중앙 정렬 */
+.preview-wrap input[type="radio"],
+.preview-wrap label,
+.preview-wrap button {
+  margin-top: 6px;
+}
+

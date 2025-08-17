@@ -154,3 +154,138 @@
 .simple-page .sub-content {
   overflow: visible !important;
 }
+
+/* 상품 목록 4열: 상품명 / 가격 / 재고 / 관리 */
+.products-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;        /* th의 width 비율(60/15/10/15) 고정 */
+}
+
+.products-table thead th {
+  text-align: center;
+  font-weight: 700;
+  padding: 12px 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.products-table tbody td {
+  padding: 12px 10px;
+  border-bottom: 1px solid #f6f6f6;
+  vertical-align: middle;
+}
+
+/* 1열: 상품명은 좌측 정렬(넓게) */
+.products-table tbody td:nth-child(1) {
+  text-align: left;
+  word-break: break-word;
+}
+
+/* 2~4열: 가운데 정렬 + 줄바꿈 방지(가격의 '원'이 같은 줄에 오게) */
+.products-table tbody td:nth-child(2),
+.products-table tbody td:nth-child(3),
+.products-table tbody td:nth-child(4) {
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* 관리(수정/삭제) 버튼을 가로로 정렬 */
+.products-table tbody td:nth-child(4) form {
+  display: inline-block;
+  margin: 0 4px;
+}
+
+/* 버튼 크기/간격 살짝 정리(있는 클래스와 함께 동작) */
+.products-table .btn-edit,
+.products-table .btn-delete,
+.products-table tbody td:nth-child(4) button,
+.products-table tbody td:nth-child(4) input[type="submit"],
+.products-table tbody td:nth-child(4) input[type="button"] {
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+
+/* 반응형(옵션): 화면이 좁을 때도 컬럼 유지 */
+@media (max-width: 768px) {
+  .products-table { font-size: 14px; }
+  .products-table thead th, .products-table tbody td { padding: 10px 8px; }
+}
+
+
+/* ===== 공통 테이블 스킨 (주문목록 스크린샷 스타일) ===== */
+.products-table {
+  width: 100%;
+  border-collapse: separate;     /* 라운드/그림자용 */
+  border-spacing: 0;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  overflow: hidden;              /* 둥근 모서리에 내용 잘라내기 */
+  background: #fff;
+}
+
+/* 헤더 */
+.products-table thead th {
+  background: #f7f8fa;          /* 밝은 회색 헤더 */
+  color: #444;
+  font-weight: 600;
+  text-align: center;
+  height: 46px;
+  padding: 10px 12px;
+  border-right: 1px solid #edf0f3;
+  border-bottom: 1px solid #e9ecef;
+}
+.products-table thead th:last-child { border-right: 0; }
+
+/* 바디(행) */
+.products-table tbody td {
+  padding: 14px 12px;
+  border-right: 1px solid #f0f2f5;
+  border-bottom: 1px solid #f5f6f8;
+  vertical-align: middle;
+  color: #333;
+}
+.products-table tbody td:last-child { border-right: 0; }
+
+/* 첫 번째 열은 좌측 정렬, 나머지 가운데 */
+.products-table tbody td:nth-child(1) { text-align: center; }
+.products-table tbody td:nth-child(n+2) { text-align: center; white-space: nowrap; }
+
+/* 호버 라인 하이라이트 */
+.products-table tbody tr:hover { background: #fafbfc; }
+
+/* 비어있는 상태(“주문 내역이 없습니다.”) 중앙 정렬 */
+.products-table tbody tr.empty,
+.products-table tbody tr:only-child td,
+.products-table tbody td[colspan],
+.products-table .empty-message {
+  text-align: center !important;
+  color: #8a94a6;
+  padding: 22px 12px;
+  font-size: 14px;
+  background: #fff;
+  border-right: 0 !important;
+}
+
+/* 관리(확인/버튼) 칸 가로 정렬 */
+.products-table tbody td .actions {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+}
+.products-table tbody td .actions .btn,
+.products-table tbody td .actions button,
+.products-table tbody td .actions input[type="button"],
+.products-table tbody td .actions input[type="submit"] {
+  padding: 6px 12px;
+  border-radius: 6px;
+}
+
+/* 살짝 그림자 (선택) */
+.table-shadow .products-table { box-shadow: 0 2px 8px rgba(0,0,0,.03); }
+
+/* 반응형 살짝 줄임 */
+@media (max-width: 768px) {
+  .products-table { font-size: 14px; }
+  .products-table thead th, .products-table tbody td { padding: 10px 8px; }
+}

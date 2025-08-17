@@ -6,6 +6,16 @@
 <meta charset="utf-8" />
 <title>상품 수정</title>
 <link href="<c:url value='/css/productRegistration.css' />" rel="stylesheet" />
+<!-- 공통 CSS -->
+<link href="<c:url value='/css/seller_mypage.css' />" rel="stylesheet" />
+<link href="<c:url value='/css/Dashboard.css' />" rel="stylesheet" />
+<!-- 페이지 CSS -->
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/myPageMain.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/mainpage.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <script>
     // 서버에서 전달한 기존 이미지 정보를 JS에서 사용 가능하도록 JSON으로 직렬화
@@ -24,7 +34,22 @@
 <script defer src="<c:url value='/js/prod/prodUpdate.js' />"></script>
 </head>
 
-<body>
+<body class="simple-page">
+	<!-- 상단 공통 헤더 -->
+	<jsp:include page="/WEB-INF/views/common/header.jsp" />
+
+	<!-- 레이아웃 래퍼 -->
+	<div id="seller" class="mypage-wrapper">
+	
+		<!-- 기존 id="seller" 보존(폼 ➜ div로 교체) -->
+		<!-- 좌측: 판매자 전용 사이드바 -->
+		<jsp:include page="/WEB-INF/views/common/header3.jsp">
+			<jsp:param name="active" value="product" />
+		</jsp:include>
+
+		<!-- 우측 컨텐츠 -->
+<main class="sub-content">
+			<section class="product-form-page">
 <form id="productForm" method="post" enctype="multipart/form-data" action="${pageContext.request.contextPath}/seller/update.do">
 
     <div class="form-row">
@@ -72,6 +97,10 @@
         <button type="submit">수정</button>
         <button type="button" id="cancelBtn">취소</button>
     </div>
+    
 </form>
+</section>
+</main>
+	</div>
 </body>
 </html>
