@@ -14,16 +14,20 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.farm.config.CustomUserDetails;
+import com.farm.dto.AddressDTO;
 import com.farm.dto.MemberDTO;
 import com.farm.dto.ProductDTO;
 import com.farm.dto.ReviewBoardDTO;
+import com.farm.service.IMemberService;
 import com.farm.service.IMypageService;
 
 @Controller
 public class MypageController {
 	
 	@Autowired
-	IMypageService dao;
+	IMypageService mypageDAO;
+	@Autowired
+	IMemberService memDAO;
 	
 	@GetMapping("/mypage.do")
 	public String mypageMapper(@AuthenticationPrincipal CustomUserDetails userDetails) {
@@ -44,9 +48,9 @@ public class MypageController {
 		if(userDetails!=null) {
 			MemberDTO member = userDetails.getMemberDTO();
 			Long member_id = member.getMember_id();
-			int orderCnt = dao.getOrderCnt(member_id);
-			int reviewCnt = dao.getReviewCnt(member_id);
-			int inquiryCnt = dao.getInquiryCnt(member_id);
+			int orderCnt = mypageDAO.getOrderCnt(member_id);
+			int reviewCnt = mypageDAO.getReviewCnt(member_id);
+			int inquiryCnt = mypageDAO.getInquiryCnt(member_id);
 			model.addAttribute("member", member);
 			model.addAttribute("orderCnt", orderCnt);
 			model.addAttribute("reviewCnt", reviewCnt);
@@ -54,6 +58,21 @@ public class MypageController {
 		}
 		return "buyer/mypage";
 	}
+	
+	
+	@GetMapping("/buyer/address/list.do")
+	public String buyerAddress(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
+		
+		MemberDTO member = userDetails.getMemberDTO();
+		Long member_id = member.getMember_id();
+		AddressDTO address = memDAO.selectAddress(member_id);
+		
+		model.addAttribute("AddressDTO", address);
+		model.addAttribute("member", member);
+		
+		return "buyer/delivery-destination";
+	}
+	
 	@GetMapping("/seller/mypage.do")
 	public String sellerMypage(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
 		if(userDetails!=null) {
@@ -62,10 +81,10 @@ public class MypageController {
 			Long member_id = member.getMember_id();
 			
 			/******  상품 주문 현황  ******/
-			int chkOrder = dao.getCheckOrder(member_id);    // 주문확인중
-			int preOrder = dao.getPrepareOrder(member_id);  // 상품준비중
-			int deliOrder = dao.getDeliOrder(member_id);    // 배송중
-			int cmplOrder = dao.getCompleteOrder(member_id);// 배송완료
+			int chkOrder = mypageDAO.getCheckOrder(member_id);    // 주문확인중
+			int preOrder = mypageDAO.getPrepareOrder(member_id);  // 상품준비중
+			int deliOrder = mypageDAO.getDeliOrder(member_id);    // 배송중
+			int cmplOrder = mypageDAO.getCompleteOrder(member_id);// 배송완료
 			model.addAttribute("member", member);
 			model.addAttribute("chkOrder", chkOrder);
 			model.addAttribute("preOrder", preOrder);
@@ -73,7 +92,7 @@ public class MypageController {
 			model.addAttribute("cmplOrder", cmplOrder);
 			
 			/****** 상품문의현황  ******/
-			int inquiryCnt = dao.getInquiryCnt_Seller(member_id); // 현재 문의 수
+			int inquiryCnt = mypageDAO.getInquiryCnt_Seller(member_id); // 현재 문의 수
 			model.addAttribute("inquiryCnt_seller", inquiryCnt);
 			
 			/****** 상품판매실적  ******/
@@ -89,8 +108,8 @@ public class MypageController {
 				dateList.add(Date.valueOf(today.minusDays(i)));
 			}
 			
-			List<Integer> soldNum = dao.getSoldNum(member_id, sqlToday, sqlFourDaysAgo); // 지난 5일 판매량
-			List<Integer> sales = dao.getSales(member_id, sqlToday, sqlFourDaysAgo);     // 지난 5일 매출
+			List<Integer> soldNum = mypageDAO.getSoldNum(member_id, sqlToday, sqlFourDaysAgo); // 지난 5일 판매량
+			List<Integer> sales = mypageDAO.getSales(member_id, sqlToday, sqlFourDaysAgo);     // 지난 5일 매출
 			
 			Map<String, Object> soldData = new HashMap<>();
 			
@@ -104,11 +123,11 @@ public class MypageController {
 			model.addAttribute("soldData",soldData);
 			
 			/****** 등록한 상품 목록  ******/
-			List<ProductDTO> myProducts = dao.getMyProducts(member_id); // 모든 항목(현재는 페이징x)
+			List<ProductDTO> myProducts = mypageDAO.getMyProducts(member_id); // 모든 항목(현재는 페이징x)
 			model.addAttribute("myProducts", myProducts);
 			
 			/****** 내 상품의 리뷰  ******/
-			List<ReviewBoardDTO> myReviews = dao.getMyReviews(member_id); // 모든 항목(현재는 페이징x)
+			List<ReviewBoardDTO> myReviews = mypageDAO.getMyReviews(member_id); // 모든 항목(현재는 페이징x)
 			model.addAttribute("myReviews", myReviews);
 			
 		}

@@ -30,13 +30,13 @@
 		SELECT * FROM farm
 			WHERE confirm='request'	
 	</select>
-	<!-- 상품 승인 -->
+	<!-- 농장 승인 -->
 	<update id="confirmFarm">
 		UPDATE farm
 			SET confirm='confirmed'
 			WHERE farm_id=#{farm_id}
 	</update>
-	<!-- 상품 반려 -->
+	<!-- 농장 반려 -->
 	<update id="rejectFarm">
 		UPDATE farm
 			SET confirm='rejected'

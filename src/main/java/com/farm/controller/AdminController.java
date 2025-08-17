@@ -16,15 +16,18 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.farm.dto.FarmDTO;
 import com.farm.dto.ParameterDTO;
 import com.farm.dto.ProductDTO;
 import com.farm.service.IAdminConfirmService;
 import com.farm.service.IProductService;
 
 import jakarta.servlet.http.HttpServletRequest;
+import oracle.jdbc.proxy.annotation.Post;
 
 
 @Controller
@@ -95,6 +98,12 @@ public class AdminController {
 		return "admin/productView";
 	}
 	
+	@PostMapping("/admin/product/confirm.do")
+	public String adminProdConfirm(@RequestParam("prod_id") Long prod_id) {
+		confirmDAO.confirmProduct(prod_id);
+		return "redirect:admin/productView?prod_id="+prod_id;
+	}
+	
 	@GetMapping("/admin/product/delete.do")
 	public String adminDelete(@RequestParam("prod_id") Long prod_id) {
 		// 파라미터로 받은 prod_id를 통해 삭제
@@ -105,8 +114,13 @@ public class AdminController {
 	
 	
 	// 농장 목록
-	@GetMapping("/admin/farm/list.do")
-	public String adminFarm() {
+	@GetMapping("/admin/farm/request/list.do")
+	public String adminFarm(Model model, ParameterDTO parameterDTO, HttpServletRequest req) {
+		// 등록요청 중인 농장 가져오기
+		List<FarmDTO> farms = confirmDAO.selectRequestFarms();
+		// model 객체를 통해 전달
+		model.addAttribute("farms", farms);
+		
 		return "admin/farm";
 	}
 	

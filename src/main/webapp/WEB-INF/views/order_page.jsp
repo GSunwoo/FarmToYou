@@ -64,7 +64,7 @@
           </div>
           <div class="card-bd">
             <span class="badge">최근배송지</span>
-            <div class="addr-text" id="addrText">주소: <c:out value="${addr1}" /> <c:out value="${addr2}" /></div>
+            <div class="addr-text" id="addrText">주소: <c:out value="${addr.addr1}" /> <c:out value="${addr.addr2}" /></div>
             <!-- <div class="addr-phone" id="addrPhone">휴대폰 : <c:out value="${phone_num}" /></div>  -->
 
             <!-- 화면 값 보관용 (DB 컬럼명 유지) -->

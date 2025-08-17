@@ -17,7 +17,7 @@
 			<li>회원정보
 				<ul class="sub-depth3">
 					<li><a href="/buyer/member-info.do">회원정보 변경</a></li>
-					<li><a href="/buyer/delivery-destination.do">배송지 관리</a></li>
+					<li><a href="/buyer/address/list.do">배송지 관리</a></li>
 					<li><a href="#">리뷰 관리</a></li>
 				</ul>
 			</li>
