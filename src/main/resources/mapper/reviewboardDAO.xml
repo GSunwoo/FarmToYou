@@ -49,6 +49,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	
+	
 	<insert id="write" parameterType="com.farm.dto.ReviewBoardDTO">
 	<selectKey keyProperty="review_id" resultType="long" order="BEFORE">
 		SELECT seq_review_id.nextval FROM dual
