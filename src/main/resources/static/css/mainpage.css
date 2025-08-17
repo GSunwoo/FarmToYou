@@ -235,15 +235,13 @@ body {
   height: 49px;
   line-height: 49px;
   text-align: center;
-  font-size: 15px;
-  color: #333;
-  cursor: pointer;
-  border-right: 1px solid #ddd;
   margin: 0;
 }
 
-.category-menu li:last-child {
-  border-right: none;
+.category-menu li a {
+  font-size: 1.5em;       
+  color: #333;           
+  text-decoration: none; /* 밑줄 없음 */
 }
 
 /* 검색창 */
@@ -603,3 +601,22 @@ body {
   display: none !important;
   
 }
+
+/* 회원가입 드롭다운 */
+.top-util .join-dropdown { position: relative; }
+.top-util .join-toggle {
+  display: inline-block; padding: 2px 6px; text-decoration: none;
+}
+.top-util .join-menu {
+  display: none; position: absolute; top: 100%; left: 0;
+  min-width: 150px; background: #fff; border: 1px solid #ddd; border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0,0,0,.06); z-index: 1000;
+}
+.top-util .join-menu li { list-style: none; }
+.top-util .join-menu li a {
+  display: block; padding: 8px 12px; text-decoration: none; color: #333; white-space: nowrap;
+}
+.top-util .join-menu li a:hover { background: #f5f5f5; }
+
+/* hover 시 표시 */
+.top-util .join-dropdown:hover .join-menu { display: block; }

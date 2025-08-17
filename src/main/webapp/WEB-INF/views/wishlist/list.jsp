@@ -39,6 +39,13 @@
 	align-items: center;
 	gap: 5px;
 }
+.qty-btn, .pay-btn {
+	background: #2563eb;
+	border: 1px solid #ccc;
+	padding: 5px 10px;
+	cursor: pointer;
+	
+}
 
 .qty-btn, .delete-btn {
 	background: #eee;
@@ -46,6 +53,7 @@
 	padding: 5px 10px;
 	cursor: pointer;
 }
+
 
 .qty-input {
 	width: 40px;
@@ -59,9 +67,22 @@
 	background: #d9534f;
 	border-color: #d43f3a;
 }
+.pay-btn {
+	color: #fff;
+	background: #c9b9b9;
+	border: 1px solid #ccc;
+	padding: 5px 10px;
+	cursor: pointer;
+	
+}
+
 
 .delete-btn:hover {
 	background: #c9302c;
+}
+
+.pay-btn:hover {
+	background: #2059d6;
 }
 
 .total-price {
@@ -83,6 +104,7 @@
 				<table class="cart-table">
 					<thead>
 						<tr>
+							<th style="width:50px;">선택</th>
 							<th>상품명</th>
 							<th>수량</th>
 							<th>가격</th>
@@ -92,6 +114,9 @@
 					<tbody id="cart-body">
 						<c:forEach var="row" items="${wishlist}">
 							<tr data-prod-id="${row.prod_id}" data-wish-id="${row.wish_id}">
+								 <td>
+        							<input type="checkbox" class="select-item" />
+      							</td>
 								<td><a
 									href="${pageContext.request.contextPath}/guest/Detailpage.do?prod_id=${row.prod_id}">
 										${row.prod_name} </a></td>
@@ -106,7 +131,7 @@
 								<td class="price" data-price="${row.prod_price}"><fmt:formatNumber
 										value="${row.prod_price * row.prod_qty}" />원</td>
 								<td>
-									<button type="button" class="delete-btn">삭제</button>
+									<button type="button"  class="delete-btn">삭제</button>
 								</td>
 							</tr>
 						</c:forEach>
@@ -114,6 +139,9 @@
 				</table>
 				<div class="total-price">
 					총 합계: <span id="total-amount"></span>원
+					<div>
+						<button id="wishlist" type="button" class="pay-btn" disabled>결제하기</button>
+					</div>					
 				</div>
 			</c:when>
 			<c:otherwise>
@@ -122,6 +150,73 @@
 			</c:otherwise>
 		</c:choose>
 	</div>
+	<script>
+(function () {
+  const ctx = '${pageContext.request.contextPath}';
+  const cartBody = document.getElementById('cart-body');
+  const totalEl = document.getElementById('total-amount');
+  const payBtn = document.getElementById('wishlist'); // ← 버튼 id 변경
+
+  function getRowQty(row) {
+    return parseInt(row.querySelector('.qty-input').value, 10) || 0;
+  }
+  function getRowUnitPrice(row) {
+    return parseInt(row.querySelector('.price').dataset.price, 10) || 0;
+  }
+  function formatNumber(n) { return n.toLocaleString('ko-KR'); }
+
+  function recalcRowPrice(row) {
+    const unit = getRowUnitPrice(row);
+    const qty = getRowQty(row);
+    row.querySelector('.price').textContent = formatNumber(unit * qty) + '원';
+  }
+
+  function computeSelectedTotal() {
+    let sum = 0, anyChecked = false;
+    cartBody.querySelectorAll('tr').forEach(row => {
+      const cb = row.querySelector('.select-item');
+      if (cb && cb.checked) {
+        anyChecked = true;
+        sum += getRowUnitPrice(row) * getRowQty(row);
+      }
+    });
+    totalEl.textContent = formatNumber(sum);
+    if (payBtn) payBtn.disabled = !anyChecked;
+  }
+
+
+  // 체크 선택 합계
+  cartBody.addEventListener('change', (e) => {
+    if (e.target.classList.contains('select-item')) computeSelectedTotal();
+  });
+
+  // 초기 상태
+  totalEl.textContent = '0';
+  if (payBtn) payBtn.disabled = true;
+
+  // 결제: 선택된 항목만 prod_id/qty 반복 파라미터로 전송
+  if (payBtn) {
+    payBtn.addEventListener('click', () => {
+      const selectedRows = [...cartBody.querySelectorAll('tr')].filter(r => {
+        const cb = r.querySelector('.select-item');
+        return cb && cb.checked;
+      });
+      if (selectedRows.length === 0) {
+        alert('결제할 상품을 선택해주세요.');
+        return;
+      }
+
+      const qs = new URLSearchParams();
+      selectedRows.forEach(row => {
+        const wishId = row.dataset.wishId;      // <tr data-prod-id="...">
+        qs.append('wishlist', wishId);
+      });
+
+      window.location.href = ctx + '/buyer/purchase/wishlist.do?' + qs.toString();
+    });
+  }
+})();
+</script>
 
 </body>
 </html>

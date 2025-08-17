@@ -25,6 +25,7 @@ public class PurchaseController {
 	IPurchaseService purDAO;
 	
 	@GetMapping("/buyer/purchase/direct.do")
+	// 파라미터로 prod_id 현재상품 qty 몇개사는지
 	public String purchaseDirect(@RequestParam("prod_id") String prod_id, @RequestParam("qty") int qty, Model model) {
 		WishlistDTO prod = purDAO.selectProduct(prod_id);
 		prod.setProd_id(prod_id);
@@ -44,5 +45,10 @@ public class PurchaseController {
 		
 		model.addAttribute("cart",cart);
 		return "order_page";
+	}
+	
+	@GetMapping("/buyer/purchase/complete.do")
+	public String purchaseComplete() {
+		return "pur_complete";
 	}
 }

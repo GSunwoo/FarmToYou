@@ -21,6 +21,7 @@
   <div class="login-page-wrapper">
     <div class="login-container">
       <div class="logo">Login</div>
+      
       <c:if test="${param.error != null}">
         <p>Login Error!<br />${errorMsg}</p>
       </c:if>
@@ -34,7 +35,6 @@
         >
 
         <div class="login-options">
-          <label><input type="checkbox">기억하기</label>
           <a href="/guest/findPw.do">비밀번호를 잊어버리셨나요?</a>
         </div>
 

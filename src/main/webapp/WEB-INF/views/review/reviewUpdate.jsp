@@ -25,7 +25,7 @@
     <!-- 작성자(로그인 세션) - 화면 표시용 -->
 	<label for="member_id_view">회원 ID</label>
 	<input type="text" id="member_id" name="member_id"
-	       value="'${param.member_id}'"readonly><br><br>
+	       value="'${member_id}'"readonly><br><br>
 	
 	<!-- 실제 전송용 (파라미터로 넘어감) -->
 	<input type="hidden" id="name" name="name"

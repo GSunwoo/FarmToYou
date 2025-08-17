@@ -27,8 +27,15 @@
         <p id="paymentKey"></p>
         <p id="orderId"></p>
         <p id="amount"></p>
+        <p><button type="button" class="button" onclick="window.close()">닫기</button></p>
       </div>
     </div>
     <script src="/js/success.js"></script>
+    <script>
+    // success.jsp 혹은 success.html 안에
+    if (window.opener) {
+        window.opener.location.href = "/buyer/purchase/complete.do";
+    }
+</script>
   </body>
 </html>
