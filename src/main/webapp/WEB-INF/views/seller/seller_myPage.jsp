@@ -16,7 +16,7 @@
 <script
 	src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <!-- 페이지용 JS -->
-<script src="<c:url value='/js/seller_myPage.js' />"></script>
+<script src="<c:url value='/js/seller_myPage.js' />" defer></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/myPageMain.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/mainpage.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">

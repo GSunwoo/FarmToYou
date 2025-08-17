@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -15,6 +17,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.farm.config.CustomUserDetails;
 import com.farm.dto.AddressDTO;
@@ -124,33 +128,6 @@ public class MypageController {
 			int inquiryCnt = mypageDAO.getInquiryCnt_Seller(member_id); // 현재 문의 수
 			model.addAttribute("inquiryCnt_seller", inquiryCnt);
 			
-			/****** 상품판매실적  ******/
-			LocalDate today = LocalDate.now();			// 오늘날짜
-			LocalDate fourDaysAgo = today.minusDays(4); // 4일전
-			
-			// sql Date로 변환
-			Date sqlToday = Date.valueOf(today);
-			Date sqlFourDaysAgo = Date.valueOf(fourDaysAgo);
-			
-			List<Date> dateList = new ArrayList<>();
-			for(int i = 0; i<4; i++) {
-				dateList.add(Date.valueOf(today.minusDays(i)));
-			}
-			
-			List<Integer> soldNum = mypageDAO.getSoldNum(member_id, sqlToday, sqlFourDaysAgo); // 지난 5일 판매량
-			List<Integer> sales = mypageDAO.getSales(member_id, sqlToday, sqlFourDaysAgo);     // 지난 5일 매출
-			
-			Map<String, Object> soldData = new HashMap<>();
-			
-			for(int i = 0; i<5; i++) {
-				soldData.put("date",dateList);
-				soldData.put("sold",soldNum);
-				soldData.put("sales",sales);
-			}
-			// 날짜별 판매량/매출(지난 5일간)
-			// Object로 보내서 list로 변환필요
-			model.addAttribute("soldData",soldData);
-			
 			/****** 등록한 상품 목록  ******/
 			List<ProductDTO> myProducts = mypageDAO.getMyProducts(member_id); // 모든 항목(현재는 페이징x)
 			model.addAttribute("myProducts", myProducts);
@@ -163,6 +140,38 @@ public class MypageController {
 		return "seller/seller_myPage";
 	}
 
+	@GetMapping("/seller/api/sold-stats")
+	@ResponseBody
+	public JSONObject sellerSaleData(@RequestParam("memberId") Long member_id){
+		/****** 상품판매실적  ******/
+		LocalDate today = LocalDate.now();			// 오늘날짜
+		LocalDate fourDaysAgo = today.minusDays(4); // 4일전
+		
+		// sql Date로 변환
+		Date sqlToday = Date.valueOf(today);
+		Date sqlFourDaysAgo = Date.valueOf(fourDaysAgo);
+		
+		List<Date> dateList = new ArrayList<>();
+		for(int i = 0; i<4; i++) {
+			dateList.add(Date.valueOf(today.minusDays(i)));
+		}
+		
+		List<Integer> soldNum = mypageDAO.getSoldNum(member_id, sqlToday, sqlFourDaysAgo); // 지난 5일 판매량
+		List<Integer> sales = mypageDAO.getSales(member_id, sqlToday, sqlFourDaysAgo);     // 지난 5일 매출
+		
+		Map<String, Object> soldData = new HashMap<>();
+		
+		for(int i = 0; i<5; i++) {
+			soldData.put("date",dateList);
+			soldData.put("sold",soldNum);
+			soldData.put("sales",sales);
+		}
+		
+		JSONObject soldJSON = new JSONObject(soldData);
+		
+		return soldJSON;
+	}
+	
     @GetMapping("/seller/sellerManagement")
     public String sellerManagement() {
         return "seller/sellerManagement"; // /WEB-INF/views/seller/sellerManagement.jsp
