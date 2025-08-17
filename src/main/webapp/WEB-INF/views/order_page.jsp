@@ -45,10 +45,6 @@
     <%-- <jsp:include page="/WEB-INF/views/common/header3.jsp">
       <jsp:param name="active" value="update" />
     </jsp:include> --%>
-
-    <a href="<c:url value='/'/>" class="logo-section">
-      <img src="<c:url value='/images/shopping mall-Photoroom.png'/>" style="transform:scaleX(2);" alt="로고">
-    </a>
 	<c:set var="total_price" value="0" />
 	<c:forEach var="row" items="${cart}">
 	  <c:set var="total_price" value="${total_price + (row.prod_price * row.prod_qty)}" />
