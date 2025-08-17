@@ -17,9 +17,9 @@ public interface IInquiryService {
    public ArrayList<InquiryDTO> selectInq(@Param("member_id") Long member_id);
    
    public int insertInq(InquiryDTO inquiryDTO);
-   
+   //수정
    public int updateInquiry(@Param("title") String title, @Param("content") String content, @Param("inquiry_id") Long inquiry_id);
-   
+   //삭제
    public int deleteInquiry(@Param("inquiry_id") Long inquiry_id);
    
    

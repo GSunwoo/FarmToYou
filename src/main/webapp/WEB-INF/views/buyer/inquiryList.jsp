@@ -45,7 +45,6 @@
                             <fmt:formatDate value="${q.inquiry_date}" pattern="yyyy-MM-dd" />
                           </time>
                         </td>
-                        <td><c:out value="${q.category}" /></td>
                         <td class="ellipsis">
                           <a href="${pageContext.request.contextPath}/inquiry/detail?inquiry_id=${q.inquiry_id}">
                             <c:out value="${q.title}" />

@@ -57,6 +57,8 @@ public class InquiryController {
    public String inquiry3(@RequestParam("member_id") Long member_id, Model model, PageDTO pageDTO,
          HttpServletRequest req) {
 	   
+	  pageDTO.setMember_id(member_id);
+	   
       int totalCount = inqDao.getTotalCount(pageDTO);
       int pageSize = 10;
       int blockPage = 5;
@@ -67,7 +69,7 @@ public class InquiryController {
       int end = pageNum * pageSize;
       pageDTO.setStart(start);
       pageDTO.setEnd(end);
-      pageDTO.setMember_id(member_id);
+      
 
       
       Map<String, Object> maps = new HashMap<String, Object>();
@@ -84,7 +86,7 @@ public class InquiryController {
                   req.getContextPath()+"/buyer/inquiryList.do?member_id=" + member_id + "&");
       model.addAttribute("pagingImg", pagingImg);
       
-      return "buyer/inquiryList";
+      return "/buyer/inquiryList";
    }
 
    // 수정

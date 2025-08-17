@@ -235,15 +235,13 @@ body {
   height: 49px;
   line-height: 49px;
   text-align: center;
-  font-size: 15px;
-  color: #333;
-  cursor: pointer;
-  border-right: 1px solid #ddd;
   margin: 0;
 }
 
-.category-menu li:last-child {
-  border-right: none;
+.category-menu li a {
+  font-size: 1.5em;       
+  color: #333;           
+  text-decoration: none; /* 밑줄 없음 */
 }
 
 /* 검색창 */
