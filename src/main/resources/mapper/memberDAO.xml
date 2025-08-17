@@ -35,4 +35,21 @@
 	WHERE member_id=#{member_id} AND main=1
 	</select>
 	
+	<insert id="insertAddress"
+		parameterType="com.farm.dto.AddressDTO">
+		INSERT INTO address (addr_id, zipcode, addr1, addr2, main, member_id)
+			VALUES (seq_address_id.nextval, #{zipcode}, #{addr1}, #{addr2}, #{main}, #{member_id})
+	</insert>
+	
+	<update id="updateMainToZero">
+	UPDATE address
+	SET main=0
+	WHERE member_id=#{member_id}
+	</update>
+	
+	<update id="updateMain">
+	UPDATE address
+	SET main=1
+	WHERE addr_id=#{addr_id}
+	</update>
 </mapper>

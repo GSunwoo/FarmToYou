@@ -9,11 +9,14 @@ import com.farm.dto.MemberDTO;
 @Mapper
 public interface IMemberService {
 
-	MemberDTO loginCheck(String userId);
+	public MemberDTO loginCheck(String userId);
 	// user_id로 회원 정보를 조회하는 쿼리
-	MemberDTO selectBuyerData (MemberDTO memberDTO);
-	MemberDTO selectSellerData (MemberDTO memberDTO);
+	public MemberDTO selectBuyerData (MemberDTO memberDTO);
+	public MemberDTO selectSellerData (MemberDTO memberDTO);
 	
-	AddressDTO selectAddress(@Param("member_id") Long member_id);
+	public AddressDTO selectAddress(@Param("member_id") Long member_id);
+	public int insertAddress(AddressDTO addressDTO);
+	public int updateMainToZero(@Param("member_id") Long member_id);
+	public int updateMain(@Param("addr_id") Long addr_id);
 
 }

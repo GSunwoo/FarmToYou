@@ -8,10 +8,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.farm.config.CustomUserDetails;
 import com.farm.dto.AddressDTO;
@@ -71,6 +74,32 @@ public class MypageController {
 		model.addAttribute("member", member);
 		
 		return "buyer/delivery-destination";
+	}
+	
+	@PostMapping("/buyer/address/write.do")
+	public ResponseEntity<AddressDTO> addAddress(@RequestBody AddressDTO addressDTO,
+				@AuthenticationPrincipal CustomUserDetails userDetails){
+		MemberDTO member = userDetails.getMemberDTO();
+		Long member_id = member.getMember_id();
+		
+		addressDTO.setMember_id(member_id.toString());
+		int result = memDAO.insertAddress(addressDTO);
+		
+		return ResponseEntity.ok(addressDTO);
+	}
+	
+	@PostMapping("/buyer/address/update.do")
+	public ResponseEntity<Long> updateAddress(@RequestBody Long addr_id,
+			@AuthenticationPrincipal CustomUserDetails userDetails){
+		MemberDTO member = userDetails.getMemberDTO();
+		Long member_id = member.getMember_id();
+		
+		// 멤버의 모든 address 전체 main 0으로 변경
+		int resultZero = memDAO.updateMainToZero(member_id);
+		// 메인 지정
+		int resultMain = memDAO.updateMain(addr_id);
+		
+		return ResponseEntity.ok(addr_id);
 	}
 	
 	@GetMapping("/seller/mypage.do")
