@@ -20,7 +20,6 @@
 
 <body>
 	<%@ include file="../common/header.jsp"%>
-	<!-- 베스트 리뷰 섹션 -->
 	<section>
 		<div class="review-hero-cont">
 			<div class="rhc-wrapper">
@@ -35,14 +34,12 @@
 			<div class="review-best-items">
 				<c:forEach var="best" items="${bestList}" varStatus="status">
 					<c:if test="${status.index < 4}">
-						<!-- 최대 4개만 -->
 						<div class="review-top-card">
 							<div class="review-info">
 								<div class="review-img">
 									<c:choose>
-										<!-- 이미지 이름 넣기 -->
-										<c:when test="${not empty best.}">
-											<img src="${best.}" alt="${best.title}" />
+										<c:when test="${not empty best.img}">
+											<img src="${best.img}" alt="${best.title}" />
 										</c:when>
 										<c:otherwise>
 											<img alt="${best.title}" />
@@ -97,10 +94,8 @@
 		</div>
 	</section>
 
-	<!-- 일반 리뷰 섹션 -->
 	<section>
 		<div id="review-grid-lists" class="review-grid-lists">
-			<!-- 임시확인용. 백엔드에서 제어시 비긴,앤드 제거 -->
 			<c:forEach var="review" items="${reviewList }">
 				<div class="review-cards" data-review-id="${review.review_id}"
 					data-star="${review.star}" data-likes="${review.review_like}"
@@ -109,8 +104,8 @@
 
 					<div class="review-imgs">
 						<c:choose>
-							<c:when test="${not empty review.}">
-								<img src="" alt="${review.title }" />
+							<c:when test="${not empty review.img}">
+								<img src="${review.img}" alt="${review.title }" />
 							</c:when>
 							<c:otherwise>
 								<img alt="${review.title }" />
@@ -154,10 +149,7 @@
 									var="iso" />
 								<fmt:formatDate value="${review.postdate}" pattern="yyyy년 M월 d일"
 									var="human" />
-
-								<!-- 태그 속성에 기계표현, 태그 안 텍스트에 사람표현 -->
 								<time class="review-date" datetime="${iso}">${human}</time>
-								<!-- 백에서 연결하는 이름 dto 받기 -->
 							</c:otherwise>
 						</c:choose>
 					</div>

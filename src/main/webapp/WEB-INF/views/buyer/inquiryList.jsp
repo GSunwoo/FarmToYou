@@ -14,7 +14,7 @@
         <div class="mypage-info">
         
           <div class="mypage-zone-tit">
-            <h3>상품문의</h3>
+            <h3>상품문의 목록</h3>
           </div>
           
 

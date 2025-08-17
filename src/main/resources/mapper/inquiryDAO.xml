@@ -25,7 +25,7 @@
    <update id="updateInquiry"
       parameterType="Long">
       UPDATE inquiry 
-         SET   title, content = #{title}, #{content}
+         SET title = #{title}, content = #{content}
             WHERE inquiry_id = #{inquiry_id}
    </update>
    

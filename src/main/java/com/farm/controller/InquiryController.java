@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.farm.config.login.CustomUserDetails;
 import com.farm.dto.InquiryDTO;
 import com.farm.dto.PageDTO;
-import com.farm.dto.ParameterDTO;
 import com.farm.service.IInquiryService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,7 +25,8 @@ public class InquiryController {
 
    @Autowired
    IInquiryService inqDao;
-
+   
+   //문의 생성
    @GetMapping("/buyer/inquiryForm.do")
    public String inquiry1(@RequestParam("prod_id") Long prod_id, @RequestParam("prod_name") String prod_name,
          Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
@@ -49,14 +49,14 @@ public class InquiryController {
          System.out.println("입력에 실패했습니다.");
       }
       
-      return "inquiryForm";
+      return "redirect:/buyer/inquiryList.do?member_id=" + inquiryDTO.getMember_id();
    }
    
    // 문의목록
    @GetMapping("/buyer/inquiryList.do")
    public String inquiry3(@RequestParam("member_id") Long member_id, Model model, PageDTO pageDTO,
          HttpServletRequest req) {
-      
+	   
       int totalCount = inqDao.getTotalCount(pageDTO);
       int pageSize = 10;
       int blockPage = 5;
@@ -67,6 +67,8 @@ public class InquiryController {
       int end = pageNum * pageSize;
       pageDTO.setStart(start);
       pageDTO.setEnd(end);
+      pageDTO.setMember_id(member_id);
+
       
       Map<String, Object> maps = new HashMap<String, Object>();
       maps.put("totalCount", totalCount);
@@ -75,11 +77,11 @@ public class InquiryController {
       model.addAttribute("maps", maps);
       
       ArrayList<InquiryDTO> list = inqDao.selectInq(member_id);
-      model.addAttribute("list", list);
+      model.addAttribute("inquiries", list);
       
       String pagingImg = 
             PagingUtil.pagingImg(totalCount, pageSize, blockPage, pageNum,
-                  req.getContextPath()+"/list.do?");
+                  req.getContextPath()+"/buyer/inquiryList.do?member_id=" + member_id + "&");
       model.addAttribute("pagingImg", pagingImg);
       
       return "buyer/inquiryList";
@@ -87,25 +89,29 @@ public class InquiryController {
 
    // 수정
    @GetMapping("/buyer/inquiryUpdate.do")
-   public String updateInquiry(Model model, @RequestParam("title") String title, @RequestParam("content") String content) {
+   public String updateInquiry(Model model, @RequestParam("title") String title, @RequestParam("content") String content,
+		   @RequestParam("inquiry_id") Long inquiry_id) {
       model.addAttribute("title", title);
       model.addAttribute("content", content);
-      return "buyer/inquiryList";
+      model.addAttribute("inquiry_id", inquiry_id);
+      
+      return "buyer/inquiryUpdate";
    }
 
    // 수정2 : 사용자가 입력한 내용을 전송하여 update 처리
    @PostMapping("/buyer/inquiryUpdate.do")
-   public String updateInquiry(@RequestParam("title") String title, @RequestParam("content") String content) {
-      int result = inqDao.updateInquiry("title", "content");
+   public String updateInquiry(@RequestParam("title") String title, @RequestParam("content") String content, 
+		   @RequestParam("inquiry_id") Long inquiry_id, @RequestParam("member_id") Long member_id) {
+      int result = inqDao.updateInquiry(title, content, inquiry_id);
       System.out.println("글수정결과:"+ result);
       //return값 확인필요
-      return "redirect:/buyer/inquiryList.do?inquiry_id=";
+      return "redirect:/buyer/inquiryList.do?member_id=" + member_id;
    }
 
    @PostMapping("/buyer/inquiry/delete.do")
-   public String deleteInquiry(@RequestParam("inquiry_id") Long inquiry_id) {
+   public String deleteInquiry(@RequestParam("inquiry_id") Long inquiry_id, @RequestParam("member_id") Long member_id) {
       int result = inqDao.deleteInquiry(inquiry_id);
-      return "redirect:inquiryList.do";
+      return "redirect:/buyer/inquiryList.do?member_id=" + member_id;
    }
    
 
