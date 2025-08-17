@@ -32,6 +32,7 @@
 			</div>
 		</c:if>
 
+
 		<div class="dp-right">
 			<h2 class="dp-tit">${productDTO.prod_name }</h2>
 		</div>
