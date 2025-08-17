@@ -41,8 +41,8 @@
         <button type="submit" class="login-btn">로그인</button>
       </form>
 
-      <div class="divider"><span>or</span></div>
-      <button class="signup-btn">회원가입</button>
+      <!-- <div class="divider"><span>or</span></div>
+      <button class="signup-btn">회원가입</button> -->
     </div>
   </div>
 
