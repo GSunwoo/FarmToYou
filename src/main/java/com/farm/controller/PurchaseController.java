@@ -46,4 +46,9 @@ public class PurchaseController {
 		model.addAttribute("cart",cart);
 		return "order_page";
 	}
+	
+	@GetMapping("/buyer/purchase/complete.do")
+	public String purchaseComplete() {
+		return "pur_complete";
+	}
 }
