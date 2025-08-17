@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -8,7 +9,6 @@
   <title>구매페이지</title>
 	
   <!-- CSS -->
-  <link rel="stylesheet" href="<c:url value='/'/>">
   <link rel="stylesheet" href="<c:url value='/css/order_page.css' />">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
@@ -118,7 +118,7 @@
               <input type="checkbox" id="agreeAll">
               <span>구매조건/결제대행 약관에 동의합니다.</span>
             </label>
-            <button type="submit" class="btn-lg solid" id="btnPay">toss결제</button> <!-- type을 submit으로 변경  -->
+            <button type="button" class="btn-lg solid" id="btnPay">결제하기</button> <!-- type을 submit으로 변경  -->
           </div>
         </div>
         <input type="hidden" id="total_price" name="total_price" value="${total_price}" />
@@ -203,8 +203,29 @@
     </div>
   </div>
   <!-- ===================== 구매페이지 끝 ===================== -->
-
+  <c:set var="orderName">
+  <c:forEach var="row" items="${cart}" varStatus="st">
+    <c:if test="${st.first}">
+      <c:out value="${row.prod_name}" />
+    </c:if>
+    <c:if test="${fn:length(cart) > 1}">
+      외 ${fn:length(cart) - 1}건
+    </c:if>
+  </c:forEach>
+</c:set>
+  <script>
+  const totalPrice = document.getElementById("total_price").value;
+  function openTossPage() {
+	  const orderName = "${fn:trim(orderName)}"; 
+	  window.open(
+	    "/buyer/pay/checkout.do?orderName="+orderName+"&totalPrice="+totalPrice, 
+	    "_blank",
+	    "width=600,height=800,top=500,left=500,scrollbars=yes,resizable=yes"
+	  );
+	}
+  </script>
   <!-- JS -->
   <script src="<c:url value='/js/order_page.js'/>" defer></script>
+  
 </body>
 </html>

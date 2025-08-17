@@ -1,7 +1,6 @@
 package com.farm.controller;
 
-import java.time.LocalDate;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -10,7 +9,6 @@ import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,10 +28,11 @@ public class PaymentController {
 	private String WIDGET_CLIENT_KEY; // toss 클라이언트 키
 	
 	@GetMapping("/buyer/pay/checkout.do")
-	public String checkout(Model model, @AuthenticationPrincipal CustomUserDetails userDetails, @RequestParam("prod_id") Long prod_id) {
+	public String checkout(Model model, @AuthenticationPrincipal CustomUserDetails userDetails,
+							@RequestParam("orderName") String orderName, @RequestParam("totalPrice") int totalPrice) {
 		// 클라이언트키 전달
 		model.addAttribute("widgetClientKey",WIDGET_CLIENT_KEY);
-		// customerKey를 만들기위해 member_id와 user_id를 Bcrypt로 인코딩 후 model객체로 전달
+		// member_id와 user_id를 seed로 customerKey를 생성하여 model객체로 전달
 		Long memberId = userDetails.getMemberDTO().getMember_id();
 		String userId = userDetails.getUsername();
 		// customerKey 제작 및 전달
@@ -41,41 +40,34 @@ public class PaymentController {
 		model.addAttribute("customerKey", encoId);
 		
 		// 주문정보 가공 및 전달
-		PayDTO payDTO_Mem = payDAO.getOrderInfoMember(memberId); // 구매자정보
-		PayDTO payDTO_Prod = payDAO.getOrderInfoProduct(prod_id); // 상품정보
-		PayDTO payDTO = new PayDTO(); // 두 정보를 모두 담을 DTO객체
-		// 두가지 정보 합치기
+		PayDTO payDTO = payDAO.getOrderInfoMember(memberId); // 구매자정보 가져오기
 		payDTO.setMember_id(memberId);
-		payDTO.setName(payDTO_Mem.getName());
-		payDTO.setPhone_num(payDTO_Mem.getPhone_num());
-		payDTO.setEmailid(payDTO_Mem.getEmailid());
-		payDTO.setEmaildomain(payDTO_Mem.getEmaildomain());
-		payDTO.setProd_id(prod_id);
-		payDTO.setProd_name(payDTO_Prod.getProd_name());
-		payDTO.setProd_price(payDTO_Prod.getProd_price());
+		// 파라미터로 받은 주문정보
+		payDTO.setProd_name(orderName);
+		payDTO.setProd_price(totalPrice);
 		
-		LocalDate now = LocalDate.now();
+		// 주문명과 회원번호, 현재시간을 seed로 주문번호 생성
+		LocalDateTime now = LocalDateTime.now();
 		String nowTime = now.toString();
-		String orderId = payDTO.getProd_id().toString() + payDTO.getMember_id().toString() + nowTime;
+		String orderId = payDTO.getProd_name() + payDTO.getMember_id().toString() + nowTime;
 		String encOrderId = generateRandomString(orderId, 20);
 		
+		// toss payments API 형식에 맞춰 Map 생성
 		Map<String, String> orderInfo = new HashMap<>();
-		orderInfo.put("orderId", encOrderId);
-		orderInfo.put("orderName", payDTO.getProd_name());
-		orderInfo.put("successUrl", "/buyer/pay/success.do");
-		orderInfo.put("failUrl", "/buyer/pay/fail.do");
-		orderInfo.put("customerEmail", payDTO.getEmailid()+"@"+payDTO.getEmaildomain());
-		orderInfo.put("customerName", payDTO.getName());
-		orderInfo.put("customerMobilePhone", payDTO.getPhone_num());
+		orderInfo.put("orderId", encOrderId);     // 주문번호
+		orderInfo.put("orderName", payDTO.getProd_name()); // 주문이름
+		orderInfo.put("successUrl", "/buyer/pay/success.do"); // 성공 url
+		orderInfo.put("failUrl", "/buyer/pay/fail.do"); 	  // 실패 url
+		orderInfo.put("customerEmail", payDTO.getEmailid()+"@"+payDTO.getEmaildomain()); // email
+		orderInfo.put("customerName", payDTO.getName()); // 구매자명
+		orderInfo.put("customerMobilePhone", payDTO.getPhone_num()); // 구매자 핸드폰번호
 		
-
-		// JSON으로 변환
+		// 생성한 Map을 JSON으로 변환(js에서 JSON으로 사용)
 		JSONObject orderInfoJSON = new JSONObject(orderInfo);
 		// 주문정보 전달
 		model.addAttribute("orderInfo",orderInfoJSON);
 		// 가격 전달
-//		model.addAttribute("amount", payDTO.getProd_price());
-		model.addAttribute("amount", 1000);
+		model.addAttribute("amount", payDTO.getProd_price());
 		
 		return "pay/checkout";
 	}

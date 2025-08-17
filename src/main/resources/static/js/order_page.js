@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
       alert('약관에 동의해 주세요.');
       return;
     }
-    alert('toss 결제창 호출(연동 예정)');
+	openTossPage();
   });
 });
 
