@@ -7,4 +7,6 @@ public class PageDTO {
 
 	private int start;
 	private int end;
+	
+    private Long member_id; // 회원별 조회 조건 추가
 }

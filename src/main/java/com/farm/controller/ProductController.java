@@ -19,6 +19,7 @@ import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.farm.config.login.CustomUserDetails;
@@ -68,10 +69,10 @@ public class ProductController {
 		productDTO.setMember_id(userDetails.getMemberDTO().getMember_id());
 		int prodResult = proDao.productWrite(productDTO);
 		Long prod_id = productDTO.getProd_id();
-		
+		Long last_idx = null;
 		
 		if(!files.isEmpty()) {			
-			insertImg(prod_id, main_idx, files);
+			insertImg(prod_id, main_idx, files, last_idx);
 		}
 		
 		
@@ -81,7 +82,7 @@ public class ProductController {
 	
 
 	public void insertImg(Long prod_id, Long main_idx,
-			List<MultipartFile> files) {
+			List<MultipartFile> files, Long last_idx) {
 		
 		try {
 			
@@ -95,7 +96,7 @@ public class ProductController {
 			}
 
 			
-			long i = 1;
+			Long i = (last_idx != null) ? last_idx + 1 : 1L;
 			for(MultipartFile file : files) {
 				if (file.isEmpty()) {
 					System.out.println("파일 빔?");
@@ -244,8 +245,7 @@ public class ProductController {
 		productDTO = proDao.selectProductView(prod_id);
 		Long write_id = productDTO.getMember_id();
 		
-		productDTO.setProd_content(productDTO.getProd_content()
-				.replaceAll("\r\n", "<br/>"));
+
 		
 		
 		try {
@@ -253,8 +253,7 @@ public class ProductController {
 			if(login_id == write_id && login_id != null && write_id != null) {
 				model.addAttribute("productDTO", productDTO);
 				ArrayList<ProductImgDTO> imglist = imgDao.selectAllImg(prod_id);
-				ProductImgDTO main = imgDao.selectMain(prod_id);
-				model.addAttribute("main", main);
+				model.addAttribute("last_idx", imglist.size());
 				model.addAttribute("imglist", imglist);
 				return "seller/productUpdate";
 			}
@@ -272,39 +271,90 @@ public class ProductController {
 	}
 	
 	@PostMapping("/seller/update.do")
-	public String productUpdate2(ProductDTO productDTO,
-			@RequestParam("main_idx") String idx,
-			@RequestParam("image") List<MultipartFile> files){
+	@ResponseBody
+	public int productUpdate2(ProductDTO productDTO,
+	        @RequestParam("main_idx") Long main_idx,
+	        @RequestParam("image") List<MultipartFile> files,
+	        @RequestParam("last_idx") Long last_idx) { 
 		
-		Long main_idx = idx != null ? Long.parseLong(idx) : 0L;
-		int prod_result = proDao.productUpdate(productDTO);
-		Long prod_id = productDTO.getProd_id();
-		
-		//이미지 전체 삭제 후 삽입
-		int img_result = imgDao.deleteImg(prod_id);
-		if(img_result == 1) {
-			insertImg(prod_id, main_idx, files);
-		}
-		if(prod_result == 1) {
-			System.out.println("상품 수정신청이 들어왔습니다.");
-		}
-		else {
-			System.out.println("상품 수정신청에 실패했습니다. : " + prod_result);
-		}
-		return "seller/myPageList";
+		productDTO.setProd_content(productDTO.getProd_content()
+				.replaceAll("\r\n", "<br/>"));
+	    int prod_result = proDao.productUpdate(productDTO);
+	    Long prod_id = productDTO.getProd_id();
+
+
+	    
+	    	
+	    /*
+	    이미지 변경 과정 :
+	    	수정폼으로 이동 및 게시물 불러오기(완료)
+	    	수정폼에서 게시물 및 이미지 추가 및 삭제
+	    		-> 삭제 구현방법 삭제버튼에 인덱스를 넣고 버튼클릭시 인덱스가 전달되고
+	    			인덱스에 해당하는 이미지 삭제 => prod_id와 idx를 조건으로 걸어야될듯
+	    			만약 이미지가 추가 된다면? 삭제를 비동기로 바로 처리하게 하면될듯?
+	    			또다른문제. 인덱스는 기존 이미지들의 인덱스 다음 숫자를 오게할 수 있을것인가? 
+	    			가능한지 확인해봐야됨
+	    	메인인덱스 수정구현 
+	    		-> 방식은 모든main인덱스를 0으로 만들고
+	    			프론트에서 받은 main_idx의 사진의 메인인덱스 활성화(1)
+	    	
+	     */
+	    if(!files.isEmpty()) {
+	    	insertImg(prod_id, main_idx, files, last_idx);	    	
+	    }
+	    
+	    int UMI = updateMainImage(prod_id, main_idx);
+	    if(UMI > 0) System.out.println("메인 이미지 업데이트 완료");
+
+	    
+	    
+	    if (prod_result == 1) {
+	        System.out.println("상품 수정에 성공했습니다.");
+	        return 200;
+	    } else {
+	        System.out.println("상품 수정신청에 실패했습니다. : " + prod_result);
+	        return 500;
+	    }
+
 	}
 	
+	public int updateMainImage(Long prod_id, Long main_idx) {
+		
+		int zero = imgDao.makeZero(prod_id);
+		int result = 0;
+		if(zero > 0) {
+			result = imgDao.updateMainImg(prod_id, main_idx);
+		}
+		return result;
+	}
+	
+	
 	@PostMapping("/seller/delete.do")
-	public String delete(@RequestParam("prod_id") Long prod_id){
+	public String deleteProduct(@RequestParam("prod_id") Long prod_id){
 		int prod_result = proDao.productDelete(prod_id);
-		int img_result = imgDao.deleteImg(prod_id);
+		int img_result = imgDao.deleteAllImg(prod_id);
 		if(prod_result == 1 && img_result == 1) {
 			System.out.println("상품 삭제가 완료되었습니다 : " + prod_result);
 		}
 		else {
 			System.out.println("상품 삭제에 실패하였습니다. : " + prod_result);
 		}
-		return "seller/myPageList";
+		return "seller/myprodlist";
+	}
+	
+	
+	@PostMapping("/seller/deleteImg.do")
+	@ResponseBody
+	public String deleteImg(
+	        @RequestParam("prod_id") Long prod_id,
+	        @RequestParam("idx") Long idx) {
+	    try {
+	        int result = imgDao.deleteImg(prod_id, idx);
+	        return (result > 0) ? "success" : "fail";
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return "error";
+	    }
 	}
 	
 	

@@ -4,9 +4,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Footer 부분</title>
+<title>구매완료</title>
 </head>
 <body>
-
+<h3>구매가 완료되었습니다.</h3>
+<a href="/">메인페이지</a><br />
+<a href="/wishlist/list.do">장바구니</a>
 </body>
 </html>

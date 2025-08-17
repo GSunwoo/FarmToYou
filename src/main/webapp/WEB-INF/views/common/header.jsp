@@ -20,10 +20,6 @@
         <li>|</li>
         <li><a href="/mypage.do">마이페이지</a></li>
 	</sec:authorize>
-        <li>|</li>
-        <li><a href="/wishlist/list.do">장바구니</a></li>
-        <li>|</li>
-        <li><a href="#">-</a></li>
     </ul>
 </div>
 
@@ -51,12 +47,10 @@
 
     <div class="category-bar">
         <ul class="category-menu">
-            <li><a href="/guest/productList.do">상품</a></li>
+            <li style=""><a href="/guest/productList.do">상품</a></li>
             <li><a href="/guest/review/list.do">리뷰</a></li>
-            <li>-</li>
-            <li>-</li>
-            <li>-</li>
-            <li>-</li>
+        	<li><a href="/wishlist/list.do">장바구니</a></li>
+            <li><a href="">1:1문의</a></li>
         </ul>
     </div>
 </div>

@@ -93,13 +93,12 @@
 	
 	<update id="productUpdate"
 		parameterType="com.farm.dto.ProductDTO">
-		UPDATE product set(
+		UPDATE product set
 			prod_price = #{prod_price}, 
 			prod_stock = #{prod_stock},  
 			prod_cate = #{prod_cate}, 
 			prod_content = #{prod_content}, 
 			prod_name = #{prod_name}
-		)
 		WHERE prod_id = #{prod_id}
 	</update>
 	

@@ -4,34 +4,34 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
    
 <mapper namespace="com.farm.service.IInquiryService">
-	<!-- 문의 조회 -->
-	<select id="selectInq"
-	resultType="com.farm.dto.InquiryDTO"
-	>
-	SELECT user_id, inquiry_id, prod_id, content, member_id, title
-			FROM inquiry WHERE member_id = #{member_Id}
-	</select>
-	
-	<!-- 문의 등록 -->
-	<insert id="insertInq"
-		parameterType="com.farm.dto.InquiryDTO">
-		INSERT INTO inquiry
-			(inquiry_id, prod_id, user_id, content, title, member_id)	
-		VALUES
-			(seq_inquiry_id.nextval, #{prod_id} ,#{user_id} , #{content} ,#{title}, #{member_id})
-	</insert>
-	
-	<!-- 문의 수정 -->
-	<update id="updateInquiry"
-		parameterType="Long">
-		UPDATE inquiry 
-			SET	title, content = #{title}, #{content}
-				WHERE inquiry_id = #{inquiry_id}
-	</update>
-	
-	<!-- 문의 삭제 -->
-	<delete id="deleteInquiry"
-		parameterType="Long">
-		DELETE FROM inquiry WHERE inquiry_id = #{inquiry_id}
-	</delete>
+   <!-- 문의 조회 -->
+   <select id="selectInq"
+   resultType="com.farm.dto.InquiryDTO"
+   >
+   SELECT user_id, inquiry_id, prod_id, content, member_id, title
+         FROM inquiry WHERE member_id = #{member_Id}
+   </select>
+   
+   <!-- 문의 등록 -->
+   <insert id="insertInq"
+      parameterType="com.farm.dto.InquiryDTO">
+      INSERT INTO inquiry
+         (inquiry_id, prod_id, user_id, content, title, member_id)   
+      VALUES
+         (seq_inquiry_id.nextval, #{prod_id} ,#{user_id} , #{content} ,#{title}, #{member_id})
+   </insert>
+   
+   <!-- 문의 수정 -->
+   <update id="updateInquiry"
+      parameterType="Long">
+      UPDATE inquiry 
+         SET title = #{title}, content = #{content}
+            WHERE inquiry_id = #{inquiry_id}
+   </update>
+   
+   <!-- 문의 삭제 -->
+   <delete id="deleteInquiry"
+      parameterType="Long">
+      DELETE FROM inquiry WHERE inquiry_id = #{inquiry_id}
+   </delete>
 </mapper>

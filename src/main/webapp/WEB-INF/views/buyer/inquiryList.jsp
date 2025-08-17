@@ -9,12 +9,12 @@
 <title>상품문의</title>
 </head>
 <body>
-	<div class="sub-content">
+   <div class="sub-content">
       <div class="mypage-cont">
         <div class="mypage-info">
         
           <div class="mypage-zone-tit">
-            <h3>상품문의</h3>
+            <h3>상품문의 목록</h3>
           </div>
           
 
@@ -28,10 +28,12 @@
                   <col style="width: 10%;">
                 </colgroup>
                 <thead>
+                <tr>
                   <th>날짜</th>
                   <th>카테고리</th>
                   <th>제목</th>
                   <th>문의상태</th>
+                </tr>
                 </thead>
                 <tbody>
                   <c:choose>
@@ -43,7 +45,6 @@
                             <fmt:formatDate value="${q.inquiry_date}" pattern="yyyy-MM-dd" />
                           </time>
                         </td>
-                        <td><c:out value="${q.category}" /></td>
                         <td class="ellipsis">
                           <a href="${pageContext.request.contextPath}/inquiry/detail?inquiry_id=${q.inquiry_id}">
                             <c:out value="${q.title}" />

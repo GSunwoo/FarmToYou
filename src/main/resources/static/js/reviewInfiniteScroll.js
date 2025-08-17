@@ -12,8 +12,8 @@
 	let loading = false;
 	let hasMore = true;
 	
-	async function fetchList(pageNum, size) {
-		const res = await fetch(`/buyer/review/api/list?pageNum=${pageNum}&pageSize=${size}`);
+	async function fetchList(pageNum) {
+		const res = await fetch(`/guest/review/restApi/list?pageNum=${pageNum}`);
 		if(!res.ok) throw new Error(`목록 로드 실패: ${res.status}`);
 		return res.json();
 	}
