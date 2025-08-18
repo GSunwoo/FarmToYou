@@ -25,6 +25,8 @@
         <li><a href="/myLogout.do">로그아웃</a></li> 
         <li>|</li>
         <li><a href="/mypage.do">마이페이지</a></li>
+        <li>|</li>
+        <li><a href="/buyer/review/write.do">리뷰쓰기</a></li>
 	</sec:authorize>
     </ul>
 </div>

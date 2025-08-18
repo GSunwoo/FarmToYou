@@ -41,7 +41,7 @@
                       </div>
                       <div class="item-money-box">
                         <%-- <c:if test="${p.originalPrice gt p.salePrice}"> --%>
-                          <del><fmt:formatNumber value="${best.prod_price}"/>원</del>
+                          <span><fmt:formatNumber value="${best.prod_price}"/>원</span>
                         <%-- </c:if> --%>
                         <%-- <div class="price-inline">
                           <strong class="item-price">
@@ -71,13 +71,12 @@
               <c:forEach var="prod" items="${lists}" >
                 <li>
                   <div class="item-photo-box">
-                  <c:if test="${prod.filename } != null">
+                  
                     <img
                       src="${pageContext.request.contextPath}/uploads/prodimg/prod_id/${prod.prod_id}/${prod.filename}"
                       alt="${prod.filename}"
                       onclick="location.href='${pageContext.request.contextPath}/guest/Detailpage.do?prod_id=${prod.prod_id}'">
-                      <img src="/uploads/prodimg/prod_id/${prod.prod_id}/${prod.filename}">
-                  </c:if>
+                  
                   </div>
                   <div class="item-info-box">
                     <div class="item-info-cont">
@@ -88,7 +87,7 @@
                       </div>
                       <div class="item-money-box">
                         <%-- <c:if test="${prod.prod_price gt prod.prod_salePrice}"> --%>
-                          <del><fmt:formatNumber value="${prod.prod_price}"/>원</del>
+                          <span><fmt:formatNumber value="${prod.prod_price}"/>원</span>
                          <%-- </c:if> --%>
                       </div>
                       <%-- <div class="price-inline">

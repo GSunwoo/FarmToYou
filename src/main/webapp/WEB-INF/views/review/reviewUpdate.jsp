@@ -30,8 +30,8 @@
     <!-- 상품 ID (쿼리스트링에서 받기) -->
     <label for="prod_id">상품 ID</label>
     <input type="text" id="prod_id" name="prod_id"
-           value="${prod_id}" readonly><br><br>
-
+           value="${prod_id}" ><br><br>
+	<!-- readonly 리뷰작성때매 일부러 빼놨음 나중에 추가해야됨 -->
    
     <!-- 제목 -->
     <label for="title">제목</label>

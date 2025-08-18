@@ -34,47 +34,44 @@
 
 
 		<div class="dp-right">
-			<h2 class="dp-tit">${productDTO.prod_name }</h2>
-		</div>
+    <!-- 상품명 -->
+    <h2 class="dp-tit">${productDTO.prod_name }</h2>
 
-		<ul class="dp-info">
-			<li><span class="lb">정가</span> <span class="val strike">
-					<fmt:formatNumber value="${productDTO.prod_price }" type="number" />
-					<c:if test="${not empty productDTO.prod_price }">원</c:if>
-			</span></li>
-			<%-- <li>
-				<span class="lb">판매가</span>
-				<span class="val strong">
-					<fmt:formatNumber value="${salePrice }" type="number" />원
-				</span>
-			</li> --%>
-			<li><span class="lb">배송비</span> <span class="val">무료</span></li>
-		</ul>
+    <!-- 가격/배송비 -->
+    <ul class="dp-info">
+        <li>
+            <span class="lb">정가</span>
+            <span class="val strike">
+                <fmt:formatNumber value="${productDTO.prod_price }" type="number" />
+                <c:if test="${not empty productDTO.prod_price }">원</c:if>
+            </span>
+        </li>
+        <li>
+            <span class="lb">배송비</span>
+            <span class="val">무료</span>
+        </li>
+    </ul>
 
+    <!-- 수량 -->
+    <div class="dp-qty">
+        <button type="button" class="qty-btn" data-delta="-1">-</button>
+        <input id="qty" type="text" value="1" readonly>
+        <button type="button" class="qty-btn" data-delta="1">+</button>
+    </div>
 
-		<div class="dp-qty">
-			<button type="button" class="qty-btn" data-delta="-1">-</button>
-			<input id="qty" type="text" value="1" readonly>
-			<button type="button" class="qty-btn" data-delta="1">+</button>
-		</div>
+    <!-- 액션 버튼 -->
+    <div class="dp-actions">
+        <form id="cart_form">
+            <input type="hidden" name="prod_id" value="${productDTO.prod_id }">
+            <input type="hidden" id="qtyInput" name="prod_qty" value="1">
 
-		<!-- 백엔드 연결 시 name, value, 액션경로 세팅 -->
-		<!-- 액션 버튼 -->
-		<div class="dp-actions" >
-			<form id="cart_form">
-				<input type="hidden" name="prod_id" value="${productDTO.prod_id }">
-				<input type="hidden" id="qtyInput" name="prod_qty" value="1">
-				<button type="submit" class="btn-outline" id="wishlist-add-btn">장바구니 담기</button>
-				
-				
-				<!-- 장바구니로 가는 경로 세팅 -->
-				<a id="order" class="btn-solid">바로결제</a>
-				<a href="/buyer/inquiryForm.do?prod_name=${productDTO.prod_name}&prod_id=${productDTO.prod_id}" 
-				class="btn-outline">상품문의쓰기</a>
-				
-				<a href="/buyer/review/write.do" class="btn-outline">리뷰쓰기</a>
-			</form>
-		</div>
+            <button type="submit" class="btn-outline" id="wishlist-add-btn">장바구니 담기</button>
+            <a id="order" class="btn-solid">바로결제</a>
+            <a href="/buyer/inquiryForm.do?prod_name=${productDTO.prod_name}&prod_id=${productDTO.prod_id}" 
+               class="btn-outline">상품문의쓰기</a>
+        </form>
+    </div>
+</div>
      
 		<section class="dp-detail">
 			<div class="dp-tabwrap">

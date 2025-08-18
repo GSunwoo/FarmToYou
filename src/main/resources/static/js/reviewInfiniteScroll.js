@@ -1,6 +1,7 @@
 /**
  * 무한스크롤 js (중복 방지 적용)
  */
+
 (() => {
   const listEl   = document.getElementById('review-grid-lists');
   const sentinel = document.getElementById('sentinel');
