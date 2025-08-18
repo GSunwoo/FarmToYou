@@ -172,6 +172,17 @@ public class MypageController {
 		return soldJSON;
 	}
 	
+	@GetMapping("/buyer/myPageList")
+	public String myPageList() {
+		return "buyer/myPageList";
+	}
+	
+	@GetMapping("/buyer/member-info")
+    public String member_info1() {
+        return "buyer/member-info";
+    }
+	
+	
     @GetMapping("/seller/sellerManagement")
     public String sellerManagement() {
         return "seller/sellerManagement"; // /WEB-INF/views/seller/sellerManagement.jsp

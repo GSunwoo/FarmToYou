@@ -9,14 +9,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>주문목록/배송조회</title>
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/myPageMain.css">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/mainpage.css">
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/mainpage.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/myPageMain.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/myPageList.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
+<%@ include file="../common/header.jsp"%>
 	<div class="sub-content">
 		<div class="side-bar">
 			<%@ include file="../common/header2.jsp"%>

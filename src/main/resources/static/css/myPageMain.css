@@ -135,3 +135,36 @@
 
 /* 마이페이지 메인 컨테이너가 배경/보더로 눌러붙는 느낌 방지(필요 시) */
 .mypage-cont { background: transparent; border: 0; padding: 0; }
+
+.mypage-sidebar .sub-menu-mypage > li {
+  font-weight: bold; /* 폰트 굵기를 굵게 설정 */
+}
+
+/* 레이아웃 */
+.sub-content{
+  display:flex;
+  gap:24px;
+  align-items:flex-start;
+  max-width:1200px;
+  margin:0 auto;
+  padding:0 16px;
+}
+
+/* 사이드바 폭 고정 */
+.sub-content .mypage-sidebar{
+  width:240px;
+  flex:0 0 240px;
+}
+
+/* 메인 영역은 나머지 */
+.mypage-main-cont{
+  flex:1 1 auto;
+  min-width:0;
+  display:flex;
+  justify-content:center;
+}
+
+/* (선택) 사이드 메뉴 기본 정리 */
+.mypage-sidebar ul{ list-style:none; margin:0; padding:0; }
+.mypage-sidebar a{ display:block; padding:6px 10px; text-decoration:none; color:#333; }
+.mypage-sidebar a:hover{ background:#f6f7f9; }

@@ -16,7 +16,9 @@
 
 <div class="mypage-wrapper">
     <div class="sub-content">
-        <%@ include file="../common/header2.jsp"%>  
+    <aside class="mypage-sidebar">
+        <%@ include file="../common/header2.jsp"%>
+    </aside>  
         	<div class="mypage-main-cont">
             <div class="mypage-main-info">
                 <h2 style="font-size: 1.5em; margin-bottom: 20px;">상품문의 글쓰기</h2>
