@@ -39,11 +39,9 @@
 			<main class="sub-content">
 				<div class="mypage-cont">
 					<div class="mypage-info">
-						<div class="mypage-zone-tit">
-							<h3>모니터링</h3>
-						</div>
+						
 
-						<div class="dashboard-wrapper-2rows">
+						
 							<!-- 1) 스마트팜 (판정결과가 이 카드 안에 들어감) -->
 							<div class="card card-full">
 								<h2 class="card-title">스마트팜 모니터링</h2>
@@ -81,7 +79,7 @@
 									<div class="loading-text">농작물 정보를 불러오는 중...</div>
 								</div>
 							</div>
-						</div>
+						
 
 					</div>
 			</main>

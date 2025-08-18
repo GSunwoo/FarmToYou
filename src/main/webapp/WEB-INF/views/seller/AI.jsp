@@ -1,32 +1,82 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c"   uri="jakarta.tags.core" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<title>사과 모니터링</title>
+<meta charset="utf-8" />
+<title>판매자 마이페이지 - 모니터링</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+<!-- 기존 공통 CSS -->
+<link rel="stylesheet" href="<c:url value='/css/seller_mypage.css'/>">
+<link rel="stylesheet" href="<c:url value='/css/Dashboard.css'/>">
+<link rel="stylesheet" href="<c:url value='/css/myPageMain.css'/>">
+<link rel="stylesheet" href="<c:url value='/css/mainpage.css'/>">
+<!-- 모니터 전용 CSS (아래 제공) -->
+<link rel="stylesheet" href="<c:url value='/css/ai/ai.css'/>">
+<!-- 아이콘/차트(필요 시) -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script
+	src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<style>
-#imageResult div { margin-bottom: 15px; }
-#imageResult img { border: 1px solid #ccc; padding: 3px; }
-</style>
+<!-- 페이지 스크립트 -->
 <script>
-  // 서버에서 context path를 JS 변수로 전달
-  const contextPath = "${pageContext.request.contextPath}";
+	// 컨텍스트 경로 & Flask 예측 API 엔드포인트 (ai.js에서 사용)
+	const contextPath = "${pageContext.request.contextPath}";
+	window.FLASK_PREDICT_URL = "http://127.0.0.1:8587/predict"; // 필요 시 환경에 맞게 변경
 </script>
 </head>
-<body>
-<h2>사과 모니터링</h2>
 
-<div id="monitorArea">
-    <button id="startBtn">모니터링 시작</button>
-    <button id="stopBtn" style="display:none;">모니터링 중단</button>
-    <div id="status">대기중...</div>
-    <div id="imageResult"></div>
-</div>
+<body class="simple-page">
+	<!-- 상단 공통 헤더 -->
+	<jsp:include page="/WEB-INF/views/common/header.jsp" />
 
-<!-- 외부 JS를 body 끝에서 로드 -->
-<script src="${pageContext.request.contextPath}/js/ai/ai.js"></script>
+	<div class="mypage-wrapper">
+		<!-- 좌측 사이드바 -->
+		<jsp:include page="/WEB-INF/views/common/header3.jsp">
+			<jsp:param name="active" value="monitor" />
+		</jsp:include>
+
+		<!-- 우측 컨텐츠 -->
+		<main class="sub-content">
+			<div class="mypage-cont">
+				<div class="mypage-zone-tit">
+					<h3>스마트팜 모니터링</h3>
+				</div>
+
+				<div class="dashboard-wrapper-2rows">
+					<!-- 모니터링 카드 -->
+					<section class="card card-full">
+						<div class="card-head">
+							<h2 class="card-title">
+								<i class="fa-solid fa-seedling"></i> 실시간 판별
+							</h2>
+							<div class="monitor-controls">
+								<button class="btn btn-primary" id="startBtn">모니터링 시작</button>
+								<button class="btn btn-light" id="stopBtn"
+									style="display: none;">모니터링 중단</button>
+							</div>
+						</div>
+
+						<div class="monitor-status">
+							<span id="statusDot" class="dot idle"></span> <span id="status">대기중...</span>
+							<span id="update-time" class="lastUpdate" style="display: none;"></span>
+						</div>
+
+						<!-- 결과 영역 -->
+						<div id="cropResultWrap">
+							<!-- ai.js가 카드들을 채움 -->
+							<div id="imageResult" class="monitor-grid"></div>
+						</div>
+					</section>
+
+					<!-- (예시) 다른 카드들: 문의/통계/최근등록 등은 기존 페이지와 동일 -->
+					<!-- 필요 시 그대로 유지 -->
+				</div>
+			</div>
+		</main>
+	</div>
+	<script src="${pageContext.request.contextPath}/js/ai/ai.js"></script>
 </body>
 </html>

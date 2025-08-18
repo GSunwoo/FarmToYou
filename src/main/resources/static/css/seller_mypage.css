@@ -17,7 +17,7 @@
 }
 .simple-page .mypage-cont{
 	background:#fff; border:1px solid #ddd; border-radius:16px;
-  padding:24px; min-height:60vh;
+  padding:24px; min-height:60vh; width:100%;
 }
 
 /* 구 레이아웃 클래스도 함께 대응(.side-bar -> .sidebar) */

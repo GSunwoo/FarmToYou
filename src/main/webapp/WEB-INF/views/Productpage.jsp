@@ -63,7 +63,7 @@
 
       <!-- 국산과일 & 해외과일 -->
       <div class="goods-list-items-warp">
-        <div class="goods-list-tit"><h2>국산과일 & 해외과일</h2></div>
+        <div class="goods-list-tit"><h2>국산과일 & 국산채소</h2></div>
 
         <c:choose>
           <c:when test="${not empty lists}">
