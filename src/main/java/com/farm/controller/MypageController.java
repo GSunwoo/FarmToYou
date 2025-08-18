@@ -202,8 +202,8 @@ public class MypageController {
     public String reviewManagement() {
         return "seller/reviewManagement";
     }
-    @GetMapping("/seller/member-info")
+    @GetMapping("/seller/sellermember-info")
     public String member_info() {
-        return "seller/member-info";
+        return "seller/sellermember-info";
     }
 }
