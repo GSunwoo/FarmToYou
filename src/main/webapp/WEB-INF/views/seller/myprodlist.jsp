@@ -20,13 +20,12 @@
     <!-- 상단 공통 헤더 -->
     <jsp:include page="/WEB-INF/views/common/header.jsp" />
 
-    <!-- 레이아웃 래퍼 -->
     <div class="mypage-wrapper">
-      <!-- 좌측: 판매자 전용 사이드바 -->
-      <jsp:include page="/WEB-INF/views/common/header3.jsp">
-        <jsp:param name="active" value="products" />
-      </jsp:include>
-
+    <div class="sub-content">
+       <aside class="mypage-sidebar">
+           <%@ include file="../common/header3.jsp"%>
+       </aside>
+       </div>
       <!-- 우측 컨텐츠 -->
       <main class="sub-content">
         <div class="mypage-cont">

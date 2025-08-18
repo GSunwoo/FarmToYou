@@ -24,12 +24,12 @@
   <!-- 상단 공통 헤더 -->
   <jsp:include page="/WEB-INF/views/common/header.jsp" />
 
-  <!-- 레이아웃 래퍼 -->
   <div class="mypage-wrapper">
-    <!-- 좌측: 판매자 사이드바 -->
-    <jsp:include page="/WEB-INF/views/common/header3.jsp">
-      <jsp:param name="active" value="update" />
-    </jsp:include>
+    <div class="sub-content">
+       <aside class="mypage-sidebar">
+           <%@ include file="../common/header3.jsp"%>
+       </aside>
+       </div>
 
     <!-- 우측 컨텐츠 -->
     <main class="sub-content">
@@ -102,7 +102,6 @@
       <!-- ▲▲ 반드시 main.sub-content 내부에 위치 ▲▲ -->
     </main>
   </div>
-	</div>
   <!-- 페이지 스크립트: 본문 뒤에서 로드 -->
   <script src="<c:url value='/js/sellerUpdateForm.js' />"></script>
 </body>

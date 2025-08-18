@@ -33,17 +33,39 @@
 }
 
 /* 한 줄(레이블 + 입력) */
-.product-form .form-row {
+/* .product-form .form-row {
   display: flex;
   flex-direction: column;
   gap: 8px;
+} */
+
+/* 좌우 2열 레이아웃용 수정 */
+.product-form .form-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
 /* 레이블 */
-.product-form .form-row label {
+/* .product-form .form-row label {
   font-size: 14px;
   font-weight: 600;
   color: #666;
+} */
+/* 레이블은 고정 폭, 오른쪽 정렬 */
+.product-form .form-row label {
+  width: 120px;
+  text-align: right;
+  font-size: 15px;
+  font-weight: 600;
+  color: #444;
+  flex-shrink: 0;
+}
+/* 입력 필드 폭 자동 */
+.product-form .form-row input,
+.product-form .form-row textarea,
+.product-form .form-row select {
+  flex: 1;
 }
 
 /* 입력요소 공통 */
@@ -118,10 +140,6 @@ button[type="button"] {
 @media (max-width: 1024px) {
   .mypage-wrapper {
     display: block;
-  }
-  .product-form {
-    max-width: 900px;
-    margin: 0 auto;
   }
 }
 
@@ -309,4 +327,76 @@ button[type="button"] {
 .preview-wrap button {
   margin-top: 6px;
 }
+
+/* 바깥 카드: 제목(h3) + 폼 전체를 감싸는 상자 */
+.product-form-page {
+  max-width: 720px;        /* 카드 폭 */
+  margin: 0 auto;          /* 가운데 정렬 */
+  padding: 24px 24px 28px; /* 안쪽 여백 */
+  background: #fff;        /* 카드 배경 */
+  border-radius: 16px;     /* 둥근 모서리 */
+  box-shadow: 0 8px 28px rgba(0,0,0,.06);
+}
+
+/* 카드 안의 제목 스타일(여백만 살짝) */
+.product-form-page h3 {
+  margin: 6px 0 18px;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+/* 내부 폼은 카드 안에 들어가므로 자체 카드 스타일 제거 */
+/* .product-form {
+  padding: 0;              안쪽 여백은 바깥 카드가 담당
+  background: transparent; 이중 카드 방지
+  border-radius: 0;
+  box-shadow: none;
+  max-width: none;
+  width: 100%;
+  margin: 0;
+}
+ */
+/* 입력 요소 간격은 유지 */
+/* .product-form .form-row { gap: 10px; } */
+
+/* 반응형: 좁은 화면에서도 동일 */
+@media (max-width: 768px) {
+  .product-form-page { max-width: 94%; padding: 20px; }
+}
+
+/* ====== 바깥 카드(.product-form-page) 안에서는 폼 카드 제거 ====== */
+.product-form-page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 24px 170px 28px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 28px rgba(0,0,0,.06);
+}
+
+.product-form-page h3 {
+  margin: 6px 0 18px;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+/* 기존에 적용된 .sub-content form 카드 스타일을 무효화 */
+.product-form-page form,
+.product-form-page .sub-content form {
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+}
+
+/* 내부 입력 간격은 유지 */
+.product-form-page .form-row { gap: 10px; }
+
+/* 반응형 */
+@media (max-width: 768px) {
+  .product-form-page { max-width: 94%; padding: 20px; }
+}
+
 

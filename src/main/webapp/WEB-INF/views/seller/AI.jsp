@@ -33,10 +33,11 @@
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
 
 	<div class="mypage-wrapper">
-		<!-- 좌측 사이드바 -->
-		<jsp:include page="/WEB-INF/views/common/header3.jsp">
-			<jsp:param name="active" value="monitor" />
-		</jsp:include>
+    <div class="sub-content">
+       <aside class="mypage-sidebar">
+           <%@ include file="../common/header3.jsp"%>
+       </aside>
+       </div>
 
 		<!-- 우측 컨텐츠 -->
 		<main class="sub-content">

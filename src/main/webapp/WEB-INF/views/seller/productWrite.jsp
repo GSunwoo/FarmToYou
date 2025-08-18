@@ -26,12 +26,12 @@
 	<!-- 상단 공통 헤더 -->
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
 
-	<!-- 레이아웃 래퍼 -->
-	<div id="seller" class="mypage-wrapper">
-		<!-- 좌측: 판매자 전용 사이드바 -->
-		<jsp:include page="/WEB-INF/views/common/header3.jsp">
-			<jsp:param name="active" value="product" />
-		</jsp:include>
+	<div class="mypage-wrapper">
+    <div class="sub-content">
+       <aside class="mypage-sidebar">
+           <%@ include file="../common/header3.jsp"%>
+       </aside>
+       </div>
 
 		<!-- 우측 컨텐츠 -->
 		<main class="sub-content">
@@ -47,18 +47,18 @@
 					</div>
 
 					<div class="form-row">
-						<label for="prod_content">설명</label>
-						<textarea id="prod_content" name="prod_content" placeholder="설명" rows="4"></textarea>
+					  <label for="prod_explain">설명</label>
+					  <textarea id="prod_explain" name="prod_content" placeholder="설명"></textarea>
 					</div>
 
 					<div class="form-row">
-						<label for="prod_stock">재고</label>
-						<input id="prod_stock" type="number" name="prod_stock" placeholder="재고" />
+					  <label for="stock">재고</label>
+					  <input type="number" id="stock" name="prod_stock" placeholder="재고">
 					</div>
 
 					<div class="form-row">
-						<label for="prod_price">가격 (원)</label>
-						<input id="prod_price" type="number" name="prod_price" placeholder="가격 (원)" />
+					  <label for="price">가격 (원)</label>
+					  <input type="number" id="price" name="prod_price" placeholder="가격 (원)">
 					</div>
 
 					<div class="form-row">
