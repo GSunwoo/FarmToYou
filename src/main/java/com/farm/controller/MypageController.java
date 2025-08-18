@@ -86,7 +86,7 @@ public class MypageController {
 		MemberDTO member = userDetails.getMemberDTO();
 		Long member_id = member.getMember_id();
 		
-		addressDTO.setMember_id(member_id.toString());
+		addressDTO.setMember_id(member_id);
 		int result = memDAO.insertAddress(addressDTO);
 		
 		return ResponseEntity.ok(addressDTO);

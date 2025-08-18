@@ -6,7 +6,7 @@ import lombok.Data;
 public class AddressDTO {
 
 	// 주소
-	private String member_id; //유저 고유번호
+	private Long member_id; //유저 고유번호
 	private Long addr_id; //주소 고유번호
 	private String zipcode;
 	private String addr1;

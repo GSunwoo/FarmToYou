@@ -53,7 +53,7 @@
       return;
     }
 
-    const deliveryData = { zipcode: zip, addr1: a1, addr2: a2 };
+    const deliveryData = { zipcode: zip, addr1: a1, addr2: a2, main: 1};
 
     try {
       const response = await fetch('/buyer/address/write.do', {
