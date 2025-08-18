@@ -41,7 +41,7 @@
     <ul class="dp-info">
         <li>
             <span class="lb">정가</span>
-            <span class="val strike">
+            <span>
                 <fmt:formatNumber value="${productDTO.prod_price }" type="number" />
                 <c:if test="${not empty productDTO.prod_price }">원</c:if>
             </span>
