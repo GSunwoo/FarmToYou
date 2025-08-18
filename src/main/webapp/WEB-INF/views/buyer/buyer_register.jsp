@@ -33,7 +33,8 @@
         <label for="password">비밀번호</label>
         <div class="form-group">
 					<input type="password" id="password" name="user_pw" required
-						value="A123123!" />
+						/>
+<!-- 						value="A123123!"  -->
 					<p id="pwFormatMsg" class="warning-text" style="display:none;">
             첫 글자 대문자, 특수기호 포함, 7자리 이상이어야 합니다.
           </p>
@@ -45,8 +46,8 @@
         <label for="password2">비밀번호 확인</label>
         <div class="form-group">
           <input type="password" id="password2" placeholder="비밀번호 재입력" required 
-            value="A123123!" 
           />
+<!--             value="A123123!"  -->
           <p id="pwMismatchMsg" class="warning-text" style="display: none;">비밀번호가 틀립니다. 다시입력하세요.</p>
         </div>
       </div>

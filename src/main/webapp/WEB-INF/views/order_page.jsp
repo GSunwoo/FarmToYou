@@ -59,7 +59,7 @@
         <!-- 배송지 -->
         <section class="card">
           <div class="card-hd">
-            <strong>배송지 <span id="bar">|</span> <span id="recvName"><c:out value="${name}" default="이름"/></span></strong>
+            <strong>배송지 <%-- <span id="bar">|</span> <span id="recvName"><c:out value="${name}" default="이름"/></span> --%></strong>
             <button type="button" class="btn-sm ghost" id="btnAddrEdit">배송지 변경</button>
           </div>
           <div class="card-bd">

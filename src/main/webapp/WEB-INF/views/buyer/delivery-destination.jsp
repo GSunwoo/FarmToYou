@@ -35,6 +35,7 @@
         <div class="card-bd">
           <span class="badge">최근배송지</span>
           <div class="addr-text" id="addrText">
+        <div id="addrListBox" style="margin-top:10px;">
           	<c:choose>
           		<c:when test="${not empty AddressDTO }">
           			<c:out value="${AddressDTO.addr1 }" /> <c:out value="${AddressDTO.addr2 }" /> 
@@ -42,7 +43,7 @@
           		<c:otherwise>상세주소</c:otherwise>
           	</c:choose>
         </div>
-        <div id="addrListBox" style="margin-top:10px;"></div>
+        </div>
 		<button type="button" class="btn-sm ghost" id="btnSetMain" style="margin-top:8px;">메인 배송지 설정</button>
         </div>
       </section>
