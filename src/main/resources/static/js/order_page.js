@@ -20,6 +20,21 @@ document.addEventListener('DOMContentLoaded', () => {
   if (p3) p3.addEventListener('input', updateHiddenPhone);
 });*/
 
+const totalPrice = document.getElementById("total_price").value;
+  function openTossPage() {
+	  const ids = CART.map(item => item.id);
+	  const qtys = CART.map(item => item.qty);
+	  
+	  const queryStringId = ids.map(id => `prod_id=${id}`).join("&");
+	  const queryStringQty = qtys.map(qty => `qty=${qty}`).join("&");
+	  const orderName = (window.orderName || "").trim();
+	  window.open(
+	    "/buyer/pay/checkout.do?orderName="+orderName+"&totalPrice="+totalPrice+"&"+queryStringId+"&"+queryStringQty, 
+	    "_blank",
+	    "width=600,height=800,top=300,left=500,scrollbars=yes,resizable=yes"
+	  );
+}
+
 // 1) 검색창 드롭다운 표시/숨김
 document.addEventListener('DOMContentLoaded', () => {
   const searchInput = document.querySelector('.search-box input');

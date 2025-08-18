@@ -209,19 +209,22 @@
     </c:if>
   </c:forEach>
 </c:set>
-  <script>
-  const totalPrice = document.getElementById("total_price").value;
-  function openTossPage() {
-	  const orderName = "${fn:trim(orderName)}"; 
-	  window.open(
-	    "/buyer/pay/checkout.do?orderName="+orderName+"&totalPrice="+totalPrice, 
-	    "_blank",
-	    "width=600,height=800,top=500,left=500,scrollbars=yes,resizable=yes"
-	  );
-	}
-  </script>
+<script>
+
+
+const orderName = 
+`<c:forEach var="row" items="${cart}" varStatus="st"><c:if test="${st.first}">
+${row.prod_name}
+<c:if test="${(fn:length(cart) - 1)>0}">
+ 외 ${fn:length(cart) - 1}건
+</c:if>
+</c:if>
+</c:forEach>`.replace(/(\r\n|\n|\r)/g, "");
+console.log(orderName);
+window.orderName = orderName;
+</script>
   <!-- JS -->
-  <script src="<c:url value='/js/order_page.js'/>" defer></script>
+  <script src="<c:url value='/js/order_page.js'/>"></script>
   
 </body>
 </html>

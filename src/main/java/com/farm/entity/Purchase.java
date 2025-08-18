@@ -34,12 +34,15 @@ public class Purchase {
 	private Long purc_id;
 	@Column(nullable = false, columnDefinition = "VARCHAR(10) DEFAULT 'chk_order'")
 	private String purc_state; // 주문상태 (주문확인중/상품준비중/배송중/배송완료)
-	@Column(nullable = false, columnDefinition = "NUMBER DEFAULT 0") // 0이면 결제 안된 상태
+	@Column(nullable = false, columnDefinition = "NUMBER DEFAULT 1") // 0이면 결제 안된 상태
 	private int purc_cmpl; // 결제상태
-	@Column(nullable = false)
 	private String purc_request; // 구매자 요청사항
 	@Column(nullable = false, columnDefinition = "DATE DEFAULT SYSDATE")
 	private Date purc_date;
+	@Column(nullable = false)
+	private String order_num;
+	@Column(nullable = false)
+	private Integer qty;
 	
 	@ManyToOne
 	@JoinColumn(name = "prod_id", nullable = false)
@@ -54,7 +57,7 @@ public class Purchase {
 	@PrePersist
 	protected void onPrePersist() {
 		this.purc_date = new Date(System.currentTimeMillis());
-		this.purc_cmpl = 0;
+		this.purc_cmpl = 1;
 		this.purc_state = "chk_order";
 	}
 }

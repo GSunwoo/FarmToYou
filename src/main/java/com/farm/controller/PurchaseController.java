@@ -41,7 +41,16 @@ public class PurchaseController {
 		List<WishlistDTO> cart = new ArrayList<>();
 		cart.add(prod);
 		
+		// 주소전달을 위해 현재 사용자 가져오기
+		MemberDTO member = userDetails.getMemberDTO();
+		Long member_id = member.getMember_id();
+		
+		// 현재 사용자의 메인 주소 가져오기
+		AddressDTO address = memDAO.selectAddress(member_id);
+		
+		// 모델 객체로 전달
 		model.addAttribute("cart",cart);
+		model.addAttribute("addr", address);
 		
 		return "order_page";
 	}

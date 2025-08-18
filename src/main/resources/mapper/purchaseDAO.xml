@@ -22,4 +22,10 @@
 		    #{id}
 		</foreach>
 	</select>
+	
+	<insert id="insertPurchase"
+		parameterType="com.farm.dto.PurchaseDTO">
+	INSERT INTO purchase (purc_id, order_num, prod_id, member_id, qty, purc_request)
+		VALUES (seq_purchase_id.nextval, #{order_num}, #{prod_id}, #{member_id}, #{qty}, #{purc_request})
+	</insert>
 </mapper>

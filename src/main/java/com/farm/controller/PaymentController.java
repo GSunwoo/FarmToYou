@@ -2,6 +2,7 @@ package com.farm.controller;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -15,21 +16,30 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.farm.config.CustomUserDetails;
+import com.farm.dto.OrderCacheDTO;
 import com.farm.dto.PayDTO;
+import com.farm.dto.PurchaseDTO;
+import com.farm.service.IOrderCacheService;
 import com.farm.service.IPayService;
+import com.farm.service.IPurchaseService;
 
 @Controller
 public class PaymentController {
 	
 	@Autowired
 	IPayService payDAO;
+	@Autowired
+	IOrderCacheService orderDAO;
+	@Autowired
+	IPurchaseService purDAO;
 	
 	@Value("${toss.clientKey}")
 	private String WIDGET_CLIENT_KEY; // toss 클라이언트 키
 	
 	@GetMapping("/buyer/pay/checkout.do")
 	public String checkout(Model model, @AuthenticationPrincipal CustomUserDetails userDetails,
-							@RequestParam("orderName") String orderName, @RequestParam("totalPrice") int totalPrice) {
+							@RequestParam("orderName") String orderName, @RequestParam("totalPrice") int totalPrice,
+							@RequestParam("prod_id") List<Long> prodIds, @RequestParam("qty") List<Integer> qtys) {
 		// 클라이언트키 전달
 		model.addAttribute("widgetClientKey",WIDGET_CLIENT_KEY);
 		// member_id와 user_id를 seed로 customerKey를 생성하여 model객체로 전달
@@ -69,11 +79,41 @@ public class PaymentController {
 		// 가격 전달
 		model.addAttribute("amount", payDTO.getProd_price());
 		
+		// 주문정보 임시저장
+		for(int i=0; i<prodIds.size(); i++) {
+			OrderCacheDTO orderCache = new OrderCacheDTO();
+			orderCache.setOrder_num(encOrderId);
+			orderCache.setProd_id(prodIds.get(i));
+			orderCache.setQty(qtys.get(i));
+			
+			orderDAO.insertOrderCache(orderCache);
+		}
+		
 		return "pay/checkout";
 	}
 	
 	@GetMapping("/buyer/pay/success.do")
-	public String success() {
+	public String success(@AuthenticationPrincipal CustomUserDetails userDetails,
+						  @RequestParam("orderId") String order_num) {
+		// 회원아이디 불러오기
+		Long memberId = userDetails.getMemberDTO().getMember_id();
+		// 캐시 테이블에 있는 주문정보 가져오기
+		List<OrderCacheDTO> caches = orderDAO.selectOrderCache(order_num);
+		
+		for(OrderCacheDTO cache : caches) {
+			// 구매 테이블에 추가할 데이터 DTO 설정
+			PurchaseDTO purchaseDTO = new PurchaseDTO();
+			purchaseDTO.setMember_id(memberId);
+			purchaseDTO.setOrder_num(order_num);
+			purchaseDTO.setProd_id(cache.getProd_id());
+			purchaseDTO.setQty(cache.getQty());
+			purchaseDTO.setPurc_request("부재시 경비실에 맡겨주세요");
+			
+			// 구매테이블에 추가
+			purDAO.insertPurchase(purchaseDTO);
+			// 캐시테이블의 임시정보 삭제
+			orderDAO.deleteOrderCache(order_num);
+		}
 		return "pay/success";
 	}
 	
