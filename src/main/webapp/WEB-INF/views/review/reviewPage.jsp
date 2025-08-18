@@ -23,15 +23,15 @@
 	<section>
 		<div class="review-hero-cont">
 			<div class="rhc-wrapper">
-				<h3>
+				<!-- <h3>
 					베스트 리뷰로 <br /> 선정된 리뷰들입니다.
 				</h3>
 				<p>
 					생생한 리뷰를 작성해 주시면, 베스트 리뷰로 선정됩니다. <br /> 많은 관심 부탁드립니다.
-				</p>
+				</p> -->
 			</div>
 
-			<div class="review-best-items">
+			<%-- <div class="review-best-items">
 				<c:forEach var="best" items="${bestList}" varStatus="status">
 					<c:if test="${status.index < 4}">
 						<div class="review-top-card">
@@ -92,7 +92,7 @@
 				</c:forEach>
 			</div>
 		</div>
-	</section>
+	</section> --%>
 
 	<section>
 		<div id="review-grid-lists" class="review-grid-lists">
