@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <!-- 다음(카카오) 우편번호 API -->
   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-  <script src="/js/delivery-destination.js"></script>
+  <script src="/js/delivery-destination.js" defer></script>
   
 </head>
 <body>
