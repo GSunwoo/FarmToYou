@@ -34,8 +34,7 @@
 						<table>
 							<colgroup>
 								  <col style="width:15%;">
-				                  <col style="width:20%;">
-				                  <col>
+								  <col style="width:20%;">
 				                  <col style="width:15%;">
 				                  <col style="width:15%;">
 				                  <col style="width:15%;">
@@ -43,7 +42,6 @@
 							<thead>
 								<tr>
 									<th>날짜/주문번호</th>
-									<th>상품 사진</th>
 									<th>상품명</th>
 									<th>상품금액/수량</th>
 									<th>주문상태</th>
@@ -56,23 +54,18 @@
 									<c:forEach var="o" items="${orders }">
 										<tr>
 											<td><time>
-													<fmt:formatDate value="${o.order_date }"
+													<fmt:formatDate value="${o.purc_date }"
 														pattern="yyyy-MM-dd"></fmt:formatDate>
-												</time><br /> #<c:out value="${o.order_id }" /></td>
-											<td style="text-align: center;"><a
-												href="${pageContext.request.contextPath}/Detailpage?prod_id=${o.prod_id}">
-													<img src="${o.img}" alt="${o.product_name}" class="thumb"
-													loading="lazy" decoding="async">
-											</a></td>
+												</time><br /> #<c:out value="${o.order_num }" /></td>
 											<td><a
 												href="${pageContext.request.contextPath}/Detailpage?prod_id=${o.prod_id}">
-													<c:out value="${o.product_name }" />
+													<c:out value="${o.prod_name }" />
 											</a></td>
-											<td><fmt:formatNumber value="${o.price }"
+											<td><fmt:formatNumber value="${o.prod_price }"
 													pattern="#,###" />원 / <c:out value="${o.qty }" />개</td>
-											<td><c:out value="${o.status }"></c:out></td>
+											<td><c:out value="${o.purc_state }"></c:out></td>
 											<td>
-												<a class="btn-sm" href="">리뷰작성</a>
+												<a class="btn-sm" href="/buyer/review/write.do">리뷰작성</a>
 											</td>
 										</tr>
 									</c:forEach>

@@ -16,10 +16,11 @@
 }
 
 /* header2.jsp(사이드바) 박스가 너무 넓지 않게 */
-.sub-content .left-sidebar,      /* 혹시 사이드바에 이 클래스가 있으면 적용 */
-.sub-content .mypage-sidebar,    /* 다른 프로젝트에서 쓰던 네이밍 호환 */
-.sub-content aside {
-  width: 240px;          /* 사이드바 고정폭 */
+.sub-content .left-sidebar,
+.sub-content .mypage-sidebar,
+.sub-content aside,
+.sub-content .side-bar { /* ⭐️ 이 부분을 추가합니다. */
+  width: 240px;
   flex: 0 0 240px;
 }
 
