@@ -26,8 +26,9 @@
 
       <section class="card">
         <div class="card-hd">
-          <strong>배송지</strong> <span class="bar">|</span> <span id="recvName">성명</span>
-          <button type="button" class="btn-sm ghost" id="btnAddrEdit">배송지 변경</button>
+          <strong>배송지</strong> <span class="bar">|</span>
+          <!-- 나중에 구현 --> 
+          <!-- <button type="button" class="btn-sm ghost" id="btnAddrEdit">삭제</button>  -->
           <button type="button" class="btn-sm solid" id="btnAddrNew" style="margin-left:8px">새 배송지 추가</button>
           
         </div>
@@ -41,38 +42,18 @@
           		<c:otherwise>상세주소</c:otherwise>
           	</c:choose>
         </div>
+        <div id="addrListBox" style="margin-top:10px;"></div>
+		<button type="button" class="btn-sm ghost" id="btnSetMain" style="margin-top:8px;">메인 배송지 설정</button>
         </div>
       </section>
     </div>
   </div>
 </section>
 
-<!-- 주소 변경 모달 -->
-<!-- 임시 액션 경로 저장 나중에 컨트롤러 확인, js확인, 그리고 내일 dto 맞는지확인, ajax를 사용 json으로 받을거임 -->
-	<div class="modal" id="modalAddr" aria-hidden="true">
-	  <div class="panel" role="dialog" aria-modal="true">
-	    <div class="panel-hd">배송지 변경</div>
-	    <div class="panel-bd">
-	      <input class="input-lg" id="m_recv"  name="name"       placeholder="받는분"                value="${AddressDTO.name }">
-	      <div class="row">
-	        <input class="input-lg" id="m_zip"  name="zipcode"    placeholder="우편번호" style="max-width:140px" value="${AddressDTO.zipcode }" readonly>
-	        <button class="btn-sm ghost" id="btnPost">우편번호 찾기</button>
-	      </div>
-	      <input class="input-lg" id="m_addr1" name="addr1" placeholder="기본주소" value="${AddressDTO.addr1 }" readonly>
-	      <input class="input-lg" id="m_addr2" name="addr2" placeholder="상세주소" value="${AddressDTO.addr2 }">
-	    </div>
-	    <div class="panel-ft">
-	      <button type="button" class="btn-sm ghost" data-close="#modalAddr">취소</button>
-	      <button type="button" class="btn-sm solid" id="saveAddr">적용</button>
-	    </div>
-	  </div>
-	</div>
-<!-- 새 배송지 추가 모달 -->
 	<div class="modal" id="modalAddrNew" aria-hidden="true">
 		<div class="panel" role="dialog" aria-modal="true">
 			<div class="panel-hd">새 배송지 추가</div>
 			<div class="panel-bd">
-				<input class="input-lg" id="n_recv" name="name" placeholder="받는분">
 				<div class="row">
 					<input class="input-lg" id="n_zip" name="zipcode" placeholder="우편번호" style="max-width:140px" readonly/>
 					<button class="btn-sm ghost" id="btnPostNew" type="button">우편번호 찾기</button>
