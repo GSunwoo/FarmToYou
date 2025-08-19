@@ -182,6 +182,11 @@ public class MypageController {
         return "buyer/member-info";
     }
 	
+	@GetMapping("/buyer/reviewManagement")
+    public String reviewManagement1() {
+        return "buyer/reviewManagement";
+    }
+	
 	
     @GetMapping("/seller/sellerManagement")
     public String sellerManagement() {

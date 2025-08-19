@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.farm.config.CustomUserDetails;
+import com.farm.config.CustomUserDetailsService;
 import com.farm.dto.InquiryDTO;
 import com.farm.dto.PageDTO;
 import com.farm.service.IInquiryService;
@@ -42,20 +43,25 @@ public class InquiryController {
    }
 
    @PostMapping("/buyer/inquiryForm.do")
-   public String inquiry2(InquiryDTO inquiryDTO) {
-      
+   public String inquiry2(InquiryDTO inquiryDTO, @AuthenticationPrincipal CustomUserDetails userDetails) {
+      Long member_id = userDetails.getMemberDTO().getMember_id();
+      inquiryDTO.setMember_id(member_id);
+      inquiryDTO.setUser_id(userDetails.getUsername());
+	   
       int result = inqDao.insertInq(inquiryDTO);
       if (result == 0) {
          System.out.println("입력에 실패했습니다.");
       }
       
-      return "redirect:/buyer/inquiryList.do?member_id=" + inquiryDTO.getMember_id();
+      return "redirect:/buyer/inquiryList.do";
    }
    
    // 문의목록
    @GetMapping("/buyer/inquiryList.do")
-   public String inquiry3(@RequestParam("member_id") Long member_id, Model model, PageDTO pageDTO,
-         HttpServletRequest req) {
+   public String inquiry3(Model model, PageDTO pageDTO,
+         HttpServletRequest req, @AuthenticationPrincipal CustomUserDetails userDetails) {
+	   
+	  Long member_id = userDetails.getMemberDTO().getMember_id();
 	   
 	  pageDTO.setMember_id(member_id);
 	   
@@ -78,12 +84,12 @@ public class InquiryController {
       maps.put("pageNum", pageNum);
       model.addAttribute("maps", maps);
       
-      ArrayList<InquiryDTO> list = inqDao.selectInq(member_id);
+      ArrayList<InquiryDTO> list = inqDao.selectInq(pageDTO);
       model.addAttribute("inquiries", list);
       
       String pagingImg = 
             PagingUtil.pagingImg(totalCount, pageSize, blockPage, pageNum,
-                  req.getContextPath()+"/buyer/inquiryList.do?member_id=" + member_id + "&");
+                  req.getContextPath()+"/buyer/inquiryList.do?");
       model.addAttribute("pagingImg", pagingImg);
       
       return "/buyer/inquiryList";
@@ -91,29 +97,44 @@ public class InquiryController {
 
    // 수정
    @GetMapping("/buyer/inquiryUpdate.do")
-   public String updateInquiry(Model model, @RequestParam("title") String title, @RequestParam("content") String content,
-		   @RequestParam("inquiry_id") Long inquiry_id) {
-      model.addAttribute("title", title);
-      model.addAttribute("content", content);
-      model.addAttribute("inquiry_id", inquiry_id);
-      
+   public String updateInquiry(@RequestParam("inquiry_id") Long inquiry_id,
+		   Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
+	  Long member_id = userDetails.getMemberDTO().getMember_id();
+	  
+	  InquiryDTO param = new InquiryDTO();
+	  param.setInquiry_id(inquiry_id);
+	  param.setMember_id(member_id);
+	  
+	  InquiryDTO dto = inqDao.inquiryDetail(param);
+	  
+	  if (dto == null) {
+		  return "redirect:/buyer/inquiryList.do";
+	  }
+	  
+	  model.addAttribute("inquiryDTO", dto);
       return "buyer/inquiryUpdate";
    }
 
    // 수정2 : 사용자가 입력한 내용을 전송하여 update 처리
    @PostMapping("/buyer/inquiryUpdate.do")
-   public String updateInquiry(@RequestParam("title") String title, @RequestParam("content") String content, 
-		   @RequestParam("inquiry_id") Long inquiry_id, @RequestParam("member_id") Long member_id) {
-      int result = inqDao.updateInquiry(title, content, inquiry_id);
+   public String updateInquiry(InquiryDTO inquiryDTO, 
+		   @AuthenticationPrincipal CustomUserDetails userDetails) {
+	  Long member_id = userDetails.getMemberDTO().getMember_id();
+	  inquiryDTO.setMember_id(member_id);
+	   
+      int result = inqDao.updateInquiry(inquiryDTO);
       System.out.println("글수정결과:"+ result);
       //return값 확인필요
-      return "redirect:/buyer/inquiryList.do?member_id=" + member_id;
+      return "redirect:/buyer/inquiryList.do";
    }
 
    @PostMapping("/buyer/inquiry/delete.do")
-   public String deleteInquiry(@RequestParam("inquiry_id") Long inquiry_id, @RequestParam("member_id") Long member_id) {
-      int result = inqDao.deleteInquiry(inquiry_id);
-      return "redirect:/buyer/inquiryList.do?member_id=" + member_id;
+   public String deleteInquiry(@RequestParam("inquiry_id") Long inquiry_id,
+		   @AuthenticationPrincipal CustomUserDetails userDetails) {
+	   Long member_id = userDetails.getMemberDTO().getMember_id();
+	   
+      int result = inqDao.deleteInquiry(inquiry_id, member_id);
+      return "redirect:/buyer/inquiryList.do";
    }
    
 

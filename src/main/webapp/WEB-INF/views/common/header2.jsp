@@ -19,7 +19,7 @@
                 <ul class="sub-depth3">
                     <li><a href="/buyer/member-info">-회원정보 변경</a></li>
                     <li><a href="/buyer/address/list.do">-배송지 관리</a></li>
-                    <li><a href="#">-리뷰 관리</a></li>
+                    <li><a href="/buyer/reviewManagement">-리뷰 관리</a></li>
                 </ul>
             </li>
         </ul>

@@ -23,7 +23,7 @@
    
    <!-- 문의 수정 -->
    <update id="updateInquiry"
-      parameterType="Long">
+      parameterType="com.farm.dto.InquiryDTO">
       UPDATE inquiry 
          SET title = #{title}, content = #{content}
             WHERE inquiry_id = #{inquiry_id}
@@ -32,6 +32,6 @@
    <!-- 문의 삭제 -->
    <delete id="deleteInquiry"
       parameterType="Long">
-      DELETE FROM inquiry WHERE inquiry_id = #{inquiry_id}
+      DELETE FROM inquiry WHERE inquiry_id = #{inquiry_id} AND member_id= #{member_id}
    </delete>
 </mapper>
