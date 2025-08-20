@@ -61,7 +61,7 @@ public class ReviewBoardController {
 		ArrayList<ReviewBoardDTO> lists = dao.listPage(pageDTO);
 		model.addAttribute("reviewList", lists);
 
-		for(int i = 0 ; i <= lists.size() ; i ++) {
+		for(int i = 0 ; i < lists.size() ; i ++) {
 			ReviewBoardDTO review = lists.get(i);
 			review.setReview_like(dao.countLike(review.getReview_id()));
 	        review.setReview_liked(dao.existsLike(review.getReview_id(), review.getMember_id())==1);
@@ -83,7 +83,7 @@ public class ReviewBoardController {
 
 		List<JSONObject> list = new ArrayList<>();
 		List<ReviewBoardDTO> selectReviewList = dao.listPage(pageDTO);
-		for(int i = 0 ; i <= selectReviewList.size() ; i ++) {
+		for(int i = 0 ; i < selectReviewList.size() ; i ++) {
 			ReviewBoardDTO review = selectReviewList.get(i);
 			review.setReview_like(dao.countLike(review.getReview_id()));
 			review.setReview_liked(dao.existsLike(review.getReview_id(), review.getMember_id())==1);

@@ -55,12 +55,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 좋아요 등록 -->
 	<insert id="insertLike">
-		INSERT INTO orderproduct (review_id, member_id)
-		VALUES (#{review_id}, #{member_id})
+		INSERT INTO review_like (review_id, member_id)
+		VALUES (#{reviewId}, #{memberId})
 	</insert>
 	<!-- 좋아요 취소 -->
 	<delete id="deleteLike">
-	    DELETE FROM orderproduct
+	    DELETE FROM review_like
 	    WHERE review_id = #{reviewId}
       	AND member_id = #{memberId}
  	 </delete>
