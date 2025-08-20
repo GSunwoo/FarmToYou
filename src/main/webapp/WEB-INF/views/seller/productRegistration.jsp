@@ -12,18 +12,14 @@
 <link href="<c:url value='/css/seller_mypage.css' />" rel="stylesheet" />
 <link href="<c:url value='/css/Dashboard.css' />" rel="stylesheet" />
 <!-- 페이지 CSS -->
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/myPageMain.css">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/mainpage.css">
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/myPageMain.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/mainpage.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="<c:url value='/css/productRegistration.css' />" rel="stylesheet" />
 <!-- 페이지 JS -->
 <script src="<c:url value='/js/seller_myPage.js' />"></script>
 <script defer src="<c:url value='/js/productRegistration.js' />"></script>
 <script defer src="<c:url value='/js/prodimage/image.js' />"></script>
-<link href="<c:url value='/css/productRegistration.css' />"
-	rel="stylesheet" />
 </head>
 
 <body class="simple-page">

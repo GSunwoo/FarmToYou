@@ -8,14 +8,18 @@
 <title>판매자 마이페이지 - 상품판매등록</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
+<link href="<c:url value='/css/productRegistration.css' />"
+	rel="stylesheet" />
 <!-- 공통 CSS -->
 <link href="<c:url value='/css/seller_mypage.css' />" rel="stylesheet" />
 <link href="<c:url value='/css/Dashboard.css' />" rel="stylesheet" />
 <!-- 페이지 CSS -->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/myPageMain.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/mainpage.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<link href="<c:url value='/css/productRegistration.css' />" rel="stylesheet" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/myPageMain.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/mainpage.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <!-- 페이지 JS -->
 <script src="<c:url value='/js/seller_myPage.js' />"></script>
@@ -35,39 +39,50 @@
 
 		<!-- 우측 컨텐츠 -->
 		<main class="sub-content">
-			<section class="product-form-page">
+		<div class="mypage-cont">
+			<section class="seller-update-section">
 				<h3>상품판매등록</h3>
 
 				<form id="productForm" class="product-form" method="post"
 					enctype="multipart/form-data" action="/seller/write.do">
 
-					<div class="form-row">
+					<div class="form-line section-divider-top">
 						<label for="prod_name">상품명</label>
+						<div class="form-group">
 						<input id="prod_name" type="text" name="prod_name" placeholder="상품명" />
+						</div>
 					</div>
 
-					<div class="form-row">
+					<div class="form-line">
 					  <label for="prod_explain">설명</label>
-					  <textarea id="prod_explain" name="prod_content" placeholder="설명"></textarea>
+					  <div class="form-group">
+					  <textarea id="prod_explain" name="prod_content" placeholder="설명" rows="4"></textarea>
+					  </div>
 					</div>
 
-					<div class="form-row">
+					<div class="form-line">
 					  <label for="stock">재고</label>
+					  <div class="form-group">
 					  <input type="number" id="stock" name="prod_stock" placeholder="재고">
+					  </div>
 					</div>
 
-					<div class="form-row">
+					<div class="form-line">
 					  <label for="price">가격 (원)</label>
+					  <div class="form-group">
 					  <input type="number" id="price" name="prod_price" placeholder="가격 (원)">
+					  </div>
 					</div>
 
-					<div class="form-row">
+					<div class="form-line">
 						<label for="prod_cate">카테고리</label>
+						<div class="form-group">
 						<select id="prod_cate" name="prod_cate">
 							<option value="">선택하세요</option>
 							<option value="fruit">과일</option>
 							<option value="vegetable">채소</option>
 						</select>
+						</div>
 					</div>
 
 					<!-- 이미지 미리보기 영역 ➕ -->
