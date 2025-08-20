@@ -104,11 +104,17 @@
 				<table class="cart-table">
 					<thead>
 						<tr>
-							<th style="width:50px;">선택</th>
-							<th>상품명</th>
-							<th>수량</th>
-							<th>가격</th>
-							<th>삭제</th>
+							<th style="width:100px;" rowspan="2">
+								전체선택 <br />
+					            <input type="checkbox" id="select-all" />
+					        </th>
+							<th rowspan="2">상품명</th>
+							<th rowspan="2">수량</th>
+							<th rowspan="2">가격</th>
+							<th rowspan="2">삭제</th>
+						</tr>
+						<tr>
+							<td></td>
 						</tr>
 					</thead>
 					<tbody id="cart-body">
@@ -139,7 +145,7 @@
 				</table>
 				<div class="total-price">
 					총 합계: <span id="total-amount"></span>원
-					<div>
+					<div style="margin-top: 10px">
 						<button id="wishlist" type="button" class="pay-btn" disabled>결제하기</button>
 					</div>					
 				</div>
