@@ -6,7 +6,7 @@
 <mapper namespace="com.farm.service.IOrderService">
 	<select id="selectBuyerOrdersAll"
 		resultType="com.farm.dto.OrderDTO">
-	SELECT order_num, purc_date, purc_state, qty, ord.prod_id, prod_name, prod_price, filename
+	SELECT order_num, purc_date, purc_state, qty, ord.prod_id, prod_name, prod_price, filename, purc_id
 	FROM (SELECT Tb.*, rownum rNum FROM (
 				SELECT pu.*, prod_name, prod_price
 				FROM purchase pu
@@ -19,5 +19,18 @@
 		INNER JOIN product_img img
 		ON ord.prod_id = img.prod_id and img.main_idx = 1
 		WHERE rNum BETWEEN #{param.start} AND #{param.end}
+	</select>
+	<select id="selectSellerOrdersAll"
+		resultType="com.farm.dto.OrderDTO">
+	SELECT order_num, purc_date, purc_state, qty, ord.prod_id, prod_name, prod_price, purc_id
+	FROM (SELECT Tb.*, rownum rNum FROM (
+				SELECT pu.*, prod_name, prod_price
+				FROM purchase pu
+				INNER JOIN product pr
+				ON pu.prod_id=pr.prod_id 
+				WHERE pr.member_id=#{member_id}
+				ORDER BY purc_id DESC
+			) Tb
+		) ord
 	</select>
 </mapper>

@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // 버튼 클릭(문서 전체 위임) — DOM이 약간 어긋나도 잡힘
-  document.addEventListener("click", (e)=>{
+  document.addEventListener("click", async (e)=>{
     const btn = e.target.closest(".btn-confirm, .btn-next");
     if (!btn) return;
     const tr = btn.closest("tr");
@@ -137,5 +137,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     recount();
     filterTo(selected);
+	
+	const purc_id = btn.dataset.purcId;
+	  try {
+	    const res = await fetch(`/seller/nextstate.do?purc_id=${purc_id}&next=${next}`, {
+	      method: "POST",
+	    });
+
+	    if (!res.ok) {
+	      throw new Error("서버 오류");
+	    }
+	  } catch (err) {
+	    console.error("업데이트 실패:", err);
+	    tr.dataset.status = cur;
+	  }
   });
 });

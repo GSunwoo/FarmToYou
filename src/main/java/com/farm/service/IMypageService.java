@@ -33,4 +33,7 @@ public interface IMypageService {
 	
 	public List<ProductDTO> getMyProducts(@Param("member_id") Long member_id);
 	public List<ReviewBoardDTO> getMyReviews(@Param("member_id") Long member_id);
+	
+	public int updateState(@Param("purc_id") Long purc_id,
+						   @Param("next") String next);		
 }

@@ -12,4 +12,5 @@ import com.farm.dto.ParameterDTO;
 public interface IOrderService {
 	public List<OrderDTO> selectBuyerOrdersAll(@Param("param") ParameterDTO parameterDTO,
 											@Param("member_id") Long member_id);
+	public List<OrderDTO> selectSellerOrdersAll(@Param("member_id") Long member_id);
 }

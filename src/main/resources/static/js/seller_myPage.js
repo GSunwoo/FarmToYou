@@ -119,6 +119,7 @@ function renderCrop(data) {
 
 
 // 농작물 API 호출
+/*
 function fetchCropData() {
   fetch("/api/crop-latest")
     .then(res => res.json())
@@ -129,7 +130,7 @@ function fetchCropData() {
       if (container) container.innerHTML = `<div class="loading-text">데이터를 가져오지 못했습니다.</div>`;
     });
 }
-
+*/
 // 초기 실행
 document.addEventListener("DOMContentLoaded", () => {
   attachResizeObserver();

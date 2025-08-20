@@ -9,30 +9,50 @@ import java.util.Map;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.farm.config.CustomUserDetails;
 import com.farm.dto.MemberDTO;
+import com.farm.dto.OrderDTO;
+import com.farm.dto.ParameterDTO;
 import com.farm.dto.ProductDTO;
 import com.farm.dto.ReviewBoardDTO;
 import com.farm.service.IMemberService;
 import com.farm.service.IMypageService;
+import com.farm.service.IOrderService;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class MypageSellerController {
+	
+	@Value("${board.pageSize}")
+	private int pageSize;
+	
+	@Value("${board.blockPage}")
+	private int blockPage;
+	
+	@Value("${board.bestSize}")
+	private int bestSize;
 	
 	@Autowired
 	IMypageService mypageDAO;
 	@Autowired
 	IMemberService memDAO;
+	@Autowired
+	IOrderService orderDAO;
 	
 	@GetMapping("/seller/mypage.do")
-	public String sellerMypage(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
+	public String sellerMypage(@AuthenticationPrincipal CustomUserDetails userDetails, Model model, ParameterDTO parameterDTO,
+							   HttpServletRequest req) {
 		if(userDetails!=null) {
 			// 현재 사용자 불러오기
 			MemberDTO member = userDetails.getMemberDTO();
@@ -44,10 +64,10 @@ public class MypageSellerController {
 			int deliOrder = mypageDAO.getDeliOrder(member_id);    // 배송중
 			int cmplOrder = mypageDAO.getCompleteOrder(member_id);// 배송완료
 			model.addAttribute("member", member);
-			model.addAttribute("chkOrder", chkOrder);
-			model.addAttribute("preOrder", preOrder);
-			model.addAttribute("deliOrder", deliOrder);
-			model.addAttribute("cmplOrder", cmplOrder);
+			model.addAttribute("ChkOrder", chkOrder);
+			model.addAttribute("PrepareOrder", preOrder);
+			model.addAttribute("DeliOrder", deliOrder);
+			model.addAttribute("CmplOrder", cmplOrder);
 			
 			/****** 상품문의현황  ******/
 			int inquiryCnt = mypageDAO.getInquiryCnt_Seller(member_id); // 현재 문의 수
@@ -98,8 +118,27 @@ public class MypageSellerController {
 	}
 	
     @GetMapping("/seller/sellerManagement")
-    public String sellerManagement() {
-        return "seller/sellerManagement"; // /WEB-INF/views/seller/sellerManagement.jsp
+    public String sellerManagement(@AuthenticationPrincipal CustomUserDetails userDetails, Model model,
+			   HttpServletRequest req) {
+    	
+    	Long member_id = userDetails.getMemberDTO().getMember_id();
+		
+		List<OrderDTO> orders = orderDAO.selectSellerOrdersAll(member_id);
+		
+		model.addAttribute("orderList", orders);
+		System.out.println(orders.toString());
+		
+        return "seller/sellerManagement";
+    }
+    
+    @PostMapping("/seller/nextstate.do")
+    @ResponseBody
+    public ResponseEntity<Void> nextState(HttpServletRequest req, @RequestParam("purc_id") Long purc_id, @RequestParam("next") String next) {
+    	
+    	int result = mypageDAO.updateState(purc_id, next);
+    	
+    	
+    	return ResponseEntity.ok().build();
     }
 
     @GetMapping("/seller/monitoring")

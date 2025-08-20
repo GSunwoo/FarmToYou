@@ -105,32 +105,32 @@
                       <tr>
                         <td>
                           <!-- DB 컬럼명 유지 -->
-                          <div class="order-no"><c:out value="${order.order_no}"/></div>
-                          <div class="order-date"><c:out value="${order.order_date}"/></div>
+                          <div class="order-no"><c:out value="${order.order_num}"/></div>
+                          <div class="order-date"><c:out value="${order.purc_date}"/></div>
                         </td>
 
                         <td class="text-left"><c:out value="${order.prod_name}"/></td>
 
                         <td>
-                          <c:out value="${order.total_price}"/>원
-                          (<c:out value="${order.quantity}"/>)
+                          <c:out value="${order.prod_price*order.qty}"/>원
+                          (<c:out value="${order.qty}"/>)
                         </td>
 
                         <!-- 상태 배지: 코드값을 그대로 클래스에 매핑 -->
                         <td>
-                          <span class="badge badge-${order.status_code}">
-                            <c:out value="${order.status_name}"/>
+                          <span class="badge badge-${order.purc_state}">
+                            <c:out value="${order.purc_state}"/>
                           </span>
                         </td>
 
                         <!-- 다음/완료 버튼 -->
                         <td>
                           <c:choose>
-                            <c:when test="${order.status_code eq 'cmpl_order'}">
+                            <c:when test="${order.purc_state eq 'cmpl_order'}">
                               <button class="btn-confirm" type="button" disabled>완료</button>
                             </c:when>
                             <c:otherwise>
-                              <button class="btn-confirm" type="button" data-order-no="${order.order_no}">다음</button>
+                              <button class="btn-confirm" type="button" data-purc-id="${order.purc_id}">다음</button>
                             </c:otherwise>
                           </c:choose>
                         </td>

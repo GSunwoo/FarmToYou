@@ -14,4 +14,5 @@ public class OrderDTO {
 	private String prod_name;
 	private Integer prod_price;
 	private String filename;
+	private Long purc_id;
 }

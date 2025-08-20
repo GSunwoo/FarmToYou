@@ -140,4 +140,9 @@
 			WHERE pr.member_id=#{member_id}
 	</select>
 
+	<update id="updateState">
+		UPDATE purchase
+		SET purc_state=#{next}
+		WHERE purc_id=#{purc_id}
+	</update>
 </mapper>
