@@ -1,8 +1,10 @@
 package com.farm.service;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.farm.dto.PageDTO;
 import com.farm.dto.ReviewBoardDTO;
@@ -25,6 +27,16 @@ public interface ReviewBoardService {
 	public int edit(ReviewBoardDTO reviewboardDTO);
 	
 	public ArrayList<ReviewBoardDTO> getReviewPage(ReviewBoardDTO reviewboardDTO);
-	//좋아요기능
-	public boolean toggleLike(String memberId, Long review_id);
+	//좋아요
+	public boolean toggleLike(Long memberId, Long review_id);
+	//좋아요 확인
+	public  int existsLike(Long reviewId, Long memberId);
+	//좋아요 카운트
+	public int countLike(Long reviewId);
+	//좋아요 삭제
+	public int deleteLike(@Param("reviewId") Long reviewId,
+			@Param("memberId") Long memberId);
+	//좋아요삽입
+	public int insertLike(@Param("reviewId") Long reviewId,
+			@Param("memberId") Long memberId);
 }

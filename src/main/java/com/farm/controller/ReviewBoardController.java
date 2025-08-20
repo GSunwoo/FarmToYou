@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +28,7 @@ import com.farm.dto.ReviewBoardDTO;
 import com.farm.dto.ReviewImgDTO;
 import com.farm.service.ReviewBoardService;
 import com.farm.service.ReviewImgService;
+import com.farm.service.ReviewLikeService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -44,8 +46,12 @@ public class ReviewBoardController {
 	
 	@Autowired
 	private ObjectMapper objectMapper;
+	
+	@Autowired
+	private ReviewLikeService reviewLikeService;
+	
 
-	// 목록
+	//목록
 	@GetMapping("/guest/review/list.do")
 	// HttpServletRequest : 사용자가 웹 페이지에서 서버에게 요청한 내용을 다 들고 있는 객체
 	public String list(Model model, HttpServletRequest req, ReviewBoardDTO reviewboardDTO, PageDTO pageDTO) {
@@ -57,6 +63,7 @@ public class ReviewBoardController {
 		return "review/reviewPage";
 	}
 
+	//무한스크롤
 	@RequestMapping("/guest/review/restApi.do")
 	@ResponseBody
 	public List<JSONObject> newList(PageDTO pageDTO, HttpServletRequest req, ReviewBoardDTO reviewboardDTO) {
@@ -81,8 +88,6 @@ public class ReviewBoardController {
 		maps.put("pageSize", pageSize);
 		maps.put("pageNum", pageNum);
 		
-
-
 		return list;
 
 	}
@@ -90,11 +95,76 @@ public class ReviewBoardController {
 	// 열람
 	@GetMapping("/guest/review/view.do")
 	// DTO를 사용해서 model이라는 공간에 넘겨줌
-	public String view(@RequestParam("review_id") Long reviewId, Model model) {
-
+	public String view(@RequestParam("review_id") Long reviewId, Model model,
+			@AuthenticationPrincipal CustomUserDetails userDetails) {
+		
+		//글 상세
 		ReviewBoardDTO dto = dao.selectView(reviewId);
 		model.addAttribute("reviewboardDTO", dto);
+		
 		return "review/reviewPage";
+	}
+	
+	//게시물 좋아요
+	@PostMapping("/buyer/review/restapilike.do")
+	@ResponseBody
+	public Map<String, Object> toggleLike(@RequestParam Long reviewId,
+			@AuthenticationPrincipal CustomUserDetails userDetails) {
+		
+		//상위클래스 -> Map, 하위클래스 -> HashMap
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		//비로그인 처리
+		//userDetails객체 자체가 null인지 확인
+		//|| : OR연산자 - 둘 중 하나라도 true면 전체가 true
+		//userDetails.getMemberDTO() == null -> 의미 : 로그인하지 않았거나 사용자 정보가 없는 상태
+		if (userDetails == null || userDetails.getMemberDTO() == null) {
+            map.put("success", false);
+            map.put("message", "로그인이 필요합니다.");
+            //로그인이 필요한 기능의 결과값들을 null로 설정
+            map.put("liked", null);
+            map.put("count", null);
+            return map;
+        }
+		
+		Long memberId = userDetails.getMemberDTO().getMember_id();
+		
+		try {
+			//2) 토글 실행 (true=좋아요 추가, false=좋아요 취소)
+            boolean liked = reviewLikeService.toggleLike(reviewId, memberId);
+
+            //3) 현재 좋아요 수 재조회
+            int count = reviewLikeService.countLike(reviewId);
+
+            //요청 처리가 성공했음을 나타냄 success : true
+            map.put("success", true);
+            //boolean 변수로 현재 좋아요 상태
+            map.put("liked", liked);
+            //해당 게시물 총 좋아요 개수
+            map.put("count", count);
+            map.put("message", liked ? "좋아요가 추가되었습니다." : "좋아요가 취소되었습니다.");
+            return map;
+            
+          //DataIntegrityViolationException -> Spring Framework에서 발생하는 예외로, 데이터베이스
+          //의 데이터 무결성 제약조건이 위반되었을 때 던져지는 예외입니다.
+        } catch (DataIntegrityViolationException e) {
+            //PK(복합키) 제약 등으로 인한 중복 처리 안전망
+            int count = reviewLikeService.countLike(reviewId);
+            //요청 처리가 실패 success : false
+            map.put("success", false);
+            map.put("liked", null);
+            map.put("count", count);
+            map.put("message", "처리 중 충돌이 발생했습니다. 다시 시도해 주세요.");
+            return map;
+
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("liked", null);
+            map.put("count", null);
+            map.put("message", "알 수 없는 오류가 발생했습니다.");
+		}
+		return map;
+				
 	}
 
 	@GetMapping("/buyer/review/write.do")
@@ -123,6 +193,7 @@ public class ReviewBoardController {
 		return "redirect:/guest/review/list.do";
 	}
 
+	//이미지 업로드
 	public int insertImg(Long review_id, HttpServletRequest req) {
 
 		// 업로드 과정에서 에러가 날 수 있으니 예외처리 시작
@@ -178,7 +249,7 @@ public class ReviewBoardController {
 		return result;
 	}
 
-	// 수정
+	//수정
 	@GetMapping("/buyer/review/edit.do")
 	public String boardEditGet(Model model, ReviewBoardDTO reviewboardDTO) {
 		// 열람에서 사용했던 메서드를 그대로 사용
@@ -187,7 +258,7 @@ public class ReviewBoardController {
 		return "seller/reviewPage";
 	}
 
-	// 수정2 : 사용자가 입력한 내용을 전송하여 update 처리
+	//수정2 : 사용자가 입력한 내용을 전송하여 update 처리
 	@PostMapping("/buyer/review/edit.do")
 	public String boardEditPost(ReviewBoardDTO reviewboardDTO, @AuthenticationPrincipal CustomUserDetails userDetails,
 			RedirectAttributes redirectAttributes) {

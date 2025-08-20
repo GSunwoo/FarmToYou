@@ -39,16 +39,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       	
 </select>
 
-<!-- id="" -> 이 SQL의 이름(식별자).자바 코드에서 이걸 호출할 때 view()라고 부름-->
-<select id="selectView" 
+	<!-- id="" -> 이 SQL의 이름(식별자).자바 코드에서 이걸 호출할 때 view()라고 부름-->
+	<select id="selectView" 
 		parameterType="long"
 		resultType="com.farm.dto.ReviewBoardDTO">
 		<!-- WHERE review_id=#{review_id} BoardDTO 안의 review_id필드를 기준으로
 		해당 글 1개를 조회함 -->
   		SELECT * FROM review WHERE review_id = #{review_id}
 	</select>
+	<!-- 좋아요 확인 -->
+	<select id="existsLike" resultType="int">
+	    SELECT COUNT(*) FROM review_like 
+	    WHERE review_id = #{reviewId} AND member_id = #{memberId}
+	</select>	
 	
-	
+	<!-- 좋아요 등록 -->
+	<insert id="insertLike">
+		INSERT INTO orderproduct (review_id, member_id)
+		VALUES (#{review_id}, #{member_id})
+	</insert>
+	<!-- 좋아요 취소 -->
+	<delete id="deleteLike">
+	    DELETE FROM orderproduct
+	    WHERE review_id = #{reviewId}
+      	AND member_id = #{memberId}
+ 	 </delete>
+ 	 <!-- 좋아요 카운트 -->
+ 	 <select id="countLike" resultType="int">
+    	SELECT COUNT(*) FROM review_like
+   	 	WHERE review_id = #{reviewId}
+  	 </select>
 	
 	<insert id="write" parameterType="com.farm.dto.ReviewBoardDTO">
 	<selectKey keyProperty="review_id" resultType="long" order="BEFORE">
@@ -58,9 +78,4 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  VALUES (#{review_id}, #{member_id}, #{title}, #{content}, #{star}, #{prod_id})
 	  
 	</insert>
-	<update id="edit" parameterType="com.farm.dto.ReviewBoardDTO">
-		UPDATE review SET
-		title=#{title}, content=#{content}
-		WHERE review_id=#{review_id}
-	</update>
 </mapper>
