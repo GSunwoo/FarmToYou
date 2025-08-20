@@ -10,6 +10,7 @@ import java.util.Map;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -60,6 +61,11 @@ public class ReviewBoardController {
 		ArrayList<ReviewBoardDTO> lists = dao.listPage(pageDTO);
 		model.addAttribute("reviewList", lists);
 
+		for(int i = 0 ; i <= lists.size() ; i ++) {
+			ReviewBoardDTO review = lists.get(i);
+			review.setReview_like(dao.countLike(review.getReview_id()));
+	        review.setReview_liked(dao.existsLike(review.getReview_id(), review.getMember_id())==1);
+		}
 		return "review/reviewPage";
 	}
 
@@ -77,6 +83,11 @@ public class ReviewBoardController {
 
 		List<JSONObject> list = new ArrayList<>();
 		List<ReviewBoardDTO> selectReviewList = dao.listPage(pageDTO);
+		for(int i = 0 ; i <= selectReviewList.size() ; i ++) {
+			ReviewBoardDTO review = selectReviewList.get(i);
+			review.setReview_like(dao.countLike(review.getReview_id()));
+			review.setReview_liked(dao.existsLike(review.getReview_id(), review.getMember_id())==1);
+		}
 
 		for (ReviewBoardDTO review : selectReviewList) {
 			Map<String, Object> reviewMap = objectMapper.convertValue(review, Map.class);
@@ -147,6 +158,7 @@ public class ReviewBoardController {
             
           //DataIntegrityViolationException -> Spring Framework에서 발생하는 예외로, 데이터베이스
           //의 데이터 무결성 제약조건이 위반되었을 때 던져지는 예외입니다.
+          //Spring Framework는 자바 기반의 엔터프라이즈 애플리케이션 개발을 위한 오픈소스 프레임 워크
         } catch (DataIntegrityViolationException e) {
             //PK(복합키) 제약 등으로 인한 중복 처리 안전망
             int count = reviewLikeService.countLike(reviewId);
@@ -165,6 +177,34 @@ public class ReviewBoardController {
 		}
 		return map;
 				
+	}
+	
+	@PostMapping("/buyer/review/likeinsert.do")
+	@ResponseBody
+	//ResponseEntity : 본문 없는 응답을 돌려주겠다는 의미
+	public ResponseEntity<Void> insert(
+			@RequestParam("review_id") Long review_Id,
+			//스프링 시큐리티에서 로그인한 사용자 정보를 주입받음
+			@AuthenticationPrincipal CustomUserDetails user
+	) {
+		 Long member_Id = user.getMemberDTO().getMember_id();
+		 //DAO를 통해 DB에서 (review_Id, member_Id) 조건으로 좋아요를 삽입
+		 int inserted = dao.insertLike(review_Id, member_Id);
+		 
+		 return ResponseEntity.ok().build();
+	}
+	
+	@PostMapping("/buyer/review/likedelete.do")
+	@ResponseBody
+	public ResponseEntity<Void> delete(
+			@RequestParam("review_id") Long review_Id,
+			@AuthenticationPrincipal CustomUserDetails user
+	) {
+		 Long member_Id = user.getMemberDTO().getMember_id();
+		 //DAO를 통해 DB에서 (review_Id, member_Id) 조건으로 좋아요를 삭제
+		 int inserted = dao.deleteLike(review_Id, member_Id);
+		 
+		 return ResponseEntity.ok().build();
 	}
 
 	@GetMapping("/buyer/review/write.do")
