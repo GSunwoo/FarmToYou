@@ -10,7 +10,6 @@ import com.farm.dto.ParameterDTO;
 
 @Mapper
 public interface IOrderService {
-	public List<OrderDTO> selectBuyerOrdersLast(@Param("member_id") Long member_id);
 	public List<OrderDTO> selectBuyerOrdersAll(@Param("param") ParameterDTO parameterDTO,
 											@Param("member_id") Long member_id);
 }

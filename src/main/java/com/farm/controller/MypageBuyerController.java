@@ -10,6 +10,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -23,18 +24,34 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.farm.config.CustomUserDetails;
 import com.farm.dto.AddressDTO;
 import com.farm.dto.MemberDTO;
+import com.farm.dto.OrderDTO;
+import com.farm.dto.ParameterDTO;
 import com.farm.dto.ProductDTO;
 import com.farm.dto.ReviewBoardDTO;
 import com.farm.service.IMemberService;
 import com.farm.service.IMypageService;
+import com.farm.service.IOrderService;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class MypageBuyerController {
+	
+	@Value("${board.pageSize}")
+	private int pageSize;
+	
+	@Value("${board.blockPage}")
+	private int blockPage;
+	
+	@Value("${board.bestSize}")
+	private int bestSize;
 	
 	@Autowired
 	IMypageService mypageDAO;
 	@Autowired
 	IMemberService memDAO;
+	@Autowired
+	IOrderService orderDAO;
 	
 	@GetMapping("/mypage.do")
 	public String mypageMapper(@AuthenticationPrincipal CustomUserDetails userDetails) {
@@ -51,19 +68,32 @@ public class MypageBuyerController {
 	}
 	
 	@GetMapping("/buyer/mypage.do")
-	public String buyerMypage(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
+	public String buyerMypage(@AuthenticationPrincipal CustomUserDetails userDetails, Model model, HttpServletRequest req, ParameterDTO parameterDTO) {
 		if(userDetails!=null) {
 			MemberDTO member = userDetails.getMemberDTO();
 			Long member_id = member.getMember_id();
+			/**************************************************/
 			int orderCnt = mypageDAO.getOrderCnt(member_id);
 			int reviewCnt = mypageDAO.getReviewCnt(member_id);
 			int inquiryCnt = mypageDAO.getInquiryCnt(member_id);
-			model.addAttribute("member", member);
 			model.addAttribute("orderCnt", orderCnt);
 			model.addAttribute("reviewCnt", reviewCnt);
 			model.addAttribute("inquiryCnt_buyer", inquiryCnt);
+			/**************************************************/
+			
+			int pageNum = (req.getParameter("pageNum") == null
+					|| req.getParameter("pageNum").equals(""))
+					? 1 : Integer.parseInt(req.getParameter("pageNum"));
+			
+			parameterDTO.setStart((pageNum - 1) * pageSize + 1);
+		    parameterDTO.setEnd(pageNum * pageSize);
+			
+			List<OrderDTO> orders = orderDAO.selectBuyerOrdersAll(parameterDTO, member_id);
+			
+			model.addAttribute("orders", orders);
+			model.addAttribute("member", member);
 		}
-		return "buyer/mypage";
+		return "buyer/myPageList";
 	}
 	
 	
