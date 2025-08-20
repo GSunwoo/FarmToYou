@@ -32,58 +32,6 @@
 	</select>
 	
 	<!--             판매자용 DAO                   -->
-	<!-- 주문확인중인 주문수 -->
-	<select id="getCheckOrder"
-		resultType="int">
-		SELECT COUNT(*)
-			FROM purchase
-			INNER JOIN product
-				ON purchase.prod_id=product.prod_id
-			INNER JOIN member
-				ON product.member_id=member.member_id
-			WHERE 
-				product.member_id = #{member_id} AND
-				purchase.purc_state = 'chk_order'
-	</select>
-	<!-- 상품준비중인 주문수 -->
-	<select id="getPrepareOrder"
-		resultType="int">
-		SELECT COUNT(*)
-			FROM purchase
-			INNER JOIN product
-				ON purchase.prod_id=product.prod_id
-			INNER JOIN member
-				ON product.member_id=member.member_id
-			WHERE 
-				product.member_id = #{member_id} AND
-				purchase.purc_state = 'prepare_order'
-	</select>
-	<!-- 배송중인 주문수 -->
-	<select id="getDeliOrder"
-		resultType="int">
-		SELECT COUNT(*)
-			FROM purchase
-			INNER JOIN product
-				ON purchase.prod_id=product.prod_id
-			INNER JOIN member
-				ON product.member_id=member.member_id
-			WHERE 
-				product.member_id = #{member_id} AND
-				purchase.purc_state = 'deli_order'
-	</select>
-	<!-- 배송완료된 주문수 -->
-	<select id="getCompleteOrder"
-		resultType="int">
-		SELECT COUNT(*)
-			FROM purchase
-			INNER JOIN product
-				ON purchase.prod_id=product.prod_id
-			INNER JOIN member
-				ON product.member_id=member.member_id
-			WHERE 
-				product.member_id = #{member_id} AND
-				purchase.purc_state = 'cmpl_order'
-	</select>
 	<!-- 판매자에게 들어온 문의수 -->
 	<select id="getInquiryCnt_Seller"
 		resultType="int">
@@ -93,7 +41,7 @@
 				ON inquiry.prod_id=product.prod_id
 			INNER JOIN member
 				ON product.member_id=member.member_id
-			WHERE product.member_id=${member_id}
+			WHERE product.member_id=#{member_id}
 	</select>
 	<!-- 지난 5일간 판매량-->
 	<select id="getSoldNum"
@@ -102,8 +50,8 @@
 			FROM purchase pu
 			INNER JOIN product pr
 				ON pu.prod_id=pr.prod_id
-			WHERE pr.member_id=${member_id} AND
-				pu.purc_date BETWEEN #{start_date} AND #{end_date}
+			WHERE pr.member_id=#{member_id} AND
+				TRUNC(pu.purc_date) = #{date, jdbcType=DATE}
 	</select>
 	<!-- 지난 5일간 매출 -->
 	<select id="getSales"
@@ -113,7 +61,7 @@
 			INNER JOIN product pr
 				ON pu.prod_id=pr.prod_id
 			WHERE pr.member_id=#{member_id} AND
-				pu.purc_date BETWEEN #{start_date} AND #{end_date}
+				TRUNC(pu.purc_date) = #{date, jdbcType=DATE}
 	</select>
 	<!-- 판매자가 등록한 상품 -->
 	<select id="getMyProducts"

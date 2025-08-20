@@ -13,63 +13,62 @@ document.addEventListener('DOMContentLoaded', function SAFE_SEARCH_BIND() {
 // === 판매 통계: soldData [{date, sold, sales}] 사용 ===
 let chart;
 
-function renderChart(rows) {
-  const canvas = document.getElementById("salesRevenueChart");
-  if (!canvas) return;
+function renderChart(json) {
+	const canvas = document.getElementById("salesRevenueChart");
+	  if (!canvas) return;
 
-  // 부모 크기에 맞추기
-  const wrap = canvas.parentElement;
-  if (wrap) {
-    const rect = wrap.getBoundingClientRect();
-    canvas.width = rect.width;
-    canvas.height = rect.height;
-  }
+	  if (chart) chart.destroy();
 
-  if (chart) chart.destroy();
+	  const rows = json.date.map((d, idx) => ({
+	    date: d,
+	    sold: json.sold[idx] ?? 0,
+	    sales: json.sales[idx] ?? 0
+	  }));
 
-  chart = new Chart(canvas, {
-    type: "bar",
-    data: {
-      labels: rows.map(r => r.date),
-      datasets: [
-        { label: "판매량",  data: rows.map(r => r.sold ?? 0),  yAxisID: "ySales" },
-        { label: "매출(원)", data: rows.map(r => r.sales ?? 0), yAxisID: "yRevenue" }
-      ],
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: { display: true },
-        tooltip: {
-          callbacks: {
-            label: (ctx) => {
-              const v = ctx.raw ?? 0;
-              return `${ctx.dataset.label}: ${ctx.dataset.yAxisID === 'yRevenue' ? v.toLocaleString() + '원' : v}`;
-            }
-          }
-        }
-      },
-      scales: {
-        ySales:   { type: "linear", position: "left",  title: { display: true, text: "판매량" }, ticks: { precision: 0 } },
-        yRevenue: { type: "linear", position: "right", title: { display: true, text: "매출(원)" }, grid: { drawOnChartArea: false },
-                    ticks: { callback: v => Number(v).toLocaleString() } },
-        x:        { title: { display: true, text: "날짜" } },
-      }
-    },
-  });
+	  chart = new Chart(canvas, {
+	    type: "bar",
+	    data: {
+	      labels: rows.map(r => r.date),
+	      datasets: [
+	        { label: "판매량",  data: rows.map(r => r.sold),  yAxisID: "ySales" },
+	        { label: "매출(원)", data: rows.map(r => r.sales), yAxisID: "yRevenue" }
+	      ]
+	    },
+	    options: {
+	      responsive: true,
+	      maintainAspectRatio: false,
+	      plugins: {
+	        legend: { display: true },
+	        tooltip: {
+	          callbacks: {
+	            label: (ctx) => {
+	              const v = ctx.raw ?? 0;
+	              return `${ctx.dataset.label}: ${ctx.dataset.yAxisID === 'yRevenue' ? v.toLocaleString() + '원' : v}`;
+	            }
+	          }
+	        }
+	      },
+	      scales: {
+	        ySales: { type: "linear", position: "left", title: { display: true, text: "판매량" }, ticks: { precision: 0 } },
+	        yRevenue: { type: "linear", position: "right", title: { display: true, text: "매출(원)" }, grid: { drawOnChartArea: false },
+	                    ticks: { callback: v => Number(v).toLocaleString() } },
+	        x: { title: { display: true, text: "날짜" } }
+	      }
+	    }
+	  });
 }
 
 // API에서 판매 통계 로드
 function loadSoldData(memberId) {
   fetch(`/seller/api/sold-stats?memberId=${memberId}`)
     .then(res => res.json())
-    .then(soldData => {
-      renderChart(Array.isArray(soldData) ? soldData : []);
+    .then(json => {
+      renderChart(json);
+      console.log(json);
     })
     .catch(err => {
       console.error('판매통계 불러오기 실패', err);
-      renderChart([]);
+      renderChart({ data: [], sold: [], sales: [] });
     });
 }
 
