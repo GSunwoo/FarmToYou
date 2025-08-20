@@ -24,6 +24,7 @@ public class InifiniteScrollConfig {
 	    public void setup() {
 	    	//LocalDate, LocalDateTime을 JSON으로 바꿔줄 수 있도록 모듈 등록하는 줄
 	        objectMapper.registerModule(new JavaTimeModule());
+	        //날짜를 숫자 대신 문자열로 보내게 하는 설정
 	        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 	    }
 }
