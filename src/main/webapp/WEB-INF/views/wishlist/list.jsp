@@ -104,11 +104,17 @@
 				<table class="cart-table">
 					<thead>
 						<tr>
-							<th style="width:50px;">선택</th>
-							<th>상품명</th>
-							<th>수량</th>
-							<th>가격</th>
-							<th>삭제</th>
+							<th style="width:100px;" rowspan="2">
+								전체선택 <br />
+					            <input type="checkbox" id="select-all" />
+					        </th>
+							<th rowspan="2">상품명</th>
+							<th rowspan="2">수량</th>
+							<th rowspan="2">가격</th>
+							<th rowspan="2">삭제</th>
+						</tr>
+						<tr>
+							<td></td>
 						</tr>
 					</thead>
 					<tbody id="cart-body">
@@ -139,7 +145,7 @@
 				</table>
 				<div class="total-price">
 					총 합계: <span id="total-amount"></span>원
-					<div>
+					<div style="margin-top: 10px">
 						<button id="wishlist" type="button" class="pay-btn" disabled>결제하기</button>
 					</div>					
 				</div>
@@ -150,73 +156,6 @@
 			</c:otherwise>
 		</c:choose>
 	</div>
-	<script>
-(function () {
-  const ctx = '${pageContext.request.contextPath}';
-  const cartBody = document.getElementById('cart-body');
-  const totalEl = document.getElementById('total-amount');
-  const payBtn = document.getElementById('wishlist'); // ← 버튼 id 변경
-
-  function getRowQty(row) {
-    return parseInt(row.querySelector('.qty-input').value, 10) || 0;
-  }
-  function getRowUnitPrice(row) {
-    return parseInt(row.querySelector('.price').dataset.price, 10) || 0;
-  }
-  function formatNumber(n) { return n.toLocaleString('ko-KR'); }
-
-  function recalcRowPrice(row) {
-    const unit = getRowUnitPrice(row);
-    const qty = getRowQty(row);
-    row.querySelector('.price').textContent = formatNumber(unit * qty) + '원';
-  }
-
-  function computeSelectedTotal() {
-    let sum = 0, anyChecked = false;
-    cartBody.querySelectorAll('tr').forEach(row => {
-      const cb = row.querySelector('.select-item');
-      if (cb && cb.checked) {
-        anyChecked = true;
-        sum += getRowUnitPrice(row) * getRowQty(row);
-      }
-    });
-    totalEl.textContent = formatNumber(sum);
-    if (payBtn) payBtn.disabled = !anyChecked;
-  }
-
-
-  // 체크 선택 합계
-  cartBody.addEventListener('change', (e) => {
-    if (e.target.classList.contains('select-item')) computeSelectedTotal();
-  });
-
-  // 초기 상태
-  totalEl.textContent = '0';
-  if (payBtn) payBtn.disabled = true;
-
-  // 결제: 선택된 항목만 prod_id/qty 반복 파라미터로 전송
-  if (payBtn) {
-    payBtn.addEventListener('click', () => {
-      const selectedRows = [...cartBody.querySelectorAll('tr')].filter(r => {
-        const cb = r.querySelector('.select-item');
-        return cb && cb.checked;
-      });
-      if (selectedRows.length === 0) {
-        alert('결제할 상품을 선택해주세요.');
-        return;
-      }
-
-      const qs = new URLSearchParams();
-      selectedRows.forEach(row => {
-        const wishId = row.dataset.wishId;      // <tr data-prod-id="...">
-        qs.append('wishlist', wishId);
-      });
-
-      window.location.href = ctx + '/buyer/purchase/wishlist.do?' + qs.toString();
-    });
-  }
-})();
-</script>
 
 </body>
 </html>

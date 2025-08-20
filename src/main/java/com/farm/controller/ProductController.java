@@ -184,8 +184,10 @@ public class ProductController {
 		int totalCount = proDao.getTotalCount(parameterDTO);
 		System.out.println("totalcount" + totalCount);
 		ArrayList<ProductDTO> lists = proDao.selectProduct(parameterDTO);
+		
 		//베스트상품 불러오기
-		parameterDTO.setEnd(bestSize);
+		parameterDTO.setStart((pageNum - 1) * bestSize + 1);
+		parameterDTO.setEnd(pageNum * bestSize);
 		ArrayList<ProductDTO> bests = proDao.selectBestProd(parameterDTO);
 		model.addAttribute("bests", bests);
 		//베스트상품 끝
@@ -206,7 +208,9 @@ public class ProductController {
 		
 		String pagingImg = PagingUtil.pagingImg(
 				totalCount, pageSize, blockPage, pageNum, 
-				req.getContextPath()+"/list.do?");
+				req.getContextPath()+"/guest/productList.do?");
+		
+		model.addAttribute("pagingImg", pagingImg);
 		
 		return "Productpage";
 	}
