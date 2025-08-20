@@ -1,9 +1,9 @@
 package com.farm.entity;
 
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
-import com.farm.dto.LikeId;
+import com.farm.dto.ReviewLikeId;
 
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -23,26 +23,26 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 @Entity
-public class OrderProduct {
+public class ReviewLike {
 
     @EmbeddedId
-    private LikeId id; // ★ 반드시 LikeId 타입이어야 함
+    private ReviewLikeId id; // ★ 반드시 LikeId 타입이어야 함
 
     @ManyToOne
-    @MapsId("prod_id")  // → LikeId에 prod_id 필드 있어야 작동
-    @JoinColumn(name = "prod_id")
-    private Product product;
+    @MapsId("review_id")  // → LikeId에 prod_id 필드 있어야 작동
+    @JoinColumn(name = "review_id")
+    private Review review;
 
     @ManyToOne
     @MapsId("member_id")  // → LikeId에 member_id 필드 있어야 작동
     @JoinColumn(name = "member_id")
     private Member member;
     
-    private LocalDateTime createdAt;
+    private LocalDate createdAt;
     
     //좋아요가 언제 눌렸는지를 기록하기 위해 
     @PrePersist
     public void prePersist() {
-        if (createdAt == null) createdAt = LocalDateTime.now();
+        if (createdAt == null) createdAt = LocalDate.now();
     }
 }
