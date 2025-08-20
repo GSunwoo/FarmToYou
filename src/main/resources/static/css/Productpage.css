@@ -1,24 +1,28 @@
 @charset "UTF-8";
+
+/* ===== 메인 컨텐츠 영역 ===== */
 .main-content {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 30px 15px;
+  padding: 30px 15px; /* 좌우 여백 유지 */
 }
 
+/* ===== 추천 상품 영역 ===== */
 .recommend-items {
   width: 100%;
 }
 
+/* ===== 상품 리스트 래퍼 ===== */
 .goods-list-items-warp {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 20px; /* 아이템 사이 간격 */
 }
 
-.goods-list-tit{
+/* ===== 상품 리스트 타이틀 ===== */
+.goods-list-tit {
   width: 100%;
-  margin-bottom: 20px;
-  margin-top: 150px;
+  margin: 150px 0 20px 0;
 }
 
 .goods-list-tit h2 {
@@ -28,25 +32,37 @@
   text-align: center;
 }
 
+/* ===== 상품 리스트 컨텐츠 ===== */
 .good-list-items-content {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
-  padding: 0;
-  margin: 0;
+  gap: 20px;        /* 아이템 간격 */
+  padding: 0 15px;  /* 좌우 여백 */
+  margin: 0 auto;   /* 가운데 정렬 */
   list-style: none;
   box-sizing: border-box;
 }
 
-.good-list-items-content:hover {
+/* li 공통 스타일 - 한 행 4개 기준 */
+.good-list-items-content li {
+  width: 277px; /* gap 20px * 3 = 60px */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* 상품 카드 hover 효과 */
+.good-list-items-content li:hover {
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
-
-
+/* 상품 정보 */
 .item-info-box {
   font-size: 0.9em;
   color: #555;
+  margin-top: 10px;
 }
 
 .item-tit-box a {
@@ -70,31 +86,38 @@
   gap: 10px;
 }
 
-/* 금주의 추천상품 - 3개 */
-.good-list-items-content.three-items-per-row li {
-  width: calc((100% - 40px) / 3); /* gap 20px * 2 */
-  box-sizing: border-box;
-}
-
-/* 국산과일 & 해외과일 - 4개 */
-.good-list-items-content.four-items-per-row li {
-  width: calc((100% - 60px) / 4); /* gap 20px * 3 */
-  box-sizing: border-box;
-}
-
 /* 이미지 박스 고정 크기 */
 .item-photo-box {
   width: 100%;
-  height: 250px; /* 원하는 높이 고정 */
+  height: 250px; /* 고정 높이 */
   overflow: hidden;
-  border-radius: 8px; /* 모서리 살짝 둥글게 (선택) */
+  border-radius: 8px;
 }
 
-/* 이미지 크기와 비율 맞추기 */
+/* 이미지 크기와 박스 맞춤 */
 .item-photo-box img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* 비율 유지하면서 잘라서 맞춤 */
+  object-fit: fill; /* 깨지더라도 박스 꽉 채움 */
   display: block;
   cursor: pointer;
+}
+
+/* ===== 반응형 ===== */
+@media screen and (max-width: 1024px) {
+  .good-list-items-content li {
+    width: calc((100% - 40px) / 3); /* 3개 per row */
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .good-list-items-content li {
+    width: calc((100% - 20px) / 2); /* 2개 per row */
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .good-list-items-content li {
+    width: 100%; /* 1개 per row */
+  }
 }

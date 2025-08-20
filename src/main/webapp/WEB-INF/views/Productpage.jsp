@@ -7,107 +7,94 @@
 <meta charset="UTF-8">
 <title>상품페이지</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/mainpage.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/Productpage.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script src="${pageContext.request.contextPath}/js/search.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/Productpage.css">
 </head>
 <body>
   <%@ include file="./common/header.jsp" %>
 
   <div class="main-content">
-    <div class="recommend-items">
+  <div class="recommend-items">
 
-      <!-- 금주의 추천상품 -->
-      <div class="goods-list-items-warp">
-        <div class="goods-list-tit"><h2>금주의 추천상품</h2></div>
+    <!-- 금주의 추천상품 -->
+    <div class="goods-list-items-warp">
+      <div class="goods-list-tit"><h2>금주의 추천상품</h2></div>
 
+      <ul class="good-list-items-content four-items-per-row">
         <c:choose>
           <c:when test="${not empty bests}">
-            <ul class="good-list-items-content three-items-per-row">
-              <c:forEach var="best" items="${bests}">
-                <li>
-                  <div class="item-photo-box">
-                    <img
-                      src="${pageContext.request.contextPath}/uploads/prodimg/prod_id/${best.prod_id}/${best.filename}"
-                      alt="${best.filename}"
-                      onclick="location.href='${pageContext.request.contextPath}/guest/Detailpage.do?prod_id=${best.prod_id}'">
+            <c:forEach var="best" items="${bests}">
+              <li>
+                <div class="item-photo-box">
+                  <img src="${pageContext.request.contextPath}/uploads/prodimg/prod_id/${best.prod_id}/${best.filename}"
+                       alt="${best.filename}"
+                       onclick="location.href='${pageContext.request.contextPath}/guest/Detailpage.do?prod_id=${best.prod_id}'">
+                </div>
+                <div class="item-info-box">
+                  <div class="item-tit-box">
+                    <a href="${pageContext.request.contextPath}/guest/Detailpage.do?prod_id=${best.prod_id}">
+                      ${best.prod_name}
+                    </a>
                   </div>
-                  <div class="item-info-box">
-                    <div class="item-info-cont">
-                      <div class="item-tit-box">
-                        <a href="${pageContext.request.contextPath}/guest/Detailpage.do?prod_id=${best.prod_id}">
-                          ${best.prod_name}
-                        </a>
-                      </div>
-                      <div class="item-money-box">
-                        <%-- <c:if test="${p.originalPrice gt p.salePrice}"> --%>
-                          <span><fmt:formatNumber value="${best.prod_price}"/>원</span>
-                        <%-- </c:if> --%>
-                        <%-- <div class="price-inline">
-                          <strong class="item-price">
-                            <span><fmt:formatNumber value="${p.salePrice}"/>원</span>
-                          </strong>
-                        </div> --%>
-                      </div>
-                    </div>
+                  <div class="item-money-box">
+                    <span><fmt:formatNumber value="${best.prod_price}"/>원</span>
                   </div>
-                </li>
-              </c:forEach>
-            </ul>
+                </div>
+              </li>
+            </c:forEach>
           </c:when>
           <c:otherwise>
-            <div style="text-align: center; padding: 20px;">추천 상품이 없습니다.</div>
+            <li class="no-item">추천 상품이 없습니다.</li>
           </c:otherwise>
         </c:choose>
-      </div>
+      </ul>
+    </div>
 
-      <!-- 국산과일 & 해외과일 -->
-      <div class="goods-list-items-warp">
-        <div class="goods-list-tit"><h2>국산과일 & 국산채소</h2></div>
+    <!-- 국산과일 & 해외과일 -->
+    <div class="goods-list-items-warp">
+      <div class="goods-list-tit"><h2>국산과일 & 국산채소</h2></div>
 
+      <ul class="good-list-items-content four-items-per-row">
         <c:choose>
           <c:when test="${not empty lists}">
-            <ul class="good-list-items-content four-items-per-row">
-              <c:forEach var="prod" items="${lists}" >
-                <li>
-                  <div class="item-photo-box">
-                  
-                    <img
-                      src="${pageContext.request.contextPath}/uploads/prodimg/prod_id/${prod.prod_id}/${prod.filename}"
-                      alt="${prod.filename}"
-                      onclick="location.href='${pageContext.request.contextPath}/guest/Detailpage.do?prod_id=${prod.prod_id}'">
-                  
+            <c:forEach var="prod" items="${lists}">
+              <li>
+                <div class="item-photo-box">
+                  <img src="${pageContext.request.contextPath}/uploads/prodimg/prod_id/${prod.prod_id}/${prod.filename}"
+                       alt="${prod.filename}"
+                       onclick="location.href='${pageContext.request.contextPath}/guest/Detailpage.do?prod_id=${prod.prod_id}'">
+                </div>
+                <div class="item-info-box">
+                  <div class="item-tit-box">
+                    <a href="${pageContext.request.contextPath}/guest/Detailpage.do?prod_id=${prod.prod_id}">
+                      ${prod.prod_name}
+                    </a>
                   </div>
-                  <div class="item-info-box">
-                    <div class="item-info-cont">
-                      <div class="item-tit-box">
-                        <a href="${pageContext.request.contextPath}/guest/Detailpage.do?prod_id=${prod.prod_id}">
-                          ${prod.prod_name}
-                        </a>
-                      </div>
-                      <div class="item-money-box">
-                        <%-- <c:if test="${prod.prod_price gt prod.prod_salePrice}"> --%>
-                          <span><fmt:formatNumber value="${prod.prod_price}"/>원</span>
-                         <%-- </c:if> --%>
-                      </div>
-                      <%-- <div class="price-inline">
-                        <strong class="item-price">
-                          <span><fmt:formatNumber value="${prod.prod_salePrice}"/>원</span>
-                        </strong>
-                      </div> --%>
-                    </div>
+                  <div class="item-money-box">
+                    <span><fmt:formatNumber value="${prod.prod_price}"/>원</span>
                   </div>
-                </li>
-              </c:forEach>
-            </ul>
+                </div>
+              </li>
+            </c:forEach>
           </c:when>
           <c:otherwise>
-            <div style="text-align: center; padding: 20px;">상품이 없습니다.</div>
+            <li class="no-item">상품이 없습니다.</li>
           </c:otherwise>
         </c:choose>
-      </div>
-
+      </ul>
     </div>
+
   </div>
+</div>
+	<table  width="90%">
+        <tr align="center">
+            <td>
+                ${ pagingImg }
+            </td>
+        </tr>
+    </table>
+	
+
 </body>
 </html>
