@@ -35,10 +35,13 @@
 
 <div class="search-logo-line">
     <div class="search-box">
-        <input type="text" placeholder="과일 전문 쇼핑몰">
-        <button type="button">
-            <i class="fas fa-search"></i>
-        </button>
+        <form action="/guest/productList.do" method="get">
+            <input type="text" name="searchWord" placeholder="과일 전문 쇼핑몰">
+            <button type="submit">
+                <i class="fas fa-search"></i>
+            </button>
+        </form>
+
         <div id="search-dropdown" class="custom-search-dropdown">
             <div class="recent-keywords">
                 <strong>최근검색어</strong>
@@ -50,6 +53,8 @@
             </div>
         </div>
     </div>
+<!-- onclick="href='/guest/productList.do'" -->
+
 
     <a href="/" class="logo-section">
         <img src="${pageContext.request.contextPath}/images/shopping_mall-Photoroom.png" alt="로고 이미지" style="transform: scaleX(2);">

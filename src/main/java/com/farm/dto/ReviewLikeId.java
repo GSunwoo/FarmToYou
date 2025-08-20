@@ -17,23 +17,23 @@ import lombok.NoArgsConstructor;
 @Data
 
 //복합키 클래스 만들기
-public class LikeId implements Serializable {
+public class ReviewLikeId implements Serializable {
 
-	private Long prod_id;
+	private Long review_id;
 	private Long member_id;
 	
 	 @Override
 	    public boolean equals(Object o) {
 	        if (this == o) return true;
-	        if (!(o instanceof LikeId)) return false;
-	        LikeId that = (LikeId) o;
-	        return Objects.equals(prod_id, that.prod_id) &&
+	        if (!(o instanceof ReviewLikeId)) return false;
+	        ReviewLikeId that = (ReviewLikeId) o;
+	        return Objects.equals(review_id, that.review_id) &&
 	               Objects.equals(member_id, that.member_id);
 	    }
 
 	    @Override
 	    public int hashCode() {
-	        return Objects.hash(prod_id, member_id);
+	        return Objects.hash(review_id, member_id);
 	    }
 	
 }

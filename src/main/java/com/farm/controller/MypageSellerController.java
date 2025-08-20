@@ -58,16 +58,7 @@ public class MypageSellerController {
 			MemberDTO member = userDetails.getMemberDTO();
 			Long member_id = member.getMember_id();
 			
-			/******  상품 주문 현황  ******/
-			int chkOrder = mypageDAO.getCheckOrder(member_id);    // 주문확인중
-			int preOrder = mypageDAO.getPrepareOrder(member_id);  // 상품준비중
-			int deliOrder = mypageDAO.getDeliOrder(member_id);    // 배송중
-			int cmplOrder = mypageDAO.getCompleteOrder(member_id);// 배송완료
 			model.addAttribute("member", member);
-			model.addAttribute("ChkOrder", chkOrder);
-			model.addAttribute("PrepareOrder", preOrder);
-			model.addAttribute("DeliOrder", deliOrder);
-			model.addAttribute("CmplOrder", cmplOrder);
 			
 			/****** 상품문의현황  ******/
 			int inquiryCnt = mypageDAO.getInquiryCnt_Seller(member_id); // 현재 문의 수
@@ -87,29 +78,29 @@ public class MypageSellerController {
 
 	@GetMapping("/seller/api/sold-stats")
 	@ResponseBody
-	public JSONObject sellerSaleData(@RequestParam("memberId") Long member_id){
+	public JSONObject sellerSaleData(@AuthenticationPrincipal CustomUserDetails userDetails){
+		Long member_id = userDetails.getMemberDTO().getMember_id();
+		
 		/****** 상품판매실적  ******/
 		LocalDate today = LocalDate.now();			// 오늘날짜
-		LocalDate fourDaysAgo = today.minusDays(4); // 4일전
-		
-		// sql Date로 변환
-		Date sqlToday = Date.valueOf(today);
-		Date sqlFourDaysAgo = Date.valueOf(fourDaysAgo);
 		
 		List<Date> dateList = new ArrayList<>();
-		for(int i = 0; i<4; i++) {
+		List<Integer> soldNumList = new ArrayList<>(); // 지난 5일 판매량
+		List<Integer> salesList = new ArrayList<>();     // 지난 5일 매출
+		for(int i = 0; i<5; i++) {
 			dateList.add(Date.valueOf(today.minusDays(i)));
+			Integer sales = mypageDAO.getSales(member_id, Date.valueOf(today.minusDays(i)));
+			soldNumList.add(mypageDAO.getSoldNum(member_id, Date.valueOf(today.minusDays(i))));
+			salesList.add((sales==null)?0:sales);
 		}
 		
-		List<Integer> soldNum = mypageDAO.getSoldNum(member_id, sqlToday, sqlFourDaysAgo); // 지난 5일 판매량
-		List<Integer> sales = mypageDAO.getSales(member_id, sqlToday, sqlFourDaysAgo);     // 지난 5일 매출
 		
 		Map<String, Object> soldData = new HashMap<>();
 		
 		for(int i = 0; i<5; i++) {
 			soldData.put("date",dateList);
-			soldData.put("sold",soldNum);
-			soldData.put("sales",sales);
+			soldData.put("sold",soldNumList);
+			soldData.put("sales",salesList);
 		}
 		
 		JSONObject soldJSON = new JSONObject(soldData);
@@ -136,7 +127,6 @@ public class MypageSellerController {
     public ResponseEntity<Void> nextState(HttpServletRequest req, @RequestParam("purc_id") Long purc_id, @RequestParam("next") String next) {
     	
     	int result = mypageDAO.updateState(purc_id, next);
-    	
     	
     	return ResponseEntity.ok().build();
     }

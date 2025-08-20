@@ -52,4 +52,9 @@
 	SET main=1
 	WHERE addr_id=#{addr_id}
 	</update>
+	
+	<delete id="delete">
+	DELETE FROM address
+	WHERE addr_id=#{addr_id}
+	</delete>
 </mapper>

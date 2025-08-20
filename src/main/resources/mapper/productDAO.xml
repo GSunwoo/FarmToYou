@@ -28,7 +28,7 @@
 		<!-- 검색어가 있는 경우에만 where절을 조건부로 추가한다. -->
 		<if test="searchWord!=null and 
 			!searchWord.equals('')">
-			WHERE puduct_name LIKE '%' || #{searchWord} || '%'
+			WHERE prod_name LIKE '%' || #{searchWord} || '%'
 		</if>
 	</select>
 
