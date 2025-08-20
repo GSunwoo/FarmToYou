@@ -31,8 +31,8 @@
         value=""
         >
         <input type="password" id="pw" name="my_pass" placeholder="비밀번호를 입력해 주세요" required
-        value="A123123!"
         >
+<!--         value="A123123!" -->
 
         <div class="login-options">
           <a href="/guest/findPw.do">비밀번호를 잊어버리셨나요?</a>

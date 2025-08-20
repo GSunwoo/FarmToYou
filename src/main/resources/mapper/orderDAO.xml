@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.farm.service.IOrderService">
+	<select id="selectBuyerOrders"
+		resultType="com.farm.dto.OrderDTO">
+	SELECT order_num, purc_date, purc_state, qty, pu.prod_id, prod_name, prod_price
+	FROM (SELECT Tb.*, rownum rNum FROM (
+				SELECT pu.*, prod_name, prod_price
+				FROM purchase pu
+				LEFT INNER JOIN product pr
+				ON pu.prod_id=pr.prod_id
+				WHERE pu.member_id=#{member_id}
+				ORDER BY purc_id DESC
+			) Tb
+		) ord
+		LEFT INNER JOIN product_img img
+		ON ord.prod_id = img.prod_id and img.main_idx = 1
+		WHERE rNum BETWEEN 1 AND 5;
+	</select>
+	
+	<select id="selectBuyerOrders"
+		resultType="com.farm.dto.OrderDTO">
+	SELECT order_num, purc_date, purc_state, qty, pu.prod_id, prod_name, prod_price
+	FROM (SELECT Tb.*, rownum rNum FROM (
+				SELECT pu.*, prod_name, prod_price
+				FROM purchase pu
+				LEFT INNER JOIN product pr
+				ON pu.prod_id=pr.prod_id 
+				WHERE pu.member_id=#{member_id}
+				ORDER BY purc_id DESC
+			) Tb
+		) ord
+		LEFT INNER JOIN product_img img
+		ON ord.prod_id = img.prod_id and img.main_idx = 1
+		WHERE rNum BETWEEN #{param.start} AND #{param.end};
+	</select>
+</mapper>
