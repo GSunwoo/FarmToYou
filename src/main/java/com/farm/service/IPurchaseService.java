@@ -16,4 +16,7 @@ public interface IPurchaseService {
 	public int insertPurchase(PurchaseDTO purchaseDTO);
 	
 	public int insertPurchaseDummy(@Param("arr") List<PurchaseDTO> arr);
+	
+	public int updateQty(@Param("prod_id") Long prod_id,
+						 @Param("qty") int qty);
 }
