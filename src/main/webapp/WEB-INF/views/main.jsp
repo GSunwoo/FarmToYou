@@ -94,21 +94,25 @@
 		<div class="weekly-product-wrapper">
 			<!-- 메인 컨트롤러에서 모델객체로 bests 하면 추천상품이 나온다 (상품페이지에있는 bests) -->
 			<c:forEach var="product" items="${bests}" varStatus="status">
-				<div class="weekly-product-card">
+				<div class="weekly-product-card"
+					onclick="location.href='${pageContext.request.contextPath}/guest/Detailpage.do?prod_id=${product.prod_id}'">
 					<div class="circle-img-wrapper">
 						<img
 							src="${pageContext.request.contextPath}/uploads/prodimg/prod_id/${product.prod_id}/${product.filename}"
-							alt="${product.prod_name}"> <span class="circle-rank">이번 주 ${status.index + 1}등</span>
+							alt="${product.prod_name}"
+							
+							> 
 					</div>
 					<div class="main-best-info">
+						<div class="prod-name">${product.prod_name}</div>
 						<div class="price-box">
-							<span class="original-price">
-								<fmt:formatNumber value="${product.prod_price}" />
-								원
+							<span class="original-price"> <fmt:formatNumber
+									value="${product.prod_price}" />원
 							</span>
-						</div>
-						<div class="prod-name">
-							${product.prod_name}
+							<br/>
+							<span class="circle-rank">
+								이번주 ${status.index + 1}등
+							</span>
 						</div>
 					</div>
 				</div>

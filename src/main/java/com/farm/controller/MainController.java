@@ -9,6 +9,7 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,9 +20,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.farm.config.CustomUserDetails;
 import com.farm.dto.MemberDTO;
 import com.farm.dto.ParameterDTO;
+import com.farm.dto.ProductDTO;
 import com.farm.dto.PurchaseDTO;
 import com.farm.service.IProductService;
 import com.farm.service.IPurchaseService;
+
+
 
 @Controller
 public class MainController {
@@ -30,7 +34,10 @@ public class MainController {
 
 	@Autowired
 	IProductService proDao;
-
+	
+	@Value("${main.bestforweek}")
+	private int bestforweek;
+	
     MainController(PaymentController paymentController) {
         this.paymentController = paymentController;
     }
@@ -49,15 +56,18 @@ public class MainController {
 			}	
 		}
 		
+		Long end = (long)bestforweek;
+		ArrayList<ProductDTO> bests = proDao.selectBestProdForLastWeek(end);
 		
-		
-		
-		
+		model.addAttribute("bests", bests);
 		
 		return "main";
 	}
-
+		
+		
+		
 	@Autowired
+	
 	IPurchaseService purDao;
 	
 	
