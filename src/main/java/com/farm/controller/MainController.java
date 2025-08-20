@@ -1,16 +1,40 @@
 package com.farm.controller;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.farm.config.CustomUserDetails;
 import com.farm.dto.MemberDTO;
+import com.farm.dto.ParameterDTO;
+import com.farm.dto.PurchaseDTO;
+import com.farm.service.IProductService;
+import com.farm.service.IPurchaseService;
 
 @Controller
 public class MainController {
 
+    private final PaymentController paymentController;
+
+	@Autowired
+	IProductService proDao;
+
+    MainController(PaymentController paymentController) {
+        this.paymentController = paymentController;
+    }
+	
 	@GetMapping("/")
 	public String main(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
 		if(userDetails!=null) {
@@ -24,7 +48,81 @@ public class MainController {
 				return "redirect:/mypage.do";
 			}	
 		}
+		
+		
+		
+		
+		
+		
 		return "main";
 	}
 
+	@Autowired
+	IPurchaseService purDao;
+	
+	
+	@GetMapping("/insertPurchase.do")
+	public String inspur(PurchaseDTO purchaseDTO) {
+	    
+	    // 날짜변수 생성 시작
+	    LocalDate today = LocalDate.now();
+	    LocalDate oMA = today.minusMonths(1);
+	    long between = ChronoUnit.DAYS.between(oMA, today);
+	    // 날짜변수 생성 종료
+	    
+	    Random seed = new Random();
+	    int successCount = 0;
+	    
+	    for(int i = 1 ; i <= 300 ; i++) {
+	        PurchaseDTO newPurchaseDTO = new PurchaseDTO();
+	        
+	        long randomDays = ThreadLocalRandom.current().nextLong(between + 1);
+	        newPurchaseDTO.setPurc_date(oMA.plusDays(randomDays));
+	        newPurchaseDTO.setPurc_request("경비실에 맡겨주세요");
+	        
+	        int rd = seed.nextInt(7) + 1;
+	        Long md = 0L;
+	        switch (rd) {
+	            case 1: md = 12L; break;
+	            case 2: md = 1L; break;
+	            case 3: md = 10L; break;
+	            case 4: md = 3L; break;
+	            case 5: md = 6L; break;
+	            case 6: md = 21L; break;
+	            case 7: md = 8L; break;
+	        }
+	        
+	        newPurchaseDTO.setMember_id(md);
+	        newPurchaseDTO.setProd_id(seed.nextLong(13) + 2);
+	        
+	        String oN = PaymentController.generateRandomString(Integer.toString(i), 20);
+	        newPurchaseDTO.setOrder_num(oN);
+	        newPurchaseDTO.setQty(seed.nextInt(11) + 1);
+	        
+	        // 한 번에 하나씩 INSERT
+	        int result = purDao.insertPurchase(newPurchaseDTO);  // 단일 insert 메소드
+	        if(result > 0) successCount++;
+	    }
+	    
+	    System.out.printf("%d행 입력에 성공했습니다.", successCount);
+	    return "redirect:/";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

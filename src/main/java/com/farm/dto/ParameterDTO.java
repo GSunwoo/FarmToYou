@@ -1,5 +1,6 @@
 package com.farm.dto;
 
+import java.util.Date;
 import java.util.List;
 
 import lombok.Getter;
@@ -13,4 +14,6 @@ public class ParameterDTO {
 	private List<String> searchWords;
 	private int start;
 	private int end;
+	
+	private Date lastWeek;
 }

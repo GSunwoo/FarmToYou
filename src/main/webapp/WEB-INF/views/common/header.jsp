@@ -28,6 +28,8 @@
         <li>|</li>
         <li><a href="/buyer/review/write.do">리뷰쓰기</a></li>
 	</sec:authorize>
+		
+        <li><a href="/insertPurchase.do">구매생성</a></li>
     </ul>
 </div>
 

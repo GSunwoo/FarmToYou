@@ -17,7 +17,9 @@ public interface IProductService {
 	
 	public ArrayList<ProductDTO> selectProduct(ParameterDTO parameterDTO);
 	public ArrayList<ProductDTO> selectBestProd(ParameterDTO parameterDTO);
+	public ArrayList<ProductDTO> selectBestProdForLastWeek(ParameterDTO parameterDTO);
 	public ArrayList<ProductDTO> selectMyprod(@Param("member_id") Long member_id);
+	
 	
 	public int productUpdate(ProductDTO productDTO);
 	public int productDelete(@Param("prod_id") Long prod_id);

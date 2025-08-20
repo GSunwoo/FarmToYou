@@ -98,23 +98,18 @@
 					<div class="circle-img-wrapper">
 						<img
 							src="${pageContext.request.contextPath}/uploads/prodimg/prod_id/${product.prod_id}/${product.filename}"
-							alt="${product.prod_name}"> <span class="circle-rank">${status.index + 1}</span>
+							alt="${product.prod_name}"> <span class="circle-rank">이번 주 ${status.index + 1}등</span>
 					</div>
 					<div class="main-best-info">
 						<div class="price-box">
-							<span class="sale-price"><fmt:formatNumber
-									value="${product.salePrice}" />원</span>
-							<del class="original-price">
+							<span class="original-price">
 								<fmt:formatNumber value="${product.prod_price}" />
 								원
-							</del>
-							<span class="discount-rate"> <fmt:formatNumber
-									value="${((product.prod_price - product.salePrice) * 100) / product.prod_price}"
-									type="number" maxFractionDigits="0" />%
 							</span>
 						</div>
-						<div class="prod-name">${product.prod_name}
-							${product.weight}</div>
+						<div class="prod-name">
+							${product.prod_name}
+						</div>
 					</div>
 				</div>
 			</c:forEach>
