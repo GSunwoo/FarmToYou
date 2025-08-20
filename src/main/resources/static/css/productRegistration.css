@@ -1,312 +1,142 @@
-/* 레이아웃: 좌측 사이드바 + 우측 컨텐츠를 나란히 */
+/* .seller-update-section .form-wrapper {
+  width: 640px;
+  margin: 40px auto;
+  padding: 32px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+} */
+/* 판매자 정보 변경 신청 박스 외곽 카드 스타일 */
+.seller-update-section .form-wrapper {
+	background-color: #fff; /* 흰 배경 */
+	border: 1px solid #ddd; /* 연한 회색 테두리 */
+	border-radius: 12px; /* 모서리 둥글게 */
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06); /* 부드러운 그림자 */
+	padding: 32px; /* 내부 여백 */
+}
+
+/* 전체 래퍼를 가로 배치 */
 .mypage-wrapper {
-  display: flex;
-  align-items: flex-start;
-  gap: 24px; /* 사이드바와 폼 사이 간격 */
+	display: flex;
+	align-items: flex-start;
+	gap: 24px; /* 메뉴와 폼 사이 간격 */
 }
 
-/* 우측 컨텐츠가 남은 공간 전부 차지 */
-.sub-content {
-  flex: 1;
+/* 폼 영역 확장 */
+.seller-update-section .form-wrapper {
+	width: auto; /* 고정 폭 해제 */
+	flex: 1; /* 남은 공간 전부 사용 */
+	margin: 0; /* 중앙 정렬 해제 */
 }
 
-/* 섹션 여백/제목 */
-.product-form-page {
-  padding: 16px 8px;
-}
-.product-form-page h3 {
-  margin: 12px 0 16px;
+.seller-update-section .form-line {
+	display: flex;
+	border-bottom: 1px solid #ddd;
+	min-height: 56px;
 }
 
-/* 상품판매등록 폼: 폭 제한 해제 + 좌측으로 붙임 */
-.product-form {
-  max-width: none; /* 폭 제한 해제 */
-  width: 100%;     /* 남은 공간 전부 사용 */
-  margin: 0;       /* 가운데 정렬 제거 */
-  padding: 32px 36px;
-  background: #fff;
-  border-radius: 14px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
+.seller-update-section .form-line label {
+	width: 150px;
+	background-color: #f2f2f2;
+	color: #333;
+	font-weight: bold;
+	padding: 14px 12px;
+	box-sizing: border-box;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	border-right: 1px solid #ddd;
 }
 
-/* 한 줄(레이블 + 입력) */
-.product-form .form-row {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+.seller-update-section .form-group {
+	flex: 1;
+	padding: 12px;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	align-items: center;
+	background-color: #fff;
 }
 
-/* 레이블 */
-.product-form .form-row label {
-  font-size: 14px;
-  font-weight: 600;
-  color: #666;
+.seller-update-section input[type="text"], .seller-update-section select
+	{
+	padding: 8px 10px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	font-size: 14px;
+	min-width: 100px;
 }
 
-/* 입력요소 공통 */
-.product-form input,
-.product-form textarea,
-.product-form select {
-  width: 100%;
-  display: block;
-  box-sizing: border-box;
-  font-size: 15px;
+.seller-update-section input[readonly], .seller-update-section .readonly
+	{
+	background: #f7f7f7;
+	cursor: not-allowed;
+}
+
+.seller-update-section button {
+	padding: 8px 16px;
+	background-color: #2d8cf0;
+	color: white;
+	border: none;
+	border-radius: 4px;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.seller-update-section button:hover {
+	background-color: #1a73e8;
+}
+
+.seller-update-section .half-width {
+	width: 100px;
+}
+
+.seller-update-section .account-group select {
+	min-width: 120px;
+}
+
+.seller-update-section .submit-area {
+	text-align: center;
+	margin-top: 30px;
+}
+
+.seller-update-section .submit-btn {
+	margin-top: 20px; /* 위쪽 간격 */
+	padding: 12px 32px;
+	font-size: 16px;
+	background-color: #2d8cf0;
+	color: white;
+	border: none;
+	border-radius: 6px;
+	cursor: pointer;
+}
+
+.seller-update-section .submit-btn:disabled {
+	background-color: #ccc;
+	cursor: not-allowed;
+}
+
+.seller-update-section .section-divider-top {
+	border-top: 2px solid #999;
+}
+
+.seller-update-section .section-divider-bottom {
+	border-bottom: 2px solid #999;
+}
+
+/* 신청 버튼 감싸는 form에 적용 */
+#sellerUpdateForm {
+	text-align: center; /* 버튼을 중앙 정렬 */
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  flex: 1;               /* ✅ 좌측 label 외 모든 공간 사용 */
   padding: 12px 14px;
-  border: 1px solid #e2e2e2;
-  border-radius: 8px;
-  background: #fff;
-  outline: none;
-}
-.product-form textarea {
-  min-height: 96px;
-  resize: vertical;
-}
-
-/* 읽기전용 필드 */
-.product-form input[readonly] {
-  background-color: #f2f2f2;
-  color: #777;
-  cursor: not-allowed;
-}
-
-/* 이미지 미리보기 */
-.image-preview img {
-  margin-top: 10px;
-  max-width: 100%;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-}
-
-/* 버튼 그룹 */
-.product-form .button-group {
-  margin-top: 8px;
-  display: flex;
-  gap: 10px;
-  justify-content: flex-start; /* 좌측 정렬 */
-}
-.product-form .button-group button {
-  min-width: 84px;
-  height: 36px;
   font-size: 14px;
-}
-
-/* 전역 버튼 스타일 */
-button {
-  padding: 10px 16px;
-  background-color: #4caf50;
-  border: none;
-  color: white;
-  border-radius: 6px;
-  cursor: pointer;
-}
-button[type="button"] {
-  background-color: #aaa;
-}
-
-/* 에러 메시지 */
-.error {
-  color: red;
-  font-weight: bold;
-}
-
-
-
-/* 반응형: 화면이 좁아지면 중앙정렬 */
-@media (max-width: 1024px) {
-  .mypage-wrapper {
-    display: block;
-  }
-  .product-form {
-    max-width: 900px;
-    margin: 0 auto;
-  }
-}
-
-/* =========================
-   상품 목록 테이블 디자인
-   ========================= */
-.products-table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  border: 1px solid #e9ecef;
-  border-radius: 10px;
-  overflow: hidden;
-  background: #fff;
-  margin-top: 20px;
-}
-
-/* 헤더 */
-.products-table thead th {
-  background: #f7f8fa;
-  color: #444;
-  font-weight: 600;
-  text-align: center;
-  padding: 12px 10px;
-  border-right: 1px solid #edf0f3;
-  border-bottom: 1px solid #e9ecef;
-}
-.products-table thead th:last-child {
-  border-right: none;
-}
-
-/* 데이터 행 */
-.products-table tbody td {
-  padding: 14px 10px;
-  border-right: 1px solid #f0f2f5;
-  border-bottom: 1px solid #f5f6f8;
-  vertical-align: middle;
-  text-align: center;   /* 상품명 포함 전체 가운데 정렬 */
-}
-.products-table tbody td:last-child {
-  border-right: none;
-}
-
-/* 버튼 영역 */
-.products-table tbody td .actions {
-  display: inline-flex;
-  gap: 8px;
-}
-.products-table tbody td .actions button {
-  padding: 6px 12px;
-  border-radius: 6px;
-  border: 1px solid #bbb;
-  background: #fff;
-  cursor: pointer;
-}
-.products-table tbody td .actions button:hover {
-  background: #f1f1f1;
-}
-
-/* 비어있을 때 메시지 */
-.products-table tbody td[colspan] {
-  text-align: center;
-  color: #888;
-  padding: 22px 10px;
-  background: #fff;
-}
-
-/* =========================
-   상품 수정 폼(클래스 없어도 적용)
-   ========================= */
-.sub-content form {
-  max-width: 520px;          /* 스샷 크기 느낌 */
-  width: 100%;
-  margin: 0;                 /* 좌측 정렬 */
-  padding: 24px;
-  background: #fff;
-  border-radius: 14px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-/* 레이블 */
-.sub-content form label {
-  display: block;
-  font-size: 14px;
-  font-weight: 600;
-  color: #666;
-  margin-bottom: 6px;
-}
-
-/* 입력요소 공통 */
-.sub-content form input[type="text"],
-.sub-content form input[type="number"],
-.sub-content form input[type="file"],
-.sub-content form textarea,
-.sub-content form select {
-  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 0;
   box-sizing: border-box;
-  font-size: 15px;
-  padding: 12px 14px;
-  border: 1px solid #e2e2e2;
-  border-radius: 8px;
-  background: #fff;
-  outline: none;
 }
-.sub-content form textarea { min-height: 110px; resize: vertical; }
-
-/* 파일 입력도 카드처럼 */
-.sub-content form input[type="file"] {
-  padding: 10px 12px;
-  background: #fafafa;
-}
-
-/* 읽기전용 */
-.sub-content form input[readonly] {
-  background-color: #f2f2f2;
-  color: #777;
-  cursor: not-allowed;
-}
-
-/* 버튼 그룹 */
-.sub-content form .button-group,
-.sub-content form .btns,
-.sub-content form .buttons {
-  display: flex;
-  gap: 10px;
-  margin-top: 6px;
-}
-
-/* 버튼 스타일 (등록/수정, 취소) */
-.sub-content form button[type="submit"],
-.sub-content form input[type="submit"] {
-  padding: 10px 16px;
-  min-width: 84px;
-  height: 38px;
-  font-size: 14px;
-  background-color: #4caf50;
-  color: #fff;
-  border: 1px solid transparent;
-  border-radius: 8px;
-  cursor: pointer;
-}
-.sub-content form button[type="button"],
-.sub-content form input[type="button"] {
-  padding: 10px 16px;
-  min-width: 84px;
-  height: 38px;
-  font-size: 14px;
-  background-color: #bdbdbd;
-  color: #fff;
-  border: 1px solid transparent;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-/* 폼이 좁아질 때 중앙 정렬 */
-@media (max-width: 1024px) {
-  .mypage-wrapper { display: block; }
-  .sub-content form { max-width: 520px; margin: 0 auto; }
-}
-
-/* =========================
-   이미지 미리보기 동일 크기
-   ========================= */
-.preview-wrap {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 8px;
-}
-
-.preview-wrap img.preview-img {
-  width: 120px;      /* 원하는 고정 크기 */
-  height: 120px;
-  object-fit: cover; /* 비율 유지하며 잘라내기 */
-  border: 1px solid #ddd;
-  border-radius: 8px;
-}
-
-/* 라디오 버튼 + 텍스트 중앙 정렬 */
-.preview-wrap input[type="radio"],
-.preview-wrap label,
-.preview-wrap button {
-  margin-top: 6px;
-}
-

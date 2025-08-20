@@ -16,19 +16,19 @@
 </head>
 <body>
 <%@ include file="../common/header.jsp"%>
-	<div class="sub-content">
-		<div class="side-bar">
-			<%@ include file="../common/header2.jsp"%>
-		</div>
+<div class="mypage-wrapper">
+    <div class="sub-content">
+	    <aside class="mypage-sidebar">
+	        <%@ include file="../common/header2.jsp"%>
+	    </aside>
 		<div class="mypage-cont">
 			<div class="mypage-info">
 				<div class="mypage-zone-tit">
 					<h3>주문목록/배송조회</h3>
 				</div>
 				<div class="mypage-info-content">
-					<span class="pick-list-num"> " 주문목록 / 배송조회 내역 총 " <strong>0</strong>
-						" 건 "
-					</span>
+					<span class="pick-list-num">주문목록 / 배송조회 내역</span>
+					
 					<div class="mypage-table-type">
 						<table>
 							<colgroup>
@@ -109,5 +109,6 @@
 			</div>
 		</div>
 	</div>
+</div>
 </body>
 </html>

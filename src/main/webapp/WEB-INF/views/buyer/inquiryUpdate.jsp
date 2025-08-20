@@ -13,7 +13,7 @@
   <form action="${pageContext.request.contextPath}/buyer/inquiryUpdate.do" method="post">
     <!-- 컨트롤러에서 요구하는 파라미터 -->
    	<input type="hidden" name="prod_id" value="${prod_id}">
-    <input type="hidden" name="inquiry_id" value="${inquiry_id}" />
+    <input type="hidden" name="inquiry_id" value="${inquiryDTO.inquiry_id}" />
     <input type="hidden" name="member_id" value="${member_id}" />
 
     <div class="board-white-box">

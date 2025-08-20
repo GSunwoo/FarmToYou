@@ -1,290 +1,133 @@
-/* ReviewManagement.css */
+/* ===========================
+   Review Management (buyer)
+   =========================== */
 
-/* 섹션 래퍼 */
-/* .rm-wrap{
-  margin-top: 24px;
-  padding: 0 16px 40px;
-} */
-/* 드롭다운이 잘 보이도록 우선순위 부여 */
-.recent-search-box {
-  position: absolute;
-  z-index: 9999 !important;
-  background-color: white; /* 필요한 경우 */
-  display: block; /* 테스트 시 강제로 보이게 */
-}
-.main-content, .order-grid, .rm-grid, .seller-update-section {
-  overflow: visible !important;
-  position: relative; /* 부모가 absolute 자식 위치 기준이 되도록 */
-  z-index: auto;
-}
-.rm-wrap {
-  margin-top: 0;        /* 기존 24px → 제거 */
-  padding: 24px 24px 40px; /* 좌우 여백 조정 */
-}
-
-/* 메인패널 폭 조정 필요 시 */
-.main-panel {
-  flex: 1;
-  min-width: 0;
-}
-
-/* 섹션 헤더 */
-.rm-header{ display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
-.rm-title{ font-size:20px; font-weight:700; color:#111; margin:0; }
-
-/* ===== 그리드: 3 × 5 ===== */
-.rm-grid{
-  list-style:none; margin:0; padding:0;
-  display:grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px 20px;
-}
-
-/* 카드 */
-.rm-card{
-  background:#fff;
-  border:1px solid #eaeaea;
-  border-radius:12px;
-  overflow:hidden;
-  box-shadow: 0 2px 8px rgba(0,0,0,.04);
-  transition: box-shadow .2s ease, transform .2s ease;
-}
-.rm-card:hover{ box-shadow: 0 6px 18px rgba(0,0,0,.08); transform: translateY(-2px); }
-
-.rm-card__link{ display:block; color:inherit; text-decoration:none; height:100%; }
-
-.rm-card__thumb{ position:relative; aspect-ratio: 4 / 3; background:#f6f6f6; overflow:hidden; }
-.rm-card__img{ width:100%; height:100%; object-fit:cover; display:block; }
-
-/* 카드 본문 */
-.rm-card__body{ padding:14px 14px 12px; display:flex; flex-direction:column; gap:8px; }
-
-/* 제목 */
-.rm-card__title{
-  margin:0; font-size:16px; font-weight:700; color:#111;
-  display:-webkit-box; -webkit-line-clamp:1; -webkit-box-orient:vertical; overflow:hidden; text-overflow:ellipsis;
-}
-
-/* 별점(정수) — 기존 오버레이 방식(미사용 전환용) */
-.rm-card__rating,
-.rm-modal__rating{
-  --score: 0;
-  position:relative; height:18px;
-}
-.rm-card__rating::before,
-.rm-modal__rating::before{
-  content: "★★★★★";
-  letter-spacing:2px;
-  font-size:14px; color:#ddd;
-}
-.rm-card__rating::after,
-.rm-modal__rating::after{
-  content: "★★★★★";
-  letter-spacing:2px;
-  font-size:14px;
-  color:#f5a623;
-  position:absolute; left:0; top:0; width: calc(var(--score) / 5 * 100%);
-  overflow:hidden; white-space:nowrap;
-}
-
-/* 메타 */
-.rm-card__meta{ display:flex; gap:8px; align-items:center; color:#666; font-size:13px; }
-.rm-card__author{ font-weight:600; color:#444; }
-.rm-card__date{ color:#888; }
-
-/* 상품명(링크 자리) */
-.rm-card__product{ margin-top:4px; }
-.rm-card__product-link{ color:#2b6cb0; text-decoration:none; font-size:13px; }
-.rm-card__product-link:hover{ text-decoration:underline; }
-
-/* ===== 페이지네이션 ===== */
-.rm-pagination{
-  display:flex; align-items:center; justify-content:center;
-  gap:10px; margin-top:24px; user-select:none;
-}
-.rm-page__list{ list-style:none; display:flex; gap:6px; padding:0; margin:0; }
-
-.rm-page__num,
-.rm-page__first,
-.rm-page__prev,
-.rm-page__next{
-  border:1px solid #e0e0e0; background:#fff; color:#333;
-  padding:8px 12px; border-radius:8px; font-size:14px; cursor:pointer;
-}
-.rm-page__num.is-active{
-  background:#111; color:#fff; border-color:#111; font-weight:700;
-}
-.rm-page__num:disabled,
-.rm-page__first:disabled,
-.rm-page__prev:disabled,
-.rm-page__next:disabled{
-  opacity:.45; cursor:not-allowed;
-}
-
-/* ===== 모달 ===== */
-.rm-modal[hidden]{ display:none !important; }
-.rm-modal{ position:fixed; inset:0; z-index:1000; }
-.rm-modal__overlay{ position:absolute; inset:0; background:rgba(0,0,0,.5); }
-.rm-modal__dialog{
-  position:relative; width:min(980px, 94vw); margin: 60px auto;
-  background:#fff; border-radius:16px; box-shadow: 0 20px 60px rgba(0,0,0,.25); overflow:hidden;
-}
-.rm-modal__close{
-  position:absolute; right:12px; top:10px; width:36px; height:36px;
-  border:none; background:#fff; border-radius:50%;
-  box-shadow:0 2px 8px rgba(0,0,0,.12); cursor:pointer; font-size:18px;
-}
-.rm-modal__content{ display:grid; grid-template-columns: 58% 42%; gap:0; min-height:520px; }
-.rm-modal__left{ background:#000; display:flex; align-items:center; justify-content:center; }
-.rm-modal__figure{ margin:0; width:100%; height:100%; display:flex; flex-direction:column; }
-.rm-modal__img{ width:100%; height:100%; object-fit:contain; background:#000; }
-
-.rm-modal__product{ background:#f7f7f7; padding:10px 14px; font-size:14px; }
-.rm-modal__product-link{ color:#2b6cb0; text-decoration:none; }
-.rm-modal__product-link:hover{ text-decoration:underline; }
-
-/* 모달 제목 위 상품명 링크 */
-.rm-modal__product-top{ margin: 0 0 6px; font-size:14px; }
-.rm-modal__product-top .rm-modal__product-link{ color:#2b6cb0; text-decoration:none; }
-.rm-modal__product-top .rm-modal__product-link:hover{ text-decoration:underline; }
-
-
-.rm-modal__right{ padding:18px 18px 20px; overflow:auto; }
-.rm-modal__title{ margin:0 0 8px; font-size:20px; font-weight:800; color:#111; }
-.rm-modal__meta{ display:flex; gap:10px; align-items:center; color:#666; font-size:13px; margin-top:6px; margin-bottom:12px; }
-.rm-modal__author{ font-weight:600; color:#444; }
-.rm-modal__date{ color:#888; }
-.rm-modal__body{ line-height:1.7; color:#333; font-size:15px; white-space:pre-wrap; }
-
-/* 도움이 됐어요 버튼 */
-.rm-modal__footer{ margin-top:16px; display:flex; justify-content:flex-start; }
-.rm-help{
-  display:inline-flex; align-items:center; gap:8px;
-  border:1px solid #e0e0e0; background:#fff; color:#333;
-  padding:10px 14px; border-radius:999px; cursor:pointer; font-weight:600;
-  transition: box-shadow .2s ease, transform .04s ease;
-}
-.rm-help:hover{ box-shadow:0 4px 12px rgba(0,0,0,.08); }
-.rm-help:active{ transform: translateY(1px); }
-.rm-help__count{ font-weight:700; }
-
-/* 유틸 */
-.is-hidden{ display:none !important; }
-.is-loading{ opacity:.6; pointer-events:none; }
-
-/* 반응형 */
-@media (max-width: 1100px){
-  .rm-modal__content{ grid-template-columns: 1fr; }
-  .rm-modal__left{ height: 46vh; }
-}
-@media (max-width: 900px){
-  .rm-grid{ grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 560px){
-  .rm-grid{ grid-template-columns: 1fr; }
-  .rm-modal__dialog{ margin: 24px auto; }
-}
-
-/* ===== 텍스트 별점 모드(★/☆) ===== */
-.rm-rating--text{ line-height:1; font-size:14px; letter-spacing:2px; }
-/* 오버레이 비활성화(충돌 방지) */
-.rm-rating--text::before,
-.rm-rating--text::after{ content:none !important; }
-.rm-rating--text .filled{ color:#f5a623; }
-.rm-rating--text .empty{ color:#ddd; }
-
-/* (이전 data-rating 방식은 유지해도 되지만 이제 사용하지 않음)
-.rm-card__rating[data-rating]{ --score: attr(data-rating number); }
-.rm-modal__rating[data-rating]{ --score: attr(data-rating number); }
-*/
-
-/* === 리뷰 페이지 레이아웃 빠른 패치 (override) === */
-
-/* 드롭다운 테스트용 강제 표시 제거 (지금 화면 깨뜨림 방지) */
-.recent-search-box { display: none !important; }
-
-/* 좌측 사이드바 옆에 콘텐츠가 꽉 차게 */
-.mypage-cont { 
-  flex: 1;
-  background: transparent;
-  border: 0;
-  padding: 0;
-}
-
-/* 리뷰 섹션 기본 패딩 정리 */
-.rm-wrap { 
-  margin-top: 0;
-  padding: 16px 16px 32px;
-}
-
-/* 그리드가 좌측에 붙고, 카드 폭이 너무 좁지 않게 */
-.rm-grid{
-  display: grid;
-  grid-template-columns: repeat(3, minmax(260px, 1fr));
-  gap: 20px 20px;
-  justify-items: stretch;
-}
-
-/* 페이지네이션이 애매하게 떠 보일 때 중앙 정렬 */
-.rm-pagination { 
-  justify-content: center; 
-  margin-top: 24px; 
-}
-
-/* 상위 컨테이너가 overflow로 가리는 문제 예방 */
-.main-content, .order-grid, .rm-grid, .seller-update-section {
-  overflow: visible !important;
-  position: relative;
-  z-index: auto;
-}
-
-.rm-card__wrapper {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 12px;
-  background: #fff;
-  transition: box-shadow 0.2s ease;
-}
-
-.rm-card__wrapper:hover {
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-}
-
-/* === 리뷰 페이지 레이아웃 보정 (override) === */
-
-/* 2열 레이아웃: 좌 260px(사이드바), 우 가변(본문) */
-.sub-content {
+/* 레이아웃: 좌 260px 사이드바, 우 본문 꽉 채우기 */
+.sub-content{
   display: grid !important;
   grid-template-columns: 260px minmax(0, 1fr) !important;
   column-gap: 24px !important;
   align-items: start !important;
-  padding: 0 16px !important; /* 스샷2의 패딩값 유지 */
+  max-width: 1360px;     /* 필요하면 1280~1440으로 조절 */
+  margin: 0 auto;
+  padding: 0 16px;
 }
 
-/* 사이드바 카드 폭·패딩을 일관되게 */
-.sidebar-card {
-  width: 260px !important;
-  box-sizing: border-box !important;
-  padding: 20px !important;            /* 스샷1과 동일 */
-  background: #fff !important;         /* 필요 시 주석 해제 */
-  border-radius: 8px;                   /* 선택 */
-}
-
-/* 본문 컨테이너가 제대로 확장되도록 */
-.mypage-cont {
-  min-width: 0 !important;   /* grid/flex 자식 줄바꿈 깨짐 방지 */
+/* 가운데 카드 패널 (컨테이너) */
+.sub-content .container{
   width: 100% !important;
-  background: transparent !important;
-  border: 0 !important;
-  padding: 0 !important;
+  max-width: none !important;      /* 좁아지는 원인 제거 */
+  margin: 0;                       /* grid 안에서 중앙정렬 불필요 */
+  background: #fff;
+  border: 1px solid #e9eef3;
+  border-radius: 16px;
+  padding: 24px 28px;
+  box-shadow: 0 12px 28px rgba(0,0,0,.06);
 }
 
-/* 리뷰 섹션 여백/그리드 기본값 */
-.rm-wrap { margin-top: 0; padding: 16px 16px 32px; }
-.rm-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(260px, 1fr));
-  gap: 20px;
+/* 제목 (말풍선/부가문구 제거) */
+.sub-content .container > h2{
+  margin: 0 0 16px;
+  font-size: 22px;
+  font-weight: 800;
+  color: #111;
 }
-.rm-pagination { display:flex; justify-content:center; gap:10px; margin-top:24px; }
+.sub-content .container > h2::after{ content: none !important; }
 
+/* 테이블 래퍼 */
+.sub-content .review-table-container{
+  margin-top: 6px;
+  overflow-x: auto;
+  position: relative;
+}
+
+/* 하단 얇은 구분선 */
+.sub-content .review-table-container::after{
+  content:"";
+  display:block;
+  height:1px;
+  background:#edf1f5;
+  margin-top: 16px;
+}
+
+/* 테이블 기본 */
+.sub-content .review-table-container table{
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #fff;
+  font-size: 15px;
+}
+
+/* 헤더: 최근주문정보 느낌(연한 파란회색 + 둥근 모서리) */
+.sub-content .review-table-container thead th{
+  padding: 14px 16px;
+  text-align: left;
+  font-weight: 700;
+  color: #263442;
+  background: #eef4fb;
+  border-bottom: 1px solid #e3ebf4;
+  white-space: nowrap;
+}
+.sub-content .review-table-container thead th:first-child{ border-top-left-radius: 10px; }
+.sub-content .review-table-container thead th:last-child{  border-top-right-radius: 10px; }
+
+/* 본문 셀 */
+.sub-content .review-table-container tbody td{
+  padding: 14px 16px;
+  color: #333;
+  border-bottom: 1px solid #eef1f5;
+  vertical-align: middle;
+}
+
+/* 행 hover */
+.sub-content .review-table-container tbody tr:hover td{
+  background: #fbfdff;
+}
+
+/* 데이터 없을 때 문구: 최근주문정보 톤 */
+.sub-content .review-table-container .no-data{
+  text-align: left;
+  color: #7d8694;
+  padding: 22px 16px;
+  border-bottom: none;
+}
+
+/* 썸네일 */
+.sub-content .product-thumb{
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid #eee;
+  display: block;
+}
+
+/* 버튼(리뷰 작성) */
+.sub-content .btn-review-write{
+  padding: 9px 12px;
+  border: 1px solid #d9dee5;
+  border-radius: 8px;
+  background: #f7faff;
+  font-weight: 600;
+  cursor: pointer;
+}
+.sub-content .btn-review-write:hover{ background:#eef4ff; }
+
+/* 컬럼 폭(데스크톱에서만 살짝 가이드) */
+@media (min-width: 1100px){
+  .sub-content .review-table-container colgroup col:nth-child(1){ width: 16% !important; } /* 주문번호 */
+  .sub-content .review-table-container colgroup col:nth-child(2){ width: 14% !important; } /* 날짜 */
+  .sub-content .review-table-container colgroup col:nth-child(3){ width: 22% !important; } /* 상품명 */
+  .sub-content .review-table-container colgroup col:nth-child(4){ width: 18% !important; } /* 이미지 */
+  .sub-content .review-table-container colgroup col:nth-child(5){ width: 20% !important; } /* 내용 */
+  .sub-content .review-table-container colgroup col:nth-child(6){ width: 10% !important; } /* 리뷰 */
+}
+
+/* 태블릿 이하: 여백만 살짝 축소 */
+@media (max-width: 768px){
+  .sub-content{ padding: 0 12px; }
+  .sub-content .container{ padding: 18px; }
+  .sub-content .review-table-container thead th,
+  .sub-content .review-table-container tbody td{ padding: 12px; }
+}

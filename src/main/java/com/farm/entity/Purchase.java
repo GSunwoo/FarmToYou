@@ -33,7 +33,7 @@ public class Purchase {
 	@GeneratedValue(generator = "purchaseSequence")
 	private Long purc_id;
 	@Column(nullable = false, columnDefinition = "VARCHAR(10) DEFAULT 'chk_order'")
-	private String purc_state; // 주문상태 (주문확인중/상품준비중/배송중/배송완료)
+	private String purc_state; // 주문상태 (주문확인중/상품준비중/배송중/배송완료)(chk_order/prepare_order/deli_order/cmpl_order)
 	@Column(nullable = false, columnDefinition = "NUMBER DEFAULT 1") // 0이면 결제 안된 상태
 	private int purc_cmpl; // 결제상태
 	private String purc_request; // 구매자 요청사항
