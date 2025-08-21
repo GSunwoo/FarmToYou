@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -28,6 +29,7 @@ import com.farm.dto.PageDTO;
 import com.farm.dto.ReviewBoardDTO;
 import com.farm.dto.ReviewImgDTO;
 import com.farm.service.ReviewBoardService;
+import com.farm.service.ReviewCarouselService;
 import com.farm.service.ReviewImgService;
 import com.farm.service.ReviewLikeService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -38,6 +40,7 @@ import utils.UploadUtils;
 
 @Controller
 public class ReviewBoardController {
+
 
 	@Autowired
 	ReviewBoardService dao;
@@ -51,7 +54,35 @@ public class ReviewBoardController {
 	@Autowired
 	private ReviewLikeService reviewLikeService;
 	
+	@Autowired
+	private final ReviewCarouselService reviewCarouselService;
+	
+	//메인 페이지에 리뷰 캐러셀 20개
+	@Value("${review.bestPage}")
+	private int bestPage;
 
+    ReviewBoardController(ReviewCarouselService reviewCarouselService) {
+        this.reviewCarouselService = reviewCarouselService;
+    }
+	
+	//리뷰 캐러셀 
+	@GetMapping("/main.do")
+	@ResponseBody
+	public List<ReviewBoardDTO> mainReviewCarousel(
+			//실수로 파라미터를 빼먹어도 기본값으로 동작할 수 있게 하기위해
+			@RequestParam(name = "reviewPage", required = false, defaultValue = "20") int reviewPage,
+			Model model) {
+		
+		//서비스에서 리뷰 데이터 가져오기
+	    List<ReviewBoardDTO> reviews = reviewCarouselService.getTopLikedReviews(reviewPage);
+
+	    //JSP에서 ${reviewPage}로 접근 가능하게 넣어줌
+	    model.addAttribute("reviewPage", reviews);
+	    
+	    return reviewCarouselService.getTopLikedReviews(reviewPage);
+		
+	}
+	
 	//목록
 	@GetMapping("/guest/review/list.do")
 	// HttpServletRequest : 사용자가 웹 페이지에서 서버에게 요청한 내용을 다 들고 있는 객체
@@ -183,6 +214,7 @@ public class ReviewBoardController {
 				
 	}
 	
+	//좋아요삽입
 	@PostMapping("/buyer/review/likeinsert.do")
 	@ResponseBody
 	//ResponseEntity : 본문 없는 응답을 돌려주겠다는 의미
@@ -204,6 +236,7 @@ public class ReviewBoardController {
 		 }
 	}
 	
+	//좋아요삭제
 	@PostMapping("/buyer/review/likedelete.do")
 	@ResponseBody
 	public ResponseEntity<Void> delete(
@@ -217,7 +250,7 @@ public class ReviewBoardController {
 		 
 		 return ResponseEntity.ok().build();
 	}
-
+	//쓰기
 	@GetMapping("/buyer/review/write.do")
 	public String reviewWrite(@AuthenticationPrincipal CustomUserDetails userDetails,
 			Model model /* , @RequestParam("prod_id") Long prod_id */) {
@@ -228,7 +261,7 @@ public class ReviewBoardController {
 		return "review/reviewUpdate";
 	}
 
-	// 쓰기
+	//쓰기
 	@PostMapping("/buyer/review/write.do")
 	public String write(ReviewBoardDTO reviewboardDTO, Model model,
 			@AuthenticationPrincipal CustomUserDetails userDetails, HttpServletRequest req) {

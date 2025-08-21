@@ -34,9 +34,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE rNum <![CDATA[>=]]>#{start} 
 		
       
-      
-      
-      	
 </select>
 
 	<!-- id="" -> 이 SQL의 이름(식별자).자바 코드에서 이걸 호출할 때 view()라고 부름-->

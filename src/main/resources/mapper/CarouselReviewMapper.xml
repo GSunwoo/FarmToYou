@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 리뷰 캐러셀(메인) -->
+<mapper namespace="com.farm.service.CarouselReviewMapper">
+<select id="selectTopLiked" resultType="com.farm.dto.ReviewBoardDTO">
+   SELECT *
+  	FROM (SELECT rev.review_id, rev.title, rev.content, rev.postdate,
+      NVL(l.like_count, 0) AS like_count, img.main_filename AS filename
+    FROM review rev
+    LEFT JOIN (SELECT review_id, COUNT(*) AS like_count
+      FROM review_like GROUP BY review_id) l ON l.review_id = rev.review_id
+    LEFT JOIN (SELECT review_id, MAX(CASE WHEN main = 'MAIN' THEN filename END) AS main_filename
+      FROM review_img GROUP BY review_id) img ON img.review_id = rev.review_id
+    ORDER BY NVL(l.like_count, 0) DESC, rev.postdate DESC)
+	FETCH FIRST #{reviewPage} ROWS ONLY
+</select>
+</mapper>
