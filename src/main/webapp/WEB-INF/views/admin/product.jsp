@@ -8,6 +8,12 @@
 <title>관리자 상품 목록 페이지</title>
 
 <style>
+/* 기본 레이아웃 스타일 */
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      padding: 40px;
+      background: #f0f2f5;
+    }
 table {
 	width: 100%;
 	border-collapse: collapse; /* 격자무늬 필수 */

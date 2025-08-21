@@ -8,6 +8,12 @@
 <title>상품 상세 정보</title>
 
 <style>
+/* 기본 레이아웃 스타일 */
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      padding: 40px;
+      background: #f0f2f5;
+    }
 /* 엑셀처럼 격자무늬 표 스타일 */
 table {
 	width: 100%;
@@ -74,7 +80,8 @@ th {
 	</table>
 
 	<p>
-		<a href="/admin/product/delete.do?prod_id=${product.prod_id}">삭제</a>
+		<a href="/admin/product/delete.do?prod_id=${product.prod_id}"
+			onclick="return confirm('삭제하시겠습니까?');">삭제</a>
 	</p>
 	</div>
 </body>

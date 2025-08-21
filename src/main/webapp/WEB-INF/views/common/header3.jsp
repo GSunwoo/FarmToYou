@@ -19,7 +19,7 @@
             <li>MY 회원정보
                 <ul class="sub-depth3">
                     <li><a href="${pageContext.request.contextPath}/seller/sellerUpdateForm">-판매자 정보 변경</a></li>
-					<li><a href="${pageContext.request.contextPath}/seller/sellermember-info">-회원정보 변경</a></li>
+					<li><a href="${pageContext.request.contextPath}/seller/member-info">-회원정보 변경</a></li>
                 </ul>
             </li>
             <li>리뷰
