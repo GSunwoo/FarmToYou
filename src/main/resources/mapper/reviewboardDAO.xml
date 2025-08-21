@@ -17,6 +17,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE ${searchField} LIKE '%' || #{searchKeyword} || '%'	
 		</if>
 </select>
+<!-- 리뷰 캐러셀(메인) -->
+<select id="selectTopLiked" resultType="com.farm.dto.ReviewBoardDTO">
+  SELECT rev.review_id, rev.title, rev.content, rev.postdate, NVL(l.like_count, 0) AS like_count,
+    img.filename
+	  FROM review r LEFT JOIN (SELECT review_id, COUNT(*) AS like_count
+	  FROM review_like GROUP BY review_id) l ON l.review_id = r.review_id
+	  LEFT JOIN (SELECT review_id, MAX(CASE WHEN main = 1 THEN filename END) AS filename
+      FROM review_img GROUP BY review_id) img ON img.review_id = rev.review_id
+  ORDER BY NVL(l.like_count, 0) DESC, r.postdate DESC
+  )
+  WHERE ROWNUM = #{limit} 
+</select>
 
 <!-- 리스트 -->
 <select id="listPage"
@@ -32,11 +44,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		LEFT JOIN review_img img
 			ON rev.review_id = img.review_id and img.main = 'main'
 		WHERE rNum <![CDATA[>=]]>#{start} 
-		
-      
-      
-      
-      	
 </select>
 
 	<!-- id="" -> 이 SQL의 이름(식별자).자바 코드에서 이걸 호출할 때 view()라고 부름-->
