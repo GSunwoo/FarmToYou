@@ -15,7 +15,7 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <script src="/js/reviewModal.js"></script>
 <script src="/js/reviewInfiniteScroll.js" defer></script>
-<script src="/js/reviewLikeHandler.js" defer></script>
+<!-- <script src="/js/reviewLikeHandler.js" defer></script> -->
 </head>
 
 <body>
@@ -99,7 +99,7 @@
 			<c:forEach var="review" items="${reviewList }">
 				<div class="review-cards" data-review-id="${review.review_id}"
 					data-star="${review.star}" data-likes="${review.review_like}"
-					data-evaluation="${review.evaluation}"
+					data-evaluation="${review.evaluation}" data-liked="${review.review_liked ? 'true' : 'false'}"
 					data-content="${review.content}">
 
 					<div class="review-imgs">
@@ -114,6 +114,7 @@
 					</div>
 					<div class="review-bottom-content">
 						<h5 class="review-title">${review.title }</h5>
+						<p>${review.review_liked}</p>
 					</div>
 
 					<div class="bottom-rating">

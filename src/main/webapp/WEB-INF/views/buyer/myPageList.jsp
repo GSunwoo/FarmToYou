@@ -60,9 +60,15 @@
 												href="${pageContext.request.contextPath}/Detailpage?prod_id=${o.prod_id}">
 													<c:out value="${o.prod_name }" />
 											</a></td>
-											<td><fmt:formatNumber value="${o.prod_price }"
-													pattern="#,###" />원 / <c:out value="${o.qty }" />개</td>
-											<td><c:out value="${o.purc_state }"></c:out></td>
+											<td>
+												<fmt:formatNumber value="${o.prod_price * o.qty }" pattern="#,###" />원
+												
+											</td>
+											<td>
+												<c:out value="${o.purc_state }"></c:out>
+												<c:if test="o.purc_state">
+												</c:if>
+											</td>
 											<td>
 												<a class="btn-sm" href="/buyer/review/write.do">리뷰작성</a>
 											</td>
@@ -77,6 +83,11 @@
 							</c:choose>
 							</tbody>
 						</table>
+						
+<%-- 						<span class="sub-price">
+													(<fmt:formatNumber value="${o.prod_price }"pattern="#,###" />원 x <c:out value="${o.qty }" />개)
+												</span> --%>
+						
 						
 						<!-- <c:set var="baseUrl" value="${pageContext.request.contextPath}/buyer/myPageList.do"/>
 						

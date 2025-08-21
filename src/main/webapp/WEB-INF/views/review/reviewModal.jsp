@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
+
+
 <div id="reviewModal" class="modal" hidden>
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -16,11 +18,12 @@
 						<time class="review-date modal-date"></time>
 					</div>
 					<div class="rating modal-rating"></div>
-					<div class="review-content modal-content-text"></div>
+					<div class="review-content modal-content-text">
+					</div>
 					<div class="modal-actions">
 						<button type="button" class="like-btn" 
 								data-review-id="${review.review_id }" 
-								data-liked="${review.review_liked }"
+								data-liked="${review.review_liked}"
 								data-likes= "${review.review_like }">
 							<span class="heart">❤️</span>
 							<span class="like-count">${review.review_like}</span>

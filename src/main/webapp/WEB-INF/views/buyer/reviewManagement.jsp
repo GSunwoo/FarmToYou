@@ -42,23 +42,23 @@
                 </thead>
                     <tbody>
             <c:if test="${not empty reviewLists}">
-              <c:forEach var="rvs" items="${reviewLists}">
+              <c:forEach var="rls" items="${reviewLists}">
                 <tr>
                   <td>
-                  	<c:out value="${rvs.order_num}"/></td>
+                  	<c:out value="${rls.order_num}"/></td>
                   <td>
-  					<time><c:out value="${rvs.purc_date}"/></time>
+  					<time><c:out value="${rls.purc_date}"/></time>
                   </td>
                   <td>
-                  	<c:out value="${rvs.prod_name}"/>
+                  	<c:out value="${rls.prod_name}"/>
                   </td>
 
                   <td>
                     <c:choose>
-                      <c:when test="${not empty rvs.filename}">
+                      <c:when test="${not empty rls.filename}">
                         <img
-                          src="${pageContext.request.contextPath}/uploads/reviewimg/${rvs.review_id}/${rvs.filename}"
-                          alt="<c:out value='${rvs.title}'/>"
+                          src="${pageContext.request.contextPath}/uploads/reviewimg/${rls.review_id}/${rls.filename}"
+                          alt="<c:out value='${rls.title}'/>"
                           class="review-thumb"
                         />
                       </c:when>
@@ -68,7 +68,7 @@
                     </c:choose>
                   </td>
 
-                  <td class="review-content"><c:out value="${rvs.content}"/></td>
+                  <td class="review-content"><c:out value="${rls.content}"/></td>
                 </tr>
               </c:forEach>
             </c:if>
