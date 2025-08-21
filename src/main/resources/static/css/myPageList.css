@@ -134,3 +134,8 @@
   font-size: 15px;
   color: #888;
 }
+
+.sub-price {
+  color: #888;   /* 회색 톤 */
+  font-size: 0.9em; /* 조금 작게 */
+}

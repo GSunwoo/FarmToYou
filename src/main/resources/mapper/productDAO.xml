@@ -28,7 +28,7 @@
 		<!-- 검색어가 있는 경우에만 where절을 조건부로 추가한다. -->
 		<if test="searchWord!=null and 
 			!searchWord.equals('')">
-			WHERE puduct_name LIKE '%' || #{searchWord} || '%'
+			WHERE prod_name LIKE '%' || #{searchWord} || '%'
 		</if>
 	</select>
 
@@ -61,48 +61,43 @@
 	<select id="selectBestProd"
 		parameterType="com.farm.dto.ParameterDTO"
 		resultType="com.farm.dto.ProductDTO">
-		SELECT prod_price, pro.prod_id, prod_cate, prod_name, filename
-		FROM (
-		    SELECT Tb.*, rownum rNum 
-		    FROM (
-		        SELECT pr.prod_price, pr.prod_id, pr.prod_cate, pr.prod_name
-		        FROM product pr
-		        JOIN purchase pu ON pr.prod_id = pu.prod_id
-		
-		        <if test="searchWords != null and !searchWords.equals('') ">
-		            WHERE
-		            <foreach collection="searchWords" item="sw" separator="or" open="(" close=")">
-		                pr.prod_name LIKE '%' || #{sw} || '%'
-		            </foreach>
-		        </if>
-		
-		        GROUP BY pr.prod_price, pr.prod_id, pr.prod_cate, pr.prod_name
-		        ORDER BY COUNT(pu.prod_id) DESC
-		    ) Tb
-		    WHERE rownum <![CDATA[<=]]> #{end}
+		SELECT prod_price, prod_stock, member_id, pro.prod_id, prod_cate,
+		prod_content, prod_name, filename
+		FROM (SELECT Tb.*, rownum rNum FROM (
+		SELECT * FROM product
+		<if test="searchWords != null and !searchWords.equals('') ">
+			WHERE
+			<foreach collection="searchWords" item="sw" separator="or"
+				open="(" close=")">
+				prod_name LIKE '%' || #{sw} || '%'
+			</foreach>
+		</if>
+		ORDER BY prod_id DESC
+		) Tb
+		WHERE rownum<![CDATA[<=]]>#{end}
 		) pro
-		LEFT JOIN product_img img 
-		    ON pro.prod_id = img.prod_id AND img.main_idx = 1
-		WHERE rNum <![CDATA[>=]]> #{start}
+		LEFT JOIN product_img img
+		ON pro.prod_id = img.prod_id and
+		img.main_idx = 1
+		WHERE rNum <![CDATA[>=]]>#{start}
 	</select>
 
-	<select id="selectBestProdForLastWeek" parameterType="Long"
+	<select id="selectBestProdForLastWeek"
+		parameterType="Long"
 		resultType="com.farm.dto.ProductDTO">
 		SELECT prod_id, prod_price, prod_name, filename
-		FROM (SELECT
-		pr.prod_id,
-		pr.prod_price,
-		pr.prod_name,
-		pi.filename,
-		ROW_NUMBER() OVER (ORDER BY COUNT(pu.prod_id) DESC) rNum
-		FROM product pr
-		JOIN purchase pu ON pr.prod_id = pu.prod_id
-		JOIN product_img pi ON pr.prod_id = pi.prod_id AND pi.main_idx = 1
-		WHERE pu.purc_date >= TRUNC(SYSDATE) - 6
-		GROUP BY pr.prod_id, pr.prod_price, pr.prod_name, pi.filename
+		FROM (SELECT pr.prod_id,
+				pr.prod_price,
+				pr.prod_name,
+				pi.filename,
+				ROW_NUMBER() OVER (ORDER BY COUNT(pu.prod_id) DESC) rNum
+			FROM product pr
+				JOIN purchase pu ON pr.prod_id = pu.prod_id
+				JOIN product_img pi ON pr.prod_id = pi.prod_id AND pi.main_idx = 1
+			WHERE pu.purc_date >= TRUNC(SYSDATE) - 6 
+			GROUP BY pr.prod_id, pr.prod_price, pr.prod_name, pi.filename
 		)
-		WHERE rNum <![CDATA[<=]]>
-		#{end}
+		WHERE rNum <![CDATA[<=]]> #{end}
 	</select>
 
 

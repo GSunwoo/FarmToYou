@@ -123,7 +123,7 @@ public class MypageBuyerController {
 	}
 	
 	@PostMapping("/buyer/address/update.do")
-	public ResponseEntity<Long> updateAddress(@RequestBody Long addr_id,
+	public ResponseEntity<Long> updateAddress(@RequestParam("addr_id") Long addr_id,
 			@AuthenticationPrincipal CustomUserDetails userDetails){
 		MemberDTO member = userDetails.getMemberDTO();
 		Long member_id = member.getMember_id();
@@ -134,6 +134,14 @@ public class MypageBuyerController {
 		int resultMain = memDAO.updateMain(addr_id);
 		
 		return ResponseEntity.ok(addr_id);
+	}
+	
+	@PostMapping("/buyer/address/delete.do")
+	public String deleteAddress(@RequestParam("addr_id") Long addr_id) {
+		
+		int result = memDAO.deleteAddress(addr_id);
+		
+		return "redirect:/buyer/address/list.do";
 	}
 	
 	@GetMapping("/buyer/myPageList")

@@ -111,8 +111,11 @@ public class PaymentController {
 			
 			// 구매테이블에 추가
 			purDAO.insertPurchase(purchaseDTO);
+			// 구매 후 남은 재고 감소
+			purDAO.updateQty(purchaseDTO.getProd_id(), cache.getQty());
 			// 캐시테이블의 임시정보 삭제
 			orderDAO.deleteOrderCache(order_num);
+			
 		}
 		return "pay/success";
 	}

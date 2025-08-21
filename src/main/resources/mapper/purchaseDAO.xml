@@ -44,4 +44,10 @@
 	        #{purc_date}
 	    )
 	</insert>
+	
+	<update id="updateQty">
+	UPDATE product 
+	SET prod_stock=prod_stock-#{qty} 
+	WHERE prod_id=#{prod_id}
+	</update>
 </mapper>

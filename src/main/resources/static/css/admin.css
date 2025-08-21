@@ -1,0 +1,67 @@
+/* 상단 헤더 */
+.admin-topbar {
+  background: #1f2937; /* 진회색 */
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.topbar-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 14px 16px;
+}
+.topbar-inner h1 {
+  font-size: 18px;
+  margin: 0;
+}
+
+/* 메인 레이아웃 */
+.admin-wrap {
+  display: flex;
+  gap: 24px;
+  max-width: 1200px;
+  margin: 16px auto;
+  padding: 0 16px 24px;
+  box-sizing: border-box;
+}
+
+/* 사이드바 */
+.admin-sidebar {
+  width: 220px;
+  background: #111827; /* 더 어두운 회색 */
+  color: #e5e7eb;
+  border-radius: 8px;
+  padding: 12px 0;
+  height: fit-content;
+  position: sticky;
+  top: 58px; /* 헤더 높이+여백만큼 고정 */
+}
+
+.admin-menu { list-style: none; padding: 0; margin: 0; }
+.admin-menu li a {
+  display: block;
+  padding: 12px 16px;
+  color: #e5e7eb;
+  text-decoration: none;
+  border-radius: 6px;
+  margin: 4px 8px;
+}
+.admin-menu li a:hover { background: rgba(255,255,255,0.08); }
+.admin-menu li a.active { background: #4f46e5; color: #fff; }
+
+/* 우측 컨텐츠 */
+.admin-main { flex: 1; }
+.card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+/* 반응형 살짝 */
+@media (max-width: 900px) {
+  .admin-wrap { display: block; }
+  .admin-sidebar { width: 100%; position: static; }
+  .admin-menu li a { margin: 4px 12px; }
+}

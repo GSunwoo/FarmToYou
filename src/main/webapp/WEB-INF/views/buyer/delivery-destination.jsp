@@ -18,56 +18,61 @@
   
 </head>
 <body>
+<%@ include file="../common/header.jsp" %>
 
-<section class="order-wrap">
-  <div class="order-grid">
-    <div class="order-left">
-      <h2 class="weekly-title">배송지 관리</h2>
-
-      <section class="card">
-        <div class="card-hd">
-          <strong>배송지</strong> <span class="bar">|</span>
-          <!-- 나중에 구현 --> 
-          <!-- <button type="button" class="btn-sm ghost" id="btnAddrEdit">삭제</button>  -->
-          <button type="button" class="btn-sm solid" id="btnAddrNew" style="margin-left:8px">새 배송지 추가</button>
-          
-        </div>
-        <div class="card-bd">
-          <span class="badge">최근배송지</span>
-          <div class="addr-text" id="addrText">
-        <div id="addrListBox" style="margin-top:10px;">
-          	<c:choose>
-          		<c:when test="${not empty AddressDTO }">
-          			<c:out value="${AddressDTO.addr1 }" /> <c:out value="${AddressDTO.addr2 }" /> 
-          		</c:when>
-          		<c:otherwise>상세주소</c:otherwise>
-          	</c:choose>
-        </div>
-        </div>
-		<button type="button" class="btn-sm ghost" id="btnSetMain" style="margin-top:8px;">메인 배송지 설정</button>
-        </div>
-      </section>
-    </div>
-  </div>
-</section>
-
-	<div class="modal" id="modalAddrNew" aria-hidden="true">
-		<div class="panel" role="dialog" aria-modal="true">
-			<div class="panel-hd">새 배송지 추가</div>
-			<div class="panel-bd">
-				<div class="row">
-					<input class="input-lg" id="n_zip" name="zipcode" placeholder="우편번호" style="max-width:140px" readonly/>
-					<button class="btn-sm ghost" id="btnPostNew" type="button">우편번호 찾기</button>
+  <div class="mypage-wrapper">
+    <div class="sub-content">
+      <%@ include file="../common/header2.jsp" %>
+		<section class="order-wrap">
+		  <div class="order-grid">
+		    <div class="order-right">
+		      <h2 class="weekly-title">배송지 관리</h2>
+		
+		      <section class="card">
+		        <div class="card-hd">
+		          <strong>배송지</strong> <span class="bar">|</span>
+		          <!-- 나중에 구현 --> 
+		          <!-- <button type="button" class="btn-sm ghost" id="btnAddrEdit">삭제</button>  -->
+		          <button type="button" class="btn-sm solid" id="btnAddrNew" style="margin-left:8px">새 배송지 추가</button>
+		          
+		        </div>
+		        <div class="card-bd">
+		          <div class="addr-text" id="addrText">
+		        <div id="addrListBox" style="margin-top:10px;">
+		          	<c:choose>
+		          		<c:when test="${not empty AddressDTO }">
+		          			<c:out value="${AddressDTO.addr1 }" /> <c:out value="${AddressDTO.addr2 }" /> 
+		          		</c:when>
+		          		<c:otherwise>상세주소</c:otherwise>
+		          	</c:choose>
+		        </div>
+		        </div>
+				<button type="button" class="btn-sm ghost" id="btnSetMain" style="margin-top:8px;">메인 배송지 설정</button>
+		        </div>
+		      </section>
+		    </div>
+		  </div>
+		</section>
+		
+			<div class="modal" id="modalAddrNew" aria-hidden="true">
+				<div class="panel" role="dialog" aria-modal="true">
+					<div class="panel-hd">새 배송지 추가</div>
+					<div class="panel-bd">
+						<div class="row">
+							<input class="input-lg" id="n_zip" name="zipcode" placeholder="우편번호" style="max-width:140px" readonly/>
+							<button class="btn-sm ghost" id="btnPostNew" type="button">우편번호 찾기</button>
+						</div>
+						<input class="input-lg" id="n_addr1" name="addr1" placeholder="기본주소" readonly>
+						<input class="input-lg" id="n_addr2" name="addr2" placeholder="상세주소">
+					</div>
+					<div class="panel-ft">
+						<button type="button" class="btn-sm ghost" data-close="#modalAddrNew">취소</button>
+						<button type="button" class="btn-sm solid" id="saveAddrNew">저장</button>
+					</div>
 				</div>
-				<input class="input-lg" id="n_addr1" name="addr1" placeholder="기본주소" readonly>
-				<input class="input-lg" id="n_addr2" name="addr2" placeholder="상세주소">
-			</div>
-			<div class="panel-ft">
-				<button type="button" class="btn-sm ghost" data-close="#modalAddrNew">취소</button>
-				<button type="button" class="btn-sm solid" id="saveAddrNew">저장</button>
+			
 			</div>
 		</div>
-	
 	</div>
 </body>
 </html>

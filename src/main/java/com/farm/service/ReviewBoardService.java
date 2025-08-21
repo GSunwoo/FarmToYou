@@ -30,7 +30,7 @@ public interface ReviewBoardService {
 	//좋아요
 	public boolean toggleLike(Long memberId, Long review_id);
 	//좋아요 확인
-	public  int existsLike(Long reviewId, Long memberId);
+	public  int existsLike(@Param("reviewId") Long reviewId,@Param("memberId") Long memberId);
 	//좋아요 카운트
 	public int countLike(Long reviewId);
 	//좋아요 삭제

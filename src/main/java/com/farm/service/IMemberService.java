@@ -18,5 +18,5 @@ public interface IMemberService {
 	public int insertAddress(AddressDTO addressDTO);
 	public int updateMainToZero(@Param("member_id") Long member_id);
 	public int updateMain(@Param("addr_id") Long addr_id);
-
+	public int deleteAddress(@Param("addr_id") Long addr_id);
 }
