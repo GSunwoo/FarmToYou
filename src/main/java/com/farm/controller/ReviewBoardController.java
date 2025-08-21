@@ -67,19 +67,17 @@ public class ReviewBoardController {
 	
 	//리뷰 캐러셀 
 	@GetMapping("/main.do")
-	@ResponseBody
-	public List<ReviewBoardDTO> mainReviewCarousel(
-			//실수로 파라미터를 빼먹어도 기본값으로 동작할 수 있게 하기위해
-			@RequestParam(name = "reviewPage", required = false, defaultValue = "20") int reviewPage,
-			Model model) {
+	public String mainReviewCarousel(
+		//실수로 파라미터를 빼먹어도 기본값으로 동작할 수 있게 하기위해
+		@RequestParam(name = "reviewPage", required = false, defaultValue = "20") int reviewPage,
+		Model model
+		) {
 		
 		//서비스에서 리뷰 데이터 가져오기
 	    List<ReviewBoardDTO> reviews = reviewCarouselService.getTopLikedReviews(reviewPage);
-
-	    //JSP에서 ${reviewPage}로 접근 가능하게 넣어줌
-	    model.addAttribute("reviewPage", reviews);
 	    
-	    return reviewCarouselService.getTopLikedReviews(reviewPage);
+	    model.addAttribute("reviewPage", reviews);
+	    return "main";
 		
 	}
 	
