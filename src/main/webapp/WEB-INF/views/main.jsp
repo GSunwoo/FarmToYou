@@ -35,7 +35,6 @@
 			<button class="prev-btn">&#10094;</button>
 			<button class="next-btn">&#10095;</button>
 		</div>
-		<a href="/guest/review/list.do">리뷰리스트</a>
 	</section>
 
 

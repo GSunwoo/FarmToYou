@@ -13,6 +13,9 @@
 	href="${pageContext.request.contextPath}/css/Productpage.css">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script>
+  const ctx = "${pageContext.request.contextPath}";
+</script>
 <script src="/js/wishlist/wishlist.js"></script>
 <style>
 /* 장바구니 스타일 커스텀 */

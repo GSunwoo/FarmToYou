@@ -25,11 +25,11 @@
         <li><a href="/myLogout.do">로그아웃</a></li> 
         <li>|</li>
         <li><a href="/mypage.do">마이페이지</a></li>
-        <li>|</li>
-        <li><a href="/buyer/review/write.do">리뷰쓰기</a></li>
+        
 	</sec:authorize>
 		
-        <li><a href="/insertPurchase.do">구매생성</a></li>
+        <!-- <li><a href="/buyer/review/write.do">리뷰쓰기</a></li>
+        <li><a href="/insertPurchase.do">구매생성</a></li> -->
     </ul>
 </div>
 

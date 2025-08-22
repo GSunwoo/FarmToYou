@@ -1,6 +1,5 @@
 
 document.addEventListener("DOMContentLoaded", function() {
-    const ctx = window.location.pathname.substring(0, window.location.pathname.indexOf("/",2)); 
     const cartBody = document.getElementById("cart-body");
     const totalAmountEl = document.getElementById("total-amount");
     const payBtn = document.getElementById("wishlist");

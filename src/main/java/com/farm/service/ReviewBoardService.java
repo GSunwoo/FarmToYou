@@ -41,4 +41,9 @@ public interface ReviewBoardService {
 	public int insertLike(@Param("reviewId") Long reviewId,
 			@Param("memberId") Long memberId);
 	
+	
+	
+	
+	/* 상세페이지에서 리뷰 연동*/
+	public ArrayList<ReviewBoardDTO> loadReview(@Param("prod_id") Long prod_id);
 }

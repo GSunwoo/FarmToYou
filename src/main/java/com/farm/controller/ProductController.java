@@ -23,12 +23,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.farm.config.CustomUserDetails;
+import com.farm.config.CustomUserDetailsService;
 import com.farm.dto.MemberDTO;
 import com.farm.dto.ParameterDTO;
 import com.farm.dto.ProductDTO;
 import com.farm.dto.ProductImgDTO;
+import com.farm.dto.ReviewBoardDTO;
 import com.farm.service.IProductImgService;
 import com.farm.service.IProductService;
+import com.farm.service.ReviewBoardService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.Part;
@@ -37,9 +40,8 @@ import utils.PagingUtil;
 import utils.UploadUtils;
 
 
-
 @Controller
-public class ProductController {
+public class ProductController /*~~(Could not parse as Java)~~>*/{
 	
 	@Value("${board.pageSize}")
 	private int pageSize;
@@ -55,6 +57,9 @@ public class ProductController {
 	
 	@Autowired
 	IProductImgService imgDao;
+	
+	@Autowired
+	ReviewBoardService revDao;
 	
 	@GetMapping("/seller/write.do")
 	public String sellerWrite() {
@@ -99,7 +104,6 @@ public class ProductController {
 			Long i = (last_idx != null) ? last_idx + 1 : 1L;
 			for(MultipartFile file : files) {
 				if (file.isEmpty()) {
-					System.out.println("파일 빔?");
 					continue;
 				}
 	
@@ -177,7 +181,8 @@ public class ProductController {
 	    
 	    if(parameterDTO.getSearchWord() != null && 
 	    		!parameterDTO.getSearchWord().trim().equals("")) {
-	    	parameterDTO.setSearchWords(Arrays.asList(parameterDTO.getSearchWord().trim().split(" ")));
+	    	parameterDTO.setSearchWords(Arrays.asList(
+	    			parameterDTO.getSearchWord().trim().split(" ")));
 	    }
 		
 		
@@ -218,7 +223,8 @@ public class ProductController {
 	@GetMapping("/guest/Detailpage.do")
 	public String productView(ProductDTO productDTO, Model model,
 			@RequestParam("prod_id") Long prod_id,
-			ProductImgDTO productImgDTO) {
+			ProductImgDTO productImgDTO,
+			@AuthenticationPrincipal CustomUserDetails user) {
 		
 		productDTO = proDao.selectProductView(prod_id);
 		productDTO.setProd_content(productDTO.getProd_content()
@@ -232,7 +238,38 @@ public class ProductController {
 		ProductImgDTO main = imgDao.selectMain(prod_id);
 		model.addAttribute("main", main);
 		model.addAttribute("imglist", imglist);
+		// 이미지 불러오기 끝
 		
+		List<ReviewBoardDTO> revlist = revDao.loadReview(prod_id);
+
+		// DAO에서 null을 리턴할 수 있다면 → 빈 리스트로 보정
+		if (revlist == null) {
+		    revlist = new ArrayList<>();
+		}
+		if (user == null) {
+			model.addAttribute("member_id", 0);
+		}
+		else {
+			model.addAttribute("member_id", user.getMemberDTO().getMember_id());
+		}
+		
+		for (ReviewBoardDTO review : revlist) {
+		    if (review != null) {   // ✅ 안전한 null 체크
+		        review.setReview_like(revDao.countLike(review.getReview_id()));
+
+		        if (user != null) {
+		            Long logindata = user.getMemberDTO().getMember_id();
+		            boolean liked = (revDao.existsLike(review.getReview_id(), logindata) == 1);
+		            review.setReview_liked(liked);
+		            System.out.println("reviewLiked=" + liked + " memberId=" + logindata);
+		        } else {
+		            review.setReview_liked(false);
+		        }
+		    }
+		}
+
+		model.addAttribute("revlist", revlist);
+
 		
 		
 		return "Detailpage";
@@ -335,15 +372,15 @@ public class ProductController {
 	
 	@PostMapping("/seller/delete.do")
 	public String deleteProduct(@RequestParam("prod_id") Long prod_id){
-		int prod_result = proDao.productDelete(prod_id);
 		int img_result = imgDao.deleteAllImg(prod_id);
+		int prod_result = proDao.productDelete(prod_id);
 		if(prod_result == 1 && img_result == 1) {
 			System.out.println("상품 삭제가 완료되었습니다 : " + prod_result);
 		}
 		else {
 			System.out.println("상품 삭제에 실패하였습니다. : " + prod_result);
 		}
-		return "seller/myprodlist";
+		return "redirect:mylist.do?prod_id="+prod_id;
 	}
 	
 	

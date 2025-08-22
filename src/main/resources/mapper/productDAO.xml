@@ -57,22 +57,26 @@
 		img.main_idx = 1
 		WHERE rNum <![CDATA[>=]]>#{start}
 	</select>
-
+	
 	<select id="selectBestProd"
 		parameterType="com.farm.dto.ParameterDTO"
 		resultType="com.farm.dto.ProductDTO">
-		SELECT prod_price, prod_stock, member_id, pro.prod_id, prod_cate,
-		prod_content, prod_name, filename
+		SELECT prod_price, pro.prod_id, prod_cate, prod_name, filename
 		FROM (SELECT Tb.*, rownum rNum FROM (
-		SELECT * FROM product
-		<if test="searchWords != null and !searchWords.equals('') ">
-			WHERE
-			<foreach collection="searchWords" item="sw" separator="or"
-				open="(" close=")">
-				prod_name LIKE '%' || #{sw} || '%'
-			</foreach>
-		</if>
-		ORDER BY prod_id DESC
+		    SELECT pr.*, pur.pur_count
+		    FROM product pr
+		    JOIN (SELECT prod_id, COUNT(*) as pur_count
+		          FROM purchase
+		          GROUP BY prod_id
+		    ) pur ON pr.prod_id = pur.prod_id
+		    <if test="searchWords != null and !searchWords.equals('') ">
+		    WHERE
+		    <foreach collection="searchWords" item="sw" separator="or"
+		    open="(" close=")">
+		    prod_name LIKE '%' || #{sw} || '%'
+		    </foreach>
+		    </if>
+		    ORDER BY pur.pur_count DESC
 		) Tb
 		WHERE rownum<![CDATA[<=]]>#{end}
 		) pro
@@ -106,8 +110,7 @@
 		SELECT prod_price, prod_stock, member_id, prod_id,
 		prod_cate, prod_content, prod_name
 		FROM product
-		WHERE prod_id =
-		#{prod_id}
+		WHERE prod_id =	#{prod_id}
 	</select>
 
 	<!-- 나의상품목록 조회 -->

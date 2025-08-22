@@ -216,3 +216,49 @@
     padding-right: 0;
   }
 }
+
+  .review-list {
+    margin-top: 40px;
+    padding: 20px;
+    border-top: 2px solid #333;
+  }
+  .review-item {
+    border-bottom: 1px solid #ddd;
+    padding: 15px 0;
+  }
+  .review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .review-title {
+    font-weight: bold;
+    font-size: 16px;
+  }
+  .review-star {
+    color: gold;
+    font-size: 14px;
+  }
+  .review-meta {
+    font-size: 14px;
+    color: #666;
+    margin-top: 5px;
+  }
+  .review-content {
+    margin: 10px 0;
+    white-space: pre-wrap;
+  }
+  .review-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .like-btn {
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-size: 14px;
+  }
+  .like-btn.active .heart {
+    color: red;
+  }

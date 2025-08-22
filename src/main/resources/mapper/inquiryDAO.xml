@@ -5,10 +5,15 @@
    
 <mapper namespace="com.farm.service.IInquiryService">
    <!-- 문의 조회 -->
+    <select id="getTotalCount">
+    SELECT COUNT(*) FROM inquiry
+    	WHERE member_id = #{member_id}
+    </select>
+   
    <select id="selectInq"
    resultType="com.farm.dto.InquiryDTO"
    >
-   SELECT user_id, inquiry_id, prod_id, content, member_id, title
+   SELECT inquiry_id, prod_id, content, member_id, title
          FROM inquiry WHERE member_id = #{member_id}
    </select>
    <!-- 조인걸어서 가야돼 멤버 -->

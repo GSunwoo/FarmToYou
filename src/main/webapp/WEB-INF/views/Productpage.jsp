@@ -19,7 +19,7 @@
 
     <!-- 금주의 추천상품 -->
     <div class="goods-list-items-warp">
-      <div class="goods-list-tit"><h2>금주의 추천상품</h2></div>
+      <div class="goods-list-tit"><h2>베스트상품</h2></div>
 
       <ul class="good-list-items-content four-items-per-row">
         <c:choose>
@@ -87,7 +87,7 @@
 
   </div>
 </div>
-	<table  width="90%">
+	<table  width="100%">
         <tr align="center">
             <td>
                 ${ pagingImg }

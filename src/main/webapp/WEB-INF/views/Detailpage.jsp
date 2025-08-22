@@ -113,6 +113,56 @@
 			const qty = document.getElementById("qty").value;
 			window.location.href = '/buyer/purchase/direct.do?prod_id='+prodId+'&qty='+qty; 
 		});
+		
+		const member_id = ${member_id};
 	</script>
+	
+	
+	<div class="review-list">
+  <h3>리뷰</h3>
+  <c:forEach var="review" items="${revlist}">
+    <div class="review-item" data-review-id="${review.review_id}">
+      
+      <!-- 상단 -->
+      <div class="review-header">
+        <span class="review-title">${review.title}</span>
+        <span class="review-star">
+          <c:forEach begin="1" end="${review.star}" var="i">★</c:forEach>
+          <c:forEach begin="1" end="${5 - review.star}" var="i">☆</c:forEach>
+        </span>
+      </div>
+      
+      <!-- 작성자/작성일 -->
+      <div class="review-meta">
+        작성자: ${review.name} &nbsp;|&nbsp;
+        작성일: ${review.postdate}
+      </div>
+      
+      <!-- 본문 -->
+      <div class="review-content">
+        ${review.content}
+      </div>
+      
+      <!-- 파일 이미지 -->
+      <c:if test="${not empty review.filename}">
+        <div>
+          <img src="${pageContext.request.contextPath}/uploads/reviewimg/${review.review_id }/${review.filename}" width="500px" alt="리뷰 이미지">
+        </div>
+      </c:if>
+      
+      <!-- 하단 (좋아요, 평가) -->
+      <div class="review-footer">
+        <span>평가: ${review.evaluation}</span>
+        <button type="button" class="like-btn ${review.review_liked ? 'active' : ''}"
+                data-review-id="${review.review_id}"
+                data-liked="${review.review_liked}"
+                data-likes="${review.review_like}">
+          <span class="heart">❤️</span>
+          <span class="like-count">${review.review_like}</span>
+        </button>
+      </div>
+    </div>
+  </c:forEach>
+</div>
 </body>
 </html>

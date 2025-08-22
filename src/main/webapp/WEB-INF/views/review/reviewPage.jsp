@@ -114,7 +114,7 @@
 					</div>
 					<div class="review-bottom-content">
 						<h5 class="review-title">${review.title }</h5>
-						<p>${review.review_liked}</p>
+						
 					</div>
 
 					<div class="bottom-rating">

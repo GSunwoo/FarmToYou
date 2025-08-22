@@ -5,6 +5,7 @@ import java.time.LocalDate;
 
 import com.farm.dto.ReviewLikeId;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -38,6 +39,7 @@ public class ReviewLike {
     @JoinColumn(name = "member_id")
     private Member member;
     
+    @Column(nullable = false, columnDefinition = "DATE DEFAULT SYSDATE")
     private LocalDate createdAt;
     
     //좋아요가 언제 눌렸는지를 기록하기 위해 

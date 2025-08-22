@@ -7,34 +7,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- 컨트롤러가 호출하는 인터페이스 위치를 namespace로 설정 -->
 <mapper namespace="com.farm.service.ReviewBoardService">
 
-<select id="getTotalCount" resultType="int"
-		parameterType="com.farm.dto.ReviewBoardDTO">
-		
-		SELECT COUNT(*) FROM review
-		
-		<if test="searchKeyword!=null and 
-			!searchKeyword.equals('')"> 
-		WHERE ${searchField} LIKE '%' || #{searchKeyword} || '%'	
-		</if>
-</select>
-
-<!-- 리스트 -->
-<select id="listPage"
-      parameterType="com.farm.dto.PageDTO"
-      resultType="com.farm.dto.ReviewBoardDTO">
-      SELECT rev.review_id, rev.member_id, rev.postdate, rev.title, rev.content, rev.star, rev.evaluation, rev.review_like, rev.prod_id, img.filename
-      FROM (SELECT Tb.*, rownum rNum FROM (
-				SELECT * FROM review
-				ORDER BY review_id DESC
-			) Tb
-			WHERE rownum<![CDATA[<=]]>#{end}
-		) rev
-		LEFT JOIN review_img img
-			ON rev.review_id = img.review_id and img.main = 'main'
-		WHERE rNum <![CDATA[>=]]>#{start} 
-		
-      
-</select>
+	<select id="getTotalCount" resultType="int"
+			parameterType="com.farm.dto.ReviewBoardDTO">
+			
+			SELECT COUNT(*) FROM review
+			
+			<if test="searchKeyword!=null and 
+				!searchKeyword.equals('')"> 
+			WHERE ${searchField} LIKE '%' || #{searchKeyword} || '%'	
+			</if>
+	</select>
+	
+	<!-- 리스트 -->
+	<select id="listPage"
+	      parameterType="com.farm.dto.PageDTO"
+	      resultType="com.farm.dto.ReviewBoardDTO">
+	      SELECT rev.review_id, rev.member_id, rev.postdate, rev.title, rev.content, rev.star, rev.evaluation, rev.review_like, rev.prod_id, img.filename
+	      FROM (SELECT Tb.*, rownum rNum FROM (
+					SELECT * FROM review
+					ORDER BY review_id DESC
+				) Tb
+				WHERE rownum<![CDATA[<=]]>#{end}
+			) rev
+			LEFT JOIN review_img img
+				ON rev.review_id = img.review_id and img.main = 'main'
+			WHERE rNum <![CDATA[>=]]>#{start} 
+	</select>
 
 	<!-- id="" -> 이 SQL의 이름(식별자).자바 코드에서 이걸 호출할 때 view()라고 부름-->
 	<select id="selectView" 
@@ -75,4 +73,65 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  VALUES (#{review_id}, #{member_id}, #{title}, #{content}, #{star}, #{prod_id})
 	  
 	</insert>
+	
+	
+	
+	<!-- 상품상세페이지랑 연동 -->
+	<select id="loadReview" parameterType="Long"
+		resultType="com.farm.dto.ReviewBoardDTO">
+		SELECT 
+		    rev.postdate,
+			rev.star,
+			rev.member_id,
+			rev.prod_id,
+			rev.review_id,
+			rev.content,
+			rev.title,
+		    img.filename, 
+		    mem.name,
+		    COUNT(li.review_id) AS like_count
+		FROM review rev
+		JOIN review_img img 
+		    ON rev.review_id = img.review_id
+		JOIN member mem 
+		    ON rev.member_id = mem.member_id
+		LEFT JOIN review_like li
+		    ON rev.review_id = li.review_id
+		WHERE rev.prod_id = #{prod_id}
+		GROUP BY rev.postdate,
+				rev.star,
+				rev.member_id,
+				rev.prod_id,
+				rev.review_id,
+				rev.content,
+				rev.title, img.filename, mem.name
+		ORDER BY like_count DESC
+	</select>
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
