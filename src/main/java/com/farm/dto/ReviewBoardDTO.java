@@ -1,6 +1,6 @@
 package com.farm.dto;
 
-import java.time.LocalDate;
+import java.sql.Date;
 
 
 import lombok.Data;
@@ -10,7 +10,7 @@ public class ReviewBoardDTO {
 	
 	private Long review_id;
 	private Long member_id;
-	private LocalDate postdate;
+	private Date postdate;
 	private String title;
  	private String content;
 	private int star;
