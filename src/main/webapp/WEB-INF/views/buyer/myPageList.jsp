@@ -58,7 +58,7 @@
 												</div> 
 												<div class="order-body">
 													<a class="thumb"
-														href="${pageContext.request.contextPath}/Detailpage?prod_id=${o.prod_id}">
+														href="${pageContext.request.contextPath}/guest/Detailpage?prod_id=${o.prod_id}">
 														 <img
 														src="${pageContext.request.contextPath}/images/noimg.png"
 														alt="${fn:escapeXml(o.prod_name)}">
@@ -66,7 +66,7 @@
 
 													<div class="order-info">
 														<a class="title"
-															href="${pageContext.request.contextPath}/Detailpage?prod_id=${o.prod_id}">
+															href="${pageContext.request.contextPath}/guest/Detailpage?prod_id=${o.prod_id}">
 															<c:out value="${o.prod_name}" />
 														</a>
 
@@ -80,9 +80,18 @@
 														</div>
 
 														<div class="order-actions">
-															<a class="btn-sm"
-																href="${pageContext.request.contextPath}/buyer/review/write.do?prod_id=${o.prod_id}">
-																리뷰 작성 </a>
+															<c:choose>
+																<c:when test="${o.purc_state eq 'cmpl_order'}">
+																	<a class="btn-sm"
+																		href="${pageContext.request.contextPath}/buyer/review/write.do?prod_id=${o.prod_id}">
+																		리뷰 작성 </a>
+																</c:when>
+																<c:otherwise>
+																	<a class="btn-sm" href="javascript:void(0)" style="pointer-events:none; opacity:0.5;">
+																		리뷰 작성
+																	</a>
+																</c:otherwise>
+															</c:choose>
 														</div>
 													</div>
 												</div>
