@@ -1,5 +1,7 @@
 package com.farm.service;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -14,7 +16,7 @@ public interface IMemberService {
 	public MemberDTO selectBuyerData (MemberDTO memberDTO);
 	public MemberDTO selectSellerData (MemberDTO memberDTO);
 	
-	public AddressDTO selectAddress(@Param("member_id") Long member_id);
+	public List<AddressDTO> selectAddress(@Param("member_id") Long member_id);
 	public int insertAddress(AddressDTO addressDTO);
 	public int updateMainToZero(@Param("member_id") Long member_id);
 	public int updateMain(@Param("addr_id") Long addr_id);

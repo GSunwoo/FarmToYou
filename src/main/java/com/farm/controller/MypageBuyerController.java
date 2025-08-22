@@ -102,9 +102,9 @@ public class MypageBuyerController {
 		
 		MemberDTO member = userDetails.getMemberDTO();
 		Long member_id = member.getMember_id();
-		AddressDTO address = memDAO.selectAddress(member_id);
+		List<AddressDTO> addressList = memDAO.selectAddress(member_id);
 		
-		model.addAttribute("AddressDTO", address);
+		model.addAttribute("addressList", addressList);
 		model.addAttribute("member", member);
 		
 		return "buyer/delivery-destination";

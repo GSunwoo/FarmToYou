@@ -32,7 +32,7 @@
 		resultType="com.farm.dto.AddressDTO">
 	SELECT * 
 	FROM address
-	WHERE member_id=#{member_id} AND main=1
+	WHERE member_id=#{member_id}
 	</select>
 	
 	<insert id="insertAddress"
