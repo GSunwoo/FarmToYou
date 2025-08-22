@@ -25,7 +25,7 @@
       </div>
 
       <!-- 2. 비밀번호 -->
-      <div class="form-line">
+      <div class="form-line">            
         <label for="password">비밀번호</label>
         <div class="form-group">
           <input type="password" id="password" name="user_pw" placeholder="새 비밀번호 입력" required value=""/>
@@ -59,7 +59,7 @@
       <div class="form-line">
         <label for="name">이름</label>
         <div class="form-group">
-          <input type="text" id="name" name="name" value="${memberDTO.name}"/>
+          <input type="text" id="name" name="name" value="${memberDTO.name}" readonly/>
         </div>
       </div>
 
@@ -74,7 +74,7 @@
         </div>
       </div>
 
-      <button type="button" class="submit-btn" onclick="location.href='/buyer/mypage.do'">이전</button>
+      <button type="button" class="submit-btn" onclick="history.back();">이전</button>
       <!-- 가입 버튼 -->
       <button type="submit" class="submit-btn" id="submitBtn">회원정보수정</button>
     </form>

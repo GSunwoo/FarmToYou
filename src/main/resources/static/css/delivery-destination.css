@@ -134,3 +134,23 @@
   color: #9ca3af;
   margin: 0 6px
 }
+
+.addr-item {
+  display: flex;
+  justify-content: space-between; /* 왼쪽: 주소, 오른쪽: 라디오 */
+  align-items: center;        /* 여러 줄 주소와 정렬 자연스럽게 */
+  gap: 12px;
+  padding: 8px 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.addr-item .addr-text-detail {
+  flex: 1;             /* 주소가 가로폭 대부분 차지 */
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+.addr-item input[type="radio"] {
+  flex-shrink: 0;      /* 줄바꿈 방지 */
+  margin-top: 2px;     /* 첫 줄과 높이 맞춤 약간 */
+}

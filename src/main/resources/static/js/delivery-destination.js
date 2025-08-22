@@ -53,7 +53,7 @@
       return;
     }
 
-    const deliveryData = { zipcode: zip, addr1: a1, addr2: a2, main: 1};
+    const deliveryData = { zipcode: zip, addr1: a1, addr2: a2, main: 0};
 
     try {
       const response = await fetch('/buyer/address/write.do', {
@@ -122,9 +122,9 @@
       try {
         const res = await fetch('/buyer/address/update.do', {
           method: 'POST',
-          headers: {'Content-Type': 'application/json'},
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
           // 컨트롤러가 @RequestBody Long addr_id 를 받으므로 숫자만 전송
-          body: JSON.stringify(addr_id)
+          body: new URLSearchParams({ addr_id: String(addr_id) })
         });
         if (!res.ok) throw new Error();
 

@@ -23,36 +23,66 @@
   <div class="mypage-wrapper">
     <div class="sub-content">
       <%@ include file="../common/header2.jsp" %>
-		<section class="order-wrap">
-		  <div class="order-grid">
-		    <div class="order-right">
-		      <h2 class="weekly-title">배송지 관리</h2>
-		
-		      <section class="card">
-		        <div class="card-hd">
-		          <strong>배송지</strong> <span class="bar">|</span>
-		          <!-- 나중에 구현 --> 
-		          <!-- <button type="button" class="btn-sm ghost" id="btnAddrEdit">삭제</button>  -->
-		          <button type="button" class="btn-sm solid" id="btnAddrNew" style="margin-left:8px">새 배송지 추가</button>
-		          
-		        </div>
-		        <div class="card-bd">
-		          <div class="addr-text" id="addrText">
-		        <div id="addrListBox" style="margin-top:10px;">
-		          	<c:choose>
-		          		<c:when test="${not empty AddressDTO }">
-		          			<c:out value="${AddressDTO.addr1 }" /> <c:out value="${AddressDTO.addr2 }" /> 
-		          		</c:when>
-		          		<c:otherwise>상세주소</c:otherwise>
-		          	</c:choose>
-		        </div>
-		        </div>
-				<button type="button" class="btn-sm ghost" id="btnSetMain" style="margin-top:8px;">메인 배송지 설정</button>
-		        </div>
-		      </section>
-		    </div>
-		  </div>
-		</section>
+			<section class="order-wrap">
+			  <div class="order-grid">
+			    <div class="order-right">
+			      <h2 class="weekly-title">배송지 관리</h2>
+			
+			      <section class="card">
+			        <div class="card-hd">
+			          <strong>배송지</strong> <span class="bar">|</span>
+			          <!-- 나중에 구현 --> 
+			          <!-- <button type="button" class="btn-sm ghost" id="btnAddrEdit">삭제</button>  -->
+			          <button type="button" class="btn-sm solid" id="btnAddrNew" style="margin-left:8px">새 배송지 추가</button>
+			          
+			        </div>
+			        <div class="card-bd">
+					  <div class="addr-text" id="addrText">
+					    <c:choose>
+					      <c:when test="${not empty addressList}">
+					        <c:forEach var="a" items="${addressList}">
+					          <c:if test="${a.main == 1}">
+					            (<c:out value="${a.zipcode}"/>) 
+					            <c:out value="${a.addr1}"/>
+					            <c:if test="${not empty a.addr2}"> <c:out value="${a.addr2}"/></c:if>
+					          </c:if>
+					        </c:forEach>
+					      </c:when>
+					      <c:otherwise>상세주소</c:otherwise>
+					    </c:choose>
+					  </div>
+					
+					  <div id="addrListBox" style="margin-top:10px;">
+					    <c:choose>
+					      <c:when test="${not empty addressList}">
+					        <c:forEach var="addr" items="${addressList}">
+					          <label class="addr-item" for="addrPick-${addr.addr_id}">
+					            <div>
+					              (<c:out value="${addr.zipcode}"/>) 
+					              <c:out value="${addr.addr1}"/> <br />
+					              <c:if test="${not empty addr.addr2}"> <c:out value="${addr.addr2}"/></c:if>
+					            </div>
+						            <input type="radio"
+						                   name="addrPick"
+						                   id="addrPick-${addr.addr_id}"
+						                   value="${addr.addr_id}"
+						                   <c:if test="${addr.main == 1}">checked</c:if> />
+					          </label>
+					        </c:forEach>
+					      </c:when>
+					
+					      <c:otherwise>
+					        <div style="color:#888;">등록된 배송지가 없습니다.</div>
+					      </c:otherwise>
+					    </c:choose>
+					  </div>
+					
+					  <button type="button" class="btn-sm ghost" id="btnSetMain" style="margin-top:8px;">메인 배송지 설정</button>
+					</div>
+			      </section>
+			    </div>
+			  </div>
+			</section>
 		
 			<div class="modal" id="modalAddrNew" aria-hidden="true">
 				<div class="panel" role="dialog" aria-modal="true">

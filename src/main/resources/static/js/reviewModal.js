@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalEvaluation = modal.querySelector('.modal-evaluation');
   const closeBtn        = modal.querySelector('.modal-close');
 
-  // 문자열/숫자 → boolean
+  // toBool 함수 : 문자열이나 숫자를 불리언값으로 변환하는 헬퍼 함수
   const toBool = v => /^(1|true|y|yes)$/i.test((v ?? '').toString().trim());
 
   // ================= 카드 클릭 → 모달 열기 =================
@@ -93,13 +93,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 현재 상태
     let liked = toBool(btn.dataset.liked);
+	// 십진수로 변환하여 숫자 출력
     let likes = parseInt(btn.dataset.likes || '0', 10) || 0;
 
     // 서버 엔드포인트 (insert/delete 분리)
     const url = liked
       ? '/buyer/review/likedelete.do'
       : '/buyer/review/likeinsert.do';
-
+	
+	// 클릭된 버튼이 이미 처리중인 버튼과 같다면 함수 종료. (중복요청 방지)
     busyBtn = btn;
     try {
       const res = await fetch(url, {
@@ -108,10 +110,12 @@ document.addEventListener('DOMContentLoaded', () => {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: new URLSearchParams({ review_id: reviewId })
       });
+	  //200이 아니면 종료
       if (!res.ok) return;
 
-      // 서버 재조회 없이 눈속임만 반영
+      //좋아요 눌렀는지 여부를 반전 (liked == true => 클릭후 false)
       liked = !liked;
+	  // true => 좋아요 1 추가 / false => 좋아요 -1 취소 (Math.max(0, likes - 1) = 0 ->최소 0으로 보정)
       likes = liked ? likes + 1 : Math.max(0, likes - 1);
 
       // 버튼 자신 갱신
@@ -122,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
                          (btn === modalLikeBtn ? modalLikeCount : null);
       if (btnCountEl) btnCountEl.textContent = String(likes);
 
-      // 모달 버튼을 눌렀다면 → 연결된 카드도 동기화
+      // 모달 버튼을 눌렀다면 → 카드도 자동으로 상태가 바뀌도록 함
       if (btn === modalLikeBtn) {
         const card = document.querySelector(`.review-cards[data-review-id="${reviewId}"]`);
         if (card) {
@@ -134,15 +138,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
 
-      // 목록 버튼을 눌렀다면 → 모달이 열려있고 같은 리뷰면 모달도 동기화
-      if (btn !== modalLikeBtn && !modal.hasAttribute('hidden')) {
-        if (modalLikeBtn?.dataset.reviewId === reviewId) {
-          modalLikeBtn.dataset.liked = liked ? 'true' : 'false';
-          modalLikeBtn.dataset.likes = String(likes);
-          modalLikeBtn.classList.toggle('active', liked);
-          if (modalLikeCount) modalLikeCount.textContent = String(likes);
-        }
-      }
     } catch (err) {
       console.error('[like] 요청 실패:', err);
     } finally {
