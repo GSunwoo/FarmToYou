@@ -16,14 +16,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.farm.config.CustomUserDetails;
 import com.farm.dto.MemberDTO;
 import com.farm.dto.ParameterDTO;
 import com.farm.dto.ProductDTO;
 import com.farm.dto.PurchaseDTO;
+import com.farm.dto.ReviewBoardDTO;
 import com.farm.service.IProductService;
 import com.farm.service.IPurchaseService;
+import com.farm.service.ReviewCarouselService;
 
 
 
@@ -35,15 +38,20 @@ public class MainController {
 	@Autowired
 	IProductService proDao;
 	
+	@Autowired
+	private final ReviewCarouselService reviewCarouselService;
+	
 	@Value("${main.bestforweek}")
 	private int bestforweek;
 	
-    MainController(PaymentController paymentController) {
+    MainController(PaymentController paymentController, ReviewCarouselService reviewCarouselService) {
         this.paymentController = paymentController;
+        this.reviewCarouselService = reviewCarouselService;
     }
 	
 	@GetMapping("/")
-	public String main(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
+	public String main(@AuthenticationPrincipal CustomUserDetails userDetails, Model model,
+			@RequestParam(name = "reviewPage", required = false, defaultValue = "20") int reviewPage) {
 		if(userDetails!=null) {
 			MemberDTO member = userDetails.getMemberDTO();
 			System.out.println(member.getName());
@@ -55,6 +63,11 @@ public class MainController {
 				return "redirect:/mypage.do";
 			}	
 		}
+		
+		//서비스에서 리뷰 데이터 가져오기
+	    List<ReviewBoardDTO> reviews = reviewCarouselService.getTopLikedReviews(reviewPage);
+	    
+	    model.addAttribute("reviewPage", reviews);
 		
 		Long end = (long)bestforweek;
 		ArrayList<ProductDTO> bests = proDao.selectBestProdForLastWeek(end);
