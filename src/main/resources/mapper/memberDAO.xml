@@ -59,7 +59,7 @@
 	WHERE addr_id=#{addr_id}
 	</update>
 	
-	<delete id="delete">
+	<delete id="deleteAddress">
 	DELETE FROM address
 	WHERE addr_id=#{addr_id}
 	</delete>

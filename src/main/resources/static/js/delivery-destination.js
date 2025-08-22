@@ -23,6 +23,15 @@
     }).open();
   }
 
+  // ===== ✅ 메인박스 갱신 유틸 (신규) =====
+  function setMainBoxText(text) {
+    const box = document.querySelector('#mainAddrBox');
+    if (box) {
+      const clean = (text || '').trim();
+      box.textContent = clean || '메인 배송지가 아직 설정되지 않았습니다.';
+    }
+  }
+
   // ===== 새 배송지 추가 모달 =====
   $('#btnAddrNew')?.addEventListener('click', () => openM('#modalAddrNew'));
 
@@ -53,7 +62,7 @@
       return;
     }
 
-    const deliveryData = { zipcode: zip, addr1: a1, addr2: a2, main: 0};
+    const deliveryData = { zipcode: zip, addr1: a1, addr2: a2, main: 0 };
 
     try {
       const response = await fetch('/buyer/address/write.do', {
@@ -63,18 +72,12 @@
       });
       if (!response.ok) throw new Error();
 
-      const result = await response.json();
-
-      const addrTextEl = $('#addrText');
-      if (addrTextEl) {
-        addrTextEl.textContent =
-          `(${result.zipcode || zip}) ${result.addr1 || a1}${result.addr2 ? ' ' + result.addr2 : ''}`;
-      }
+      await response.json();
 
       alert('배송지 정보가 성공적으로 추가되었습니다.');
       closeM('#modalAddrNew');
 
-      // 목록 새로고침 (서버가 JSP에 목록을 렌더해줘야 함)
+      // 목록만 새로고침 (메인박스는 변경하지 않음: main:0로 저장)
       await loadAddrList();
     } catch (err) {
       console.error(err);
@@ -99,16 +102,23 @@
       if (box) {
         box.innerHTML = inner || '<div style="color:#888;">등록된 배송지가 없습니다.</div>';
       }
+
+      // 새 목록 기준으로 메인 박스 동기화
+      const picked = document.querySelector('input[name="addrPick"]:checked');
+      const label  = picked?.closest('label');
+      const txt    = label?.querySelector('div')?.textContent || '';
+      setMainBoxText(txt);
     } catch (e) {
       console.error(e);
       const box = document.querySelector('#addrListBox');
       if (box) box.innerHTML = '<div style="color:#888;">주소를 불러오지 못했습니다.</div>';
+      // 실패 시 메인 박스는 건드리지 않음
     }
   }
 
   // ===== 메인 배송지 설정 =====
   document.addEventListener('DOMContentLoaded', () => {
-    // 진입 시 목록 표시
+    // 진입 시 목록 표시 & 메인 박스 동기화
     loadAddrList();
 
     $('#btnSetMain')?.addEventListener('click', async () => {
@@ -123,28 +133,52 @@
         const res = await fetch('/buyer/address/update.do', {
           method: 'POST',
           headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
-          // 컨트롤러가 @RequestBody Long addr_id 를 받으므로 숫자만 전송
           body: new URLSearchParams({ addr_id: String(addr_id) })
         });
         if (!res.ok) throw new Error();
 
-        // 백엔드는 Long만 반환하므로 값만 읽고 성공으로 간주
-        await res.json();
+        await res.json(); // 서버는 Long 반환 → 값만 읽고 성공 처리
 
-        // 상단 표시 텍스트를 현재 선택된 항목으로 즉시 갱신
-        const addrTextEl = $('#addrText');
+        // 상단 메인박스 즉시 갱신
         const label = picked.closest('label');
-        const txt = label?.querySelector('div')?.textContent?.trim();
-        if (addrTextEl && txt) addrTextEl.textContent = txt;
+        const txt   = label?.querySelector('div')?.textContent?.trim();
+        setMainBoxText(txt);
 
         alert('메인 배송지가 설정되었습니다.');
 
-        // 서버 렌더 기준으로 목록 다시 가져와 체크 표시 반영
+        // 서버 기준 체크표시 반영 위해 목록 재로딩
         await loadAddrList();
       } catch (err) {
         console.error(err);
         alert('메인 배송지 설정에 실패했습니다.');
       }
     });
+	
+	$('#btnAddrDelete')?.addEventListener('click', async () => {
+		const picked = document.querySelector('input[name="addrPick"]:checked');
+		if(!picked) {
+			alert('삭제할 배송지를 선택하세요');
+			return;
+		}
+		if(!confirm('선택한 배송지를 삭제하시겠습니까?')) return;
+		
+		const addr_id = Number(picked.value);
+		
+		try {
+			const res = await fetch('/buyer/address/delete.do', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+				body: new URLSearchParams({ addr_id: String(addr_id) })
+			})
+			if(!res.ok) throw new Error();
+			
+			alert('배송지가 삭제되었습니다.');
+			await loadAddrList();
+		}
+		catch (err) {
+			console.error(err);
+			alert('배송지 삭제에 실패했습니다.')
+		}
+	});
   });
 })();
