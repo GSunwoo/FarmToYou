@@ -43,15 +43,18 @@ public class PurchaseController {
 		
 		// 주소전달을 위해 현재 사용자 가져오기
 		MemberDTO member = userDetails.getMemberDTO();
-		Long member_id = member.getMember_id();
+	    Long member_id = userDetails.getMemberDTO().getMember_id();
 		
 		// 현재 사용자의 메인 주소 가져오기
 		AddressDTO address = memDAO.selectAddressMain(member_id);
 		
+	    List<AddressDTO> saved = memDAO.selectAddress(member_id);
+
+		
 		// 모델 객체로 전달
 		model.addAttribute("cart",cart);
 		model.addAttribute("addr", address);
-		
+		model.addAttribute("savedAddresses", saved);
 		return "order_page";
 	}
 	
@@ -60,10 +63,13 @@ public class PurchaseController {
 			@AuthenticationPrincipal CustomUserDetails userDetails) {
 		// 주소전달을 위해 현재 사용자 가져오기
 		MemberDTO member = userDetails.getMemberDTO();
-		Long member_id = member.getMember_id();
+	    Long member_id = userDetails.getMemberDTO().getMember_id();
 		
 		// 현재 사용자의 메인 주소 가져오기
 		AddressDTO address = memDAO.selectAddressMain(member_id);
+		
+	    List<AddressDTO> saved = memDAO.selectAddress(member_id);
+
 		
 		// 구매할 상품 가져오기
 		List<WishlistDTO> cart = purDAO.selectProducts(wishlist);
@@ -71,6 +77,8 @@ public class PurchaseController {
 		// 모델객체로 전달
 		model.addAttribute("cart",cart);
 		model.addAttribute("addr", address);
+		model.addAttribute("savedAddresses", saved);
+		
 		return "order_page";
 	}
 	
