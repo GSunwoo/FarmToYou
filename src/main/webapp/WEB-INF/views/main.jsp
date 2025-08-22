@@ -47,36 +47,37 @@
 		<div class="review-slider-wrapper">
 			<div class="review-slider slider-horizontal">
 				<div class="slide-track slide-track-horizontal">
-					<!-- 나중에 모델객체 받아오기(임시) -->
-					<c:forEach var="review" items="${reviewList}">
+					<c:forEach var="rvs" items="${reviewPage}">
 						<div class="review-card">
 							<div class="review-top-img">
 								<img
-									src="${pageContext.request.contextPath}/images/${review.shopImage}"
+									src="${pageContext.request.contextPath}/uploads/reviewimg/${rvs.review_id}/${rvs.filename}"
 									alt="상품이미지" />
 							</div>
 							<div class="review-content">
 								<p class="review-text">
-									<!-- 50자를 초과할경우 50자까지만 보여주고 뒤에 ... 을 붙어 내용을 축약 -->
 									<c:out
-										value="${fn:length(review.content) > 50 ? fn:substring(review.content, 0, 50) + '...' : review.content }" />
+										value="${fn:length(rvs.content) > 30 ? fn:substring(rvs.content, 0, 30) + '...' : rvs.content }" />
 								</p>
 							</div>
 
 							<div class="review-stars">
 								<c:forEach var="i" begin="1" end="5">
-									<i class="fa-star ${i <= review.star ? 'fas' : 'far'}"></i>
+									<c:choose>
+										<c:when test="${i <= rvs.star }"><i class="fas fa-star"></i></c:when>
+										<c:otherwise><i class="far fa-star"></i></c:otherwise>
+									</c:choose>
 								</c:forEach>
 							</div>
 
 							<div class="review-info">
-								<img class="shop-logo"
-									src="${pageContext.request.contextPath}/images/${review.shopImage}"
-									alt="상호 이미지" />
 								<div class="review-footer">
-									<span class="review-writer">${review.shopName }</span> <span
-										class="review-data"> <fmt:formatNumber
-											value="${review.postdate }" pattern="yyyy-MM-dd" />
+									<span class="review-writer">${rvs.name }</span> <span
+										class="review-data"> <fmt:formatDate
+											value="${rvs.postdate }" pattern="yyyy-MM-dd" />
+									</span>
+									<span class="review-likes">
+										<i class="fas fa-thumbs-up"></i> ${rvs.review_like }
 									</span>
 								</div>
 							</div>
@@ -91,7 +92,6 @@
 	<section class="weekly-best">
 		<h2 class="weekly-title">WEEKLY PICK</h2>
 		<div class="weekly-product-wrapper">
-			<!-- 메인 컨트롤러에서 모델객체로 bests 하면 추천상품이 나온다 (상품페이지에있는 bests) -->
 			<c:forEach var="product" items="${bests}" varStatus="status">
 				<div class="weekly-product-card"
 					onclick="location.href='${pageContext.request.contextPath}/guest/Detailpage.do?prod_id=${product.prod_id}'">
