@@ -72,8 +72,8 @@
 
 							<div class="review-info">
 								<div class="review-footer">
-									<span class="review-writer">${rvs.name }</span> <span
-										class="review-data"> <fmt:formatDate
+									<span class="review-writer">${rvs.name }</span> 
+									<span class="review-data"> <fmt:formatDate
 											value="${rvs.postdate }" pattern="yyyy-MM-dd" />
 									</span>
 									<span class="review-likes">

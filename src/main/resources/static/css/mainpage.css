@@ -735,3 +735,69 @@ body {
   0%   { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
+
+/* 메인 리뷰 카드 레이아웃 덮어쓰기 */
+.review-section .review-card{
+  flex: 0 0 auto;
+  width: 320px;
+  border-radius: 14px;
+  background:#fff;
+  box-shadow: 0 6px 18px rgba(0,0,0,.06);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  margin-right: 16px;        /* 카드 간격 */
+  height: auto;              /* 고정 150px 제거 */
+}
+
+.review-section .review-top-img{
+  height: 180px;
+  background:#f2f4f6;
+  overflow: hidden;
+}
+.review-section .review-top-img img{
+  width:100%;
+  height:100%;
+  object-fit: cover;
+  display:block;
+}
+
+.review-section .review-content{ padding: 12px 14px 0; text-align:left; }
+.review-section .review-text{
+  margin:0;
+  font-size:14px; line-height:1.45;
+  display:-webkit-box;
+  -webkit-line-clamp: 2;        /* 두 줄로 고정 (길면 …) */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.review-section .review-stars{
+  padding:6px 14px 0;
+  text-align:left;
+  font-size:14px;
+  color:#ffc107;                /* 별 색 */
+}
+
+.review-section .review-info .review-footer{
+  display:flex;
+  justify-content: space-between;
+  align-items:center;
+  gap:8px;
+  padding: 8px 14px 14px;
+  font-size:12px; color:#666;
+}
+.review-section .review-likes i{ margin-right:4px; }
+
+/* 슬라이드 트랙 가로 스크롤 정돈 */
+.slide-track-horizontal{
+  display:flex;
+  gap:16px;
+  width:max-content;           /* 내용만큼 너비 */
+  animation: slide-left-horizontal 40s linear infinite;
+}
+
+.review-section .review-top-img { height: 220px; }   /* 기존 180px → 220px */
+.review-section .review-card    { min-height: 360px; }/* 카드 전체 최소높이 보장 */
