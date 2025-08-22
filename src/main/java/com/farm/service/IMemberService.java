@@ -17,6 +17,7 @@ public interface IMemberService {
 	public MemberDTO selectSellerData (MemberDTO memberDTO);
 	
 	public List<AddressDTO> selectAddress(@Param("member_id") Long member_id);
+	public AddressDTO selectAddressMain(@Param("member_id") Long member_id);
 	public int insertAddress(AddressDTO addressDTO);
 	public int updateMainToZero(@Param("member_id") Long member_id);
 	public int updateMain(@Param("addr_id") Long addr_id);

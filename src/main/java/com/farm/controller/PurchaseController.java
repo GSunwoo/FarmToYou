@@ -46,7 +46,7 @@ public class PurchaseController {
 		Long member_id = member.getMember_id();
 		
 		// 현재 사용자의 메인 주소 가져오기
-		AddressDTO address = memDAO.selectAddress(member_id);
+		AddressDTO address = memDAO.selectAddressMain(member_id);
 		
 		// 모델 객체로 전달
 		model.addAttribute("cart",cart);
@@ -63,7 +63,7 @@ public class PurchaseController {
 		Long member_id = member.getMember_id();
 		
 		// 현재 사용자의 메인 주소 가져오기
-		AddressDTO address = memDAO.selectAddress(member_id);
+		AddressDTO address = memDAO.selectAddressMain(member_id);
 		
 		// 구매할 상품 가져오기
 		List<WishlistDTO> cart = purDAO.selectProducts(wishlist);

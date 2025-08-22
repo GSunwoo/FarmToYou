@@ -87,7 +87,6 @@ public class ReviewBoardController {
 	public String list(Model model, HttpServletRequest req, ReviewBoardDTO reviewboardDTO, PageDTO pageDTO,
 			@AuthenticationPrincipal CustomUserDetails userDetails) {
 		
-		Long logindata = userDetails.getMemberDTO().getMember_id();
 		pageDTO.setStart(1);
 		pageDTO.setEnd(20);
 		ArrayList<ReviewBoardDTO> lists = dao.listPage(pageDTO);
@@ -95,8 +94,14 @@ public class ReviewBoardController {
 		for(int i = 0 ; i < lists.size() ; i ++) {
 			ReviewBoardDTO review = lists.get(i);
 			review.setReview_like(dao.countLike(review.getReview_id()));
-	        review.setReview_liked(dao.existsLike(review.getReview_id(), logindata)==1 ? true : false);
-	        System.out.println(review.isReview_liked() + "memberId : " + logindata);
+			if(userDetails!=null) {
+				Long logindata = userDetails.getMemberDTO().getMember_id();
+				review.setReview_liked(dao.existsLike(review.getReview_id(), logindata)==1 ? true : false);
+				System.out.println(review.isReview_liked() + "memberId : " + logindata);				
+			}
+			else {
+				review.setReview_liked(false);
+			}
 		}
 		model.addAttribute("reviewList", lists);
 		return "review/reviewPage";
@@ -105,7 +110,8 @@ public class ReviewBoardController {
 	//무한스크롤
 	@RequestMapping("/guest/review/restApi.do")
 	@ResponseBody
-	public List<JSONObject> newList(PageDTO pageDTO, HttpServletRequest req, ReviewBoardDTO reviewboardDTO) {
+	public List<JSONObject> newList(PageDTO pageDTO, HttpServletRequest req, ReviewBoardDTO reviewboardDTO,
+			@AuthenticationPrincipal CustomUserDetails userDetails) {
 		int pageSize = 20;
 		int pageNum = req.getParameter("pageNum") == null ? 1 : Integer.parseInt(req.getParameter("pageNum"));
 
@@ -119,7 +125,14 @@ public class ReviewBoardController {
 		for(int i = 0 ; i < selectReviewList.size() ; i ++) {
 			ReviewBoardDTO review = selectReviewList.get(i);
 			review.setReview_like(dao.countLike(review.getReview_id()));
-			review.setReview_liked(dao.existsLike(review.getReview_id(), review.getMember_id())==1);
+			if(userDetails!=null) {
+				Long logindata = userDetails.getMemberDTO().getMember_id();
+				review.setReview_liked(dao.existsLike(review.getReview_id(), logindata)==1 ? true : false);
+				System.out.println(review.isReview_liked() + "memberId : " + logindata);				
+			}
+			else {
+				review.setReview_liked(false);
+			}
 		}
 
 		for (ReviewBoardDTO review : selectReviewList) {

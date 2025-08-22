@@ -34,6 +34,12 @@
 	FROM address
 	WHERE member_id=#{member_id}
 	</select>
+	<select id="selectAddressMain"
+		resultType="com.farm.dto.AddressDTO">
+	SELECT * 
+	FROM address
+	WHERE member_id=#{member_id} AND main=1
+	</select>
 	
 	<insert id="insertAddress"
 		parameterType="com.farm.dto.AddressDTO">
