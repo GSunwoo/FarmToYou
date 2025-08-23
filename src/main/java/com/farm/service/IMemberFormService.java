@@ -10,5 +10,6 @@ public interface IMemberFormService {
 	public int registMember(MemberDTO memberDTO);
 	public int registAddr(MemberDTO memberDTO);
 	public int registFarm(MemberDTO memberDTO);
-
+	
+	public int updateMember(MemberDTO memberDTO);
 }

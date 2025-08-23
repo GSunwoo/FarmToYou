@@ -18,4 +18,14 @@
 			VALUES(${farm_id}, seq_member_id.currval, '${account}', '${brand_name}', '${com_addr1}', '${com_addr2}', '${com_zip}', '${owner_name}', '${depositor}')
 	</insert>
 	
+	<update id="updateMember" parameterType="com.farm.dto.MemberDTO">
+		UPDATE member SET 
+			user_pw = #{user_pw},
+			name = #{name}, 
+			emailid = #{emailid}, 
+			emaildomain = #{emaildomain},
+			phone_num = #{phone_num} 
+		WHERE member_id = #{member_id}
+	</update>
+	
 </mapper>

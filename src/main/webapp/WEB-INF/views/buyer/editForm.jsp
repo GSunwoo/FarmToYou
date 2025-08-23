@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,14 +9,14 @@
 <title>회원정보 변경</title>
 <link rel="stylesheet" href="/css/buyer_register.css">
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script src="/js/buyer_register.js" defer></script>
+<script src="/js/buyer_edit.js" defer></script>
 </head>
 <body>
   <div class="form-wrapper">
     <h2>회원정보 변경</h2>
     <p>변경하실 비밀번호와 전화번호를 입력해주세요</p>
 	
-    <form id="registerForm" method="post" action="/buyer/member-info.do">
+    <form id="registerForm" method="post" action="/buyer/editBuyerMemberInfo.do">
 	  <input type="text" name="user_type" value="ROLE_BUYER" hidden="hidden" />
       <!-- 1. 아이디 -->
       <div class="form-line">
@@ -49,8 +51,8 @@
         <label for="emailId">이메일</label>
         <div class="form-group email-group">
           <input type="text" id="emailId" name="emailid" placeholder="이메일 주소" required 
-          value="${memberDTO.emailid }" readonly/> @
-          <input type="text" id="emailDomain" name="emaildomain" readonly required value="${memberDTO.emaildomain}" />
+          value="${memberDTO.emailid }" /> @
+          <input type="text" id="emailDomain" name="emaildomain"  required value="${memberDTO.emaildomain}" />
 <!--           <input type="hidden" id="email" name="email" value="" /> -->
         </div>
       </div>
@@ -67,10 +69,12 @@
       <div class="form-line">
         <label for="phone2">전화번호</label>
         <div class="form-group row-group phone-row">
-          <input type="text" value="010" readonly />
-          <input type="text" id="phone2" maxlength="4" required />
-          <input type="text" id="phone3" maxlength="4" required />
-          <input type="hidden" id="phone_num" name="phone_num" value="" />
+          <input type="text" value="010" id="phone1" readonly />
+        <input type="text" id="phone2" maxlength="4" required 
+               value="${fn:substring(memberDTO.phone_num, 3, 7)}"/>
+        <input type="text" id="phone3" maxlength="4" required 
+               value="${fn:substring(memberDTO.phone_num, 7, 11)}"/>
+          <input type="hidden" id="phone_num" name="phone_num" value="${memberDTO.phone_num }" />
         </div>
       </div>
 
