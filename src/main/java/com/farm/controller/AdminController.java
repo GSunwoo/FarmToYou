@@ -3,6 +3,7 @@ package com.farm.controller;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -12,12 +13,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.farm.dto.FarmDTO;
 import com.farm.dto.MemberDTO;
@@ -145,8 +148,37 @@ public class AdminController {
 		
 		List<MemberDTO> memberList = memDAO.getAllMember(pageDTO);
 		
+		String userType = req.getParameter("user_type");
+		if (userType!=null&&!userType.equals("ALL")) userType = "ROLE_"+userType;
+		
+		Iterator<MemberDTO> it = memberList.iterator();
+		while (it.hasNext()) {
+			if (userType==null||userType.equals("ALL")) break;
+		    MemberDTO member = it.next();
+		    System.err.println("userType:" + userType);
+		    System.err.println("user_type:" + member.getUser_type());
+		    if (!member.getUser_type().equals(userType)) {
+		        it.remove(); // 안전하게 삭제 가능
+		    }
+		}
+		
 		model.addAttribute("memberList", memberList);
 		return "admin/member";
+	}
+	
+	@PostMapping("/admin/member/able.do")
+	@ResponseBody
+	public ResponseEntity<Void> memberToggle(@RequestParam("memberId") Long member_id, 
+											 @RequestParam("enable") Integer enable){
+		
+		if(enable!=1) {
+			confirmDAO.disableMember(member_id);
+		}
+		else {
+			confirmDAO.enableMember(member_id);
+		}
+		
+		return ResponseEntity.ok().build();
 	}
 
 	// 리뷰 목록

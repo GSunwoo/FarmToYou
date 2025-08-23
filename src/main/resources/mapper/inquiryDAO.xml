@@ -13,8 +13,9 @@
    <select id="selectInq"
    resultType="com.farm.dto.InquiryDTO"
    >
-   SELECT inquiry_id, prod_id, content, member_id, title
-         FROM inquiry WHERE member_id = #{member_id}
+   SELECT inquiry_id, prod_id, content, member_id, title, postdate AS postdate
+         FROM inquiry 
+         WHERE member_id = #{member_id} ORDER BY postdate DESC
    </select>
    <!-- 조인걸어서 가야돼 멤버 -->
    <!-- 문의 등록 -->
@@ -39,4 +40,19 @@
       parameterType="Long">
       DELETE FROM inquiry WHERE inquiry_id = #{inquiry_id} AND member_id= #{member_id}
    </delete>
+   
+   <!-- mapper/inquiryDAO.xml (namespace는 그대로) -->
+<select id="inquiryDetail"
+        parameterType="com.farm.dto.InquiryDTO"
+        resultType="com.farm.dto.InquiryDTO">
+  SELECT inquiry_id, inquiry.prod_id, content, inquiry.member_id, title, postdate, prod_name, user_id
+  FROM inquiry
+  LEFT JOIN product
+  	ON inquiry.prod_id=product.prod_id
+  LEFT JOIN member
+  	ON inquiry.member_id=member.member_id
+  WHERE inquiry_id = #{inquiry_id}
+    AND inquiry.member_id  = #{member_id}   <!-- 본인 글만 열람하려면 유지, 아니면 제거 -->
+</select>
+   
 </mapper>

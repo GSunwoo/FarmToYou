@@ -14,4 +14,8 @@ public class InquiryDTO {
    
    
    private String user_id;
+   private String prod_name;
+   
+   private java.sql.Timestamp postdate;
+
 }
