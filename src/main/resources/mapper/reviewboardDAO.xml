@@ -22,9 +22,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="listPage"
 	      parameterType="com.farm.dto.PageDTO"
 	      resultType="com.farm.dto.ReviewBoardDTO">
-	      SELECT rev.review_id, rev.member_id, rev.postdate, rev.title, rev.content, rev.star, rev.evaluation, rev.review_like, rev.prod_id, img.filename
-	      FROM (SELECT Tb.*, rownum rNum FROM (
-					SELECT * FROM review
+	      SELECT rev.review_id, rev.member_id, rev.postdate, rev.title, rev.content, rev.star, rev.evaluation, rev.review_like, 
+	      		 rev.prod_id, img.filename, prod_name, rev.purc_id
+	      FROM (SELECT Tb.*,  rownum rNum FROM (
+					SELECT re.*, pr.prod_name
+					FROM review re
+					INNER JOIN product pr
+						ON re.prod_id = pr.prod_id
 					ORDER BY review_id DESC
 				) Tb
 				WHERE rownum<![CDATA[<=]]>#{end}

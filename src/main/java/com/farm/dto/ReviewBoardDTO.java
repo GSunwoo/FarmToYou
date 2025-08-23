@@ -21,4 +21,5 @@ public class ReviewBoardDTO {
 	private String filename;
 	private String name;
 	private Long purc_id;
+	private String prod_name;
 }

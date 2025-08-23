@@ -70,47 +70,42 @@ thead th {
 						<col style="width: 10%;">
 						<col style="width: 10%;">
 						<col style="width: 10%;">
-						<col style="width: 35%;">
-						<col style="width: 35%;">
+						<col style="width: 15%;">
+						<col style="width: 45%;">
+						<col style="width: 5%;">
 					</colgroup>
 					<thead>
 						<tr>
 							<th>주문번호</th>
 							<th>날짜</th>
 							<th>상품명</th>
-							<th>상품 이미지</th>
+							<th>리뷰제목</th>
 							<th>내용</th>
+							<th></th>
 						</tr>
 					</thead>
 					<tbody>
-						<c:if test="${not empty reviewLists}">
-							<c:forEach var="rvs" items="${reviewLists}">
+						<c:if test="${not empty reviewList}">
+							<c:forEach var="rvs" items="${reviewList}">
 								<tr>
-									<td><c:out value="${rvs.order_num}" /></td>
+									<td><c:out value="${rvs.purc_id}" /></td>
 									<td><time>
-											<c:out value="${rvs.purc_date}" />
+											<c:out value="${rvs.postdate}" />
 										</time></td>
 									<td><c:out value="${rvs.prod_name}" /></td>
 
-									<td><c:choose>
-											<c:when test="${not empty rvs.filename}">
-												<img
-													src="${pageContext.request.contextPath}/uploads/reviewimg/${rvs.review_id}/${rvs.filename}"
-													alt="<c:out value='${rvs.title}'/>" class="review-thumb" />
-											</c:when>
-											<c:otherwise>
-												<span class="no-image">이미지 없음</span>
-											</c:otherwise>
-										</c:choose></td>
+									<td><c:out value="${rvs.title}" /></td>
 
 									<td class="review-content"><c:out value="${rvs.content}" /></td>
+									
+									<td><a href="/admin/review/delete.do">삭제</a></td>
 								</tr>
 							</c:forEach>
 						</c:if>
 
-						<c:if test="${empty reviewLists}">
+						<c:if test="${empty reviewList}">
 							<tr>
-								<td colspan="5" class="no-data">리뷰를 작성할 구매 내역이 없습니다.</td>
+								<td colspan="5" class="no-data">리뷰가 없습니다.</td>
 							</tr>
 						</c:if>
 					</tbody>
