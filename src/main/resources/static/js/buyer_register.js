@@ -124,7 +124,9 @@ function updateHiddenPhone() {
 	const phone2 = document.getElementById("phone2").value.trim();
 	const phone3 = document.getElementById("phone3").value.trim();
 	const hiddenPhone = document.getElementById("phone_num");
-
+	
+	console.log(phone1, phone2, phone3)
+	
 	if (hiddenPhone) {
 		hiddenPhone.value =phone1 && phone2 && phone3 ? `${phone1}${phone2}${phone3}` : "";
 	}

@@ -91,7 +91,7 @@ public class InquiryController {
                   req.getContextPath()+"/buyer/inquiryList.do?");
       model.addAttribute("pagingImg", pagingImg);
       
-      return "/buyer/inquiryList";
+      return "buyer/inquiryList";
    }
 
    // 수정

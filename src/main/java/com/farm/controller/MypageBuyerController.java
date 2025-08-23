@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +29,7 @@ import com.farm.dto.OrderDTO;
 import com.farm.dto.ParameterDTO;
 import com.farm.dto.ProductDTO;
 import com.farm.dto.ReviewBoardDTO;
+import com.farm.service.IMemberFormService;
 import com.farm.service.IMemberService;
 import com.farm.service.IMypageService;
 import com.farm.service.IOrderService;
@@ -55,6 +57,9 @@ public class MypageBuyerController {
 	IOrderService orderDAO;
 	@Autowired
 	ReviewBoardService reviewDAO;
+	
+	@Autowired
+	IMemberFormService mFDao;
 	
 	@GetMapping("/mypage.do")
 	public String mypageMapper(@AuthenticationPrincipal CustomUserDetails userDetails) {
@@ -97,7 +102,7 @@ public class MypageBuyerController {
 				Long purc_id = orders.get(i).getPurc_id();
 				Integer isWritten = reviewDAO.existReview(purc_id);
 				orders.get(i).setIsWritten(isWritten);
-				System.out.println(isWritten);
+//				System.out.println(isWritten);
 			}
 			
 			model.addAttribute("orders", orders);
@@ -154,15 +159,35 @@ public class MypageBuyerController {
 		return "redirect:/buyer/address/list.do";
 	}
 	
-	@GetMapping("/buyer/myPageList")
-	public String myPageList() {
-		return "buyer/myPageList";
-	}
+
 	
-	@GetMapping("/buyer/member-info")
-    public String member_info1() {
-        return "buyer/member-info";
+	@GetMapping("/buyer/editForm.do")
+    public String editForm(@AuthenticationPrincipal CustomUserDetails ud,
+    		MemberDTO memberDTO, Model model) {
+		if(ud != null) {
+			memberDTO = ud.getMemberDTO();
+		}
+		
+		model.addAttribute("memberDTO", memberDTO);
+		
+        return "buyer/editForm";
     }
+	@PostMapping("/buyer/editBuyerMemberInfo.do")
+	public String editBuyerMemberInfo(MemberDTO memberDTO,
+			@AuthenticationPrincipal CustomUserDetails ud) {
+		memberDTO.setMember_id(ud.getMemberDTO().getMember_id());
+		String passwd = PasswordEncoderFactories.createDelegatingPasswordEncoder()
+				.encode(memberDTO.getUser_pw());
+		memberDTO.setUser_pw(passwd.replace("{bcrypt}", ""));
+		
+		int result = mFDao.updateMember(memberDTO);
+		if(result > 0) {
+			return "redirect:/buyer/editForm.do";
+		}
+		else {
+			return "error";
+		}
+	}
 	
 	@GetMapping("/buyer/reviewManagement")
     public String reviewManagement1() {
