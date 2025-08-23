@@ -3,12 +3,14 @@ package com.farm.entity;
 import java.sql.Date;
 import java.time.LocalDate;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.SequenceGenerator;
 import lombok.AccessLevel;
@@ -44,16 +46,15 @@ public class Purchase {
 	@Column(nullable = false)
 	private Integer qty;
 	
+	@OneToOne(mappedBy = "purchase", cascade = CascadeType.REMOVE)
+	private Review review;
+	
 	@ManyToOne
 	@JoinColumn(name = "prod_id", nullable = false)
 	private Product product; // 상품
 	@ManyToOne
 	@JoinColumn(name = "member_id", nullable = false)
 	private Member member; // 판매자
-	@ManyToOne
-	@JoinColumn(name = "review_id")
-    private Review review; // 리뷰
-	
 	@PrePersist
 	protected void onPrePersist() {
 		this.purc_date = new Date(System.currentTimeMillis());

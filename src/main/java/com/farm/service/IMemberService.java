@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.farm.dto.AddressDTO;
 import com.farm.dto.MemberDTO;
+import com.farm.dto.PageDTO;
 
 @Mapper
 public interface IMemberService {
@@ -22,4 +23,6 @@ public interface IMemberService {
 	public int updateMainToZero(@Param("member_id") Long member_id);
 	public int updateMain(@Param("addr_id") Long addr_id);
 	public int deleteAddress(@Param("addr_id") Long addr_id);
+	
+	public List<MemberDTO> getAllMember(PageDTO pageDTO);
 }

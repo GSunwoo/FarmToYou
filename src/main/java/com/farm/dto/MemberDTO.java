@@ -13,4 +13,5 @@ public class MemberDTO {
 	private String phone_num;
 	private String emailid;
 	private String emaildomain;
+	private Integer enable;
 }

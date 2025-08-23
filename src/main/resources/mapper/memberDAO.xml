@@ -4,63 +4,76 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.farm.service.IMemberService">
-	
-	<select id="loginCheck"
-		resultType="com.farm.dto.MemberDTO">
-		SELECT user_id, user_pw, user_type, enable, member_id
-			FROM member WHERE user_id = #{userId}
+
+	<select id="loginCheck" resultType="com.farm.dto.MemberDTO">
+		SELECT user_id, user_pw,
+		user_type, enable, member_id
+		FROM member WHERE user_id = #{userId}
 	</select>
-	
+
 	<select id="selectBuyerData"
 		parameterType="com.farm.dto.MemberDTO"
 		resultType="com.farm.dto.MemberDTO">
 		SELECT user_id, user_pw, user_type, enable, phone_num,
-				name, emailid, emaildomain, member_id, trust_score, regidate
-		FROM member
-		WHERE user_id = #{user_id} 
+		name, emailid, emaildomain, member_id, trust_score, regidate
+		FROM
+		member
+		WHERE user_id = #{user_id}
 	</select>
 	<select id="selectSellerData"
 		parameterType="com.farm.dto.MemberDTO"
 		resultType="com.farm.dto.MemberDTO">
 		SELECT user_id, user_pw, user_type, enable, phone_num,
-				name, emailid, emaildomain, member_id, regidate
+		name, emailid, emaildomain, member_id, regidate
 		FROM member
-		WHERE user_id = #{user_id} 
+		WHERE
+		user_id = #{user_id}
 	</select>
-	
-	<select id="selectAddress"
-		resultType="com.farm.dto.AddressDTO">
-	SELECT * 
-	FROM address
-	WHERE member_id=#{member_id}
+
+	<select id="selectAddress" resultType="com.farm.dto.AddressDTO">
+		SELECT *
+		FROM address
+		WHERE member_id=#{member_id}
 	</select>
 	<select id="selectAddressMain"
 		resultType="com.farm.dto.AddressDTO">
-	SELECT * 
-	FROM address
-	WHERE member_id=#{member_id} AND main=1
+		SELECT *
+		FROM address
+		WHERE member_id=#{member_id} AND main=1
 	</select>
-	
+
 	<insert id="insertAddress"
 		parameterType="com.farm.dto.AddressDTO">
-		INSERT INTO address (addr_id, zipcode, addr1, addr2, main, member_id)
-			VALUES (seq_address_id.nextval, #{zipcode}, #{addr1}, #{addr2}, #{main}, #{member_id})
+		INSERT INTO address (addr_id, zipcode, addr1, addr2,
+		main, member_id)
+		VALUES (seq_address_id.nextval, #{zipcode}, #{addr1}, #{addr2}, #{main},
+		#{member_id})
 	</insert>
-	
+
 	<update id="updateMainToZero">
-	UPDATE address
-	SET main=0
-	WHERE member_id=#{member_id}
+		UPDATE address
+		SET main=0
+		WHERE member_id=#{member_id}
 	</update>
-	
+
 	<update id="updateMain">
-	UPDATE address
-	SET main=1
-	WHERE addr_id=#{addr_id}
+		UPDATE address
+		SET main=1
+		WHERE addr_id=#{addr_id}
 	</update>
-	
+
 	<delete id="deleteAddress">
-	DELETE FROM address
-	WHERE addr_id=#{addr_id}
+		DELETE FROM address
+		WHERE addr_id=#{addr_id}
 	</delete>
+
+	<select id="getAllMember">
+		SELECT *
+		FROM (SELECT Tb.*, ROWNUM rNum
+			  FROM (SELECT *
+				    FROM member
+					ORDER BY user_type) Tb
+			  WHERE ROWNUM <![CDATA[<=]]> #{end})
+		WHERE rNum <![CDATA[>=]]> #{start}
+	</select>
 </mapper>

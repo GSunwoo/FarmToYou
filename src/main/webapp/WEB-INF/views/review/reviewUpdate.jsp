@@ -172,15 +172,7 @@
 			<input type="hidden" id="review_id" name="review_id" value="">
 			<input type="hidden" id="review_like" name="review_like" value="0">
 
-			<!-- 작성자(로그인 세션) - 화면 표시용 -->
-			<div class="form-table">
-				<div class="form-label">회원 ID</div>
-				<div class="form-field">
-					<input type="text" id="member_id" name="member_id"
-						value="${member_id}" readonly><br>
-					<br>
-				</div>
-			</div>
+		
 
 			<!-- 상품 ID (쿼리스트링에서 받기) -->
 			<%--  <div class="form-row">
@@ -191,14 +183,10 @@
           </div> --%>
 			<!-- readonly 리뷰작성때매 일부러 빼놨음 나중에 추가해야됨 -->
 			
-			<div class="form-table">
-				<div class="form-label">상품</div>
-				<div class="form-field">
-					<input type="text" id="prod_id" name="prod_id" value="${prod_id}"><br>
-					<br>
-				</div>
-			</div>
-
+			
+					<input type="hidden" id="prod_id" name="prod_id" value="${prod_id}" /> <!-- 상품id -->
+					<input type="hidden" id="purc_id" name="purc_id" value="${purc_id}" /> <!-- 구매id -->
+					
 			<!-- 제목 -->
 			<div class="form-table">
 				<div class="form-label">제목</div>

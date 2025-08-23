@@ -6,9 +6,12 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.junit.runners.Parameterized.Parameters;
 
 import com.farm.dto.PageDTO;
 import com.farm.dto.ReviewBoardDTO;
+
+import lombok.experimental.PackagePrivate;
 
 @Mapper
 public interface ReviewBoardService {
@@ -41,7 +44,7 @@ public interface ReviewBoardService {
 	public int insertLike(@Param("reviewId") Long reviewId,
 			@Param("memberId") Long memberId);
 	
-	
+	public int existReview(@Param("purc_id") Long purc_id);
 	
 	
 	/* 상세페이지에서 리뷰 연동*/

@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.SequenceGenerator;
 import lombok.AccessLevel;
@@ -53,10 +55,14 @@ public class Review {
 	@JoinColumn(name = "prod_id", nullable = false)
 	private Product product;
 	
-	@OneToMany(mappedBy = "review")
-    private List<Purchase> purchase = new ArrayList<>();
-	@OneToMany(mappedBy = "review")
+	@OneToOne
+	@JoinColumn(name= "purc_id", unique = true)
+	private Purchase purchase;
+	
+	@OneToMany(mappedBy = "review", cascade = CascadeType.REMOVE)
 	private List<ReviewImg> reviewImg = new ArrayList<>();
+
+	
 	
 	@PrePersist
 	protected void onPrePersist() {
