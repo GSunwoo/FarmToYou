@@ -56,8 +56,14 @@
 							</div>
 							<div class="review-content">
 								<p class="review-text">
-									<c:out
-										value="${fn:length(rvs.content) > 30 ? fn:substring(rvs.content, 0, 30) + '...' : rvs.content }" />
+									<c:choose>
+									    <c:when test="${fn:length(rvs.content) > 30}">
+									        <c:out value="${fn:substring(rvs.content, 0, 30)}" />...
+									    </c:when>
+									    <c:otherwise>
+									        <c:out value="${rvs.content}" />
+									    </c:otherwise>
+									</c:choose>
 								</p>
 							</div>
 
