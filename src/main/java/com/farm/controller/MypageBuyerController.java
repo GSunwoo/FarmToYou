@@ -31,6 +31,7 @@ import com.farm.dto.ReviewBoardDTO;
 import com.farm.service.IMemberService;
 import com.farm.service.IMypageService;
 import com.farm.service.IOrderService;
+import com.farm.service.ReviewBoardService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -52,6 +53,8 @@ public class MypageBuyerController {
 	IMemberService memDAO;
 	@Autowired
 	IOrderService orderDAO;
+	@Autowired
+	ReviewBoardService reviewDAO;
 	
 	@GetMapping("/mypage.do")
 	public String mypageMapper(@AuthenticationPrincipal CustomUserDetails userDetails) {
@@ -89,6 +92,13 @@ public class MypageBuyerController {
 		    parameterDTO.setEnd(pageNum * pageSize);
 			
 			List<OrderDTO> orders = orderDAO.selectBuyerOrdersAll(parameterDTO, member_id);
+			
+			for(int i=0;i<orders.size();i++) {
+				Long purc_id = orders.get(i).getPurc_id();
+				Integer isWritten = reviewDAO.existReview(purc_id);
+				orders.get(i).setIsWritten(isWritten);
+				System.out.println(isWritten);
+			}
 			
 			model.addAttribute("orders", orders);
 			model.addAttribute("member", member);

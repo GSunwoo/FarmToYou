@@ -74,7 +74,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  
 	</insert>
 	
-	
+	<!-- 특정 구매에 대해 리뷰가 존재하는지 확인 -->
+	<select id="existReview">
+	SELECT COUNT(*)
+	FROM review
+	WHERE purc_id=#{purc_id}
+	</select>
 	
 	<!-- 상품상세페이지랑 연동 -->
 	<select id="loadReview" parameterType="Long"

@@ -81,7 +81,12 @@
 
 														<div class="order-actions">
 															<c:choose>
-																<c:when test="${o.purc_state eq 'cmpl_order'}">
+																<c:when test="${o.isWritten eq 1}">
+																	<a class="btn-sm"
+																		href="javascript:void(0)" style="pointer-events:none; opacity:0.8;">
+																		작성 완료 </a>
+																</c:when>
+																<c:when test="${o.purc_state eq 'cmpl_order' }">
 																	<a class="btn-sm"
 																		href="${pageContext.request.contextPath}/buyer/review/write.do?prod_id=${o.prod_id}&purc_id=${o.purc_id}">
 																		리뷰 작성 </a>
