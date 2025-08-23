@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -54,21 +55,21 @@ public class Member {
 	@Column(nullable = false, columnDefinition = "NUMBER DEFAULT 1")
 	private int enable;
 	
-	@OneToMany(mappedBy = "member")
+	@OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<Purchase> purchase = new ArrayList<>();
-	@OneToMany(mappedBy = "member")
+	@OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
 	private List<Farm> farm = new ArrayList<>();
-	@OneToMany(mappedBy = "member")
+	@OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
 	private List<Address> address = new ArrayList<>();
-	@OneToMany(mappedBy = "member")
+	@OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
 	private List<Inquiry> inquiry = new ArrayList<>();
-	@OneToMany(mappedBy = "member")
+	@OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
 	private List<Paymethod> paymethod = new ArrayList<>();
-	@OneToMany(mappedBy = "member")
+	@OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
 	private List<Product> product = new ArrayList<>();
-	@OneToMany(mappedBy = "member")
+	@OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
 	private List<Review> review = new ArrayList<>();
-	@OneToMany(mappedBy = "member")
+	@OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
 	private List<Wishlist> wishlist = new ArrayList<>();
 	
 	@PrePersist

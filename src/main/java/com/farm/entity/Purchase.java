@@ -3,6 +3,7 @@ package com.farm.entity;
 import java.sql.Date;
 import java.time.LocalDate;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -45,7 +46,7 @@ public class Purchase {
 	@Column(nullable = false)
 	private Integer qty;
 	
-	@OneToOne(mappedBy = "purchase")
+	@OneToOne(mappedBy = "purchase", cascade = CascadeType.REMOVE)
 	private Review review;
 	
 	@ManyToOne

@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -58,7 +59,7 @@ public class Review {
 	@JoinColumn(name= "purc_id", unique = true)
 	private Purchase purchase;
 	
-	@OneToMany(mappedBy = "review")
+	@OneToMany(mappedBy = "review", cascade = CascadeType.REMOVE)
 	private List<ReviewImg> reviewImg = new ArrayList<>();
 
 	

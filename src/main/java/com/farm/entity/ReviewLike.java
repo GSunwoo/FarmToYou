@@ -1,6 +1,7 @@
 package com.farm.entity;
 
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 import com.farm.dto.ReviewLikeId;
@@ -40,11 +41,11 @@ public class ReviewLike {
     private Member member;
     
     @Column(nullable = false, columnDefinition = "DATE DEFAULT SYSDATE")
-    private LocalDate createdAt;
+    private Date createdAt;
     
     //좋아요가 언제 눌렸는지를 기록하기 위해 
     @PrePersist
     public void prePersist() {
-        if (createdAt == null) createdAt = LocalDate.now();
+        if (createdAt == null) createdAt = new Date(System.currentTimeMillis());
     }
 }

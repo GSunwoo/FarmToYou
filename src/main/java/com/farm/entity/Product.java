@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -55,15 +56,15 @@ public class Product {
 	@JoinColumn(name = "member_id", nullable = false)
     private Member member; // 판매자
 	
-	@OneToMany(mappedBy = "product")
+	@OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
     private List<Purchase> purchase = new ArrayList<>();
-	@OneToMany(mappedBy = "product")
+	@OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
 	private List<Inquiry> inquiry = new ArrayList<>();
-	@OneToMany(mappedBy = "product")
+	@OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
 	private List<Review> review = new ArrayList<>();
-	@OneToMany(mappedBy = "product")
+	@OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
 	private List<Wishlist> wishlist = new ArrayList<>();
-	@OneToMany(mappedBy = "product")
+	@OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
 	private List<ProductImg> productImg = new ArrayList<>();
 	
 	@PrePersist

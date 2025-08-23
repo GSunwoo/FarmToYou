@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ForeignKey;
@@ -51,7 +52,7 @@ public class Farm {
 	@JoinColumn(name = "member_id", nullable = false)
 	private Member member;
 	
-	@OneToOne(mappedBy = "farm")
+	@OneToOne(mappedBy = "farm", cascade = CascadeType.REMOVE)
 	private TradeImg tradeImg;
 	
 	@PrePersist
