@@ -3,6 +3,7 @@ package com.farm.controller;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -144,6 +145,20 @@ public class AdminController {
 		pageDTO.setEnd(end);
 		
 		List<MemberDTO> memberList = memDAO.getAllMember(pageDTO);
+		
+		String userType = req.getParameter("user_type");
+		if (userType!=null&&!userType.equals("ALL")) userType = "ROLE_"+userType;
+		
+		Iterator<MemberDTO> it = memberList.iterator();
+		while (it.hasNext()) {
+			if (userType==null||userType.equals("ALL")) break;
+		    MemberDTO member = it.next();
+		    System.err.println("userType:" + userType);
+		    System.err.println("user_type:" + member.getUser_type());
+		    if (!member.getUser_type().equals(userType)) {
+		        it.remove(); // 안전하게 삭제 가능
+		    }
+		}
 		
 		model.addAttribute("memberList", memberList);
 		return "admin/member";
