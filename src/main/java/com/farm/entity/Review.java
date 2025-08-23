@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.SequenceGenerator;
 import lombok.AccessLevel;
@@ -53,10 +54,14 @@ public class Review {
 	@JoinColumn(name = "prod_id", nullable = false)
 	private Product product;
 	
-	@OneToMany(mappedBy = "review")
-    private List<Purchase> purchase = new ArrayList<>();
+	@OneToOne
+	@JoinColumn(name= "purc_id", nullable = false, unique = true)
+	private Purchase purchase;
+	
 	@OneToMany(mappedBy = "review")
 	private List<ReviewImg> reviewImg = new ArrayList<>();
+
+	
 	
 	@PrePersist
 	protected void onPrePersist() {

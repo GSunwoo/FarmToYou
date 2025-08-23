@@ -69,8 +69,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<selectKey keyProperty="review_id" resultType="long" order="BEFORE">
 		SELECT seq_review_id.nextval FROM dual
 	</selectKey>
-	  INSERT INTO review(review_id, member_id, title, content, star, prod_id)
-	  VALUES (#{review_id}, #{member_id}, #{title}, #{content}, #{star}, #{prod_id})
+	  INSERT INTO review(review_id, member_id, title, content, star, prod_id, purc_id)
+	  VALUES (#{review_id}, #{member_id}, #{title}, #{content}, #{star}, #{prod_id}, #{purc_id})
 	  
 	</insert>
 	

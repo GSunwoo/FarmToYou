@@ -15,4 +15,5 @@ public class OrderDTO {
 	private Integer prod_price;
 	private String filename;
 	private Long purc_id;
+	private Integer isWritten;
 }

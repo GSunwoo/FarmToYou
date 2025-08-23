@@ -237,11 +237,12 @@ public class ReviewBoardController {
 	//쓰기
 	@GetMapping("/buyer/review/write.do")
 	public String reviewWrite(@AuthenticationPrincipal CustomUserDetails userDetails,
-			Model model, @RequestParam("prod_id") Long prod_id ) {
+			Model model, @RequestParam("prod_id") Long prod_id, @RequestParam("purc_id") Long purc_id) {
 
 		Long member_id = userDetails.getMemberDTO().getMember_id();
 		model.addAttribute("member_id", member_id);
 		model.addAttribute("prod_id", prod_id);
+		model.addAttribute("purc_id", purc_id);
 		return "review/reviewUpdate";
 	}
 

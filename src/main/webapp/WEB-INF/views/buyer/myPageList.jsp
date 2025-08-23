@@ -83,7 +83,7 @@
 															<c:choose>
 																<c:when test="${o.purc_state eq 'cmpl_order'}">
 																	<a class="btn-sm"
-																		href="${pageContext.request.contextPath}/buyer/review/write.do?prod_id=${o.prod_id}">
+																		href="${pageContext.request.contextPath}/buyer/review/write.do?prod_id=${o.prod_id}&purc_id=${o.purc_id}">
 																		리뷰 작성 </a>
 																</c:when>
 																<c:otherwise>

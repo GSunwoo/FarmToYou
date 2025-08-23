@@ -20,4 +20,5 @@ public class ReviewBoardDTO {
 	private boolean review_liked; //좋아요 여부 existsLike
 	private String filename;
 	private String name;
+	private Long purc_id;
 }

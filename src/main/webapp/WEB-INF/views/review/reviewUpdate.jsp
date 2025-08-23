@@ -198,6 +198,14 @@
 					<br>
 				</div>
 			</div>
+			
+			<div class="form-table">
+				<div class="form-label">상품</div>
+				<div class="form-field">
+					<input type="text" id="purc_id" name="purc_id" value="${purc_id}"><br>
+					<br>
+				</div>
+			</div>
 
 			<!-- 제목 -->
 			<div class="form-table">
