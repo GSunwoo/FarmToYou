@@ -60,7 +60,7 @@
 													<a class="thumb"
 														href="${pageContext.request.contextPath}/guest/Detailpage?prod_id=${o.prod_id}">
 														 <img
-														src="${pageContext.request.contextPath}/images/noimg.png"
+														src="${pageContext.request.contextPath}/uploads/prodimg/prod_id/${o.prod_id}/${o.filename}"
 														alt="${fn:escapeXml(o.prod_name)}">
 													</a>
 

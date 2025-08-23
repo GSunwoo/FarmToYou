@@ -42,7 +42,6 @@ public class Product {
 	private int prod_stock;
 	@Column(nullable = false)
 	private String prod_cate;
-	private Long prodimg_id;
 	@Column(nullable = false)
 	private String prod_content;
 	@Column(nullable = false, columnDefinition = "NUMBER DEFAULT 0")

@@ -54,33 +54,6 @@ public class ReviewBoardController {
 	@Autowired
 	private ReviewLikeService reviewLikeService;
 	
-	@Autowired
-	private final ReviewCarouselService reviewCarouselService;
-	
-	//메인 페이지에 리뷰 캐러셀 20개
-	@Value("${review.bestPage}")
-	private int bestPage;
-
-    ReviewBoardController(ReviewCarouselService reviewCarouselService) {
-        this.reviewCarouselService = reviewCarouselService;
-    }
-	
-	//리뷰 캐러셀 
-	@GetMapping("/main.do")
-	public String mainReviewCarousel(
-		//실수로 파라미터를 빼먹어도 기본값으로 동작할 수 있게 하기위해
-		@RequestParam(name = "reviewPage", required = false, defaultValue = "20") int reviewPage,
-		Model model
-		) {
-		
-		//서비스에서 리뷰 데이터 가져오기
-	    List<ReviewBoardDTO> reviews = reviewCarouselService.getTopLikedReviews(reviewPage);
-	    
-	    model.addAttribute("reviewPage", reviews);
-	    return "main";
-		
-	}
-	
 	//목록
 	@GetMapping("/guest/review/list.do")
 	// HttpServletRequest : 사용자가 웹 페이지에서 서버에게 요청한 내용을 다 들고 있는 객체
@@ -264,11 +237,11 @@ public class ReviewBoardController {
 	//쓰기
 	@GetMapping("/buyer/review/write.do")
 	public String reviewWrite(@AuthenticationPrincipal CustomUserDetails userDetails,
-			Model model /* , @RequestParam("prod_id") Long prod_id */) {
+			Model model, @RequestParam("prod_id") Long prod_id ) {
 
 		Long member_id = userDetails.getMemberDTO().getMember_id();
 		model.addAttribute("member_id", member_id);
-		model.addAttribute("prod_id", 1/* prod_id */);
+		model.addAttribute("prod_id", prod_id);
 		return "review/reviewUpdate";
 	}
 

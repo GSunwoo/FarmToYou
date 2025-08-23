@@ -13,12 +13,12 @@
 				INNER JOIN product pr
 				ON pu.prod_id=pr.prod_id 
 				WHERE pu.member_id=#{member_id}
-				ORDER BY purc_id DESC
 			) Tb
 		) ord
 		INNER JOIN product_img img
 		ON ord.prod_id = img.prod_id and img.main_idx = 1
 		WHERE rNum BETWEEN #{param.start} AND #{param.end}
+		ORDER BY purc_id DESC
 	</select>
 	<select id="selectSellerOrdersAll"
 		resultType="com.farm.dto.OrderDTO">
