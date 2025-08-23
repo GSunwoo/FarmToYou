@@ -23,7 +23,7 @@
             <div class="mypage-main-info">
                 <h2 style="font-size: 1.5em; margin-bottom: 20px;">상품문의 글쓰기</h2>
                 
-                <form action="/buyer/inquiryList.do" method="post">
+                <form action="${pageContext.request.contextPath}/buyer/inquiryForm.do" method="post">
                     <input type="hidden" name="prod_id" value="${prod_id}">
                     <input type="hidden" name="member_id" value="${member_id}">
                     <input type="hidden" name="user_id" value="${user_id}">

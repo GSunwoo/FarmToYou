@@ -27,6 +27,11 @@
             		<li><a href="${pageContext.request.contextPath}/seller/reviewManagement">-리뷰</a></li>
             	</ul>
             </li>
+            <li>문의
+            	<ul class="sub-depth5">
+            		<li><a href="${pageContext.request.contextPath}/buyer/inquiryList.do">-문의관리</a></li>
+            	</ul>
+            </li>
         </ul>
     </div>
 </aside>
