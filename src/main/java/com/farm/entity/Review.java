@@ -55,7 +55,7 @@ public class Review {
 	private Product product;
 	
 	@OneToOne
-	@JoinColumn(name= "purc_id", nullable = false, unique = true)
+	@JoinColumn(name= "purc_id", unique = true)
 	private Purchase purchase;
 	
 	@OneToMany(mappedBy = "review")
