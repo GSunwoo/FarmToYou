@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const formData = {
     bizNum: "", ceoName: "", companyName: "", zipcode: "",
-    address: "", detailAddress: "", managerName: "",
+    address: "", detailAddress: "", depositor: "",
     accountNumber: "", bank: ""
   };
   let isVerified = false;
@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
     zipcode: root.querySelector("#zipcode"),
     address: root.querySelector("#address"),
     detailAddress: root.querySelector("#detailAddress"),
-    managerName: root.querySelector("#managerName"),
+    depositor: root.querySelector("#depositor"),
     accountNumber: root.querySelector("#accountNumber"),
     bank: root.querySelector("#bank")
   };
@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
     el.zipcode.value = formData.zipcode;
     el.address.value = formData.address;
     el.detailAddress.value = formData.detailAddress;
-    el.managerName.value = formData.managerName;
+    el.depositor.value = formData.depositor;
     el.accountNumber.value = formData.accountNumber;
     el.bank.value = formData.bank;
     updateValidity();
@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
       formData.ceoName !== "" &&
       formData.companyName !== "" &&
       formData.address !== "" &&
-      formData.managerName !== "" &&
+      formData.depositor !== "" &&
       formData.accountNumber !== "" &&
       formData.bank !== "";
     submitBtn.disabled = !valid;
@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
       Object.assign(formData, {
         ceoName: "홍길동", companyName: "길동상회",
         zipcode: "12345", address: "서울시 종로구 종로1가",
-        detailAddress: "101호", managerName: "홍길동",
+        detailAddress: "101호", depositor: "홍길동",
         accountNumber: "110-123-456789"
       });
       isVerified = true; render(); return;
@@ -103,7 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
       Object.assign(formData, {
         ceoName: "이몽룡", companyName: "남원상사",
         zipcode: "04524", address: "서울 중구 세종대로 110",
-        detailAddress: "본관 3층", managerName: "이몽룡",
+        detailAddress: "본관 3층", depositor: "이몽룡",
         accountNumber: "333-22-444555"
       });
       isVerified = true; render(); return;
@@ -113,7 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
     isVerified = false; render();
   });
 
-  form.addEventListener("submit", (e) => {
+/*  form.addEventListener("submit", (e) => {
     e.preventDefault();
     if (submitBtn.disabled) return;
     // 서버 전송 대신 콘솔로 확인 (백엔드 연동 시 fetch로 교체)
@@ -124,13 +124,13 @@ document.addEventListener("DOMContentLoaded", () => {
       com_zip: formData.zipcode,
       com_addr1: formData.address,
       com_addr2: formData.detailAddress,
-      entryman: formData.managerName,
+      entryman: formData.depositor,
       account: formData.accountNumber,
       bank: formData.bank
     };
     console.log("제출 데이터:", payload);
     alert("사업자 정보 등록 완료!");
-  });
+  });*/
 
   render();
 });

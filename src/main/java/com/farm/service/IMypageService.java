@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.farm.dto.FarmDTO;
 import com.farm.dto.ProductDTO;
 import com.farm.dto.ReviewBoardDTO;
 
@@ -30,4 +31,6 @@ public interface IMypageService {
 	
 	public int updateState(@Param("purc_id") Long purc_id,
 						   @Param("next") String next);		
+	
+	
 }

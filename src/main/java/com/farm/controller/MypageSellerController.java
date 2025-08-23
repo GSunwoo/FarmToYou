@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.farm.config.CustomUserDetails;
+import com.farm.dto.FarmDTO;
 import com.farm.dto.MemberDTO;
 import com.farm.dto.OrderDTO;
 import com.farm.dto.ParameterDTO;
@@ -49,6 +50,8 @@ public class MypageSellerController {
 	IMemberService memDAO;
 	@Autowired
 	IOrderService orderDAO;
+	
+	
 	
 	@GetMapping("/seller/mypage.do")
 	public String sellerMypage(@AuthenticationPrincipal CustomUserDetails userDetails, Model model, ParameterDTO parameterDTO,
@@ -136,10 +139,8 @@ public class MypageSellerController {
         return "seller/AI";
     }
 
-    @GetMapping("/seller/sellerUpdateForm")
-    public String sellerUpdateForm() {
-        return "seller/sellerUpdateForm";
-    }
+    
+    
 
     @GetMapping("/seller/reviewManagement")
     public String reviewManagement() {

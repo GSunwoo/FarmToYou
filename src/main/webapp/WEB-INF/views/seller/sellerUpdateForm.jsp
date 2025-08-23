@@ -4,7 +4,7 @@
 <html lang="ko">
 <head>
   <meta charset="utf-8" />
-  <title>판매자 마이페이지 - 판매자정보 변경신청</title>
+  <title>판매자 등록 및 변경</title>
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
   <!-- 공통 CSS -->
@@ -20,7 +20,7 @@
 <script src="<c:url value='/js/seller_myPage.js' />"></script>
 
 <body class="simple-page">
-<form id="seller" action="/seller/update.do" method="post">
+<form id="seller" >
   <!-- 상단 공통 헤더 -->
   <jsp:include page="/WEB-INF/views/common/header.jsp" />
 
@@ -36,15 +36,15 @@
       <!-- ▼▼ 반드시 main.sub-content 내부에 위치 ▼▼ -->
       <div class="mypage-cont">
       <section class="seller-update-section">
-        <div class="mypage-zone-tit"><h3>판매자 정보 변경 신청</h3></div>
+        <div class="mypage-zone-tit"><h3>판매자 등록 및 변경</h3></div>
 
-        <form id="sellerUpdateForm" class="form-wrapper">
+        <form id="sellerUpdateForm" class="form-wrapper" action="/seller/farmRegiOrUpdate" method="post">
           <!-- 사업자등록번호 + 인증 -->
           <div class="form-line section-divider-top">
             <label for="bizNum">사업자등록번호</label>
             <div class="form-group">
               <!-- name 속성은 기존 DB 컬럼명으로 유지하세요 -->
-              <input type="text" id="bizNum" placeholder="숫자만 입력" />
+              <input type="text" id="bizNum" name="farm_id" placeholder="숫자만 입력" />
               <button type="button" id="btnVerify">인증</button>
             </div>
           </div>
@@ -53,13 +53,13 @@
           <div class="form-line">
             <label for="ceoName">대표자명</label>
             <div class="form-group">
-              <input type="text" id="ceoName" readonly class="readonly" />
+              <input type="text" id="ceoName" name="owner_name" readonly class="readonly" />
             </div>
           </div>
           <div class="form-line">
             <label for="companyName">상호</label>
             <div class="form-group">
-              <input type="text" id="companyName" readonly class="readonly" />
+              <input type="text" id="companyName" name="brand_name" readonly class="readonly" />
             </div>
           </div>
 
@@ -76,9 +76,9 @@
 
           <!-- 정산정보 -->
           <div class="form-line">
-            <label for="managerName">예금주</label>
+            <label for="depositor">예금주</label>
             <div class="form-group">
-              <input type="text" id="managerName" name="entryman" readonly class="readonly" />
+              <input type="text" id="depositor" name="depositor" readonly class="readonly" />
             </div>
           </div>
           <div class="form-line">
@@ -95,7 +95,7 @@
             </div>
           	</div>
           	<div class="section-divider-top">
-                <button type="submit" id="submitBtn" class="submit-btn" disabled>신청</button>
+                <button type="submit" id="submitBtn" class="submit-btn" disabled>등록</button>
           </div>
         </form>
       </section>

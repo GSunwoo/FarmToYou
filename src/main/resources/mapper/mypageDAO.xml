@@ -93,4 +93,6 @@
 		SET purc_state=#{next}
 		WHERE purc_id=#{purc_id}
 	</update>
+	
+	
 </mapper>

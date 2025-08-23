@@ -18,13 +18,18 @@
             </li>
             <li>MY 회원정보
                 <ul class="sub-depth3">
-                    <li><a href="${pageContext.request.contextPath}/seller/sellerUpdateForm">-판매자 정보 변경</a></li>
-					<li><a href="${pageContext.request.contextPath}/seller/member-info">-회원정보 변경</a></li>
+                    <li><a href="${pageContext.request.contextPath}/seller/sellerUpdateForm">-판매자 등록 및 변경</a></li>
+					<li><a href="${pageContext.request.contextPath}/seller/member-info">-기본회원정보 변경</a></li>
                 </ul>
             </li>
             <li>리뷰
             	<ul class="sub-depth4">
             		<li><a href="${pageContext.request.contextPath}/seller/reviewManagement">-리뷰</a></li>
+            	</ul>
+            </li>
+            <li>문의
+            	<ul class="sub-depth5">
+            		<li><a href="${pageContext.request.contextPath}/buyer/inquiryList.do">-문의관리</a></li>
             	</ul>
             </li>
         </ul>
