@@ -85,7 +85,7 @@
         </thead>
         <tbody>
           <c:forEach var="user" items="${memberList}">
-            <tr data-user-id="${user.user_id}">
+            <tr data-user-id="${user.member_id}">
               <td>${user.user_id}</td>
               <td>${user.user_type}</td>
               <td>${user.name}</td>
@@ -96,7 +96,7 @@
                 <label class="switch" title="ON: 활성 / OFF: 비활성">
                   <!-- enable 컬럼(Y/N, 혹은 1/0/boolean)을 모두 지원하도록 조건 OR 처리 -->
                   <input type="checkbox" class="status-toggle"
-                         ${ (user.enable == 'Y' or user.enable == '1' or user.enable == 1 or user.enable) ? 'checked' : '' }>
+                         ${ (user.enable == '1' or user.enable == 1) ? 'checked' : '' }>
                   <span class="slider"></span>
                 </label>
               </td>
@@ -127,10 +127,8 @@
     		    // enable: 1(활성), 0(비활성)
     		    const enable = this.checked ? 1 : 0;
 
-    		    const res = await fetch('/admin/member/list.do', {
-    		      method: 'POST',
-    		      headers: { 'Content-Type': 'application/json' },
-    		      body: JSON.stringify({ user_id: userId, enable: enable })
+    		    const res = await fetch('/admin/member/able.do?memberId='+userId+'&enable='+enable, {
+    		      method: 'POST'
     		    });
 
     		    if (res.ok) {

@@ -20,4 +20,7 @@ public interface IAdminConfirmService {
 	public int confirmFarm(@Param("farm_id") Long farm_id);
 	public int rejectFarm(@Param("farm_id") Long farm_id);
 	
+	// 계정 활성화/비활성화
+	public int enableMember(@Param("member_id") Long member_id);
+	public int disableMember(@Param("member_id") Long member_id);
 }

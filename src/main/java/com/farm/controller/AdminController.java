@@ -13,12 +13,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.farm.dto.FarmDTO;
 import com.farm.dto.MemberDTO;
@@ -162,6 +164,21 @@ public class AdminController {
 		
 		model.addAttribute("memberList", memberList);
 		return "admin/member";
+	}
+	
+	@PostMapping("/admin/member/able.do")
+	@ResponseBody
+	public ResponseEntity<Void> memberToggle(@RequestParam("memberId") Long member_id, 
+											 @RequestParam("enable") Integer enable){
+		
+		if(enable!=1) {
+			confirmDAO.disableMember(member_id);
+		}
+		else {
+			confirmDAO.enableMember(member_id);
+		}
+		
+		return ResponseEntity.ok().build();
 	}
 
 	// 리뷰 목록

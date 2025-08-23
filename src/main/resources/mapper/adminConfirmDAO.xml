@@ -42,4 +42,15 @@
 			SET confirm='rejected'
 			WHERE farm_id=#{farm_id}
 	</update>
+	
+	<update id="enableMember">
+		UPDATE member
+			SET enable=1
+			WHERE member_id=#{member_id}
+	</update>
+	<update id="disableMember">
+		UPDATE member
+			SET enable=0
+			WHERE member_id=#{member_id}
+	</update>
 </mapper>
