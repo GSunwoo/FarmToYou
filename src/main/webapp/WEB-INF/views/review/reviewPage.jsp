@@ -31,15 +31,15 @@
 				</p> -->
 			</div>
 
-			<%-- <div class="review-best-items">
-				<c:forEach var="best" items="${bestList}" varStatus="status">
+			 <div class="review-best-items">
+				<c:forEach var="best" items="${bests}" varStatus="status">
 					<c:if test="${status.index < 4}">
 						<div class="review-top-card">
 							<div class="review-info">
-								<div class="review-img">
+						 		<div class="review-img">
 									<c:choose>
-										<c:when test="${not empty best.img}">
-											<img src="${best.img}" alt="${best.title}" />
+										<c:when test="${not empty best.filename}">
+											<img src="${best.filename}" alt="${best.title}" />
 										</c:when>
 										<c:otherwise>
 											<img alt="${best.title}" />
@@ -92,7 +92,7 @@
 				</c:forEach>
 			</div>
 		</div>
-	</section> --%>
+	</section> 
 
 	<section>
 		<div id="review-grid-lists" class="review-grid-lists">
