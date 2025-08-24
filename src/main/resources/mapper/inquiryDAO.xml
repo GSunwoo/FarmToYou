@@ -5,17 +5,39 @@
    
 <mapper namespace="com.farm.service.IInquiryService">
    <!-- 문의 조회 -->
-    <select id="getTotalCount">
+    <select id="getTotalCount1"
+    parameterType="com.farm.dto.InquiryDTO">
     SELECT COUNT(*) FROM inquiry
     	WHERE member_id = #{member_id}
     </select>
+    <select id="getTotalCount2"
+    >
+	SELECT COUNT(inq.inquiry_id) AS inquiry_count
+		FROM inquiry inq
+		LEFT JOIN product pro
+		  ON inq.prod_id = pro.prod_id
+			WHERE pro.member_id = #{member_id}
+    </select>
+    
    
-   <select id="selectInq"
+   <select id="selectInq1"
+   parameterType="com.farm.dto.PageDTO"
    resultType="com.farm.dto.InquiryDTO"
    >
    SELECT inquiry_id, prod_id, content, member_id, title, postdate AS postdate
          FROM inquiry 
          WHERE member_id = #{member_id} ORDER BY postdate DESC
+   </select>
+   
+   <select id="selectInq2"
+   parameterType="Long"
+   resultType="com.farm.dto.InquiryDTO"
+   >
+   SELECT inq.inquiry_id, inq.prod_id, inq.content, inq.member_id, title, postdate AS postdate
+         FROM inquiry inq
+         INNER JOIN product pro ON inq.prod_id = pro.prod_id
+         WHERE pro.member_id = #{member_id} 
+         ORDER BY postdate DESC
    </select>
    <!-- 조인걸어서 가야돼 멤버 -->
    <!-- 문의 등록 -->
@@ -54,5 +76,12 @@
   WHERE inquiry_id = #{inquiry_id}
     AND inquiry.member_id  = #{member_id}   <!-- 본인 글만 열람하려면 유지, 아니면 제거 -->
 </select>
+   
+   	<select id="selectProd_id" parameterType="Long"
+   		resultType="Long">
+   		SELECT prod_id FROM inquiry
+   		WHERE inquiry_id = #{inquiry_id}
+   	</select>
+   
    
 </mapper>

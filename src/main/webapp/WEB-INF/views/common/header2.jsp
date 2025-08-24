@@ -12,7 +12,7 @@
             </li>
             <li>고객센터
                 <ul class="sub-depth2">
-                    <li><a href="/buyer/inquiryList.do">-상품문의</a></li>
+                    <li><a href="/inq/inquiryList.do">-상품문의</a></li>
                 </ul>
             </li>
             <li>회원정보

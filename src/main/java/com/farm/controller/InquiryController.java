@@ -19,6 +19,7 @@ import com.farm.dto.InquiryDTO;
 import com.farm.dto.PageDTO;
 import com.farm.service.ICommentService;
 import com.farm.service.IInquiryService;
+import com.farm.service.IProductService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import utils.PagingUtil;
@@ -31,8 +32,9 @@ public class InquiryController {
 
 	@Autowired
 	ICommentService comDao;
+	
 	// 문의 생성
-	@GetMapping("/buyer/inquiryForm.do")
+	@GetMapping("/inq/inquiryForm.do")
 	public String inquiry1(@RequestParam("prod_id") Long prod_id, @RequestParam("prod_name") String prod_name,
 			Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
 
@@ -43,10 +45,10 @@ public class InquiryController {
 		model.addAttribute("prod_name", prod_name);
 		model.addAttribute("prod_id", prod_id);
 
-		return "buyer/inquiryForm";
+		return "inq/inquiryForm";
 	}
 
-	@PostMapping("/buyer/inquiryForm.do")
+	@PostMapping("/inq/inquiryForm.do")
 	public String inquiry2(InquiryDTO inquiryDTO, @AuthenticationPrincipal CustomUserDetails userDetails) {
 		Long member_id = userDetails.getMemberDTO().getMember_id();
 		inquiryDTO.setMember_id(member_id);
@@ -57,19 +59,27 @@ public class InquiryController {
 			System.out.println("입력에 실패했습니다.");
 		}
 
-		return "redirect:/buyer/inquiryList.do";
+		return "redirect:/inq/inquiryList.do";
 	}
 
 	// 문의목록
-	@GetMapping("/buyer/inquiryList.do")
+	@GetMapping("/inq/inquiryList.do")
 	public String inquiry3(Model model, PageDTO pageDTO, HttpServletRequest req,
 			@AuthenticationPrincipal CustomUserDetails userDetails) {
 
 		Long member_id = userDetails.getMemberDTO().getMember_id();
+		
+		String type = userDetails.getMemberDTO().getUser_type().substring(5).toLowerCase();
+		
+		pageDTO.setMember_id(member_id);			
 
-		pageDTO.setMember_id(member_id);
-
-		int totalCount = inqDao.getTotalCount(pageDTO);
+		int totalCount;
+		if(type.equals("buyer")) {
+			totalCount = inqDao.getTotalCount1(pageDTO);			
+		}
+		else {
+			totalCount = inqDao.getTotalCount2(member_id);
+		}
 		int pageSize = 10;
 		int blockPage = 5;
 		int pageNum = (req.getParameter("pageNum") == null || req.getParameter("pageNum").equals("")) ? 1
@@ -85,18 +95,25 @@ public class InquiryController {
 		maps.put("pageNum", pageNum);
 		model.addAttribute("maps", maps);
 
-		ArrayList<InquiryDTO> list = inqDao.selectInq(pageDTO);
+		ArrayList<InquiryDTO> list;
+		
+		if(type.equals("buyer")) {
+			list = inqDao.selectInq1(pageDTO);			
+		}
+		else {
+			list = inqDao.selectInq2(member_id);
+		}
 		model.addAttribute("inquiries", list);
 
 		String pagingImg = PagingUtil.pagingImg(totalCount, pageSize, blockPage, pageNum,
-				req.getContextPath() + "/buyer/inquiryList.do?");
+				req.getContextPath() + "/inq/inquiryList.do?");
 		model.addAttribute("pagingImg", pagingImg);
 
-		return "buyer/inquiryList";
+		return type+"/inquiryList";
 	}
 
 // 상세보기
-	@GetMapping("/buyer/inquiryDetail.do")
+	@GetMapping("/inq/inquiryDetail.do")
 	public String inquiryDetail(@RequestParam("inquiry_id") Long inquiry_id, Model model,
 			@AuthenticationPrincipal CustomUserDetails userDetails) {
 		Long member_id = userDetails.getMemberDTO().getMember_id();
@@ -108,17 +125,17 @@ public class InquiryController {
 		InquiryDTO dto = inqDao.inquiryDetail(param); // 이미 Service/Mapper에 있음
 
 		
-		ArrayList<CommentDTO> coms = comDao.selectComment(inquiry_id);
+		ArrayList<CommentDTO> coms = comDao.selectComments(inquiry_id);
 		
 		model.addAttribute("coms", coms);
-		
+		model.addAttribute("login_id", member_id);
 		// 상세 JSP에서 ${inquiry.*} 로 쓰셨으니 키 이름을 inquiry로 맞춤
 		model.addAttribute("inquiry", dto);
-		return "buyer/inquiryDetail"; // 상세 JSP 파일명에 맞게
+		return "inq/inquiryDetail"; // 상세 JSP 파일명에 맞게
 	}
 
 	// 수정
-	@GetMapping("/buyer/inquiryUpdate.do")
+	@GetMapping("/inq/inquiryUpdate.do")
 	public String updateInquiry(@RequestParam("inquiry_id") Long inquiry_id, Model model,
 			@AuthenticationPrincipal CustomUserDetails userDetails) {
 		Long member_id = userDetails.getMemberDTO().getMember_id();
@@ -130,32 +147,32 @@ public class InquiryController {
 		InquiryDTO dto = inqDao.inquiryDetail(param);
 
 		if (dto == null) {
-			return "redirect:/buyer/inquiryList.do";
+			return "redirect:/inq/inquiryList.do";
 		}
 
 		model.addAttribute("inquiryDTO", dto);
-		return "buyer/inquiryUpdate";
+		return "inq/inquiryUpdate";
 	}
 
 
 	// 수정2 : 사용자가 입력한 내용을 전송하여 update 처리
-	@PostMapping("/buyer/inquiryUpdate.do")
+	@PostMapping("/inq/inquiryUpdate.do")
 	public String updateInquiry(InquiryDTO inquiryDTO, @AuthenticationPrincipal CustomUserDetails userDetails) {
 		Long member_id = userDetails.getMemberDTO().getMember_id();
 		inquiryDTO.setMember_id(member_id);
 		int result = inqDao.updateInquiry(inquiryDTO);
 		System.out.println("글수정결과:" + result);
 		// return값 확인필요
-		return "redirect:/buyer/inquiryList.do";
+		return "redirect:/inq/inquiryList.do";
 	}
 
-	@PostMapping("/buyer/inquiry/delete.do")
+	@PostMapping("/inq/inquiry/delete.do")
 	public String deleteInquiry(@RequestParam("inquiry_id") Long inquiry_id,
 			@AuthenticationPrincipal CustomUserDetails userDetails) {
 		Long member_id = userDetails.getMemberDTO().getMember_id();
 
 		int result = inqDao.deleteInquiry(inquiry_id, member_id);
-		return "redirect:/buyer/inquiryList.do";
+		return "redirect:/inq/inquiryList.do";
 	}
 
 }

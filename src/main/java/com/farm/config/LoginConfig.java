@@ -58,6 +58,7 @@ public class LoginConfig {
 						.requestMatchers("/css/**", "/js/**", "/images/**", "/uploads/**").permitAll()
 						.requestMatchers("/buyer/**", "/wishlist/**").hasAnyRole("BUYER", "ADMIN")
 						.requestMatchers("/seller/**").hasAnyRole("SELLER", "ADMIN")
+						.requestMatchers("/inq/**").hasAnyRole("SELLER", "BUYER")
 						.anyRequest()
 						.authenticated());
 

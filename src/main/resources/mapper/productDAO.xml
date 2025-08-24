@@ -123,6 +123,12 @@
 		${member_id}
 	</select>
 
+	<select id="selectMember_id" parameterType="Long"
+		resultType="Long">
+		SELECT member_id FROM product
+		WHERE prod_id = #{prod_id}
+	</select>
+
 	<update id="productUpdate"
 		parameterType="com.farm.dto.ProductDTO">
 		UPDATE product set

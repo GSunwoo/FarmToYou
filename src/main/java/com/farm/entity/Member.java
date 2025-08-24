@@ -71,6 +71,8 @@ public class Member {
 	private List<Review> review = new ArrayList<>();
 	@OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
 	private List<Wishlist> wishlist = new ArrayList<>();
+	@OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+	private List<Comment> comment = new ArrayList<>();
 	
 	@PrePersist
 	protected void onPrePersist() {

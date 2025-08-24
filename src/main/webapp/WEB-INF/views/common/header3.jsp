@@ -29,7 +29,7 @@
             </li>
             <li>문의
             	<ul class="sub-depth5">
-            		<li><a href="${pageContext.request.contextPath}/buyer/inquiryList.do">-문의관리</a></li>
+            		<li><a href="${pageContext.request.contextPath}/inq/inquiryList.do">-문의관리</a></li>
             	</ul>
             </li>
         </ul>
