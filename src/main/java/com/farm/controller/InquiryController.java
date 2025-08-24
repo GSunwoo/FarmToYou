@@ -2,6 +2,7 @@ package com.farm.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +14,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.farm.config.CustomUserDetails;
+import com.farm.dto.CommentDTO;
 import com.farm.dto.InquiryDTO;
 import com.farm.dto.PageDTO;
+import com.farm.service.ICommentService;
 import com.farm.service.IInquiryService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,6 +29,8 @@ public class InquiryController {
 	@Autowired
 	IInquiryService inqDao;
 
+	@Autowired
+	ICommentService comDao;
 	// 문의 생성
 	@GetMapping("/buyer/inquiryForm.do")
 	public String inquiry1(@RequestParam("prod_id") Long prod_id, @RequestParam("prod_name") String prod_name,
@@ -102,9 +107,11 @@ public class InquiryController {
 
 		InquiryDTO dto = inqDao.inquiryDetail(param); // 이미 Service/Mapper에 있음
 
-		/*
-		 * if (dto == null) { return "redirect:/buyer/inquiryList.do"; }
-		 */
+		
+		ArrayList<CommentDTO> coms = comDao.selectComment(inquiry_id);
+		
+		model.addAttribute("coms", coms);
+		
 		// 상세 JSP에서 ${inquiry.*} 로 쓰셨으니 키 이름을 inquiry로 맞춤
 		model.addAttribute("inquiry", dto);
 		return "buyer/inquiryDetail"; // 상세 JSP 파일명에 맞게
