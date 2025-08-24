@@ -78,6 +78,7 @@ public class PurchaseController {
 		model.addAttribute("cart",cart);
 		model.addAttribute("addr", address);
 		model.addAttribute("savedAddresses", saved);
+		model.addAttribute("wishList", wishlist);
 		
 		return "order_page";
 	}

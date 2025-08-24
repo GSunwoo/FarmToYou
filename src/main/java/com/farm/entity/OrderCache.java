@@ -35,4 +35,5 @@ public class OrderCache {
 	private Long prod_id;
 	@Column(nullable=false)
 	private Integer qty;
+	private Long wish_id;
 }
