@@ -24,12 +24,15 @@ const totalPrice = document.getElementById("total_price").value;
   function openTossPage() {
 	  const ids = CART.map(item => item.id);
 	  const qtys = CART.map(item => item.qty);
-	  
+	  const wishList = window.wishList || [];
+
+	  // 쿼리스트링 만들기
 	  const queryStringId = ids.map(id => `prod_id=${id}`).join("&");
 	  const queryStringQty = qtys.map(qty => `qty=${qty}`).join("&");
+	  const queryStringWL = wishList.map(id => `wish_id=${id}`).join("&");
 	  const orderName = (window.orderName || "").trim();
 	  window.open(
-	    "/buyer/pay/checkout.do?orderName="+orderName+"&totalPrice="+totalPrice+"&"+queryStringId+"&"+queryStringQty, 
+	    "/buyer/pay/checkout.do?orderName="+orderName+"&totalPrice="+totalPrice+"&"+queryStringId+"&"+queryStringQty+"&"+queryStringWL, 
 	    "_blank",
 	    "width=600,height=800,top=300,left=500,scrollbars=yes,resizable=yes"
 	  );

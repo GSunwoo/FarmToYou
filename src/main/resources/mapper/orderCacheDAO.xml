@@ -6,8 +6,8 @@
 <mapper namespace="com.farm.service.IOrderCacheService">
 	<insert id="insertOrderCache"
 		parameterType="com.farm.dto.OrderCacheDTO">
-	INSERT INTO order_cache (order_cache_id, prod_id, order_num, qty)
-		VALUES (seq_order_cache_id.nextval, #{prod_id}, #{order_num}, #{qty})
+	INSERT INTO order_cache (order_cache_id, prod_id, order_num, qty, wish_id)
+		VALUES (seq_order_cache_id.nextval, #{prod_id}, #{order_num}, #{qty}, #{wish_id})
 	</insert>
 	<delete id="deleteOrderCache">
 	DELETE FROM order_cache WHERE order_num=#{order_num}

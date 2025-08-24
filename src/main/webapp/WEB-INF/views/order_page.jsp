@@ -2,6 +2,8 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ page import="com.fasterxml.jackson.databind.ObjectMapper" %>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -205,7 +207,10 @@
     </c:if>
   </c:forEach>
 </c:set>
-
+<%
+    String wishListJson = new com.fasterxml.jackson.databind.ObjectMapper()
+                             .writeValueAsString(request.getAttribute("wishList"));
+%>
 <script>
   // 문자열 라인브레이크 제거
   const orderName =
@@ -274,6 +279,8 @@ ${row.prod_name}
     // 모달 닫기
     closeM('#modalAddr');
   });
+  
+  window.wishList = JSON.parse('<%= wishListJson %>');
 </script>
 
 <!-- 외부 JS 사용 시 (inline 대신) -->
