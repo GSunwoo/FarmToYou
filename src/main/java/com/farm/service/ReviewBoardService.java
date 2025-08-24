@@ -51,4 +51,6 @@ public interface ReviewBoardService {
 	public ArrayList<ReviewBoardDTO> loadReview(@Param("prod_id") Long prod_id);
 	
 	public List<ReviewBoardDTO> selectReviewByMember(@Param("member_id") Long member_id);
+	
+	public List<ReviewBoardDTO> selectReviewBySeller(@Param("member_id") Long member_id);
 }

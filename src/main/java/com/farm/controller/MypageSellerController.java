@@ -29,6 +29,7 @@ import com.farm.dto.ReviewBoardDTO;
 import com.farm.service.IMemberService;
 import com.farm.service.IMypageService;
 import com.farm.service.IOrderService;
+import com.farm.service.ReviewBoardService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -50,6 +51,8 @@ public class MypageSellerController {
 	IMemberService memDAO;
 	@Autowired
 	IOrderService orderDAO;
+	@Autowired
+	ReviewBoardService reviewDAO;
 	
 	
 	
@@ -143,7 +146,12 @@ public class MypageSellerController {
     
 
     @GetMapping("/seller/reviewManagement")
-    public String reviewManagement() {
+    public String reviewManagement(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
+    	Long member_id = userDetails.getMemberDTO().getMember_id();
+		List<ReviewBoardDTO> myReviewList = reviewDAO.selectReviewBySeller(member_id);
+		
+		model.addAttribute("myReviewList", myReviewList);
+		
         return "seller/reviewManagement";
     }
     @GetMapping("/seller/member-info")
