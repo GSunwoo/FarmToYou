@@ -1,7 +1,6 @@
 package com.farm.controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -9,16 +8,11 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -34,7 +28,6 @@ import com.farm.service.IProductService;
 import com.farm.service.ReviewBoardService;
 
 import jakarta.servlet.http.HttpServletRequest;
-import oracle.jdbc.proxy.annotation.Post;
 
 @Controller
 public class AdminController {
@@ -129,7 +122,7 @@ public class AdminController {
 		// 등록요청 중인 농장 가져오기
 		List<FarmDTO> farms = confirmDAO.selectRequestFarms();
 		// model 객체를 통해 전달
-		model.addAttribute("farms", farms);
+		model.addAttribute("farmList", farms);
 
 		return "admin/farm";
 	}
