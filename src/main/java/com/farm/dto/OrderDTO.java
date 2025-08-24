@@ -16,4 +16,5 @@ public class OrderDTO {
 	private String filename;
 	private Long purc_id;
 	private int isWritten;
+	
 }

@@ -22,6 +22,7 @@ import com.farm.dto.PurchaseDTO;
 import com.farm.service.IOrderCacheService;
 import com.farm.service.IPayService;
 import com.farm.service.IPurchaseService;
+import com.farm.service.IWishlistService;
 
 @Controller
 public class PaymentController {
@@ -32,6 +33,8 @@ public class PaymentController {
 	IOrderCacheService orderDAO;
 	@Autowired
 	IPurchaseService purDAO;
+	@Autowired
+	IWishlistService wishDAO;
 	
 	@Value("${toss.clientKey}")
 	private String WIDGET_CLIENT_KEY; // toss 클라이언트 키
@@ -39,7 +42,8 @@ public class PaymentController {
 	@GetMapping("/buyer/pay/checkout.do")
 	public String checkout(Model model, @AuthenticationPrincipal CustomUserDetails userDetails,
 							@RequestParam("orderName") String orderName, @RequestParam("totalPrice") int totalPrice,
-							@RequestParam("prod_id") List<Long> prodIds, @RequestParam("qty") List<Integer> qtys) {
+							@RequestParam("prod_id") List<Long> prodIds, @RequestParam("qty") List<Integer> qtys,
+							@RequestParam("wish_id") List<Long> wishIds) {
 		// 클라이언트키 전달
 		model.addAttribute("widgetClientKey",WIDGET_CLIENT_KEY);
 		// member_id와 user_id를 seed로 customerKey를 생성하여 model객체로 전달
@@ -85,6 +89,8 @@ public class PaymentController {
 			orderCache.setOrder_num(encOrderId);
 			orderCache.setProd_id(prodIds.get(i));
 			orderCache.setQty(qtys.get(i));
+			if(wishIds!=null) orderCache.setWish_id(wishIds.get(i));
+			else orderCache.setWish_id(0L);
 			
 			orderDAO.insertOrderCache(orderCache);
 		}
@@ -115,6 +121,10 @@ public class PaymentController {
 			purDAO.updateQty(purchaseDTO.getProd_id(), cache.getQty());
 			// 캐시테이블의 임시정보 삭제
 			orderDAO.deleteOrderCache(order_num);
+			// 장바구니에서 삭제
+			if(cache.getWish_id()!=null) {
+				wishDAO.deleteWishlist(cache.getWish_id());
+			}
 			
 		}
 		return "pay/success";
