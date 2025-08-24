@@ -33,7 +33,7 @@
 				</colgroup>
                 <thead>
                     <tr>
-                        <th>주문번호</th>
+                        <th>리뷰번호</th>
                         <th>날짜</th>
                         <th>상품명</th>
                         <th>상품 이미지</th>
@@ -41,13 +41,13 @@
                     </tr>
                 </thead>
                     <tbody>
-            <c:if test="${not empty reviewLists}">
-              <c:forEach var="rls" items="${reviewLists}">
+            <c:if test="${not empty myReviewList}">
+              <c:forEach var="rls" items="${myReviewList}">
                 <tr>
                   <td>
-                  	<c:out value="${rls.order_num}"/></td>
+                  	<c:out value="${rls.review_id}"/></td>
                   <td>
-  					<time><c:out value="${rls.purc_date}"/></time>
+  					<time><c:out value="${rls.postdate}"/></time>
                   </td>
                   <td>
                   	<c:out value="${rls.prod_name}"/>
@@ -73,7 +73,7 @@
               </c:forEach>
             </c:if>
 
-            <c:if test="${empty reviewLists}">
+            <c:if test="${empty myReviewList}">
               <tr>
                 <td colspan="5" class="no-data">리뷰를 작성할 구매 내역이 없습니다.</td>
               </tr>
