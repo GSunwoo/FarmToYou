@@ -9,7 +9,6 @@ import java.util.Map;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -54,16 +53,23 @@ public class ReviewBoardController {
 	@Autowired
 	private ReviewLikeService reviewLikeService;
 	
+	@Autowired
+	ReviewCarouselService reviewCarouselService;
+	
+	
 	//목록
 	@GetMapping("/guest/review/list.do")
 	// HttpServletRequest : 사용자가 웹 페이지에서 서버에게 요청한 내용을 다 들고 있는 객체
 	public String list(Model model, HttpServletRequest req, ReviewBoardDTO reviewboardDTO, PageDTO pageDTO,
-			@AuthenticationPrincipal CustomUserDetails userDetails) {
+			@AuthenticationPrincipal CustomUserDetails userDetails,
+			@RequestParam(name = "reviewPage", required = false, defaultValue = "5") int reviewPage) {
 		
 		pageDTO.setStart(1);
 		pageDTO.setEnd(20);
 		ArrayList<ReviewBoardDTO> lists = dao.listPage(pageDTO);
-
+		List<ReviewBoardDTO> bests = reviewCarouselService.getTopLikedReviews(reviewPage);
+		model.addAttribute("bests", bests);
+		
 		for(int i = 0 ; i < lists.size() ; i ++) {
 			ReviewBoardDTO review = lists.get(i);
 			review.setReview_like(dao.countLike(review.getReview_id()));
@@ -79,6 +85,8 @@ public class ReviewBoardController {
 		model.addAttribute("reviewList", lists);
 		return "review/reviewPage";
 	}
+	
+	
 
 	//무한스크롤
 	@RequestMapping("/guest/review/restApi.do")

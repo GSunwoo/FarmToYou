@@ -120,22 +120,7 @@
         <th>브랜드명</th>
         <th>상세보기</th>
       </tr>
-    </thead>
-    <tbody>
-  <tr>
-    <td>farmuser01</td>
-    <td>홍길동</td>
-    <td>햇살농장</td>
-    <td><button class="view-btn" onclick="openModal(1)">보기</button></td>
-  </tr>
-  <tr>
-    <td>farmuser02</td>
-    <td>이영희</td>
-    <td>맑은들농장</td>
-    <td><button class="view-btn" onclick="openModal(2)">보기</button></td>
-  </tr>
-</tbody>
-    
+    </thead>   
     <tbody>
       <!-- 반복문으로 농장 리스트 출력 -->
       <c:forEach var="farm" items="${farmList}">
@@ -176,7 +161,7 @@
 
   <script>
     // JSP에서 farmList를 JavaScript 객체로 변환
-    /* const farmMap = {
+   const farmMap = {
       <c:forEach var="farm" items="${farmList}">
         ${farm.farm_id}: {
           member_id: '${farm.member_id}',
@@ -186,54 +171,14 @@
           com_zip: '${farm.com_zip}',
           com_addr1: '${farm.com_addr1}',
           com_addr2: '${farm.com_addr2}',
-          entryman: '${farm.entryman}',
+          entryman: '${farm.depositor}',
           bank: '${farm.bank}',
           account: '${farm.account}'
         },
       </c:forEach>
-    }; */
+    };
     
-    const farmMap = {
-    	    // 더미 데이터 
-    	    1: {
-    	      member_id: 'farmuser01',
-    	      farm_id: '1',
-    	      owner_name: '홍길동',
-    	      brand_name: '햇살농장',
-    	      com_zip: '12345',
-    	      com_addr1: '서울특별시 강남구',
-    	      com_addr2: '테헤란로 123',
-    	      entryman: '김사원',
-    	      bank: '국민은행',
-    	      account: '123-4567-8901'
-    	    },
-    	    2: {
-    	      member_id: 'farmuser02',
-    	      farm_id: '2',
-    	      owner_name: '이영희',
-    	      brand_name: '맑은들농장',
-    	      com_zip: '54321',
-    	      com_addr1: '부산광역시 해운대구',
-    	      com_addr2: '센텀서로 45',
-    	      entryman: '이대리',
-    	      bank: '신한은행',
-    	      account: '987-6543-2100'
-    	    }
-    	    <c:forEach var="farm" items="${farmList}">
-    	    ,${farm.farm_id}: {
-    	      member_id: '${farm.member_id}',
-    	      farm_id: '${farm.farm_id}',
-    	      owner_name: '${farm.owner_name}',
-    	      brand_name: '${farm.brand_name}',
-    	      com_zip: '${farm.com_zip}',
-    	      com_addr1: '${farm.com_addr1}',
-    	      com_addr2: '${farm.com_addr2}',
-    	      entryman: '${farm.entryman}',
-    	      bank: '${farm.bank}',
-    	      account: '${farm.account}'
-    	    }
-    	    </c:forEach>
-    	  };
+    
 
     // 모달 열기 함수
     function openModal(farmId) {

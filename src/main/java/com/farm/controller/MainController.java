@@ -69,11 +69,6 @@ public class MainController {
 	    
 	    model.addAttribute("reviewPage", reviews);
 		
-		Long end = (long)bestforweek;
-		ArrayList<ProductDTO> bests = proDao.selectBestProdForLastWeek(end);
-		
-		model.addAttribute("bests", bests);
-		
 		return "main";
 	}
 		

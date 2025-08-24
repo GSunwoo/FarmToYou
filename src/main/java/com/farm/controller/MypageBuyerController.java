@@ -190,7 +190,12 @@ public class MypageBuyerController {
 	}
 	
 	@GetMapping("/buyer/reviewManagement")
-    public String reviewManagement1() {
+    public String reviewManagement1(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
+		Long member_id = userDetails.getMemberDTO().getMember_id();
+		List<ReviewBoardDTO> myReviewList = reviewDAO.selectReviewByMember(member_id);
+		
+		model.addAttribute("myReviewList", myReviewList);
+		
         return "buyer/reviewManagement";
     }
 	
