@@ -99,7 +99,7 @@
 		<h2 class="weekly-title">WEEKLY PICK</h2>
 		<div class="weekly-product-wrapper">
 			<c:forEach var="product" items="${bests}" varStatus="status">
-				<div class="weekly-product-card"
+				<div class="weekly-product-card big-circle"
 					onclick="location.href='${pageContext.request.contextPath}/guest/Detailpage.do?prod_id=${product.prod_id}'">
 					<div class="circle-img-wrapper">
 						<img
