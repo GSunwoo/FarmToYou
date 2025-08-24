@@ -138,10 +138,10 @@
 							가산디지털2로 101 3층</span>
 						<div></div>
 						<div>
-							<i class="fas fa-phone"></i> <span>1577-1577</span>
+							<i class="fas fa-phone"></i> <span>010-2272-2867</span>
 						</div>
 						<div>
-							<i class="fas fa-fax"></i> <span>02-2272-2272</span>
+							<i class="fas fa-fax"></i> <span>02-2272-22867</span>
 						</div>
 						<div>
 							<i class="fas fa-envelope"></i> <span>wlstjr2867@gmail.com</span>

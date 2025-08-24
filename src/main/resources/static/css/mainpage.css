@@ -859,3 +859,69 @@ body {
   margin-top: 6px;
   font-size: 1.1em;
 }
+
+/* 카드 네모 스타일 제거 + 가운데 정렬 */
+.weekly-product-card.big-circle {
+  position: relative;
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  width: auto;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* 동그라미 크게 */
+.weekly-product-card.big-circle .circle-img-wrapper {
+  position: relative;   /* 기준점 설정 */
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 8px auto 14px;
+}
+
+/* 이미지를 원형에 꽉 채우기 */
+.weekly-product-card.big-circle .circle-img-wrapper img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block;
+}
+
+/* 랭크 뱃지 */
+.weekly-product-card.big-circle .circle-rank {
+  position: absolute;
+  top: 8px;    /* 이미지 안쪽 여백 */
+  left: 8px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.9em;
+  line-height: 1.2;
+  flex-direction: column; /* "주"랑 "등"을 위아래로 */
+}
+
+/* 텍스트/가격 */
+.weekly-product-card.big-circle .prod-name {
+  margin: 6px 0 4px;
+  font-size: 1.05em;
+}
+
+.weekly-product-card.big-circle .price-box {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+}
+
+.weekly-product-card.big-circle .original-price { color: #888; }
