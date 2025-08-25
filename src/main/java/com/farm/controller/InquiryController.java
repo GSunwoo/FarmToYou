@@ -98,7 +98,8 @@ public class InquiryController {
 		ArrayList<InquiryDTO> list;
 		
 		if(type.equals("buyer")) {
-			list = inqDao.selectInq1(pageDTO);			
+			list = inqDao.selectInq1(pageDTO);
+			
 		}
 		else {
 			list = inqDao.selectInq2(member_id);

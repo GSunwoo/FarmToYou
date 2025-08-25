@@ -87,6 +87,57 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+/* ===== 페이지네이션 디자인 ===== */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  margin-top: 25px;
+  font-size: 14px;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+.pagination a {
+  display: inline-block;
+  min-width: 34px;
+  height: 34px;
+  line-height: 32px;
+  text-align: center;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background-color: #fff;
+  color: #555;
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
+}
+
+/* 호버 시 효과 */
+.pagination a:hover:not(.active):not(.disabled) {
+  border-color: #2d8cf0;
+  color: #2d8cf0;
+}
+
+/* 활성 페이지 */
+.pagination a.active {
+  background-color: #2d8cf0;
+  border-color: #2d8cf0;
+  color: white;
+  font-weight: bold;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* 비활성(처음, 끝 버튼) */
+.pagination a.disabled {
+  color: #ccc;
+  background-color: #f9f9f9;
+  border-color: #eee;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 </style>
 <!-- 공통 css -->
 <link rel="stylesheet"
@@ -206,7 +257,17 @@
 												</a>
 												</td>
 												<!-- 문의상태: 스키마가 없으니 고정 -->
-												<td>대기</td>
+												<td class="status">
+												    <c:choose>
+												        <c:when test="${inquiry.com_count > 0}">
+												            <span class="status-complete">답변완료</span>
+												        </c:when>
+												        <c:otherwise>
+												            <span class="status-wait">대기</span>
+												        </c:otherwise>
+												    </c:choose>
+												</td>
+												<!-- <td>대기</td> -->
 											</tr>
 										</c:forEach>
 									</c:when>

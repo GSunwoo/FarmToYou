@@ -72,6 +72,13 @@
 	padding: 12px;
 	border-bottom: 1px solid #ddd;
 }
+/* 내용 셀만 패딩 늘리기 */
+.board-white-table td.content-cell {
+    padding-top: 70px;   /* 상단 패딩 */
+    padding-bottom: 70px; /* 하단 패딩 */
+    vertical-align: top;  /* 위쪽부터 내용 표시 */
+}
+
 
 /* 버튼 영역 */
 .btn-center-box {
@@ -109,6 +116,19 @@
 .btn-write-ok:hover {
 	background-color: #256d45;
 }
+
+.comments-wrap { margin-top: 30px; }
+.comments-title { font-size: 18px; font-weight: bold; margin-bottom: 12px; }
+.comments-list { list-style: none; padding: 0; margin: 0 0 16px; }
+.comment-item { border:1px solid #eee; border-radius:6px; padding:10px; margin-bottom:10px; background:#fafafa; }
+.comment-meta { font-size: 13px; color:#777; margin-bottom: 6px; }
+.comment-content { white-space: pre-wrap; line-height: 1.5; }
+.no-comments { color:#999; margin-bottom: 12px; }
+.comment-form textarea { width: 100%; padding: 8px; resize: vertical; border: 1px solid #ccc; border-radius: 4px; }
+.comment-form .btns { margin-top: 8px; text-align: right; }
+
+
+
 </style>
 </head>
 <!-- 공통 css -->
@@ -172,7 +192,7 @@
 							</tr>
 							<tr>
 								<th scope="row">내용</th>
-								<td><c:out value="${inquiry.content}" /></td>
+								<td class="content-cell"><c:out value="${inquiry.content}" /></td>
 							</tr>
 						</tbody>
 					</table>
@@ -182,13 +202,54 @@
 					<!-- 목록 -->
 					<a class="btn-before" href="/inq/inquiryList.do"><strong>목록</strong></a>
 
-					<!-- 수정: 반드시 inquiry_id 전달 -->
-					<a class="btn-write-ok"
-						href="<c:url value='/buyer/inquiryUpdate.do'>
-                     <c:param name='inquiry_id' value='${inq.inquiry_id}'/>
-                   </c:url>">
-						<strong>수정</strong>
-					</a>
+					<!-- ====== 판매자 답변 섹션 ====== -->
+<div class="comments-wrap">
+  <h3 class="comments-title">판매자 답변</h3>
+
+  <!-- 답변 리스트 -->
+  <c:choose>
+    <c:when test="${not empty comments}">
+      <ul class="comments-list">
+        <c:forEach var="cmt" items="${comments}">
+          <li class="comment-item">
+            <div class="comment-meta">
+              <span class="comment-date">
+                <fmt:formatDate value="${cmt.com_date}" pattern="yyyy-MM-dd HH:mm" />
+              </span>
+            </div>
+            <div class="comment-content">
+              <c:out value="${cmt.com_content}" />
+            </div>
+          </li>
+        </c:forEach>
+      </ul>
+    </c:when>
+    <c:otherwise>
+      <p class="no-comments">등록된 답변이 없습니다.</p>
+    </c:otherwise>
+  </c:choose>
+
+ <!-- 문의 상세 내용 아래에 답변 작성 폼 추가 -->
+<div id="comment-section" style="margin-top:30px;">
+  <h3>판매자 답변</h3>
+
+  <!-- 답변 작성 폼 -->
+  <form id="commentForm">
+    <input type="hidden" name="inquiry_id" value="${inquiry.inquiry_id}">
+    <textarea id="com_content" name="com_content" rows="4" placeholder="답변을 입력하세요" required></textarea>
+    <button type="submit" id="commentSubmitBtn">등록</button>
+  </form>
+
+  <!-- 답변 리스트 출력 영역 -->
+  <div id="commentList" style="margin-top:20px;">
+    <c:forEach var="comment" items="${comments}">
+      <div class="comment-item">
+        <p>${comment.com_content}</p>
+        <span><fmt:formatDate value="${comment.com_date}" pattern="yyyy-MM-dd HH:mm"/></span>
+      </div>
+    </c:forEach>
+  </div>
+</div>
 
 					<!-- 삭제 (POST) -->
 					<!-- <form action="${pageContext.request.contextPath}/buyer/inquiryDelete.do" method="post" style="display:inline;">
@@ -200,5 +261,43 @@
 			</div>
 		</div>
 	</div>
+	<script>
+	document.addEventListener("DOMContentLoaded", function () {
+		  const form = document.getElementById("commentForm");
+		  const commentList = document.getElementById("commentList");
+
+		  form.addEventListener("submit", function (e) {
+		    e.preventDefault();
+
+		    const formData = new FormData(form);
+
+		    fetch("seller/updateComment", {
+
+		      method: "POST",
+		      body: formData
+		    })
+		    .then(res => res.json())
+		    .then(data => {
+		      if (data.success) {
+		        // 신규 답변 추가
+		        const newComment = document.createElement("div");
+		        newComment.classList.add("comment-item");
+		        newComment.innerHTML = `
+		          <p>${data.comment.com_content}</p>
+		          <span>${data.comment.com_date}</span>
+		        `;
+		        commentList.appendChild(newComment);
+
+		        // 입력창 초기화
+		        document.getElementById("com_content").value = "";
+		      } else {
+		        alert("답변 작성에 실패했습니다.");
+		      }
+		    })
+		    .catch(err => console.error("댓글 작성 에러:", err));
+		  });
+		});
+
+</script>
 </body>
 </html>

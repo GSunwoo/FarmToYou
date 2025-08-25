@@ -24,9 +24,26 @@
    parameterType="com.farm.dto.PageDTO"
    resultType="com.farm.dto.InquiryDTO"
    >
-   SELECT inquiry_id, prod_id, content, member_id, title, postdate AS postdate
-         FROM inquiry 
-         WHERE member_id = #{member_id} ORDER BY postdate DESC
+   SELECT 
+	    inq.inquiry_id,
+	    inq.prod_id,
+	    inq.content,
+	    inq.member_id,
+	    inq.title,
+	    inq.postdate,
+	    COUNT(com.inquiry_id) AS com_count
+	FROM inquiry inq
+	LEFT JOIN comments com 
+	    ON inq.inquiry_id = com.inquiry_id
+	WHERE inq.member_id = #{member_id}
+	GROUP BY 
+	    inq.inquiry_id, 
+	    inq.prod_id, 
+	    inq.content, 
+	    inq.member_id, 
+	    inq.title, 
+	    inq.postdate
+	ORDER BY inq.postdate DESC;
    </select>
    
    <select id="selectInq2"

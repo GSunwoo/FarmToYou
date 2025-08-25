@@ -72,6 +72,12 @@
 	padding: 12px;
 	border-bottom: 1px solid #ddd;
 }
+/* 내용 셀만 패딩 늘리기 */
+.board-white-table td.content-cell {
+    padding-top: 70px;   /* 상단 패딩 */
+    padding-bottom: 70px; /* 하단 패딩 */
+    vertical-align: top;  /* 위쪽부터 내용 표시 */
+}
 
 /* 버튼 영역 */
 .btn-center-box {
@@ -172,7 +178,7 @@
 							</tr>
 							<tr>
 								<th scope="row">내용</th>
-								<td><c:out value="${inquiry.content}" /></td>
+								<td class="content-cell"><c:out value="${inquiry.content}" /></td>
 							</tr>
 						</tbody>
 					</table>
