@@ -44,9 +44,9 @@
    <insert id="insertInq"
       parameterType="com.farm.dto.InquiryDTO">
       INSERT INTO inquiry
-         (inquiry_id, prod_id, user_id, content, title, member_id)   
+         (inquiry_id, prod_id, content, title, member_id)   
       VALUES
-         (seq_inquiry_id.nextval, #{prod_id} ,#{user_id} , #{content} ,#{title}, #{member_id})
+         (seq_inquiry_id.nextval, #{prod_id}, #{content} ,#{title}, #{member_id})
    </insert>
    
    <!-- 문의 수정 -->
@@ -74,7 +74,7 @@
   LEFT JOIN member
   	ON inquiry.member_id=member.member_id
   WHERE inquiry_id = #{inquiry_id}
-    AND inquiry.member_id  = #{member_id}   <!-- 본인 글만 열람하려면 유지, 아니면 제거 -->
+    AND (inquiry.member_id  = #{member_id} OR product.member_id = #{member_id})   <!-- 본인 글만 열람하려면 유지, 아니면 제거 -->
 </select>
    
    	<select id="selectProd_id" parameterType="Long"

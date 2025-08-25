@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.farm.config.CustomUserDetails;
-import com.farm.dto.CommentDTO;
+import com.farm.dto.CommentsDTO;
 import com.farm.dto.InquiryDTO;
-import com.farm.service.ICommentService;
+import com.farm.service.ICommentsService;
 import com.farm.service.IInquiryService;
 import com.farm.service.IProductService;
 
@@ -24,7 +24,7 @@ import com.farm.service.IProductService;
 public class CommentController {
 	
 	@Autowired
-	ICommentService comDao;
+	ICommentsService comDao;
 	@Autowired
 	IProductService proDao;
 	@Autowired
@@ -32,17 +32,17 @@ public class CommentController {
 	
 	@PostMapping("seller/insertComment")
 	@ResponseBody
-	public int insertComment(CommentDTO commentDTO, 
+	public int insertComment(CommentsDTO commentsDTO, 
 			@AuthenticationPrincipal CustomUserDetails ud) {
 		
-		Long inquiry_id = commentDTO.getInquiry_id();
+		Long inquiry_id = commentsDTO.getInquiry_id();
 		Long prod_id = inqDao.selectProd_id(inquiry_id);
 		
 		Long login_user = ud.getMemberDTO().getMember_id();
 		Long prod_mem_id = proDao.selectMember_id(prod_id);
 		if (login_user == prod_mem_id) {
-			commentDTO.setMember_id(login_user);
-			int result = comDao.insertComment(commentDTO);
+			commentsDTO.setMember_id(login_user);
+			int result = comDao.insertComments(commentsDTO);
 			if(result > 0) {
 				return 200;			
 			}
@@ -59,13 +59,13 @@ public class CommentController {
 		Map<String, String> map = new HashMap<>();
 		
 		Long login_id = ud.getMemberDTO().getMember_id();
-		CommentDTO commentDTO = comDao.getComment(com_id);
-		Long writer_id = commentDTO.getMember_id();
+		CommentsDTO commentsDTO = comDao.getComments(com_id);
+		Long writer_id = commentsDTO.getMember_id();
 		
 		
 		if(login_id == writer_id) {
 			map.put("code", "200");
-			map.put("content", commentDTO.getCom_content());
+			map.put("content", commentsDTO.getCom_content());
 			map.put("com_id", com_id.toString());
 			return map;			
 		}
@@ -78,8 +78,8 @@ public class CommentController {
 	
 	@PostMapping("seller/updateComment")
 	@ResponseBody
-	public int updateComment(CommentDTO commentDTO) {
-		int result = comDao.updateComment(commentDTO);
+	public int updateComment(CommentsDTO commentsDTO) {
+		int result = comDao.updateComments(commentsDTO);
 		if(result > 0) {
 			return 200;			
 		}
@@ -89,7 +89,7 @@ public class CommentController {
 	@GetMapping("seller/deleteComment")
 	@ResponseBody
 	public int updateComment(@RequestParam("com_id") Long com_id) {
-		int result = comDao.deleteComment(com_id);
+		int result = comDao.deleteComments(com_id);
 		if(result > 0) {
 			return 200;			
 		}

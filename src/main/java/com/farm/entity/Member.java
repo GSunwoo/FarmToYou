@@ -72,7 +72,7 @@ public class Member {
 	@OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
 	private List<Wishlist> wishlist = new ArrayList<>();
 	@OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
-	private List<Comment> comment = new ArrayList<>();
+	private List<Comments> comments = new ArrayList<>();
 	
 	@PrePersist
 	protected void onPrePersist() {

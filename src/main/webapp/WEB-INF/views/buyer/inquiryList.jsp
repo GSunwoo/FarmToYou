@@ -202,7 +202,7 @@
 												<!-- 문의 상세보기 -->
 												<td class="ellipsis">
 												<a
-													href="${pageContext.request.contextPath}/buyer/inquiryDetail.do?inquiry_id=${q.inquiry_id}">상세보기
+													href="/inq/inquiryDetail.do?inquiry_id=${q.inquiry_id}">상세보기
 												</a>
 												</td>
 												<!-- 문의상태: 스키마가 없으니 고정 -->

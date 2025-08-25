@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 @Entity
-public class Comment {
+public class Comments {
 
 	@Id
 	@SequenceGenerator(

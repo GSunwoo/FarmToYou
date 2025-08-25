@@ -54,7 +54,7 @@ public class Inquiry {
 	private Product product; 
 	
 	@OneToMany(mappedBy = "inquiry", cascade = CascadeType.REMOVE)
-    private List<Comment> comment = new ArrayList<>();
+    private List<Comments> comments = new ArrayList<>();
 	
 	@PrePersist
 	protected void onPrePersist() {

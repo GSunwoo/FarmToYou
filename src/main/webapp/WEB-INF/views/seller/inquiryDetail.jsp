@@ -140,10 +140,10 @@
 				<c:if test="${empty inq}">
 					<p style="color: #d00">조회할 문의가 없습니다.</p>
 					<p>
-						<a href="<c:url value='/buyer/inquiryList.do'/>">목록으로</a>
+						<a href="<c:url value='/inq/inquiryList.do'/>">목록으로</a>
 					</p>
 					<c:remove var="inq" />
-					<c:redirect url="/buyer/inquiryList.do" />
+					<c:redirect url="/inq/inquiryList.do" />
 				</c:if>
 
 				<div class="board-white-box">
@@ -180,7 +180,7 @@
 
 				<div class="btn-center-box">
 					<!-- 목록 -->
-					<a class="btn-before" href="<c:url value='/inq/inquiryList.do'/>"><strong>목록</strong></a>
+					<a class="btn-before" href="/inq/inquiryList.do"><strong>목록</strong></a>
 
 					<!-- 수정: 반드시 inquiry_id 전달 -->
 					<a class="btn-write-ok"
