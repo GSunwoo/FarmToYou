@@ -321,91 +321,6 @@ body {
   color: #555;
 }
 
-/* 고객 리뷰 섹션 */
-.review-section {
-  background-color: #f4f7fb;
-  padding: 60px 0;
-  text-align: center;
-  overflow: hidden;
-}
-
-.review-slider-wrapper {
-  width: 100%;
-  overflow: hidden;
-  position: relative;
-}
-
-.review-slider {
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-}
-
-.slide-track {
-  display: flex;
-  width: calc((220px + 20px) * 24);
-}
-
-.slide-track-left {
-  animation: scroll-left 25s linear infinite;
-}
-
-.slide-track-right {
-  animation: scroll-right 30s linear infinite;
-}
-
-.review-card {
-  flex: 0 0 auto;
-  width: 220px;
-  height: 150px;
-  margin-right: 20px;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #555;
-  font-size: 15px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.review-card a {
-  text-decoration: none;
-  color: inherit;
-  display: block;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  line-height: 150px;
-}
-
-.review-slider:hover .slide-track {
-  animation-play-state: paused;
-}
-
-.review-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-}
-
-@keyframes scroll-left {
-  0% { 
-  	transform: translateX(0); 
-  }
-  100% { 
-  	transform: translateX(-50%); 
-  }
-}
-
-@keyframes scroll-right {
-  0% { 
-  	transform: translateX(-50%); 
-  }
-  100% { 
-  	transform: translateX(0); 
-  }
-}
 
 /* weekly pick */
 .weekly-best {
@@ -732,9 +647,12 @@ body {
 
 /* 슬라이드 애니메이션 */
 @keyframes slide-left-horizontal {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  from { transform: translate3d(0,0,0); }
+  to   { transform: translate3d(calc(-1 * var(--loop, 0px)),0,0); } /* 변수로 이동 */
 }
+
+/* 애니메이션은 이 클래스에만 단일 적용(중복 방지) */
+.slide-track-horizontal.animate { animation: slide-left-horizontal 40s linear infinite; }
 
 /* 메인 리뷰 카드 레이아웃 덮어쓰기 */
 .review-section .review-card{
@@ -796,7 +714,7 @@ body {
   display:flex;
   gap:16px;
   width:max-content;           /* 내용만큼 너비 */
-  animation: slide-left-horizontal 40s linear infinite;
+  will-change: transform;
 }
 
 .review-section .review-top-img { height: 220px; }   /* 기존 180px → 220px */
