@@ -8,8 +8,8 @@
 <meta charset="UTF-8">
 <title>리뷰 홈페이지 메인</title>
 <!-- 필요한 스타일 -->
-<link rel="stylesheet" href="/css/mainpage.css">
-<link rel="stylesheet" href="/css/reviewPage.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/mainpage.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/reviewPage.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/reviewModal.css">
 <!-- 돋보기, 별 css -->
 <link rel="stylesheet"

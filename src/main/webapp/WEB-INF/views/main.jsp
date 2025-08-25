@@ -14,6 +14,7 @@
 
 <!-- CSS (상대경로) -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/mainpage.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/reviewSlider.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/reviewModal.css">
 
 <!-- 돋보기, 별 css -->
@@ -47,8 +48,8 @@
 		</div>
 
 		<div class="review-slider-wrapper">
-			<div class="review-slider slider-horizontal">
-				<div class="slide-track slide-track-horizontal">
+			<div class="review-slider">
+				<div class="slide-track">
 					<c:forEach var="rvs" items="${reviewPage}">
 						<div class="review-cards"
 						    data-review-id="${rvs.review_id}"
