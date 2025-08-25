@@ -100,16 +100,4 @@
    		SELECT prod_id FROM inquiry
    		WHERE inquiry_id = #{inquiry_id}
    	</select>
-   
-   <insert id="insertComment"
-   		   parameterType="com.farm.dto.CommentsDTO">
-   INSERT INTO comments (com_id, com_content, member_id, inquiry_id)
-      VALUES (seq_comment_id.nextval, #{com_content}, #{member_id}, #{inquiry_id})
-   </insert>
-   
-   <update id="updateComment"
-   	       parameterType="com.farm.dto.CommentsDTO">
-   UPDATE comments SET com_content = #{com_content} WHERE com_id=#{com_id}
-   </update>
-   
 </mapper>

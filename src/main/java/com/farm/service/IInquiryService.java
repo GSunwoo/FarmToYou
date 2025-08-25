@@ -30,7 +30,4 @@ public interface IInquiryService {
    
    public Long selectProd_id(@Param("inquiry_id") Long inquiry_id);
    
-   // 문의 답변 작성/수정
-   public int insertComment(CommentsDTO commentsDTO);
-   public int updateComment(CommentsDTO commentsDTO);
 }
