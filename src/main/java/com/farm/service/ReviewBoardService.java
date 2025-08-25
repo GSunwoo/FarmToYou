@@ -46,6 +46,7 @@ public interface ReviewBoardService {
 	
 	public int existReview(@Param("purc_id") Long purc_id);
 	
+	public int deleteReivew(@Param("reviewId") Long reviewId);
 	
 	/* 상세페이지에서 리뷰 연동*/
 	public ArrayList<ReviewBoardDTO> loadReview(@Param("prod_id") Long prod_id);
