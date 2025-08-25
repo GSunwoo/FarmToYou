@@ -85,7 +85,7 @@
 <select id="inquiryDetail"
         parameterType="com.farm.dto.InquiryDTO"
         resultType="com.farm.dto.InquiryDTO">
-  SELECT inquiry_id, inquiry.prod_id, content, inquiry.member_id, title, postdate, prod_name, user_id
+  SELECT inquiry_id, inquiry.prod_id, inquiry.content, inquiry.member_id, inquiry.title, inquiry.postdate, member.user_id
   FROM inquiry
   LEFT JOIN product
   	ON inquiry.prod_id=product.prod_id
