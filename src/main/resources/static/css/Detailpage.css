@@ -218,13 +218,18 @@
 }
 
   .review-list {
-    margin-top: 40px;
-    padding: 20px;
-    border-top: 2px solid #333;
+      max-width: 900px;   /* 필요에 따라 800~1000px 조정 */
+	  margin: 40px auto;  /* 가운데 정렬 */
+	  padding: 20px;
+	  border-top: 2px solid #333;
+	  background: #fafafa;   /* 살짝 배경 차별화 */
+	  border-radius: 6px
   }
   .review-item {
     border-bottom: 1px solid #ddd;
-    padding: 15px 0;
+    padding: 12px 0;
+    font-size: 14px; /* 글씨 살짝 축소 */
+    line-height: 1.6;
   }
   .review-header {
     display: flex;
@@ -233,7 +238,7 @@
   }
   .review-title {
     font-weight: bold;
-    font-size: 16px;
+    font-size: 15px;
   }
   .review-star {
     color: gold;
@@ -245,14 +250,21 @@
     margin-top: 5px;
   }
   .review-content {
-    margin: 10px 0;
-    white-space: pre-wrap;
+    margin: 8px 0;
+    font-size: 14px;
   }
   .review-footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
+  .review-item img {
+  max-width: 200px;  /* 원래 200px이면 줄여보고 싶으면 150~180px */
+  height: auto;
+  border-radius: 4px;
+  display: block;
+  margin-top: 8px;
+}
   .like-btn {
     cursor: pointer;
     background: none;
@@ -262,3 +274,85 @@
   .like-btn.active .heart {
     color: red;
   }
+
+  
+  :root { --fixed-header-h: 80px; }         /* 고정 헤더 높이면 조정 */
+html { scroll-behavior: smooth; }
+#desc, #reviews { scroll-margin-top: calc(var(--fixed-header-h) + 8px); }
+
+/* 탭바 */
+.dp-tabbar{
+  position: sticky;
+  top: var(--fixed-header-h);
+  z-index: 30;
+  background:#fff;
+  border-bottom:1px solid #e9ecef;
+}
+.dp-tabbar__inner{
+  max-width:1200px;
+  margin:0 auto;
+  padding:12px 16px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:12px;
+}
+.dp-tabbar__link{
+  text-decoration:none;
+  color:#666;
+  font-size:15px;
+  padding:8px 2px;
+  border-bottom:2px solid transparent;
+  transition:color .15s, border-color .15s;
+}
+.dp-tabbar__link:hover{ color:#111; }
+.dp-tabbar__link.is-active{ color:#111; border-color:#111; }
+.dp-tabbar__sep{ color:#ddd; user-select:none; }
+
+/* 탭바 링크 기본 스타일 강화 */
+.dp-tabbar__link {
+  text-decoration: none;
+  color: #444;          /* 기존 #666 → 조금 더 진하게 */
+  font-size: 15px;
+  font-weight: 600;     /* 글씨 두께 추가 */
+  padding: 8px 4px;
+  border-bottom: 2px solid transparent;
+  transition: color .15s, border-color .15s;
+}
+
+/* hover 시 */
+.dp-tabbar__link:hover {
+  color: #111;          /* 더 진하게 */
+}
+
+/* 활성 탭 */
+.dp-tabbar__link.is-active {
+  color: #111;
+  font-weight: 700;     /* 활성화된 탭은 더 두껍게 */
+  border-color: #111;
+}
+
+/* 리뷰 항목을 좌우 배치 */
+.review-item {
+  display: flex;
+  gap: 20px;              /* 이미지와 글 사이 간격 */
+  align-items: flex-start;
+  border-bottom: 1px solid #ddd;
+  padding: 15px 0;
+}
+
+/* 이미지 왼쪽 고정 크기 */
+.review-item img {
+  max-width: 150px;       /* 적당한 크기 (원하면 120~180px로 조절) */
+  height: auto;
+  border-radius: 4px;
+  flex-shrink: 0;         /* 글이 줄어도 이미지 크기 유지 */
+}
+
+/* 텍스트는 오른쪽에서 차지 */
+.review-item .review-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+  

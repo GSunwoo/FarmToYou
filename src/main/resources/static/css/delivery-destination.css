@@ -1,14 +1,14 @@
 @charset "UTF-8";
 /* ===================== 구매페이지(ORDER SECTION) 스타일 ===================== */
 .order-wrap {
-  max-width: 1200px;
+  max-width: 1100px;
   margin: 80px auto 24px;
-  padding: 0 16px
+  padding: 0 12px
 }
 
 .order-grid {
   display: grid;
-  grid-template-columns: 1fr 360px;
+  grid-template-columns: 1fr;
   gap: 24px;
   align-items: start
 }
@@ -25,7 +25,9 @@
   border: 1px solid #e5e7eb;
   border-radius: 12px;
   background: #fff;
-  margin-bottom: 14px
+  margin-bottom: 14px;
+  padding: 0;
+  width: 100%;
 }
 
 .card-hd {
@@ -39,7 +41,7 @@
 }
 
 .card-bd {
-  padding: 16px
+  padding: 16px 20px;
 }
 
 .badge {
@@ -140,8 +142,9 @@
   justify-content: space-between; /* 왼쪽: 주소, 오른쪽: 라디오 */
   align-items: center;        /* 여러 줄 주소와 정렬 자연스럽게 */
   gap: 12px;
-  padding: 8px 10px;
+  padding: 10px 14px;
   border-bottom: 1px solid #eee;
+  width: 100%;
 }
 
 .addr-item .addr-text-detail {
@@ -153,4 +156,9 @@
 .addr-item input[type="radio"] {
   flex-shrink: 0;      /* 줄바꿈 방지 */
   margin-top: 2px;     /* 첫 줄과 높이 맞춤 약간 */
+}
+
+#mainAddrBox {
+  width: 100%;
+  font-size: 15px;
 }

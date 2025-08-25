@@ -57,7 +57,9 @@
 							data-likes="${rvs.review_like}"
 							data-evaluation="${rvs.evaluation}" 
 							data-liked="${rvs.review_liked ? 'true' : 'false'}"
-							data-content="${rvs.content}">
+							data-content="${rvs.content}"
+							data-prod-id="${rvs.prod_id}"
+							>
 							
 							<div class="review-top-img">
 								<img

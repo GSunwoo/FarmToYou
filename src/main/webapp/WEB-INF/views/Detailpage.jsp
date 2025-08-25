@@ -72,8 +72,15 @@
         </form>
     </div>
 </div>
+<nav class="dp-tabbar" aria-label="상품 상세 탭">
+  <div class="dp-tabbar__inner">
+    <a href="#desc" class="dp-tabbar__link is-active">설명</a>
+    <span class="dp-tabbar__sep">|</span>
+    <a href="#reviews" class="dp-tabbar__link">리뷰</a>
+  </div>
+</nav>
      
-		<section class="dp-detail">
+		<section class="dp-detail" id="desc">
 			<div class="dp-tabwrap">
 				<!-- 좌측 사이드 레이블 -->
 				<aside class="dp-tab-aside" data-label="상품 상세">
@@ -118,12 +125,20 @@
 	</script>
 	
 	
-	<div class="review-list">
+	<div class="review-list" id="reviews">
   <h3>리뷰</h3>
   <c:forEach var="review" items="${revlist}">
     <div class="review-item" data-review-id="${review.review_id}">
       
+      <!-- 파일 이미지 -->
+      <c:if test="${not empty review.filename}">
+        <div>
+          <img src="${pageContext.request.contextPath}/uploads/reviewimg/${review.review_id }/${review.filename}" width="200px" alt="리뷰 이미지">
+        </div>
+      </c:if>
+      
       <!-- 상단 -->
+      <div class="review-text">
       <div class="review-header">
         <span class="review-title">${review.title}</span>
         <span class="review-star">
@@ -143,12 +158,7 @@
         ${review.content}
       </div>
       
-      <!-- 파일 이미지 -->
-      <c:if test="${not empty review.filename}">
-        <div>
-          <img src="${pageContext.request.contextPath}/uploads/reviewimg/${review.review_id }/${review.filename}" width="200px" alt="리뷰 이미지">
-        </div>
-      </c:if>
+      
       
       <!-- 하단 (좋아요, 평가) -->
       <div class="review-footer">
@@ -162,6 +172,7 @@
         </button>
       </div>
     </div>
+  </div>
   </c:forEach>
 </div>
 </body>
