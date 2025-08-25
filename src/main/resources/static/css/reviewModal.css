@@ -1,0 +1,49 @@
+@charset "UTF-8";
+/* ========== 모달 ========== */
+#reviewModal[hidden]{display:none}
+#reviewModal{
+  position:fixed; inset:0; background:rgba(0,0,0,.45); z-index:1000;
+  display:flex; align-items:center; justify-content:center; padding:20px;
+}
+#reviewModal .modal-dialog{width:min(900px, 96vw)}
+#reviewModal .modal-content{
+  background:var(--bg); border-radius:16px; overflow:hidden; position:relative;
+  display:grid; grid-template-columns:1.1fr 1fr; min-height:420px;
+}
+@media (max-width:840px){
+  #reviewModal .modal-content{grid-template-columns:1fr}
+}
+
+.modal-close{
+  position:absolute; top:10px; right:12px; width:36px; height:36px; border-radius:50%;
+  border:1px solid var(--line); background:#fff; cursor:pointer; font-size:18px;
+}
+.modal-body{display:contents} /* grid 유지 */
+
+.modal-left{background:#f6f6f6; display:flex; align-items:center; justify-content:center}
+.modal-left .modal-image{width:100%; height:100%; object-fit:contain}
+
+.modal-right{padding:18px 18px 16px; display:flex; flex-direction:column; gap:10px}
+.modal-right .review-author{display:flex; align-items:center; gap:10px}
+.modal-right .modal-author{font-weight:700; color:var(--ink)}
+.modal-right .modal-date{color:var(--muted)}
+.modal-right .modal-rating i{color:#ffc107}
+.modal-right .modal-content-text{line-height:1.55; color:#222; min-height:80px;}
+
+/* 좋아요 버튼 */
+.modal-actions{margin-top:auto; display:flex; gap:10px; align-items:center}
+.like-btn{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:8px 12px; border:1px solid var(--line); border-radius:999px; background:#fff; cursor:pointer;
+  transition:box-shadow .15s ease, transform .05s ease;
+}
+.like-btn:hover{box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.like-btn:active{transform:translateY(1px)}
+.heart{font-size:16px; line-height:1}
+.like-count{font-weight:700; color:var(--ink)}
+/* 좋아요 활성화 상태(프론트에서 data-liked="true" 주면 강조) */
+.like-btn[data-liked="true"]{border-color:#ff9bb0; background:#fff5f7}
+.like-btn[data-liked="true"] .heart{color:#e91e63}
+
+/* 평가 텍스트 */
+.modal-evaluation{color:#444; font-size:0.95rem}

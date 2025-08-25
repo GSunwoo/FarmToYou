@@ -25,34 +25,23 @@
         <div class="review-table-container">
             <table>
             	<colgroup>
-					  <col style="width:10%;">
-					  <col style="width:10%;">
-	                  <col style="width:10%;">
 	                  <col style="width:35%;">
+					  <col style="width:15%;">
 	                  <col style="width:35%;">
+					  <col style="width:15%;">
 				</colgroup>
                 <thead>
                     <tr>
-                        <th>리뷰번호</th>
+                        <th style="text-align: center;">상품이미지</th>
+                        <th>제목</th>
+                        <th style="text-align: center;">내용</th>
                         <th>날짜</th>
-                        <th>상품명</th>
-                        <th>상품 이미지</th>
-                        <th>내용</th>
                     </tr>
                 </thead>
                     <tbody>
             <c:if test="${not empty myReviewList}">
               <c:forEach var="rls" items="${myReviewList}">
                 <tr>
-                  <td>
-                  	<c:out value="${rls.review_id}"/></td>
-                  <td>
-  					<time><c:out value="${rls.postdate}"/></time>
-                  </td>
-                  <td>
-                  	<c:out value="${rls.prod_name}"/>
-                  </td>
-
                   <td>
                     <c:choose>
                       <c:when test="${not empty rls.filename}">
@@ -67,15 +56,25 @@
                       </c:otherwise>
                     </c:choose>
                   </td>
+                  <td>
+                  	<c:out value="${rls.title}"/>
+                  </td>
+                  <td class="review-content">
+                  	<c:out value="${rls.content}"/>
+                  </td>
+                  <td>
+  					<time><c:out value="${rls.postdate}"/></time>
+                  </td>
 
-                  <td class="review-content"><c:out value="${rls.content}"/></td>
+                 
+
                 </tr>
               </c:forEach>
             </c:if>
 
             <c:if test="${empty myReviewList}">
               <tr>
-                <td colspan="5" class="no-data">리뷰를 작성할 구매 내역이 없습니다.</td>
+                <td colspan="4" class="no-data">리뷰를 작성할 구매 내역이 없습니다.</td>
               </tr>
             </c:if>
           </tbody>

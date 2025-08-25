@@ -10,6 +10,7 @@
 <!-- 필요한 스타일 -->
 <link rel="stylesheet" href="/css/mainpage.css">
 <link rel="stylesheet" href="/css/reviewPage.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/reviewModal.css">
 <!-- 돋보기, 별 css -->
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -23,23 +24,27 @@
 	<section>
 		<div class="review-hero-cont">
 			<div class="rhc-wrapper">
-				<!-- <h3>
-					베스트 리뷰로 <br /> 선정된 리뷰들입니다.
+				<h3>
+					베스트 리뷰
 				</h3>
-				<p>
-					생생한 리뷰를 작성해 주시면, 베스트 리뷰로 선정됩니다. <br /> 많은 관심 부탁드립니다.
-				</p> -->
 			</div>
 
 			 <div class="review-best-items">
 				<c:forEach var="best" items="${bests}" varStatus="status">
-					<c:if test="${status.index < 4}">
-						<div class="review-top-card">
+					<c:if test="${status.index < 5}">
+						<div class="review-top-card review-cards"
+						    data-review-id="${best.review_id}"
+							data-star="${best.star}" 
+							data-likes="${best.review_like}"
+							data-evaluation="${best.evaluation}" 
+							data-liked="${best.review_liked ? 'true' : 'false'}"
+							data-content="${best.content}">
+							
 							<div class="review-info">
 						 		<div class="review-img">
 									<c:choose>
 										<c:when test="${not empty best.filename}">
-											<img src="${best.filename}" alt="${best.title}" />
+											<img src="${pageContext.request.contextPath}/uploads/reviewimg/${best.review_id}/${best.filename}" alt="${best.title }" />
 										</c:when>
 										<c:otherwise>
 											<img alt="${best.title}" />
@@ -64,13 +69,14 @@
 								</div>
 							</div>
 							<div class="review-author">
-								<span class="author"> <c:choose>
-										<c:when test="${not empty best.name}">
-                                ${best.name}
-                            </c:when>
+								<span class="author"> 
+									<c:choose>
+										<c:when test="${not empty best.name }">
+											${best.name }
+										</c:when>
 										<c:otherwise>
-                                회원 ${best.member_id}
-                            </c:otherwise>
+											회원 ${best.member_id }
+										</c:otherwise>
 									</c:choose>
 								</span>
 
@@ -95,11 +101,19 @@
 	</section> 
 
 	<section>
+			<div class="rhc-wrapper">
+				<h3>
+					일반 리뷰
+				</h3>
+			</div>
 		<div id="review-grid-lists" class="review-grid-lists">
 			<c:forEach var="review" items="${reviewList }">
-				<div class="review-cards" data-review-id="${review.review_id}"
-					data-star="${review.star}" data-likes="${review.review_like}"
-					data-evaluation="${review.evaluation}" data-liked="${review.review_liked ? 'true' : 'false'}"
+				<div class="review-cards" 
+					data-review-id="${review.review_id}"
+					data-star="${review.star}" 
+					data-likes="${review.review_like}"
+					data-evaluation="${review.evaluation}" 
+					data-liked="${review.review_liked ? 'true' : 'false'}"
 					data-content="${review.content}">
 
 					<div class="review-imgs">

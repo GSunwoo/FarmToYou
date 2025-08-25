@@ -69,16 +69,27 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 모달 표시
+	modal.classList.add('open');
     modal.removeAttribute('hidden');
   });
 
   // ================ 모달 닫기 ================
-  closeBtn?.addEventListener('click', () => modal.setAttribute('hidden', ''));
+  closeBtn?.addEventListener('click', () => {
+	modal.setAttribute('hidden', '');
+	modal.classList.remove('open');   //같이 닫기
+  }); 
   modal.addEventListener('click', (e) => {
-    if (e.target === modal) modal.setAttribute('hidden', '');
+    if (e.target === modal) {
+      modal.setAttribute('hidden', '');
+      modal.classList.remove('open'); 
+    }
   });
+
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') modal.setAttribute('hidden', '');
+    if (e.key === 'Escape') {
+      modal.setAttribute('hidden', '');
+      modal.classList.remove('open'); 
+    }
   });
 
   // ================ 좋아요 클릭(모달/목록 공통) ================

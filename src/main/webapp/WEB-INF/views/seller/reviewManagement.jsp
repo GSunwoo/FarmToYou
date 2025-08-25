@@ -50,15 +50,6 @@
               <c:forEach var="rls" items="${myReviewList}">
                 <tr>
                   <td>
-                  	<c:out value="${rls.review_id}"/></td>
-                  <td>
-  					<time><c:out value="${rls.postdate}"/></time>
-                  </td>
-                  <td>
-                  	<c:out value="${rls.prod_name}"/>
-                  </td>
-
-                  <td>
                     <c:choose>
                       <c:when test="${not empty rls.filename}">
                         <img
@@ -72,8 +63,17 @@
                       </c:otherwise>
                     </c:choose>
                   </td>
+                  <td>
+                  	<c:out value="${rls.title}"/>
+                  </td>
+                  <td class="review-content">
+                  	<c:out value="${rls.content}"/>
+                  </td>
+                  <td>
+  					<time><c:out value="${rls.postdate}"/></time>
+                  </td>
 
-                  <td class="review-content"><c:out value="${rls.content}"/></td>
+                  
                 </tr>
               </c:forEach>
             </c:if>

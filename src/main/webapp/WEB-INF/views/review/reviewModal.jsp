@@ -1,7 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-
+<style>
+	/* 모달이 모든 것 위에 오도록 강제 */
+#reviewModal{ z-index: 999999 !important; }
+/* 혹시 내부 겹침 방지 */
+#reviewModal .modal-content{ position: relative; z-index: 1; }
+/* 우측 패널이 투명해도 배경 글자 안 비치도록 */
+#reviewModal .modal-right{ background:#fff; }
+/* 닫기 버튼도 최상위로 */
+#reviewModal .modal-close{ z-index: 2; }
+</style>
 
 <div id="reviewModal" class="modal" hidden>
 	<div class="modal-dialog">

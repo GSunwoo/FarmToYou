@@ -9,15 +9,17 @@
 		SELECT *
 		FROM (
 			SELECT Tb.*, rownum rnum
-			FROM (SELECT rev.review_id, rev.title, rev.star, rev.content, rev.postdate, NVL(l.like_count, 0) AS review_like, img.main_filename AS filename
+			FROM (SELECT rev.review_id, rev.title, rev.star, rev.content, rev.postdate, NVL(l.like_count, 0) AS review_like, img.main_filename AS filename, mem.name
 				  FROM review rev
 				  LEFT JOIN (SELECT review_id, COUNT(*) AS like_count
 					   		 FROM review_like GROUP BY review_id) l 
 				  	ON l.review_id = rev.review_id
-						 	 LEFT JOIN (SELECT review_id, MAX(CASE WHEN main = 'main' THEN filename END) AS main_filename
-										FROM review_img GROUP BY review_id) img 
-							 	ON img.review_id = rev.review_id
-							 ORDER BY NVL(l.like_count, 0) DESC, rev.postdate DESC) Tb
+			 	 LEFT JOIN (SELECT review_id, MAX(CASE WHEN main = 'main' THEN filename END) AS main_filename
+							FROM review_img GROUP BY review_id) img 
+				 	ON img.review_id = rev.review_id
+				 LEFT JOIN member mem
+				 	ON rev.member_id=mem.member_id
+				 ORDER BY NVL(l.like_count, 0) DESC, rev.postdate DESC) Tb
 			WHERE rownum <![CDATA[<=]]> #{reviewPage}
 		)
 	</select>

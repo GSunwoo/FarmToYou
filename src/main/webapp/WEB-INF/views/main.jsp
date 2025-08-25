@@ -13,7 +13,9 @@
 <c:set var="isMainPage" value="${true }" scope="request" />
 
 <!-- CSS (상대경로) -->
-<link rel="stylesheet" href="/css/mainpage.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/mainpage.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/reviewModal.css">
+
 <!-- 돋보기, 별 css -->
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -48,7 +50,14 @@
 			<div class="review-slider slider-horizontal">
 				<div class="slide-track slide-track-horizontal">
 					<c:forEach var="rvs" items="${reviewPage}">
-						<div class="review-card">
+						<div class="review-cards"
+						    data-review-id="${rvs.review_id}"
+							data-star="${rvs.star}" 
+							data-likes="${rvs.review_like}"
+							data-evaluation="${rvs.evaluation}" 
+							data-liked="${rvs.review_liked ? 'true' : 'false'}"
+							data-content="${rvs.content}">
+							
 							<div class="review-top-img">
 								<img
 									src="${pageContext.request.contextPath}/uploads/reviewimg/${rvs.review_id}/${rvs.filename}"
@@ -151,5 +160,9 @@
 			</div>
 		</div>
 	</footer>
+	
+	<%@ include file="./review/reviewModal.jsp" %>
+	
+	<script src="/js/reviewModal.js" defer></script>
 </body>
 </html>

@@ -146,7 +146,7 @@
       <!-- 파일 이미지 -->
       <c:if test="${not empty review.filename}">
         <div>
-          <img src="${pageContext.request.contextPath}/uploads/reviewimg/${review.review_id }/${review.filename}" width="500px" alt="리뷰 이미지">
+          <img src="${pageContext.request.contextPath}/uploads/reviewimg/${review.review_id }/${review.filename}" width="200px" alt="리뷰 이미지">
         </div>
       </c:if>
       
