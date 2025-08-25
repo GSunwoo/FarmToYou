@@ -38,7 +38,9 @@
 							data-likes="${best.review_like}"
 							data-evaluation="${best.evaluation}" 
 							data-liked="${best.review_liked ? 'true' : 'false'}"
-							data-content="${best.content}">
+							data-content="${best.content}"
+							data-prod-id="${best.prod_id }"
+							>
 							
 							<div class="review-info">
 						 		<div class="review-img">
@@ -114,7 +116,8 @@
 					data-likes="${review.review_like}"
 					data-evaluation="${review.evaluation}" 
 					data-liked="${review.review_liked ? 'true' : 'false'}"
-					data-content="${review.content}">
+					data-content="${review.content}"
+					data-prod-id="${review.prod_id }">
 
 					<div class="review-imgs">
 						<c:choose>

@@ -136,7 +136,34 @@ public class InquiryController {
 		model.addAttribute("inquiry", dto);
 		return type+"/inquiryDetail"; // 상세 JSP 파일명에 맞게
 	}
+	
+	@PostMapping("/seller/writeComment.do")
+	public String writeComment(@AuthenticationPrincipal CustomUserDetails userDetails, CommentsDTO commentsDTO,
+			@RequestParam("inquiry_id") Long inquiry_id) {
+		
+		Long member_id = userDetails.getMemberDTO().getMember_id();
+		
+		commentsDTO.setMember_id(member_id);
+		commentsDTO.setInquiry_id(inquiry_id);
+		
+		comDao.insertComments(commentsDTO);
+		
+		return "redirect:inq/inquiryDetail.do?inquiry_id="+inquiry_id;
+	}
 
+	@PostMapping("/seller/updateComment.do")
+	public String updateComment(@AuthenticationPrincipal CustomUserDetails userDetails, CommentsDTO commentsDTO,
+			@RequestParam("inquiry_id") Long inquiry_id) {
+		Long member_id = userDetails.getMemberDTO().getMember_id();
+		
+		commentsDTO.setMember_id(member_id);
+		commentsDTO.setInquiry_id(inquiry_id);
+		
+		comDao.updateComments(commentsDTO);
+		
+		return "redirect:inq/inquiryDetail.do?inquiry_id="+inquiry_id;
+	}
+	
 	// 수정
 	@GetMapping("/buyer/inquiryUpdate.do")
 	public String updateInquiry(@RequestParam("inquiry_id") Long inquiry_id, Model model,

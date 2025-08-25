@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.farm.dto.CommentsDTO;
 import com.farm.dto.InquiryDTO;
 import com.farm.dto.PageDTO;
 
@@ -28,4 +29,8 @@ public interface IInquiryService {
    public int deleteInquiry(@Param("inquiry_id") Long inquiry_id, @Param("member_id") Long member_id);
    
    public Long selectProd_id(@Param("inquiry_id") Long inquiry_id);
+   
+   // 문의 답변 작성/수정
+   public int insertComment(CommentsDTO commentsDTO);
+   public int updateComment(CommentsDTO commentsDTO);
 }
