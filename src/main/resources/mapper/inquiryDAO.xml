@@ -24,6 +24,7 @@
    parameterType="com.farm.dto.PageDTO"
    resultType="com.farm.dto.InquiryDTO"
    >
+   
    SELECT 
 	    inq.inquiry_id,
 	    inq.prod_id,
