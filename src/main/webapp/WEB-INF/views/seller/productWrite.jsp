@@ -85,17 +85,32 @@
 						</div>
 					</div>
 
-					<!-- 이미지 미리보기 영역 ➕ -->
-					<div id="previewWrap" style="display:none; margin-bottom:10px;">
+					
+					
+					<div class="form-line section-divider-bottom">
+					  <label for="image">사진등록</label>
+					  <div class="form-group">
+					  <input id="imageInput" type="file" name="image" accept="image/*" multiple /> 
+					<input type="hidden" name="main_idx" id="main_idx" />
+					  <div id="previewWrap" style="display:none; margin-bottom:10px;">
 						<img id="previewImg" alt="미리보기 이미지" style="max-width:200px; max-height:200px;"/>
 					</div>
+					  </div>
+					</div>
+					
+					
+					<!-- 이미지 미리보기 영역 ➕ -->
+					<!-- <div id="previewWrap" style="display:none; margin-bottom:10px;">
+						<img id="previewImg" alt="미리보기 이미지" style="max-width:200px; max-height:200px;"/>
+					</div> -->
 
 					<!-- 오류 메시지 표시 영역 ➕ -->
 					<div id="errorMsg" style="display:none; color:red; margin-bottom:10px;"></div>
 
 					<div id="previewContainer"></div>
-					<input id="imageInput" type="file" name="image" accept="image/*" multiple /> 
+					<!-- <input id="imageInput" type="file" name="image" accept="image/*" multiple /> --> 
 					<input type="hidden" name="main_idx" id="main_idx" />
+					
 
 					<div class="button-group">
 						<button type="submit">등록</button>

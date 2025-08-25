@@ -15,6 +15,8 @@ public class InquiryDTO {
    
    private String user_id;
    private String prod_name;
+   private int com_count;
+   
    
    private java.sql.Timestamp postdate;
 

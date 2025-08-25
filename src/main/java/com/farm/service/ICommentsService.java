@@ -15,5 +15,6 @@ public interface ICommentsService {
 	public CommentsDTO getComments(@Param("com_id") Long com_id);
 	public int updateComments(CommentsDTO commentsDTO);
 	public int deleteComments(@Param("com_id") Long com_id);
+	public int hascomments(@Param("inquiry_id") Long inquiry_id);
 	
 }

@@ -72,6 +72,12 @@
 	padding: 12px;
 	border-bottom: 1px solid #ddd;
 }
+/* 내용 셀만 패딩 늘리기 */
+.board-white-table td.content-cell {
+	padding-top: 70px; /* 상단 패딩 */
+	padding-bottom: 70px; /* 하단 패딩 */
+	vertical-align: top; /* 위쪽부터 내용 표시 */
+}
 
 /* 버튼 영역 */
 .btn-center-box {
@@ -109,6 +115,16 @@
 .btn-write-ok:hover {
 	background-color: #256d45;
 }
+
+.comments-wrap { margin-top: 28px; }
+.comments-title { margin: 0 0 10px; font-size: 18px; font-weight: 700; }
+.comments-list { list-style: none; padding: 0; margin: 0; }
+.comment-item { border:1px solid #eee; border-radius:6px; padding:12px; margin-bottom:10px; background:#fafafa; }
+.comment-meta { display:flex; gap:12px; font-size:13px; color:#777; margin-bottom:6px; }
+.comment-content { white-space:pre-wrap; line-height:1.55; }
+.no-comments { color:#999; }
+
+
 </style>
 </head>
 <!-- 공통 css -->
@@ -119,7 +135,7 @@
 <body class="simple-page">
 	<!-- 상단 공통 헤더 -->
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
-	
+
 	<div class="mypage-wrapper">
 		<div class="mypage-container">
 			<!-- 왼쪽 사이드바 -->
@@ -159,7 +175,7 @@
 							</tr>
 							<tr>
 								<th scope="row">작성자</th>
-								<td><c:out value="${inquiry.user_id}"/></td>
+								<td><c:out value="${inquiry.user_id}" /></td>
 							</tr>
 							<tr>
 								<th scope="row">작성일</th>
@@ -172,7 +188,7 @@
 							</tr>
 							<tr>
 								<th scope="row">내용</th>
-								<td><c:out value="${inquiry.content}" /></td>
+								<td class="content-cell"><c:out value="${inquiry.content}" /></td>
 							</tr>
 						</tbody>
 					</table>
@@ -182,23 +198,57 @@
 					<!-- 목록 -->
 					<a class="btn-before" href="/inq/inquiryList.do"><strong>목록</strong></a>
 
-					<!-- 수정: 반드시 inquiry_id 전달 -->
+					<!-- ✔ 수정 버튼 제거, 대신 답변작성 버튼 -->
 					<a class="btn-write-ok"
-						href="<c:url value='/buyer/inquiryUpdate.do'>
-                     <c:param name='inquiry_id' value='${inq.inquiry_id}'/>
-                   </c:url>">
-						<strong>수정</strong>
+						href="<c:url value='seller/commentWrite'>
+					              <c:param name='inquiry_id' value='${inquiry.inquiry_id}'/>
+					           </c:url>">
+						<strong>답변작성</strong>
 					</a>
+				</div>
 
-					<!-- 삭제 (POST) -->
-					<!-- <form action="${pageContext.request.contextPath}/buyer/inquiryDelete.do" method="post" style="display:inline;">
+
+				<!-- ====== 판매자 답변(댓글) 리스트 ====== -->
+				<div class="comments-wrap">
+					<h3 class="comments-title">판매자 답변</h3>
+
+					<c:set var="commentList"
+						value="${not empty comments ? comments
+                 : (not empty commentList ? commentList : (not empty commentsDTOList ? commentsDTOList : null))}" />
+
+					<c:choose>
+						<c:when test="${not empty commentList}">
+							<ul class="comments-list">
+								<c:forEach var="cmt" items="${commentList}">
+									<li class="comment-item">
+										<div class="comment-meta">
+											<span class="comment-writer"> 작성자 ID: <c:out
+													value="${cmt.member_id}" />
+											</span> <span class="comment-date"> <fmt:formatDate
+													value="${cmt.com_date}" pattern="yyyy-MM-dd HH:mm" />
+											</span>
+										</div>
+										<div class="comment-content">
+											<c:out value="${cmt.com_content}" />
+										</div>
+									</li>
+								</c:forEach>
+							</ul>
+						</c:when>
+						<c:otherwise>
+							<p class="no-comments">등록된 답변이 없습니다.</p>
+						</c:otherwise>
+					</c:choose>
+				</div>
+				<!-- 삭제 (POST) -->
+				<!-- <form action="${pageContext.request.contextPath}/buyer/inquiryDelete.do" method="post" style="display:inline;">
         <button type="submit" class="btn-write-ok" onclick="return confirm('삭제하시겠습니까?');">
           <strong>삭제</strong>
         </button>
       </form>  -->
-				</div>
 			</div>
 		</div>
+	</div>
 	</div>
 </body>
 </html>
