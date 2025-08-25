@@ -131,7 +131,7 @@
 		<div class="mypage-container">
 			<!-- 왼쪽 사이드바 -->
 			<aside class="mypage-sidebar">
-				<%@ include file="../common/header2.jsp"%>
+				<%@ include file="../common/header3.jsp"%>
 			</aside>
 
 			<!-- 오른쪽 콘텐츠 -->
