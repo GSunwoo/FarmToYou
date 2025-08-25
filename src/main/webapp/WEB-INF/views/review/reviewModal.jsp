@@ -33,10 +33,12 @@
 						<button type="button" class="like-btn" 
 								data-review-id="${review.review_id }" 
 								data-liked="${review.review_liked}"
-								data-likes= "${review.review_like }">
+								data-likes= "${review.review_like }"
+								data-prod-id="${review.prod_id }">
 							<span class="heart">❤️</span>
 							<span class="like-count">${review.review_like}</span>
 						</button>
+						<a class="prod-link" href="#">상세보기</a>
 					</div>
 					<div class="evaluation modal-evaluation"></div>
 				</div>

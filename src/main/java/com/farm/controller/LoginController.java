@@ -16,6 +16,7 @@ import com.farm.service.IPassFinderService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+//로그인 페이지 이동, 권한/에러 페이지 이동, "비밀번호 찾기"처리
 @Controller
 public class LoginController {
 	

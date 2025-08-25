@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalLikeCount  = modal.querySelector('.like-count');
   const modalEvaluation = modal.querySelector('.modal-evaluation');
   const closeBtn        = modal.querySelector('.modal-close');
+  const modalProdLink   = modal.querySelector('.prod-link');
 
   // toBool 함수 : 문자열이나 숫자를 불리언값으로 변환하는 헬퍼 함수
   const toBool = v => /^(1|true|y|yes)$/i.test((v ?? '').toString().trim());
@@ -38,6 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const reviewId   = card.dataset.reviewId || '';
     const evaluation = card.dataset.evaluation || '';
     const likedNow   = toBool(card.dataset.liked);
+	const prodId = card.dataset.prodId||'';
 
     // 모달에 콘텐츠 반영
     if (modalImage)   modalImage.src = imgSrc;
@@ -55,9 +57,11 @@ document.addEventListener('DOMContentLoaded', () => {
       modalLikeBtn.dataset.liked    = likedNow ? 'true' : 'false';
       modalLikeBtn.dataset.likes    = String(likes);
       modalLikeBtn.classList.toggle('active', likedNow);
+	  modalLikeBtn.dataset.prodId = prodId;
     }
     if (modalLikeCount) modalLikeCount.textContent = String(likes);
 
+	modalProdLink.href = `/guest/Detailpage.do?prod_id=${prodId}`;
     // 별점 갱신
     if (modalRating) {
       modalRating.innerHTML = '';

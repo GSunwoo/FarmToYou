@@ -9,7 +9,7 @@
 		SELECT *
 		FROM (
 			SELECT Tb.*, rownum rnum
-			FROM (SELECT rev.review_id, rev.title, rev.star, rev.content, rev.postdate, NVL(l.like_count, 0) AS review_like, img.main_filename AS filename, mem.name
+			FROM (SELECT rev.review_id, rev.title, rev.star, rev.content, rev.postdate, NVL(l.like_count, 0) AS review_like, img.main_filename AS filename, mem.name, rev.prod_id
 				  FROM review rev
 				  LEFT JOIN (SELECT review_id, COUNT(*) AS like_count
 					   		 FROM review_like GROUP BY review_id) l 

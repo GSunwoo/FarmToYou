@@ -68,6 +68,7 @@ public class ReviewBoardController {
 		pageDTO.setEnd(20);
 		ArrayList<ReviewBoardDTO> lists = dao.listPage(pageDTO);
 		List<ReviewBoardDTO> bests = reviewCarouselService.getTopLikedReviews(reviewPage);
+		System.out.println(bests.get(0).getProd_id());
 		model.addAttribute("bests", bests);
 		
 		for(int i = 0 ; i < lists.size() ; i ++) {
