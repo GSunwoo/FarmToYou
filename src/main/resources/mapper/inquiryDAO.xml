@@ -44,7 +44,7 @@
 	    inq.member_id, 
 	    inq.title, 
 	    inq.postdate
-	ORDER BY inq.postdate DESC;
+	ORDER BY inq.postdate DESC
    </select>
    
    <select id="selectInq2"
