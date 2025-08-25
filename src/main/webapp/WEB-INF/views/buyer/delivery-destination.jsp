@@ -23,6 +23,7 @@
   <div class="mypage-wrapper">
     <div class="sub-content">
       <%@ include file="../common/header2.jsp" %>
+      <div class="delivery-container">
 			<section class="order-wrap">
 			  <div class="order-grid">
 			    <div class="order-right">
@@ -53,10 +54,14 @@
 			
 				      <section class="card">
 				        <div class="card-hd">
+				        <div class="title-area">
 				          <strong>배송지 목록</strong> <span class="bar">|</span>
+				        </div>
 				          <!-- 나중에 구현 --> 
+				          <div class="btn-group">
 				          <button type="button" class="btn-sm solid" id="btnAddrNew" style="margin-left:8px">새 배송지 추가</button>
 				          <button type="button" class="btn-sm ghost" id="btnAddrDelete">삭제</button>
+				          </div>
 				        </div>
 				        
 				        <div class="card-bd">
@@ -99,6 +104,14 @@
 						<div class="row">
 							<input class="input-lg" id="n_zip" name="zipcode" placeholder="우편번호" style="max-width:140px" readonly/>
 							<button class="btn-sm ghost" id="btnPostNew" type="button">우편번호 찾기</button>
+							
+							<!-- ✅ 라디오 버튼 추가 -->
+						    <label style="margin-left:12px;">
+						        <input type="radio" name="mainFlag" value="1" /> 메인 배송지 추가
+						    </label>
+						    <label style="margin-left:8px;">
+						        <input type="radio" name="mainFlag" value="0" checked /> 선택안함
+						    </label>
 						</div>
 						<input class="input-lg" id="n_addr1" name="addr1" placeholder="기본주소" readonly>
 						<input class="input-lg" id="n_addr2" name="addr2" placeholder="상세주소">
@@ -110,6 +123,7 @@
 				</div>
 			
 			</div>
+		</div>
 		</div>
 	</div>
 </body>

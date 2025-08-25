@@ -34,6 +34,18 @@
 			<div class="banner-slide">
 				<img src="./images/2024_main04.jpg" alt="배너2">
 			</div>
+			<div class="banner-slide">
+				<img src="./images/2024_main02.jpg" alt="배너2">
+			</div>
+			<div class="banner-slide">
+				<img src="./images/2024_main03.jpg" alt="배너2">
+			</div>
+			<div class="banner-slide">
+				<img src="./images/2024_main05.jpg" alt="배너2">
+			</div>
+			<div class="banner-slide">
+				<img src="./images/2024_main10.jpg" alt="배너2">
+			</div>
 			<!-- 화살표 버튼 -->
 			<button class="prev-btn">&#10094;</button>
 			<button class="next-btn">&#10095;</button>

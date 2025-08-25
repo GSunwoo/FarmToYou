@@ -1,16 +1,29 @@
 @charset "UTF-8";
 /* ===================== 구매페이지(ORDER SECTION) 스타일 ===================== */
-.order-wrap {
+ .order-wrap {
   max-width: 1100px;
-  margin: 80px auto 24px;
-  padding: 0 12px
-}
+  margin: 10px auto 24px;
+  padding: 0 12px;
+} 
+
 
 .order-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 24px;
   align-items: start
+}
+/* ===== 배송지 관리 전체 컨테이너 ===== */
+.delivery-container {
+  background-color: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  padding: 24px;
+  max-width: 900px;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0 auto;
 }
 .order-grid { align-items: start; }                    
 .order-right { position: sticky; top: 24px; height: max-content; margin-top: 60px;} 
@@ -31,13 +44,22 @@
 }
 
 .card-hd {
-  display: flex;
-  justify-content: space-between;
+    display: flex;
   align-items: center;
   padding: 14px 16px;
   background: #f3f4f6;
   border-bottom: 1px solid #e5e7eb;
-  border-radius: 12px 12px 0 0
+  border-radius: 12px 12px 0 0;
+}
+.btn-group {
+   display: flex;
+  gap: 8px;           /* 버튼 간격 */
+  margin-left: auto;  /* 버튼을 오른쪽 끝으로 밀어줌 */
+}
+
+/* 버튼 그룹 정렬 */
+.card-hd button {
+  margin-left: 6px; /* 버튼 사이 여백 */
 }
 
 .card-bd {
@@ -141,7 +163,7 @@
   display: flex;
   justify-content: space-between; /* 왼쪽: 주소, 오른쪽: 라디오 */
   align-items: center;        /* 여러 줄 주소와 정렬 자연스럽게 */
-  gap: 12px;
+  gap: 10px;
   padding: 10px 14px;
   border-bottom: 1px solid #eee;
   width: 100%;
